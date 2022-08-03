@@ -12,7 +12,7 @@ website:
       - section: "Test"
         contents:
           - index.qmd
-          - site/shiny_app1/index.html
+          - test_pages/test_with_shinylive.qmd
       
 
 format:

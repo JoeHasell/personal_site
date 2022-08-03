@@ -6,27 +6,27 @@
 
 # Create the dirstribution for each 
 
-folder_prefix="./"
-app_prefix="./shiny_apps/"
+apps_folder_name="shiny_apps"
+site_folder="site_apps"
 
-suffix="/"
-
-for d in ./shiny_apps/*/; do
+for d in ./$apps_folder_name/*/; do
     
-    folder=${d#"$folder_prefix"}
-    folder=${folder%"$suffix"}
 
-    app=${d#"$app_prefix"}
-    app=${app%"$suffix"}
+    folder=${d#"./"}
+    folder=${folder%"/"}
+    app=${folder#$apps_folder_name"/"}
 
     echo "$d"
     echo "$folder"
     echo "$app"
 
-    shiny static $folder site_apps --subdir $app 
+    #shiny static $folder"/script" $folder"/site"
+    shiny static $folder $site_folder --subdir $app
 
 done
 
-#shiny static shiny_apps/app1 site_apps --subdir app1   
 
-#quarto publish netlify
+netlify deploy --prod    
+
+
+quarto publish netlify

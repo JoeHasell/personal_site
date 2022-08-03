@@ -16,10 +16,15 @@ b<- a * 2 + 1
 
 df<- data.frame(a, b)
 
-fp<- paste0(here(),"/shiny_apps/shiny_app1/data.csv")
+fp<- paste0(here(),"/shiny_apps/app1/data.csv")
 
 write.csv(df, fp)
 
+```
+
+
+```{=html}
+<iframe src="https://shiny-apps.netlify.app/app1/" height="700" width="100%" title="Shinylive test"></iframe>
 ```
 
 

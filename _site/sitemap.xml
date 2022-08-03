@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://joehasell.netlify.app/site_apps/shinylive/jquery.terminal/CHANGELOG.html</loc>
+    <lastmod>2022-08-03T14:14:10.117Z</lastmod>
+  </url>
+  <url>
     <loc>https://joehasell.netlify.app/index.html</loc>
-    <lastmod>2022-08-03T10:13:00.967Z</lastmod>
+    <lastmod>2022-08-03T14:14:10.465Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/about.html</loc>
-    <lastmod>2022-08-03T10:13:01.278Z</lastmod>
-  </url>
-  <url>
-    <loc>https://joehasell.netlify.app/site/shinylive/jquery.terminal/CHANGELOG.html</loc>
-    <lastmod>2022-08-03T10:13:02.911Z</lastmod>
+    <lastmod>2022-08-03T14:14:10.795Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/test_pages/test_with_shinylive.html</loc>
-    <lastmod>2022-08-03T10:13:05.225Z</lastmod>
+    <lastmod>2022-08-03T14:14:13.043Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/how_to.html</loc>
+    <lastmod>2022-08-03T14:14:13.294Z</lastmod>
   </url>
 </urlset>
