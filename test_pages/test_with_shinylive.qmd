@@ -1,0 +1,25 @@
+---
+title: "A test notebook with Shinylive"
+---
+
+``` {r}
+library(tidyverse)
+library(here)
+```
+
+
+
+``` {r}
+a<- c(1:10)
+b<- a * 2 + 1
+
+
+df<- data.frame(a, b)
+
+fp<- paste0(here(),"/shiny_apps/shiny_app1/data.csv")
+
+write.csv(df, fp)
+
+```
+
+

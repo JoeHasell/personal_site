@@ -1,13 +1,19 @@
 project:
   type: website
+  
+
 
 website:
   title: "personal_site"
-  navbar:
-    left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Test"
+        contents:
+          - index.qmd
+          - site/shiny_app1/index.html
+      
 
 format:
   html:
