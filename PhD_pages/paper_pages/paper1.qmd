@@ -1,0 +1,78 @@
+---
+title: "Paper 1: Triangulating trends in inequality around the world from secondary databases"
+---
+
+```{r, echo=FALSE, message = FALSE, warning=FALSE}
+
+library(tidyverse)
+library(trackdown)
+
+```
+
+What has happened to within-country inequality globally?
+
+Is it that there has been a secular rise - suggesting global forces.
+
+Or is it mixed - suggesting much scope for national policy to influence?
+
+Different headline - WID suggests general rise (find a quote). PIP much more mixed... even a fall.
+
+Untangle which methods, definitions.
+
+# Methods and data
+
+## Data sources
+
+### PIP
+
+### WID
+
+### LIS
+
+### Other sources
+
+Should we use Solt? As another check on results?
+
+What about GCIP? For trying to flip between income and consumption...
+
+## Coverage
+
+## Lining up methods
+
+Method 1: Reference years
+
+Method 2: Fully extrapolating/interpolating
+
+The equivalent of the reference year approach where there is no max threshold gap.
+
+Method 3: For the time trend, use a regression with country fixed effects to allow for entry and exit from the sample.
+
+## Comparing distributions
+
+### Comparing welfare concepts
+
+Getting a *global* view of inequalities within countries faces a Catch-22 situation: If you want broad coverage you get very heterogeneous data; if you want comparable data, or to be able to consider different welfare concepts consistently, the coverage you get is much smaller.
+
+Here I'll take two avenues.
+
+Firstly, what we're going for with the 'triangulation' approach is dominance - if different welfare metrics agree
+
+Second we will cross reference to attempts to 'standardise' across these differences: using Solt and GCIP. How valid that is I don't know. But taking the two approaches together we get as close as we can to robust observations.
+
+### A range of inequality metrics
+
+### Lorenz curves
+
+Dominance implies any (well-behaved) summary measure of inequality will agree on the ranking.
+
+Operationalize this by taking 99 points on the Lorenze curve: the percentiles.
+
+This leaves out the *very* top. But this would be quite a warped conception of inequality. I.e. if you have two distributions, A and B, and the share of income received by every whole percentile threshold in B is higher than A, but the Lorenze curves crossed within the top percentile - to claim that inequality is higher in B you'd need a very extreme conception of inequality.
+
+# Results
+
+### Outliers
+
+Russia
+
+# Conclusion

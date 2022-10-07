@@ -2,22 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://joehasell.netlify.app/site_apps/shinylive/jquery.terminal/CHANGELOG.html</loc>
-    <lastmod>2022-08-04T12:08:51.962Z</lastmod>
+    <lastmod>2022-10-06T19:47:52.635Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/rmarkdown/overview.html</loc>
+    <lastmod>2022-10-06T19:47:54.770Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/quarto/overview.html</loc>
+    <lastmod>2022-10-06T19:47:56.725Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/index.html</loc>
-    <lastmod>2022-08-04T12:08:52.324Z</lastmod>
+    <lastmod>2022-10-06T19:47:56.988Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/about.html</loc>
-    <lastmod>2022-08-04T12:08:52.668Z</lastmod>
+    <lastmod>2022-10-06T19:47:57.252Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/test_pages/test_with_shinylive.html</loc>
-    <lastmod>2022-08-04T12:08:54.925Z</lastmod>
+    <lastmod>2022-10-06T19:47:59.368Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/how_to.html</loc>
-    <lastmod>2022-08-04T12:08:55.158Z</lastmod>
+    <lastmod>2022-10-06T19:47:59.601Z</lastmod>
   </url>
 </urlset>

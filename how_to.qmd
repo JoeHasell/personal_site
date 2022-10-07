@@ -1,25 +1,36 @@
 ---
-title: "How to"
+title: "How I built this site"
 editor: visual
 ---
 
-To create a folder of shinylive apps deployed to netlify within your repo...
+This site is built on three main ingredients:
 
-1.  Get netlify CLI up an running - see here: [https://docs.netlify.com/cli/get-started](https://docs.netlify.com/cli/get-started/)
-2.  Run `netlify init` in the command line (from your local repo).
-    1.  Follow the options.
+-   Quarto notebooks, gathered together into a Quarto website
 
-    2.  Provide a domain name
+-   These are published to the web via Netlify
 
-    3.  For the build command, use `hugo build`
+-   Text editing is done using Google Docs, pulled in to the Quarto notebooks using the R **trackdown** package
 
-    4.  For the directory to deploy, use the 'site' folder associated with the folder of apps. For me this is `./site_apps`
+<!-- To create a folder of shinylive apps deployed to netlify within your repo... -->
 
-    5.  Accept default functions folder
+<!-- 1.  Get netlify CLI up an running - see here: [https://docs.netlify.com/cli/get-started](https://docs.netlify.com/cli/get-started/) -->
 
-    6.  Upon prompting ask to create new `netlify.toml` file
+<!-- 2.  Run `netlify init` in the command line (from your local repo). -->
 
-To add a new zsh shell script...
+<!--     1.  Follow the options. -->
 
-1.  dsf
-2.  Sort out permissions by running: `chmod u+x <FILNAME>.sh`
+<!--     2.  Provide a domain name -->
+
+<!--     3.  For the build command, use `hugo build` -->
+
+<!--     4.  For the directory to deploy, use the 'site' folder associated with the folder of apps. For me this is `./site_apps` -->
+
+<!--     5.  Accept default functions folder -->
+
+<!--     6.  Upon prompting ask to create new `netlify.toml` file -->
+
+<!-- To add a new zsh shell script... -->
+
+<!-- 1.  dsf -->
+
+<!-- 2.  Sort out permissions by running: `chmod u+x <FILNAME>.sh` -->

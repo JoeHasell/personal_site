@@ -4,14 +4,17 @@ project:
 
 
 website:
-  title: "personal_site"
+  title: "Joe Hasell"
   sidebar:
     style: "docked"
     search: true
     contents:
-      - section: "Test"
+      - section: "DPhil: Triangulating the key facts about global income distribution"
         contents:
-          - index.qmd
+          - PhD_pages/paper_pages/overview.qmd
+      - section: "About this site"
+        contents:
+          - how_to.qmd
           - test_pages/test_with_shinylive.qmd
       
 
