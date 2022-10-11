@@ -1,0 +1,165 @@
+```{r}
+library(tidyverse)
+
+source('PhD_pages/scripts/functions.r')
+
+```
+
+```{r}
+#These variables uniquely id a set of survey results
+pip_id_vars<- c('Entity', 'Year', 'reporting_level', 'welfare_type')
+
+
+```
+
+```{r}
+pip_perc_orig<- read.csv("PhD_pages/data/original/pip_percentiles.csv")
+
+```
+
+```{r}
+pip_main_vars_orig<- read.csv("PhD_pages/data/original/pip_main_vars.csv")
+
+```
+
+#### Prep 'percentiles' data file
+
+```{r}
+pip_perc<- pip_perc_orig
+```
+
+```{r}
+# Drop duplicate observations of 'headcount' - The PIP API returns the . Given the discrete nature of the survey data, it sometimes returns a headcount ratio that are fairly far from the target percentile queried and the same headcount ratio can be returned for multiple percentile queries. Here we keep only one.
+
+pip_perc<- drop_dupes(pip_perc,
+                       id_vars = pip_id_vars,
+                        duplicate_data_var = 'headcount')
+
+```
+
+```{r}
+
+# Browse for nonmonotonic rows
+# browse_nonmonotonic<- monotonicity_check(
+#   df = pip_perc, 
+#   id_vars = pip_id_vars,
+#   order_var = 'headcount',
+#   data_var = 'percentile_value', 
+#   action = 'browse')
+
+#There seems to be an issue with China in 1993,  driven by rural China.
+# br<- pip_perc %>%
+#   filter(Entity == "China",
+#          reporting_level == 'national',
+#          Year == 1993)
+
+# Let's drop these rows
+pip_perc<- monotonicity_check(
+  df = pip_perc, 
+  id_vars = pip_id_vars,
+  order_var = 'headcount',
+  data_var = 'percentile_value', 
+  action = 'drop')
+
+```
+
+```{r}
+#Drop world regions from percentile data
+
+# These are entities with no reporting level - as veried below
+# pip_perc %>%
+#   filter(reporting_level=="") %>% 
+#   select(Entity) %>%
+#   unique() %>%
+#   print()
+
+pip_perc<- pip_perc %>%
+    filter(reporting_level!="") 
+
+```
+
+#### Prep 'main vars' data file
+
+```{r}
+
+pip_main_vars<- pip_main_vars_orig %>%
+  rename(Entity = country_name,
+         Year = reporting_year) %>%
+  select(Entity, Year, reporting_level, welfare_type, mean, reporting_pop, reporting_gdp, gini, mld)
+```
+
+#### Merge the percentile and main data files
+
+```{r}
+pip_perc<- left_join(pip_perc, pip_main_vars)
+
+```
+
+#### Additional cleaning
+
+```{r}
+#Keep only 'National' estimates, except for country-years that don't have national estimates.
+
+# Count how many reporting levels there are for each estimate
+count_reporting_levels<- pip_main_vars %>%
+  select(Entity, Year, reporting_level) %>%
+  unique() %>%
+  count(Entity, Year) %>%
+  rename(number_of_reporting_levels = n)
+
+# We see there only 1 and 3 reporting levels - i.e. either national, rural or uban alone, or else all three are present.
+count_reporting_levels %>% select(number_of_reporting_levels) %>% unique()
+
+# Merge the counts back into dataframe
+pip_main_vars<- left_join(pip_main_vars, count_reporting_levels)
+
+# Filter to see if there are any cases where only non-national estimates are available
+pip_main_vars %>%
+filter(number_of_reporting_levels<3 & reporting_level!='national') %>%
+select(Entity) %>%
+unique()
+
+# Keep only national estimates except for these cases
+
+pip_main_vars<- pip_main_vars %>%
+filter(reporting_level=='national' | number_of_reporting_levels<3)
+
+# Check again if there is more than one reporting level
+pip_main_vars %>%
+  select(Entity, Year, reporting_level) %>%
+  unique() %>%
+  count(Entity, Year) %>%
+  rename(number_of_reporting_levels = n) %>%
+    filter(number_of_reporting_levels>1)
+
+```
+
+### Prepare reference year data
+
+```{r}
+# I'll prepare the observations from the main_vars file, and then merge in the percentiles
+
+target_years<- c(1990, 2000, 2010, 2018)
+
+df_pip_ref_years<- keep_closest(
+  df= pip_main_vars,
+  id_vars = c("Entity", "reporting_level"),
+  distance_varname = "Year",
+  targets = target_years,
+  tie_break_dist_up_or_down = "up",
+  tie_break_varname = "welfare_type",
+  tie_break_value = "income")
+
+# We see that if we impose that a max distance, country coverage falls.
+df_count<- df_pip_ref_years %>%
+  count(Entity)
+
+df_pip_ref_years_filter<- df_pip_ref_years %>%
+  filter(abs_distance<3)
+
+df_count<- df_pip_ref_years_filter %>%
+  count(Entity)
+
+
+
+```

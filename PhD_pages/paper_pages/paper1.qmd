@@ -11,13 +11,21 @@ library(trackdown)
 
 What has happened to within-country inequality globally?
 
-Is it that there has been a secular rise - suggesting global forces.
-
-Or is it mixed - suggesting much scope for national policy to influence?
-
 Different headline - WID suggests general rise (find a quote). PIP much more mixed... even a fall.
 
-Untangle which methods, definitions.
+Which world we live in matters for how we think we should tackle inequality.
+
+A secular, general rise - suggesting global forces, perhaps something intrinsic to capitalism (Piketty, 2014).
+
+A mixed picture of inequality around the world suggests reflect specific circumstances, with accordingly much scope for national policy to influence.
+
+Both are reasonable methods and have strengths and weaknesses.
+
+I want to:
+
+a\) Triangulate the key stylized facts. Which observations are robust to across available datasets with their different methods, and which are contingent?
+
+b\) Untangle which methods, definitions affect the different conclusions arrived at.
 
 # Methods and data
 
@@ -35,9 +43,13 @@ Should we use Solt? As another check on results?
 
 What about GCIP? For trying to flip between income and consumption...
 
-## Coverage
+### Coverage
 
-## Lining up methods
+s
+
+## Methods: Comparing databases
+
+### Lining up years
 
 Method 1: Reference years
 
@@ -46,8 +58,6 @@ Method 2: Fully extrapolating/interpolating
 The equivalent of the reference year approach where there is no max threshold gap.
 
 Method 3: For the time trend, use a regression with country fixed effects to allow for entry and exit from the sample.
-
-## Comparing distributions
 
 ### Comparing welfare concepts
 
