@@ -2,30 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://joehasell.netlify.app/site_apps/shinylive/jquery.terminal/CHANGELOG.html</loc>
-    <lastmod>2022-10-06T19:47:52.635Z</lastmod>
+    <lastmod>2022-10-12T08:18:29.952Z</lastmod>
   </url>
   <url>
-    <loc>https://joehasell.netlify.app/PhD_pages/rmarkdown/overview.html</loc>
-    <lastmod>2022-10-06T19:47:54.770Z</lastmod>
+    <loc>https://joehasell.netlify.app/PhD_pages/scripts/PIP/prepare_pip_percentiles.html</loc>
+    <lastmod>2022-10-12T08:18:36.018Z</lastmod>
   </url>
   <url>
-    <loc>https://joehasell.netlify.app/PhD_pages/quarto/overview.html</loc>
-    <lastmod>2022-10-06T19:47:56.725Z</lastmod>
+    <loc>https://joehasell.netlify.app/PhD_pages/scripts/PIP/get_main_pip_vars.html</loc>
+    <lastmod>2022-10-12T08:18:45.713Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/scripts/PIP/get_pip_percentiles.html</loc>
+    <lastmod>2022-10-12T08:18:46.865Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/paper_pages/overview.html</loc>
+    <lastmod>2022-10-12T08:18:48.885Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/paper_pages/paper1.html</loc>
+    <lastmod>2022-10-12T08:18:50.607Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/paper_pages/paper3.html</loc>
+    <lastmod>2022-10-12T08:18:51.060Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/index.html</loc>
-    <lastmod>2022-10-06T19:47:56.988Z</lastmod>
+    <lastmod>2022-10-12T08:18:51.327Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/about.html</loc>
-    <lastmod>2022-10-06T19:47:57.252Z</lastmod>
+    <lastmod>2022-10-12T08:18:51.597Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/test_pages/test_with_shinylive.html</loc>
-    <lastmod>2022-10-06T19:47:59.368Z</lastmod>
+    <lastmod>2022-10-12T08:18:53.657Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/how_to.html</loc>
-    <lastmod>2022-10-06T19:47:59.601Z</lastmod>
+    <lastmod>2022-10-12T08:18:53.947Z</lastmod>
   </url>
 </urlset>

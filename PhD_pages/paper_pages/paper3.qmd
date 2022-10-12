@@ -1,0 +1,124 @@
+---
+title: "Paper 3: Housing and the capital share of income"
+editor: visual
+---
+
+## The housing share of income
+
+What share of aggregate income is made up by rents on housing assets and how has this evolved in recent decades? The national accounts offers three avenues for answering this question: operating surplus within the household sector ('Household sector' approach); operating surplus within the real estate industry ('Real estate industry' approach); and household final consumption of housing services ('Final consumption' approach).
+
+Figure 1 shows the housing capital share of factor cost value added calculated according to three approaches.
+
+-   **Capital income of the real estate industry\
+    **(Give brief description)
+
+-   **Household final consumption of rent\
+    **(Give brief description)
+
+-   **Gross operating surplus of the household sector\
+    **(Give brief description)
+
+\
+
+### Trends in the housing share
+
+Comparing the housing share series plotted in Figure 1, we see the figures for the industry approach are quite consistent across the two data sources: the early vintage KLEMS data (red line) and OECD data (green line). The series adopting the second approach of final household consumption of rent (blue line) also tracks both these series closely.
+
+As expected, the third approach of gross operating surplus in the household sector (purple line) is generally an outlier. How far this series falls from the others varies considerably across countries, reflecting the varying accounting conventions and tenure structures just discussed.
+
+A notable exception to the above characterisation is the UK, in which the more recent data from the OECD (beginning in 1995) for all three approaches falls substantially above the share calculated from the earlier KLEMS industry data. The reason for this large discrepancy is not entirely clear, but may relate to recent revisions to ONS practices for calculating imputed rent. (FIND REFERENCE).
+
+Before turning to summary statistics, an inspection of Figure 1shows that there have been substantial rises in a majority of the twenty countries. Many countries -- including France, Germany, Italy and Spain -- have seen an increase in the housing share roughly five percentage points across five decades, or one point per decade. To give a sense of scale, it serves to compare this with the changes in the factor distribution found in the existing literature. Karabarbounis and Neiman [(2014)](https://paperpile.com/c/C530Q2/vTOu/?noauthor=1) find a 1.3 points-per-decade fall in the overall 'global' labour share between 1975 and 2012; Rodriguez and Jayadev [(2010)](https://paperpile.com/c/ztky5j/NxrB/?noauthor=1) find xxxx, and Piketty finds xxxx across X countries.
+
+A number of countries, however have seen only modest rises or none at all -- Ireland, Norway and Sweden all falling in the latter group. It is only in Portugal that we see a substantial fall over the period, (Presumably the revolution/nationalizations? But a) why would this affect the housing share so much, b) the fall seems to begin in 1977 -- some time after the revolution an economic downturn).
+
+To facilitate comparisons I construct a single housing share series for each country. For most countries, the series is centred around the OECD industry-level data which is then extended back using the KLEMS industry-level data where available for earlier years. In the case of Canada, United States and Spain, for which recent OECD industry data is not available, the rent consumption share is used. Earlier and later series are linked on a proportionate basis: the earlier data is adjusted by the ratio of the two series for the earliest overlapping year.
+
+(The series based on gross operating surplus in the household sector (approach 3) are excluded entirely due to the comparability issues discussed. For each individual country the available series are 'averaged' by plotting the year fixed effects from a linear regression across all series, normalised so as to coincide with the earliest series. See Appendix **X** for details and regression results.)
+
+Figure 2 plots the 'average' of the resulting housing share series across all twenty countries. This represents the year fixed effects from a linear regression of the synthetic housing share on country and year dummies, normalised so as to coincide with the mean across all earliest series. This is used in order to account for entry and exit of countries from the sample.
+
+On average x point rise.
+
+## Housing and non-housing capital shares
+
+To see how this increase in housing income has contributed to changes in the overall functional distribution, Figure 1 shows the capital share of income across 18 high income countries from roughly 2017 separating out housing (dotted lines) from non-housing (solid lines) capital income. The data exclude net taxes on production, such that capital and labour income sum to 100% of value added (i.e. at factor cost). On this basis, a rise in the capital share of 1 point implies a fall in the labour share of 1 point. 
+
+In order to increase coverage, trends are shown from three sources as follows.
+
+\
+
+#### 1) EU-KLEMS -- industry-level data
+
+The EU-KLEMS database collates industry-level data for most European countries as well some larger OECD countries. This includes industry figures for value added, compensation of employees and gross operating surplus (the residual balance after subtracting employee compensation from value added). In addition, labour income attributable to the activity of the self-employed is imputed and separated out from gross operating surplus, resulting in a 'capital' and 'labour' income series for each industry which together sum to total value added. The imputation is made using employment data, based on the assumption that the hourly compensation of the employed and self-employed is equal on average within each industry.
+
+In the series presented below, we use the capital income reported within the real estate industry as a proxy for housing capital income. Since activities other than housing services are included in this industry (such as the rent of offices, or activity involved in the sale or marketing of property) this leads to an overestimate of the housing capital share per se.
+
+Comparison with national accounts data on households' consumption expenditure on rent (both actual and imputed) shows that in many countries the real estate industry has grown somewhat faster than housing services (Appendix X). Arguably, it makes sense to include these additional activities along with housing since their growth is likely to derive in part from the same underlying force -- namely, rising demand for urban space against an inelastic supply. As shown in Appendix X however, where the boundary of 'housing' is drawn -- whether the real estate industry as a whole or only including dwellings -- does not substantively affect the resulting trends in the housing and non-housing capital shares in any case. 
+
+Country and year coverage varies across different vintages of the EU-KLEMS data, in part due to changes in industry classification over time. In order to maximise coverage in earlier years, I rely on the 2009 release from which long-run series, generally running from 1970 to 2007, can be obtained for 18 high income countries.
+
+#### 2) OECD -- industry-level data
+
+The OECD also provide national accounts data at the industry-level similar to the EU-KLEMS data used, though based on a more recent industry classification. Country coverage is wider, and observations generally run up to 2017 or later, but in most cases only begin from around 1995.
+
+In the series presented below, capital and labour components of value added (at factor cost) are obtained following the same imputation method for self-employment activity as used in the EU-KLEMS dataset, based on industry employment data also from the OECD (see Appendix X for further discussion).
+
+\
+
+#### 3) OECD -- institutional sector data
+
+A third series is based on national accounts data broken down by institutional sector (corporations, households, government and non-profit institutions serving households) rather than by industry.
+
+This is added in order to further increase coverage, and to connect with the existing factor shares literature which commonly relies on this approach (see for instance Piketty and Zucman [(2014)](https://paperpile.com/c/ztky5j/VuzZ/?noauthor=1), Karabarbounis and Neiman [(2014)](https://paperpile.com/c/ztky5j/qk46/?noauthor=1) and Rognlie [(2016)](https://paperpile.com/c/ztky5j/CmLb/?noauthor=1)). However, it suffers from two important drawbacks.
+
+Firstly, the question of how to treat the mixed income arising from self-employment activity is particularly problematic in the context of sector-level data. In the series presented below, I adopt a commonly used approach whereby mixed income -- reported as a separate line in the household sector accounts -- is split into capital and labour components based on the assumption that the respective shares are equal to those observed in the corporate sector. In addition to the uncertainty surrounding this assumption, however, Pionnier and Guidetti [(2015)](https://paperpile.com/c/ztky5j/Jgmu/?noauthor=1) point to a significant limitation of this approach on account of the varying treatment of unincorporated enterprises across countries. In some countries, substantial self-employment activity may be recorded fully as corporate gross operating surplus, due to the inclusion of some unincorporated enterprises within the corporate sector as quasi-corporations. In the case of Italy and Germany they demonstrate that failing to account for the labour income implicit within such activity biases the labour share downward substantially, and also affect trends as the composition of employment changes over time.
+
+Secondly, sector-level data also presents difficulties when seeking to isolate the capital income relating specifically to housing. Previous studies have tended to take the gross operating surplus of the household sector as the relevant measure [(Piketty and Zucman 2014; Rognlie 2016)](https://paperpile.com/c/ztky5j/VuzZ+CmLb). According to national accounting conventions, this is where the imputed rent attributable to owner-occupied housing is recorded, which for most countries represents the large majority of dwellings.
+
+There are two issues with this approach however. Firstly, whilst the corporate sector involvement in the housing market is often small, it is by no means insignificant in all cases. In addition to houses and apartments owned in the for-profit sector, this includes social housing operated by public or non-profit corporations. The latter comprises, for instance, 18% of the UK housing stock in recent years -- down from roughly 30% through the 1970s.
+
+Secondly, there appears to be inconsistency across national accounting practices with respect to private rentals on the part of unincorporated individuals, which often represent the bulk of the private rented sector. In some countries this is recorded as household gross operating surplus, but in others it is included as mixed income (see Appendix X for further discussion). Consistent with these two observations, household gross operating surplus is often substantially lower than two other more comprehensive measures of housing income available in the national accounts (see Figure A.1).
+
+For this reason, in the series below we use households' final consumption expenditure on rent (both actual and imputed) in order to separate out housing from non-housing capital income within the sector data. These data exclude any costs relating to maintenance, services or utilities, but are, nevertheless, probably a slight overestimate of housing capital income since they may include some labour income (such as the management activity of landlords) and production taxes (since it is measured at market prices).
+
+Given these problems relating to the institutional sector data, this third series is generally not included in the calculation of average trends (section X below). The exceptions are the US and Spain, which lack OECD industry-level data for recent years and are not affected by the aforementioned issue relating to quasi-corporations.
+
+\
+
+### Country trends in the housing and non-housing capital share
+
+The three series are plotted in Figure 1. (Further discussion)
+
+Table 1 indicates the average annual points change observed in each series, multiplied by 10. As a rough indicator of the centrality of housing to changes in the overall housing share, positive changes in the housing capital share greater than the corresponding change seen in the non-housing capital share are highlighted in red (including where the non-housing capital share fell). We see that in the earlier KLEMS data, the majority of countries saw rises in the housing capital share greater than those in the non-housing capital share. In the two later OECD series we see a more even split between countries with rising and falling housing shares. (Further discussion).
+
+\
+
+#### Average trends
+
+To consider average trends, the various series are clustered into an 'early' grouping and a 'later' grouping. The early grouping is made up of observations from 1970 to 2007 which for almost all countries is taken from the KLEMS industry data. The later grouping is made up of observations from 1995 onwards which for almost all countries is taken from the OECD industry data. The exceptions are Denmark and Norway for which a complete series in the OECD industry data is available. In these cases the OECD data is used twice over, for both the 'early' and 'late' groupings. For Japan, only the KLEMS industry data is available, and again this is included in both the late and early groupings. In the case of the United States and Spain, for which no OECD industry-level data is available, observations for the later grouping are taken from the sector accounts and housing rent consumption data (see discussion in Section X).
+
+'Average' housing and non-housing capital shares are then obtained within each respective grouping by taking the year fixed effects from a linear model controlling for country fixed effects to account for the (few instances of) entry or exit from the sample. These are then normalised such that the value in the initial year corresponds to the mean across countries for that year. These average series are plotted for the early and late groupings in figure 2. 
+
+\
+The fact that the gradients of the average housing and non-housing capital share trend lines are, broadly speaking, similar gives us an overall indication of the importance of housing to movements in the overall capital share: its contribution alone was comparable to the aggregate across all other industries.
+
+This is confirmed in Table 1, which shows the change in the averages, broken down into sub-periods to facilitate comparison between the early and late series. The first four columns split the trends into two roughly equal subperiods: 1970-1995 and 1995-2017. 1995 marks the year in which the later series for the average capital shares begins (the earliest year for which the OECD industry data is available for most countries).
+
+We see from the earlier (primarily KLEMS) data that the quarter-century from 1970 to 1995 saw a substantial rise in the overall capital share. The average capital share rose by 4.6 points across the 18 high-income countries in our sample, and 3.5 points where weighted by GDP at PPPs. But around two-thirds of this increase owed to rising housing shares.
+
+The later series shows a much more modest rise in the overall capital share between 1995 and 2017, with housing nevertheless playing an important role. Rising housing shares drove almost all of the 1 point rise in the unweighted average for this period, and about half of the 2.5 point rise in the weighted average.
+
+The four columns to the right of Table 2 provide a further breakdown of the later period, split at 2007 which marks the end of the early KLEMS data. As visible from Figure 2, where the early and later series overlap, there is some disagreement between them concerning the non-housing capital share. Between 1995 and 2007 the early series average rose by around 1-1.5 points more than the later series, with no apparent slow-down. 
+
+Referring back to Figure 1, we see that whilst the more recent OECD industry data does generally track the earlier KLEMS data very closely, for a small number of countries -- Greece, Italy and to a lesser extent the United Kingdom -- there is a large initial discrepancy beginning in 1995 that decreases over time. Similarly, for the United States the later series based on institutional sectors rises more slowly than indicated in the KLEMS data. \[Can we say anything about the reasons for these discrepancies?\]
+
+Taken together, however, the overall view of the past half century afforded by the available data sources is not much affected by the differences visible across them. Table 3 sums the points changes seen in the averages across the subperiods, as a summary across the full period.
+
+We see the rise in the overall capital share varies modestly depending on whether we make a break to the later series from where it begins in 1995 (left two columns) or from where the earlier series ends in 2007 (right two columns). Similarly, the average rise also depends somewhat on whether countries are weighted by GDP, with some larger economies seeing greater rises (see Table 1). But any combination of the series results in a rise in the overall capital share in the region of 6-7 points between 1970 and 2017.
+
+Likewise, whilst there are differences across specifications, the centrality of housing to changes in the overall capital share over the past five decades is clear. On a weighted basis, rising housing shares contributed to around half of the rise in the overall capital share on average. Taking the unweighted average, the contribution was larger still, at around two-thirds of the overall rise.
+
+\
+
+\

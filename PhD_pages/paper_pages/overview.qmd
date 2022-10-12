@@ -1,25 +1,51 @@
 ---
 title: "Overview of papers"
+bibliography: references.bib
 ---
 
 ```{r, echo=FALSE, message = FALSE, warning=FALSE}
 
 library(tidyverse)
-library(trackdown)
 
 ```
 
-The revival of research on top incomes since 2000 (refs) has come to have a huge impact on our understanding of economic inequality and its evolution around the world, across academia, policy and civil society alike.
+Thanks to the efforts of a number of key teams involved in the production of harmonized inequality datasets, we are in a far better position than ever to describe and monitor trends in income inequality across the world as a whole. Recent years have seen considerable improvements, either in terms of spatial or temporal coverage of these datasets, the degree of comparability achieved across data points, or both.
 
-#### Two sets of methods
+However, the key takeaways of this substantial body of empirical work remain surprisingly, and unhelpfully fractured.
 
-The top incomes approach is separated by a range of different methodological differences, the key ones being:
+For example, available inequality estimates based on Distributional National Accounts - as collated and summarise by the World Inequality Lab - depict a near universal rise inequality in recent decades.
 
--   **the data sources relied upon:**
+> Income and wealth inequalities have been on the rise nearly everywhere since the 1980s, following a series of deregulation and liberalization programs which took different forms in different countries. [@chancel2021]
 
-The use of administrative tax data, national accounts aggregates, or rich lists in place of, or in addition to, household survey data; - **its conception of inequality:**
+In stark contrast, national survey data collected and harmonized by the World Bank show a far more mixed picture, with overall a decline in average inequality more recently.
 
-The approach has an emphasis on the share of income captured by the rich, in contrast to measures of overall inequality such as the Gini coefficient; - **the welfare concept used:**
+> Within-country inequality as a whole---that is, considering together the trends of all countries on which evidence is available---\[...\] started to narrow in the last decade, after peaking in the 1990s. [@WBpoverty2016]
+
+Alongside these differing views of within-country inequality around the world are starkly contrasting views concerning the locus of global inequality: with inverse findings concerning the respective contributions made by within- and between country inequalities. [@chancel2021, @BourgMorrisons2002, @laknerMilanovic2016]
+
+Despite the far richer, wider range of distributional data at our disposal, basic questions concerning the nature and direction of inequality around the world remain, effectively, unanswered.
+
+One explanation for this disconnect - between the greatly improved data and the ambiguous understanding of inequality globally that this has yielded - lies in extent to which the available data has emerged from the efforts of different networks of researchers, coalescing around different institutions, most notably the World Bank, the World Inequality Lab and the Luxembourg Income Study. These approaches to the measurement of inequality around the world are separated by a range of methodological differences woven together, somewhat as a package. Related to choice of methods, the approaches are also separated by different emphasis on hypotheses regarding the nature of inequality and its drivers - in particular the role played by factor shares in driving income inequality, particularly at the top. They are also separated technologically - presented on different platforms each with fairly high start-up costs required for proficient use.
+
+A causal observer would be forgiven for thinking that the different efforts occupy almost different 'worlds' of inequality research, where it is difficult to compare results, to understand where approaches agree, where they differ and why. Since the answers arrived at within each 'world' of inequality measurement can be strikingly different, very basic questions concerning inequality across the world remain, in effect, unanswered.
+
+In the public and policy debate, this leads very different narratives that tends to focus, on the one hand, on a runaway global elite - 'the 1%' - or on the other hand on 'convergence' and 'shared prosperity'. Within these different narratives sit divergent views concerning a variety of important and urgent questions: the outcomes, merits and demerits of global economic development and globalisation; and the scope and proper role of international development aid, philanthropy, and taxation - at national and international levels - to shape a fairer, more equal world.
+
+Which of these 'worlds' of inequality we live in matters a great deal - but the way the data supporting these two views of the world has been presented and compared to date leaves us to a large extent in the dark as to which world we actually live in. By not 'speaking to each other', the value to society of the enormous efforts collectively made by hundreds of researchers and statisticians around the world in the production of these datasets is greatly diminished.
+
+#### Distinct methods
+
+\[Breakdown the bundled methods: top incomes approach vs 'conventional' approaches\]
+
+-   **The data sources relied upon:**
+
+The use of administrative tax data, national accounts aggregates, or rich lists in place of, or in addition to, household survey data
+
+-   **The conception of inequality adopted:**
+
+The approach has an emphasis on the share of income captured by the rich, in contrast to measures of overall inequality such as the Gini coefficient;
+
+-   **The welfare concept typically measured:**
 
 Fiscal income, or more recently pre-tax national income as defined within the DINA methodology. This contrasts with household disposable income (Canberra Group 2011, chapter 2) or consumption.
 
@@ -29,15 +55,19 @@ Methodological innovations within the top incomes literature, including the prod
 
 Nonetheless a primary focus on top income shares of pre-tax income continues to be a defining feature of research efforts in this space, marking it out from conventional approaches focussing on disposable income or consumption, often measured with Gini coefficient.
 
-#### Two views of the world
+#### Distinct views of inequality and its drivers
 
-This distinction between in terms of methods is reflected different hypothesis: two concerning the empirical reality of inequality around the world, one concerning the drivers of these trends.
+This distinction between in terms of methods is reflected different hypothesis concerning the empirical reality of inequality around the world, one concerning the drivers of these trends.
 
 ##### 1) Accounting for 'missing' top incomes, inequality within countries around the world is higher and has risen faster than we thought
 
 Much of the 'action' in the income distribution in recent decades has been towards a greater concentration at the top. This is a phenomenon that standard approaches to inequality measurement -- based on survey data and often using the Gini coefficient as the main summary measure -- are ill-equipped to monitor.
 
-Compared to World Bank assessment -- Inequality falling in a majority of countries. \##### 2) Inequality within countries are considerably greater than inequalities between countries Because within-country inequality is much higher than suggested by survey data, so too is its contribution to global inequality. Working with DINA estimates from the World Inequality Database, Chancel and Piketty (2021) disaggregate global income inequality into between- and within-country components. They find that the majority of global inequality relates to within-country income differences, inverting the results of previous studies anchored more closely to household survey data (Lakner and Milanovic 2016; van Zanden et al. 2014; Bourguignon and Morrisson 2002).
+Compared to World Bank assessment -- Inequality falling in a majority of countries.
+
+##### 2) Inequality within countries are considerably greater than inequalities between countries 
+
+Because within-country inequality is much higher than suggested by survey data, so too is its contribution to global inequality. Working with DINA estimates from the World Inequality Database, Chancel and Piketty (2021) disaggregate global income inequality into between- and within-country components. They find that the majority of global inequality relates to within-country income differences, inverting the results of previous studies anchored more closely to household survey data (Lakner and Milanovic 2016; van Zanden et al. 2014; Bourguignon and Morrisson 2002).
 
 ##### 3) The accumulation and concentration of wealth is a key driver of these trends, and an inherent feature of capitalism
 
@@ -51,15 +81,13 @@ But taken together ends up in two distinct views of the world:
 
 -   And a 'radical' view of the world in which the locus of global inequality is 'the 1%' -- a global elite, driven by wealth accumulation, somewhat inevitable without radical rethink of policy implemented at the global level.
 
-#### Connecting up two worlds of inequality research
+#### Distinct platforms
 
-Which world we live in matters a great deal for how we prioritise our efforts to reduce global inequality -- national policy making, international policy, in international development and aid, in philanthropy. It affects our view of the consequences of globalisation, good and bad.
+\[I'm not sure whether to include this, but it seems to me that the root of many of these problems is essentially technological: the infrastructure and practices we have to compare and 'switch' between different methodological choices in our analysis of global inequality is very poor. Whilst the code behind the production of inequality estimates is become more available, in practice the barriers to this kind of joined-up analysis remain prohibitively high.\]
 
-And it matters which world we live in: for national and international policy, including on coordinated taxation, international development and aid, philanthropy.
+#### Connecting up the worlds of inequality research
 
-But crucially, these worlds are a set of methods and questions that come bundled together. It is makes the assessment of what world we live in impossible.
-
-The goal of the DPhil is to connect up these two worlds. It does so in two ways.
+The goal of the DPhil is to connect up these worlds. It does so in two ways.
 
 Firstly on the empirical side. Can we triangulate a clearer view of the world by bringing the methods from both 'worlds'. This is the subject of the first two papers:
 
@@ -71,4 +99,4 @@ Secondly, by addressing the causal hypothesis driving -- namely factor shares an
 
 Paper 3: Housing and factor shares
 
-Paper 4: Explaining difference between wealth and income inequality in survey data.
+Paper 4: Explaining the poor correlation between wealth and income inequality.

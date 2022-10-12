@@ -4,11 +4,11 @@ We have produced a set of percentiles in the pipeline for getting PIP data into 
 Here we take the file from GitHub.
 ```{r}
 
-pip_perc_orig<- read.csv('https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/JoeHasell/PIP/data/ppp_2017/raw/percentiles.csv')
+# pip_perc_orig<- read.csv('https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/JoeHasell/PIP/data/ppp_2017/raw/percentiles.csv')
 
 ```
 
 
 ```{r}
-write.csv(pip_perc_orig, "PhD_pages/data/pip_percentiles.csv.csv", row.names = FALSE)
+# write.csv(pip_perc_orig, "PhD_pages/data/pip_percentiles.csv.csv", row.names = FALSE)
 ```

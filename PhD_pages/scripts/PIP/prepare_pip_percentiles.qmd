@@ -139,26 +139,26 @@ pip_main_vars %>%
 ```{r}
 # I'll prepare the observations from the main_vars file, and then merge in the percentiles
 
-target_years<- c(1990, 2000, 2010, 2018)
-
-df_pip_ref_years<- keep_closest(
-  df= pip_main_vars,
-  id_vars = c("Entity", "reporting_level"),
-  distance_varname = "Year",
-  targets = target_years,
-  tie_break_dist_up_or_down = "up",
-  tie_break_varname = "welfare_type",
-  tie_break_value = "income")
-
-# We see that if we impose that a max distance, country coverage falls.
-df_count<- df_pip_ref_years %>%
-  count(Entity)
-
-df_pip_ref_years_filter<- df_pip_ref_years %>%
-  filter(abs_distance<3)
-
-df_count<- df_pip_ref_years_filter %>%
-  count(Entity)
+# target_years<- c(1990, 2000, 2010, 2018)
+# 
+# df_pip_ref_years<- keep_closest(
+#   df= pip_main_vars,
+#   id_vars = c("Entity", "reporting_level"),
+#   distance_varname = "Year",
+#   targets = target_years,
+#   tie_break_dist_up_or_down = "up",
+#   tie_break_varname = "welfare_type",
+#   tie_break_value = "income")
+# 
+# # We see that if we impose that a max distance, country coverage falls.
+# df_count<- df_pip_ref_years %>%
+#   count(Entity)
+# 
+# df_pip_ref_years_filter<- df_pip_ref_years %>%
+#   filter(abs_distance<3)
+# 
+# df_count<- df_pip_ref_years_filter %>%
+#   count(Entity)
 
 
 

@@ -11,6 +11,8 @@ website:
       - section: "DPhil: Triangulating the key facts about global income distribution"
         contents:
           - PhD_pages/paper_pages/overview.qmd
+          - PhD_pages/paper_pages/paper1.qmd
+          - PhD_pages/paper_pages/paper3.qmd
       - section: "About this site"
         contents:
           - how_to.qmd
