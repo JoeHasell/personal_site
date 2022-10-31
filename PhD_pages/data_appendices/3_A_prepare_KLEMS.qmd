@@ -5,6 +5,8 @@ format: html
 
 ```{r}
 library(tidyverse)
+library(readxl) # For handling xls source data files
+
 ```
 
 ## Introduction
@@ -18,12 +20,14 @@ Make a list of filenames (both to reference the correct file in the url and as t
 
 files<- c("32_countries",
           "Canada",
-          "US_alt")
+          "US_alt",
+          "Japan")
 
 # The urls where the files can be retrieved
 download_urls<- c("http://www.euklems.net/data/09i/all_countries_09I.txt",
                "https://www.worldklems.net/data/basic/CAN_WK_07_2012.xlsx",
-               "https://www.worldklems.net/data/basic/usa_wk_mar_2017.xlsx"
+               "https://www.worldklems.net/data/basic/usa_wk_apr_2013.xlsx",
+               "https://www.worldklems.net/data/basic/JPN_wk_may_2013.xlsx"
 )
 
 names(download_urls)<- files
@@ -55,13 +59,17 @@ download.file(download_urls[file], filepaths[file])
 
 ## Preparing dataframes
 
+```{r}
+df_list<- list()
+```
+
 Importing the main data file - with data for 32 countries.
 ```{r}
 
-df <- read.csv(filepaths["32_countries"], quote="")
+df_list[["32_countries"]]<- read.csv(filepaths["32_countries"], quote="")
 
 # convert to long format and rename variables
-df<- df %>%
+df_list[["32_countries"]]<- df_list[["32_countries"]] %>%
   pivot_longer(cols = starts_with("X_"), names_to = "year",
     names_prefix = "X_", values_to ="value",
     names_transform = list(year=as.integer),
@@ -70,12 +78,227 @@ df<- df %>%
          transaction = var)
 
 # Remove quotations (These come from not properly specifying the file structure in the read.csv command above. But I was unable to find the right format spec.)
-df <- df %>% 
+df_list[["32_countries"]]<- df_list[["32_countries"]] %>%
   mutate(country = str_replace(country, '"', ''),
          value = as.numeric(str_replace(value, '"', '')))
 
 ```
 
 
-## Calculatiing derived variables
+Data for Canada, Japan and an alternative (longer) series for the US.
+```{r}
+countries<- c("Canada", "US_alt", "Japan")
+
+for (country in countries){
+df_list[[country]]<- as.data.frame(read_excel(filepaths[country],
+                                                         sheet = 'DATA'))
+
+# convert to long format and rename variables
+df_list[[country]]<- df_list[[country]] %>%
+  pivot_longer(cols = starts_with("_"), names_to = "year",
+    names_prefix = "_", values_to ="value",
+    names_transform = list(year=as.integer)) %>%
+  rename(transaction = Variable) %>%
+  mutate(country = country)
+
+}
+
+
+```
+
+Tidying Canada data
+```{r}
+# Drop some NA values (- data for 2009 and 2010 is given as missing)
+df_list[["Canada"]]<- df_list[["Canada"]] %>%
+  filter(!is.na(value))
+
+
+# For Canada we need to calculate some industry aggregates to be comparable with other countries
+agg_industries<- list()
+
+agg_industries[['D']]<- c(
+  "15t16",
+  "17t19",
+  "20",
+  "21t22",
+  "23",
+  "24",
+  "25",
+  "26",
+  "27t28",
+  "29",
+  "30t33",
+  "34t35",
+  "36t37")
+
+agg_industries[['G']]<- c(
+  "50",
+  "52")
+
+agg_industries[['I']]<- c(
+  "60t63",
+  "64")
+
+agg_industries[['K']]<- c(
+  "70",
+  "71t74")
+
+for (agg_ind in names(agg_industries)){
+  print(agg_ind)
+  
+  df_totals<- df_list[["Canada"]] %>%
+  filter(code %in% agg_industries[[agg_ind]]) %>%
+    group_by(transaction, year) %>%
+    summarise(value = sum(value)) %>%
+    ungroup() %>%
+    mutate(code = agg_ind) %>%
+    mutate(country = "Canada")
+
+  
+  df_list[["Canada"]]<- bind_rows(df_list[["Canada"]], df_totals)
+  
+}
+
+```
+Tidying Japan data
+```{r}
+# Drop NA values
+df_list[["Japan"]]<- df_list[["Japan"]] %>% filter(is.na(value))
+
+# Rename the capital compensation variable, to agree with other files
+df_list[["Japan"]]<- df_list[["Japan"]] %>%
+  mutate(transaction = replace(transaction,
+                               transaction == "CAP_GFCF",
+                               "CAP"))
+
+
+```
+
+
+Join the different dataframes together into a single dataframe.
+```{r}
+df<- bind_rows(
+  df_list
+)
+
+```
+
+Make a dictionary of industry codes and there descriptions from the combined data sources.
+```{r}
+
+df_industries<- df %>%
+  select(code, desc) %>%
+  drop_na() %>%
+  unique() 
+
+# There are a couple of different spellings etc. from the different datasets. Here we just take select one (arbitrarily)
+df_industries<- df_industries %>%
+  distinct(code, .keep_all = TRUE)
+
+# Add in the uniform industry code descriptions
+df<- df %>%
+  select(-desc)
+
+df<- left_join(df, df_industries)
+
+
+```
+
+Some more tidying
+```{r}
+df<- df %>%
+  filter(transaction %in% c("VA", "CAP", "LAB", "COMP"))
+
+df<- df %>%
+  pivot_wider(names_from = "transaction",
+              values_from = "value")
+
+# Any industry where VA = CAP but LAB is missing, set LAB = 0
+  # This is generally only the case for sector Q, where VA=CAP=0.
+df<- df %>%
+  mutate(LAB = replace(LAB,
+                       VA==CAP & is.na(LAB),
+                       0))
+
+
+# Any industry where VA = LAB but CAP is missing, set CAP = 0
+  # This is only for sector P for US (NAICS data) and Korea (and Japan where P VA = 0)
+df<- df %>%
+  mutate(CAP = replace(CAP,
+                       VA==LAB & is.na(CAP),
+                       0))
+
+
+# Drop any country-year-industry obs that do not have data for all 4 transactions
+  # To-do check if COMP is needed, and calculate for US_alt and Japan if so)
+
+df<- df %>% filter(!(is.na(VA) & is.na(CAP) & is.na(LAB)) )
+
+```
+
+Drop USA-NAICS data (in favour of of SIC data)
+```{r}
+df<- df %>%
+  filter(country!="USA-NAICS")
+```
+
+
+Standardize country names
+```{r}
+
+# Mapping file
+fp<- "PhD_pages/data/original/KLEMS/KLEMS_country_name_mapping.csv"
+
+KLEMS_country_names<- read.csv(fp)
+
+KLEMS_country_names<- KLEMS_country_names %>%
+  rename(country = Country)
+
+# aggregate shares
+df<- merge(df, KLEMS_country_names)
+
+df <- df %>%
+  select(-country) %>%
+  rename(country = Our.World.In.Data.Name)
+
+
+```
+
+
+## Complete dataset for aggregate industries
+
+```{r}
+
+# This list gives the codes of the main industries
+main_industry_codes<- c("AtB",
+                        "C",
+                        "D",
+                        "E",
+                        "F",
+                        "G",
+                        "H",
+                        "I",
+                        "J",
+                        "K",
+                        "L",
+                        "M",
+                        "N",
+                        "O",
+                        "P",
+                        "Q")
+
+# filter for these codes sub-industries
+industry_level_values<- df %>%
+  filter(code %in% main_industry_codes)
+
+
+# Store reported totals separately
+
+reported_total_values<- df %>%
+  filter(code == "TOT") %>%
+  select(-code) %>%
+  gather(transaction, reported_total, -c(country, year)) %>%
+  arrange(country, year, transaction)
+
+```
 

@@ -18,6 +18,7 @@ website:
           - section: "Data appendices"
             contents:
               - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
+              - PhD_pages/data_appendices/3_B_prepare_OECD.qmd
       - section: "About this site"
         contents:
           - how_to.qmd

@@ -3,6 +3,16 @@ title: "Paper 3: Housing and the capital share of income"
 editor: visual
 ---
 
+## Introduction
+
+A substantial literature has documented a long-run shift in the distribution of national income between wages and returns to capital.
+
+Much of the interest in this trend is due to it lying at the junction of two prominent topics within the social sciences: 1) the decline of labour bargaining power, and 2) the rise in income inequality.
+
+(Explain (1) and connection to (2)).
+
+\
+
 ## The housing share of income
 
 What share of aggregate income is made up by rents on housing assets and how has this evolved in recent decades? The national accounts offers three avenues for answering this question: operating surplus within the household sector ('Household sector' approach); operating surplus within the real estate industry ('Real estate industry' approach); and household final consumption of housing services ('Final consumption' approach).
