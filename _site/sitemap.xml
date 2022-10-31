@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://joehasell.netlify.app/site_apps/shinylive/jquery.terminal/CHANGELOG.html</loc>
-    <lastmod>2022-10-12T08:18:29.952Z</lastmod>
+    <lastmod>2022-10-31T12:09:51.621Z</lastmod>
+  </url>
+  <url>
+    <loc>https://joehasell.netlify.app/PhD_pages/data_appendices/3_A_prepare_KLEMS.html</loc>
+    <lastmod>2022-10-31T12:10:06.286Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/PhD_pages/scripts/PIP/prepare_pip_percentiles.html</loc>
-    <lastmod>2022-10-12T08:18:36.018Z</lastmod>
+    <lastmod>2022-10-31T12:10:12.131Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/PhD_pages/scripts/PIP/get_main_pip_vars.html</loc>
-    <lastmod>2022-10-12T08:18:45.713Z</lastmod>
+    <lastmod>2022-10-31T12:10:15.201Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/PhD_pages/scripts/PIP/get_pip_percentiles.html</loc>
-    <lastmod>2022-10-12T08:18:46.865Z</lastmod>
+    <lastmod>2022-10-31T12:10:16.331Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/PhD_pages/paper_pages/overview.html</loc>
-    <lastmod>2022-10-12T08:18:48.885Z</lastmod>
+    <lastmod>2022-10-31T12:10:18.196Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/PhD_pages/paper_pages/paper1.html</loc>
-    <lastmod>2022-10-12T08:18:50.607Z</lastmod>
+    <lastmod>2022-10-31T12:10:19.970Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/PhD_pages/paper_pages/paper3.html</loc>
-    <lastmod>2022-10-12T08:18:51.060Z</lastmod>
+    <lastmod>2022-10-31T12:10:20.396Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/index.html</loc>
-    <lastmod>2022-10-12T08:18:51.327Z</lastmod>
+    <lastmod>2022-10-31T12:10:20.647Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/about.html</loc>
-    <lastmod>2022-10-12T08:18:51.597Z</lastmod>
+    <lastmod>2022-10-31T12:10:20.887Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/test_pages/test_with_shinylive.html</loc>
-    <lastmod>2022-10-12T08:18:53.657Z</lastmod>
+    <lastmod>2022-10-31T12:10:22.856Z</lastmod>
   </url>
   <url>
     <loc>https://joehasell.netlify.app/how_to.html</loc>
-    <lastmod>2022-10-12T08:18:53.947Z</lastmod>
+    <lastmod>2022-10-31T12:10:23.199Z</lastmod>
   </url>
 </urlset>

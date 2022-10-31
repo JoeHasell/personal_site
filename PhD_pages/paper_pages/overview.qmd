@@ -65,7 +65,7 @@ Much of the 'action' in the income distribution in recent decades has been towar
 
 Compared to World Bank assessment -- Inequality falling in a majority of countries.
 
-##### 2) Inequality within countries are considerably greater than inequalities between countries 
+##### 2) Inequality within countries are considerably greater than inequalities between countries
 
 Because within-country inequality is much higher than suggested by survey data, so too is its contribution to global inequality. Working with DINA estimates from the World Inequality Database, Chancel and Piketty (2021) disaggregate global income inequality into between- and within-country components. They find that the majority of global inequality relates to within-country income differences, inverting the results of previous studies anchored more closely to household survey data (Lakner and Milanovic 2016; van Zanden et al. 2014; Bourguignon and Morrisson 2002).
 

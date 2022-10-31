@@ -1,0 +1,81 @@
+---
+title: "Appendix 3.A: Preparing EU KLEMS industry data"
+format: html
+---
+
+```{r}
+library(tidyverse)
+```
+
+## Introduction
+
+
+## Raw data files
+
+
+Make a list of filenames (both to reference the correct file in the url and as the filename to save locally).
+```{r}
+
+files<- c("32_countries",
+          "Canada",
+          "US_alt")
+
+# The urls where the files can be retrieved
+download_urls<- c("http://www.euklems.net/data/09i/all_countries_09I.txt",
+               "https://www.worldklems.net/data/basic/CAN_WK_07_2012.xlsx",
+               "https://www.worldklems.net/data/basic/usa_wk_mar_2017.xlsx"
+)
+
+names(download_urls)<- files
+
+# uses the last part of the download urls as the filenames
+filenames<- sub(".*\\/", "", download_urls)
+
+names(filenames)<- files
+
+
+# Add directory to specify filepaths in which to save a local copy of each file
+filepaths<- paste0("PhD_pages/data/original/KLEMS/", filenames)
+
+names(filepaths)<- files
+  
+
+```
+
+Save files locally.
+```{r}
+
+for (file in files){
+  print(file)
+download.file(download_urls[file], filepaths[file])
+}
+
+```
+
+
+## Preparing dataframes
+
+Importing the main data file - with data for 32 countries.
+```{r}
+
+df <- read.csv(filepaths["32_countries"], quote="")
+
+# convert to long format and rename variables
+df<- df %>%
+  pivot_longer(cols = starts_with("X_"), names_to = "year",
+    names_prefix = "X_", values_to ="value",
+    names_transform = list(year=as.integer),
+    values_transform = list(value=as.character)) %>%
+  rename(country = X.country,
+         transaction = var)
+
+# Remove quotations (These come from not properly specifying the file structure in the read.csv command above. But I was unable to find the right format spec.)
+df <- df %>% 
+  mutate(country = str_replace(country, '"', ''),
+         value = as.numeric(str_replace(value, '"', '')))
+
+```
+
+
+## Calculatiing derived variables
+

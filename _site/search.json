@@ -1883,6 +1883,41 @@
     "text": "0.2.1\n\nadd support for paste from clipboard with CTRL+V (Copy to clipboard is always enabled on websites)"
   },
   {
+    "objectID": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html",
+    "href": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html",
+    "title": "Appendix 3.A: Preparing EU KLEMS industry data",
+    "section": "",
+    "text": "library(tidyverse)\n\nWarning: package 'tidyverse' was built under R version 4.1.2\n\n\n── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──✔ ggplot2 3.3.5      ✔ purrr   0.3.4 \n✔ tibble  3.1.6      ✔ dplyr   1.0.10\n✔ tidyr   1.2.0      ✔ stringr 1.4.0 \n✔ readr   2.1.2      ✔ forcats 0.5.1 \n\n\nWarning: package 'tidyr' was built under R version 4.1.2\n\n\nWarning: package 'readr' was built under R version 4.1.2\n\n\nWarning: package 'dplyr' was built under R version 4.1.2\n\n\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()"
+  },
+  {
+    "objectID": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#introduction",
+    "href": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#introduction",
+    "title": "Appendix 3.A: Preparing EU KLEMS industry data",
+    "section": "Introduction",
+    "text": "Introduction"
+  },
+  {
+    "objectID": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#raw-data-files",
+    "href": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#raw-data-files",
+    "title": "Appendix 3.A: Preparing EU KLEMS industry data",
+    "section": "Raw data files",
+    "text": "Raw data files\nMake a list of filenames (both to reference the correct file in the url and as the filename to save locally).\n\nfiles<- c(\"32_countries\",\n          \"Canada\",\n          \"US_alt\")\n\n# The urls where the files can be retrieved\ndownload_urls<- c(\"http://www.euklems.net/data/09i/all_countries_09I.txt\",\n               \"https://www.worldklems.net/data/basic/CAN_WK_07_2012.xlsx\",\n               \"https://www.worldklems.net/data/basic/usa_wk_mar_2017.xlsx\"\n)\n\nnames(download_urls)<- files\n\n# uses the last part of the download urls as the filenames\nfilenames<- sub(\".*\\\\/\", \"\", download_urls)\n\nnames(filenames)<- files\n\n\n# Add directory to specify filepaths in which to save a local copy of each file\nfilepaths<- paste0(\"PhD_pages/data/original/KLEMS/\", filenames)\n\nnames(filepaths)<- files\n\nSave files locally.\n\nfor (file in files){\n  print(file)\ndownload.file(download_urls[file], filepaths[file])\n}\n\n[1] \"32_countries\"\n[1] \"Canada\"\n[1] \"US_alt\""
+  },
+  {
+    "objectID": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#preparing-dataframes",
+    "href": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#preparing-dataframes",
+    "title": "Appendix 3.A: Preparing EU KLEMS industry data",
+    "section": "Preparing dataframes",
+    "text": "Preparing dataframes\nImporting the main data file - with data for 32 countries.\n\ndf <- read.csv(filepaths[\"32_countries\"], quote=\"\")\n\n# convert to long format and rename variables\ndf<- df %>%\n  pivot_longer(cols = starts_with(\"X_\"), names_to = \"year\",\n    names_prefix = \"X_\", values_to =\"value\",\n    names_transform = list(year=as.integer),\n    values_transform = list(value=as.character)) %>%\n  rename(country = X.country,\n         transaction = var)\n\n# Remove quotations (These come from not properly specifying the file structure in the read.csv command above. But I was unable to find the right format spec.)\ndf <- df %>% \n  mutate(country = str_replace(country, '\"', ''),\n         value = as.numeric(str_replace(value, '\"', '')))"
+  },
+  {
+    "objectID": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#calculatiing-derived-variables",
+    "href": "PhD_pages/data_appendices/3_A_prepare_KLEMS.html#calculatiing-derived-variables",
+    "title": "Appendix 3.A: Preparing EU KLEMS industry data",
+    "section": "Calculatiing derived variables",
+    "text": "Calculatiing derived variables"
+  },
+  {
     "objectID": "PhD_pages/scripts/PIP/prepare_pip_percentiles.html",
     "href": "PhD_pages/scripts/PIP/prepare_pip_percentiles.html",
     "title": "Joe Hasell",

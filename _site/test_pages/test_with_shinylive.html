@@ -158,6 +158,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       </a>
     </div>
     <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Papers</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../PhD_pages/paper_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
@@ -177,12 +185,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
     <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">About this site</a>
-      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Data appendices</a>
+      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
         <i class="bi bi-chevron-right ms-2"></i>
       </a>
     </div>
-    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link">Appendix 3.A: Preparing EU KLEMS industry data</a>
+  </div>
+</li>
+    </ul>
+  </li>
+    </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+    <div class="sidebar-item-container"> 
+        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
+      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+        <i class="bi bi-chevron-right ms-2"></i>
+      </a>
+    </div>
+    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
@@ -227,10 +252,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Warning: package 'tidyverse' was built under R version 4.1.2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──✔ ggplot2 3.3.5     ✔ purrr   0.3.4
-✔ tibble  3.1.6     ✔ dplyr   1.0.7
-✔ tidyr   1.2.0     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──✔ ggplot2 3.3.5      ✔ purrr   0.3.4 
+✔ tibble  3.1.6      ✔ dplyr   1.0.10
+✔ tidyr   1.2.0      ✔ stringr 1.4.0 
+✔ readr   2.1.2      ✔ forcats 0.5.1 </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'tidyr' was built under R version 4.1.2</code></pre>
@@ -239,25 +264,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>Warning: package 'readr' was built under R version 4.1.2</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>here() starts at /Users/joehasell/Documents/GitHub/personal_site</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span> a <span class="sc">*</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(a, b)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>fp<span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">here</span>(),<span class="st">"/shiny_apps/app1/data.csv"</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(df, fp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>a<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>b<span class="ot">&lt;-</span> a <span class="sc">*</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">data.frame</span>(a, b)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>fp<span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">here</span>(),<span class="st">"/shiny_apps/app1/data.csv"</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(df, fp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <iframe src="https://shiny-apps.netlify.app/app1/" height="700" width="100%" title="Shinylive test"></iframe>
 
