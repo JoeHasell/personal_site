@@ -1,4 +1,4 @@
-Country,Our World In Data Name
+Country_KLEMS,Our_World_In_Data_country_name
 AUS,Australia
 AUT,Austria
 BEL,Belgium
@@ -17,9 +17,9 @@ IRL,Ireland
 ITA,Italy
 JPN,Japan
 KOR,South Korea
+LVA,Latvia
 LTU,Lithuania
 LUX,Luxembourg
-LVA,Latvia
 MLT,Malta
 NLD,Netherlands
 POL,Poland
@@ -28,4 +28,4 @@ SVK,Slovakia
 SVN,Slovenia
 SWE,Sweden
 UK,United Kingdom
-US_alt,United States
+USA,United States

@@ -7,17 +7,39 @@ editor: visual
 
 A substantial literature has documented a long-run shift in the distribution of national income between wages and returns to capital.
 
-Much of the interest in this trend is due to it lying at the junction of two prominent topics within the social sciences: 1) the decline of labour bargaining power, and 2) the rise in income inequality.
+Much of the interest in this empirical trend owes to its lying at the junction of two prominent topics within the social sciences: 1) the decline of labour bargaining power, and 2) the rise in income inequality.
 
 (Explain (1) and connection to (2)).
 
-\
+The hypothesis underpins much of the motivation for the Top incomes approach.
+
+## Data
+
+###  Background on the structure of national accounts
+
+### Approaches to calculating factor shares
+
+### Available sources
 
 ## The housing share of income
 
-What share of aggregate income is made up by rents on housing assets and how has this evolved in recent decades? The national accounts offers three avenues for answering this question: operating surplus within the household sector ('Household sector' approach); operating surplus within the real estate industry ('Real estate industry' approach); and household final consumption of housing services ('Final consumption' approach).
+The unusual nature of housing ... in the national accounts.
 
-Figure 1 shows the housing capital share of factor cost value added calculated according to three approaches.
+As a *stock*, housing is a non-financial asset included in the balance sheet. Housing also features as a *flow*, included in each of the three approaches to calculating GDP: output, income and expenditure.
+
+As output, housing services are included in Real Estate activity (SIC....). Sub Sector.
+
+This flow of housing services generates a stream of income, which, in addition to small amounts of labour income (property management, agents' fees), is the yield received by owners of housing assets.[^1] This private or public rented sector , and owner occupied, to which an equivalent rent is imputed. includes rent imputed to owner occupiers, as well as actual rents received by private landlords, whether individuals or corporations (both privately and publicly owned).
+
+[^1]: ADD NOTE ABOUT LABOUR INCOME IN ACTUAL RENTS
+
+This income as an expenditure by households, again both actual and imputed rents 'paid'.
+
+In line with national accounting principles, the value of the flow of housing is equal, whether conceived of as a stream of services, income, or expenditure. As such, these offer different entry points from which aggregate housing income can be calculated and isolated from non-housing capital income.
+
+Figure 1 shows these housing flows as a share of total income.
+
+In each case the denoninator is gross domestic value added, valued at factor cost. This aggregate is similar to GDP, with the exception that taxes and subsidies on production are excluded. This results in an aggregate that capital and labour components: *gross operating surplus* and *compensation of employees.*
 
 -   **Capital income of the real estate industry\
     **(Give brief description)

@@ -1,0 +1,246 @@
+---
+title: "Appendix 3.B: Preparing OECD data"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(rsdmx)
+library(knitr)
+```
+
+## Queries of the OECD API
+
+Here is where we will save the outputs of the API without any processing.
+```{r}
+
+fp<- "PhD_pages/data/original/OECD/"
+```
+
+
+Set a year range for the queries below.
+```{r}
+query_API<- FALSE
+
+start_year<- 1950
+end_year<- 2020
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Industry-level data on value added and its components"
+
+if (query_API){
+select_table<- "SNA_TABLE6A_ARCHIVE" # Value added and its components by activity, ISIC rev4
+
+
+countries<- "" # leave blank for all entities
+transactions<- "" # i.e. output/GOS/CoE etc. leave blank for all
+activities<- "" # ISIC rev 4 industries. leave blank for all industries and sub-industries
+measures<- "C+VOB" # Prices. C = constant; VOB = indexed to OECD base year
+
+key_query<- paste(countries,transactions,activities,measures, sep = ".")
+
+industry_accounts <- readSDMX(providerId = "OECD",
+                              resource = "data",
+                              flowRef = select_table,
+                              key = key_query,
+                              start = start_year,
+                              end = end_year,
+                              dsd = TRUE)
+
+industry_accounts<- as.data.frame(industry_accounts)
+
+# Save
+save(industry_accounts, file= paste0(fp, "industry_accounts", ".Rda"))
+
+}
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Industry-level data on employment"
+
+if (query_API){
+
+# INDUSTRY LABOUR INPUTS DATA ----
+
+# set paramaters for API query
+
+select_table<- "SNA_TABLE7A_ARCHIVE" # Labour intput by activity, ISIC rev4
+
+countries<- "" # leave blank for all entities
+transactions<- "" # i.e. total employment/employed/self-employed. leave blank for all
+activities<- "" # ISIC rev 4 industries. leave blank for all industries and sub-industries
+measures<- "HRS" # i.e. hours/jobs/fte. HRS = hours in millions
+
+key_query<- paste(countries,transactions,activities,measures, sep = ".")
+
+employment_by_industry <- readSDMX(providerId = "OECD",
+                              resource = "data",
+                              flowRef = select_table,
+                              key = key_query,
+                              start = start_year,
+                              end = end_year,
+                              dsd = TRUE)
+
+employment_by_industry<- as.data.frame(employment_by_industry)
+
+
+# Save
+save(employment_by_industry, file=paste0(fp, "employment_by_industry", ".Rda"))
+}
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Sector-level accounts (Households, Corporations, Govt etc.)"
+
+if (query_API){
+
+# Grab full dataset
+
+sector_accounts <- readSDMX(providerId = "OECD",
+                        resource = "data",
+                        flowRef = "SNA_TABLE14A",
+                        key = "..S1+S2+S11+S12+S13+S14_S15+S14+S15.C",
+                        start = start_year,
+                        end = end_year,
+                        dsd = TRUE)
+
+sector_accounts<- as.data.frame(sector_accounts)
+
+# Save
+save(sector_accounts,
+     file= paste0(fp, "sector_accounts", ".Rda"))
+
+}
+```
+
+```{r}
+
+#| code-fold: true
+#| code-summary: "GDP measured in international-$"
+
+if (query_API){
+# GDP AT PPPs ----
+
+GDP_PPP<- readSDMX(providerId = "OECD",
+                       resource = "data",
+                      flowRef = "SNA_TABLE1",
+                      key = ".B1_GE.VPVOB",
+                       start = start_year,
+                      end = end_year,
+                      dsd = TRUE)
+
+
+GDP_PPP<- as.data.frame(GDP_PPP)
+
+# Save
+save(GDP_PPP, file= paste0(fp, "GDP_PPP", ".Rda"))
+
+}
+
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Consumption of rent"
+
+if (query_API){
+# HOUSING CONSUMPTION ------
+rental_consumption <- readSDMX(providerId = "OECD",
+                            resource = "data",
+                            flowRef = "SNA_TABLE5",
+                            key = ".P31CP041+P31CP042.C+VOB",
+                            start = start_year,
+                            end = end_year,
+                            dsd = TRUE)
+
+rental_consumption<- as.data.frame(rental_consumption)
+
+# Save
+save(rental_consumption, file= paste0(fp, "rental_consumption", ".Rda"))
+}
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "Rental price level"
+ 
+if (query_API){
+# RENT PRICE -----
+# This is the CPI component for actual rentals or else the aggrgeate
+  # of actual and imputed rentals and maintenance. See paper for details.
+
+rent_price_index <- readSDMX(providerId = "OECD",
+                               resource = "data",
+                               flowRef = "HOUSE_PRICES",
+                               key = ".RPI",
+                               start = start_year,
+                               end = end_year,
+                               dsd = TRUE)
+
+rent_price_index<- as.data.frame(rent_price_index)
+
+
+# Save
+save(rent_price_index, file= paste0(fp, "rent_price_index", ".Rda"))
+
+}
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "CPI"
+
+if (query_API){
+# CPI ------
+
+CPI <- readSDMX(providerId = "OECD",
+                             resource = "data",
+                             flowRef = "PRICES_CPI",
+                             key = ".CPALTT01.IXOB.A",
+                             start = start_year,
+                             end = end_year,
+                             dsd = TRUE)
+
+CPI<- as.data.frame(CPI)
+
+  # the single subject-measure CPALTT01 - IXOB refers to all items
+    # CPI index. 2015=100
+
+# Save
+save(CPI, file= paste0(fp, "CPI", ".Rda"))
+}
+```
+
+```{r}
+#| code-fold: true
+#| code-summary: "GDP deflator"
+
+if (query_API){
+
+# GDP deflator ------
+
+GDP_deflator <- readSDMX(providerId = "OECD",
+                resource = "data",
+                flowRef = "EO",
+                key = ".PGDP.A",
+                start = start_year,
+                end = end_year,
+                dsd = TRUE)
+
+GDP_deflator<- as.data.frame(GDP_deflator)
+
+# the single subject-measure CPALTT01 - IXOB refers to all items
+# CPI index. 2015=100
+
+# Save
+save(GDP_deflator, file= paste0(fp, "GDP_deflator", ".Rda"))
+
+}
+```
+

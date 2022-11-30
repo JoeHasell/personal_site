@@ -3,32 +3,48 @@ title: "Appendix 3.A: Preparing EU KLEMS industry data"
 format: html
 ---
 
+## Processing steps
+
+The titles in each of the boxes below summarise the steps taken to prepare the KLEMS industry data. In each case you can expand the box to see the code used.
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load libraries and functions
+
 ```{r}
 library(tidyverse)
 library(readxl) # For handling xls source data files
+library(knitr)
 
+
+source("PhD_pages/scripts/general_functions.R")
 ```
+:::
 
-## Introduction
+::: {.callout-note collapse="true" appearance="minimal"}
+### Specify the location of four original data files
 
+We obtain data from four KLEMS datasets:
 
-## Raw data files
+-   EU KLEMS version ...
+-   Canada...
+-   An additional series for the US (different industry classification, longer series..)
+-   Japan
 
+Here we specify corresponding lists of URLs where the original files are located, short names for the files, and local filepaths where a copy of the original data files will be saved.
 
-Make a list of filenames (both to reference the correct file in the url and as the filename to save locally).
 ```{r}
 
 files<- c("32_countries",
-          "Canada",
-          "US_alt",
-          "Japan")
+          "CAN",
+          "USA")
 
 # The urls where the files can be retrieved
 download_urls<- c("http://www.euklems.net/data/09i/all_countries_09I.txt",
                "https://www.worldklems.net/data/basic/CAN_WK_07_2012.xlsx",
-               "https://www.worldklems.net/data/basic/usa_wk_apr_2013.xlsx",
-               "https://www.worldklems.net/data/basic/JPN_wk_may_2013.xlsx"
+               "https://www.worldklems.net/data/basic/usa_wk_apr_2013.xlsx"
 )
+
+# JAPAN OLD: "https://www.worldklems.net/data/basic/JPN_wk_may_2013.xlsx"
 
 names(download_urls)<- files
 
@@ -37,33 +53,45 @@ filenames<- sub(".*\\/", "", download_urls)
 
 names(filenames)<- files
 
+# The directory where the copies will be saved
+fp<- "PhD_pages/data/original/KLEMS/"
 
-# Add directory to specify filepaths in which to save a local copy of each file
-filepaths<- paste0("PhD_pages/data/original/KLEMS/", filenames)
+# Append this directory to the file names to specify file paths
+filepaths<- paste0(fp, filenames)
 
 names(filepaths)<- files
   
 
 ```
+:::
 
-Save files locally.
+::: {.callout-note collapse="true" appearance="minimal"}
+### Save a local copy of the original data files
+
+If a new copy of the original data is required, the `grab_original` variable can be set to `TRUE`. Otherwise this step is skipped.
+
 ```{r}
+grab_original<- FALSE
 
-for (file in files){
-  print(file)
-download.file(download_urls[file], filepaths[file])
+if (grab_original){
+  for (file in files){
+    print(paste0("Downloading ", file))
+    download.file(download_urls[file], filepaths[file])
+  }
 }
 
 ```
+:::
 
-
-## Preparing dataframes
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load locally saved copies of original data as data frames
 
 ```{r}
 df_list<- list()
 ```
 
 Importing the main data file - with data for 32 countries.
+
 ```{r}
 
 df_list[["32_countries"]]<- read.csv(filepaths["32_countries"], quote="")
@@ -77,17 +105,23 @@ df_list[["32_countries"]]<- df_list[["32_countries"]] %>%
   rename(country = X.country,
          transaction = var)
 
-# Remove quotations (These come from not properly specifying the file structure in the read.csv command above. But I was unable to find the right format spec.)
+# Remove quotations (Ideally this would be handled by specifying the right format in the read.csv command above. But I was unable to find the right format specification)
 df_list[["32_countries"]]<- df_list[["32_countries"]] %>%
   mutate(country = str_replace(country, '"', ''),
          value = as.numeric(str_replace(value, '"', '')))
 
+# Recode the Entity name for US: 'USA-NAICS' -> 'USA'
+df_list[["32_countries"]]<- df_list[["32_countries"]] %>%
+  mutate(country = if_else(country == "USA-NAICS",
+                           "USA",
+                           country))
+
 ```
 
+Data for Canada and the alternative series for the US.
 
-Data for Canada, Japan and an alternative (longer) series for the US.
 ```{r}
-countries<- c("Canada", "US_alt", "Japan")
+countries<- c("CAN", "USA")
 
 for (country in countries){
 df_list[[country]]<- as.data.frame(read_excel(filepaths[country],
@@ -105,11 +139,14 @@ df_list[[country]]<- df_list[[country]] %>%
 
 
 ```
+:::
 
-Tidying Canada data
+::: {.callout-note collapse="true" appearance="minimal"}
+### Tidying Canada data
+
 ```{r}
 # Drop some NA values (- data for 2009 and 2010 is given as missing)
-df_list[["Canada"]]<- df_list[["Canada"]] %>%
+df_list[["CAN"]]<- df_list[["CAN"]] %>%
   filter(!is.na(value))
 
 
@@ -144,128 +181,181 @@ agg_industries[['K']]<- c(
   "71t74")
 
 for (agg_ind in names(agg_industries)){
-  print(agg_ind)
+  print(paste0("Adding aggregate data for industry: ", agg_ind))
   
-  df_totals<- df_list[["Canada"]] %>%
+  df_totals<- df_list[["CAN"]] %>%
   filter(code %in% agg_industries[[agg_ind]]) %>%
     group_by(transaction, year) %>%
     summarise(value = sum(value)) %>%
     ungroup() %>%
     mutate(code = agg_ind) %>%
-    mutate(country = "Canada")
+    mutate(country = "CAN")
 
   
-  df_list[["Canada"]]<- bind_rows(df_list[["Canada"]], df_totals)
+  df_list[["CAN"]]<- bind_rows(df_list[["CAN"]], df_totals)
   
 }
 
 ```
-Tidying Japan data
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Tidying Japan data - OLD, TO DELETE
+
 ```{r}
 # Drop NA values
-df_list[["Japan"]]<- df_list[["Japan"]] %>% filter(is.na(value))
+# df_list[["JPN"]]<- df_list[["JPN"]] %>% filter(is.na(value))
+# 
+# # Rename the capital compensation variable, to agree with other files
+# df_list[["JPN"]]<- df_list[["JPN"]] %>%
+#   mutate(transaction = replace(transaction,
+#                                transaction == "CAP_GFCF",
+#                                "CAP"))
 
-# Rename the capital compensation variable, to agree with other files
-df_list[["Japan"]]<- df_list[["Japan"]] %>%
-  mutate(transaction = replace(transaction,
-                               transaction == "CAP_GFCF",
-                               "CAP"))
+```
+:::
 
+::: {.callout-note collapse="true" appearance="minimal"}
+### Join the different dataframes together into a single dataframe
+
+
+```{r}
+df<- bind_rows(
+  df_list, .id = "source"
+)
+
+# Make a copy of the original merged dataframe, for use later on.
+df_orig<- df
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop duplicate series for the US
+
+Data for the US is included in the main data file using the NAICS industry classification.
+
+A separate source provides a much longer series using SIC classification.
+
+Here we show the data for aggregate Value Added from the two datasets.
+```{r}
+
+df %>%
+  filter(country %in% c("USA"),
+         code == "TOT",
+ transaction == "VA") %>%
+  ggplot(aes(x = year, y = value, shape = source, colour = source, alpha=0.5)) +
+  geom_point()
 
 ```
 
-
-Join the different dataframes together into a single dataframe.
+We drop the shorter NAICS data in favour of the SIC data.
 ```{r}
-df<- bind_rows(
-  df_list
+df<- df %>%
+  filter(!(country == "USA" & source == "32_countries"))
+
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Standardize country names
+
+Here is the mapping of country names we use to standardize across data sources.
+```{r}
+
+KLEMS_country_mapping<- read.csv(paste0(fp, "KLEMS_country_name_mapping", ".csv"))
+
+kable(KLEMS_country_mapping)
+
+```
+
+Here we map the joined KLEMS data sets to these standardized names.
+```{r}
+df<- map_names(
+  df = df, 
+  df_mapping = KLEMS_country_mapping, 
+  old_country_varname_df = "country", 
+  old_country_varname_df_mapping = "Country_KLEMS",
+  new_country_varname_df_mapping = "Our_World_In_Data_country_name",
+  new_country_varname_final = "country"
 )
 
 ```
+:::
 
-Make a dictionary of industry codes and there descriptions from the combined data sources.
-```{r}
+::: {.callout-note collapse="true" appearance="minimal"}
+### Select relevant transactions and convert to wide format
 
-df_industries<- df %>%
-  select(code, desc) %>%
-  drop_na() %>%
-  unique() 
+We keep only the transactions we need: Value Added, Capital income, Labour income and Compensation of employees. And we spread the data to a wider format.
 
-# There are a couple of different spellings etc. from the different datasets. Here we just take select one (arbitrarily)
-df_industries<- df_industries %>%
-  distinct(code, .keep_all = TRUE)
-
-# Add in the uniform industry code descriptions
-df<- df %>%
-  select(-desc)
-
-df<- left_join(df, df_industries)
-
-
-```
-
-Some more tidying
 ```{r}
 df<- df %>%
   filter(transaction %in% c("VA", "CAP", "LAB", "COMP"))
 
 df<- df %>%
-  pivot_wider(names_from = "transaction",
+  pivot_wider(id_cols = c(country, year, code),
+              names_from = "transaction",
               values_from = "value")
 
-# Any industry where VA = CAP but LAB is missing, set LAB = 0
-  # This is generally only the case for sector Q, where VA=CAP=0.
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Replace some NA values with 0
+
+There are many (`r df %>% filter(VA == CAP & is.na(LAB)) %>% count() %>% as.numeric()`) country-year-industry observations where where CAP is 100% of VA, but LAB is missing.
+
+Most of these (`r df %>% filter(VA == CAP & is.na(LAB) & VA == 0) %>% count() %>% as.numeric()`) are where both capital income and value added equal zero. Such observations appear only for the following industries:
+
+```{r}
+kable(
+  df %>% filter(VA == CAP & is.na(LAB) & VA == 0) %>% count(code) 
+)
+```
+
+There are also a small number of such observations where VA>0, listed here:
+
+```{r}
+kable(
+  df %>% filter(VA == CAP & is.na(LAB) & VA>0)
+)
+
+```
+
+For both cases (i.e. where LAB is NA and either VA = CAP = 0 or VA = CAP > 0) we set LAB = 0.
+
+```{r}
 df<- df %>%
   mutate(LAB = replace(LAB,
                        VA==CAP & is.na(LAB),
                        0))
+```
 
 
-# Any industry where VA = LAB but CAP is missing, set CAP = 0
-  # This is only for sector P for US (NAICS data) and Korea (and Japan where P VA = 0)
+There is a similar set of country-year-industry observations (n = `r df %>% filter(VA == LAB & is.na(CAP)) %>% count() %>% as.numeric()`) where VA = LAB but CAP is NA. These we list here.
+
+```{r}
+kable(
+  df %>% filter(VA == LAB & is.na(CAP) & VA>0)
+)
+
+```
+
+
+For these cases (i.e. where CAP is NA and VA = LAB) we set CAP = 0.
+
+```{r}
 df<- df %>%
   mutate(CAP = replace(CAP,
                        VA==LAB & is.na(CAP),
                        0))
-
-
-# Drop any country-year-industry obs that do not have data for all 4 transactions
-  # To-do check if COMP is needed, and calculate for US_alt and Japan if so)
-
-df<- df %>% filter(!(is.na(VA) & is.na(CAP) & is.na(LAB)) )
-
 ```
-
-Drop USA-NAICS data (in favour of of SIC data)
-```{r}
-df<- df %>%
-  filter(country!="USA-NAICS")
-```
+:::
 
 
-Standardize country names
-```{r}
-
-# Mapping file
-fp<- "PhD_pages/data/original/KLEMS/KLEMS_country_name_mapping.csv"
-
-KLEMS_country_names<- read.csv(fp)
-
-KLEMS_country_names<- KLEMS_country_names %>%
-  rename(country = Country)
-
-# aggregate shares
-df<- merge(df, KLEMS_country_names)
-
-df <- df %>%
-  select(-country) %>%
-  rename(country = Our.World.In.Data.Name)
-
-
-```
-
-
-## Complete dataset for aggregate industries
+::: {.callout-note collapse="true" appearance="minimal"}
+### Filter and store data for main industries and the aggregate economy separately
 
 ```{r}
 
@@ -287,18 +377,161 @@ main_industry_codes<- c("AtB",
                         "P",
                         "Q")
 
-# filter for these codes sub-industries
-industry_level_values<- df %>%
+# filter for these codes
+main_industry_accounts<- df %>%
   filter(code %in% main_industry_codes)
 
 
 # Store reported totals separately
 
-reported_total_values<- df %>%
+reported_totals<- df %>%
   filter(code == "TOT") %>%
-  select(-code) %>%
-  gather(transaction, reported_total, -c(country, year)) %>%
-  arrange(country, year, transaction)
+  select(-code)
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop country-year-industry observations that do not have all variables needed
+
+There are some observations (n=`r main_industry_accounts %>% filter(is.na(VA) & is.na(CAP) & is.na(LAB)) %>% count() %>% as.numeric()`) without .... . We group these by country and industry.
+
+```{r}
+kable(
+  main_industry_accounts %>% filter(is.na(VA) | is.na(CAP) | is.na(LAB)) %>% count(country, code)
+)
 
 ```
 
+We filter these out.
+
+```{r}
+
+  # TODO check if COMP is needed, and add in check here and/or calculate it where missing? if so)
+
+main_industry_accounts<- main_industry_accounts %>% filter(!(is.na(VA) & is.na(CAP) & is.na(LAB)) )
+
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Add industry code descriptions
+
+Here are the industry descriptions provided in the data.
+```{r}
+
+industry_descriptions<- df_orig %>%
+  filter(code %in% main_industry_codes) %>%
+  select(code, desc) %>%
+  drop_na() %>%
+  unique() %>%
+  arrange(code)
+
+kable(industry_descriptions)
+
+```
+
+We join these back into the clean dataframe.
+```{r}
+
+main_industry_accounts<- left_join(main_industry_accounts, industry_descriptions)
+
+
+```
+:::
+
+## Sense checking
+
+### How does the sum across all industries compare to the reported economy-wide totals?
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Calculate aggregate across industries and merge with reported economy-wide totals
+
+```{r}
+agg_industries<- main_industry_accounts %>%
+    group_by(country, year) %>%
+    summarise(VA = sum(VA, na.rm = TRUE),
+              CAP = sum(CAP, na.rm = TRUE),
+              COMP = sum(COMP, na.rm = TRUE),
+              LAB = sum(LAB, na.rm = TRUE)
+              )
+
+reported_totals <- reported_totals %>%
+  rename(VA_reported = VA,
+         CAP_reported = CAP,
+         COMP_reported = COMP,
+         LAB_reported = LAB)
+
+check_totals<- left_join(agg_industries, reported_totals) %>%
+  mutate(VA_ratio = VA/VA_reported,
+         CAP_ratio = CAP/CAP_reported,
+         COMP_ratio = COMP/COMP_reported,
+         LAB_ratio = LAB/LAB_reported)
+
+tolerance<- 0.001 # tenth of a percent tolerance
+
+```
+:::
+
+In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than `r tolerance*100`%.
+
+Note that in Canada - which is one of the countries we will go on to use this data for - the sum across available industries falls short of the reported aggregate (for value added, Capital income, Labour income and Compensation of employees) by around 5%, with no trend over time.
+
+
+::: {.panel-tabset}
+## Value added
+```{r}
+
+kable(
+  check_totals %>%
+  filter(VA_ratio<(1-tolerance) | VA_ratio>(1+tolerance)) %>%
+    select(country, year, VA_ratio, VA, VA_reported)
+)
+```
+## Capital income
+```{r}
+kable(
+  check_totals %>%
+  filter(CAP_ratio<(1-tolerance) | CAP_ratio>(1+tolerance)) %>%
+    select(country, year, CAP_ratio, CAP, CAP_reported)
+)
+
+```
+
+## Labour income
+
+```{r}
+kable(
+  check_totals %>%
+  filter(LAB_ratio<(1-tolerance) | LAB_ratio>(1+tolerance)) %>%
+    select(country, year, LAB_ratio, LAB, LAB_reported)
+)
+
+```
+
+## Comp. of employees
+```{r}
+kable(
+  check_totals %>%
+  filter(COMP_ratio<(1-tolerance) | COMP_ratio>(1+tolerance)) %>%
+    select(country, year, COMP_ratio, COMP, COMP_reported)
+)
+
+```
+
+
+:::
+
+## Save cleaned data
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Write cleaned data to csv
+```{r}
+fp<- "PhD_pages/data/clean/"
+
+write.csv(main_industry_accounts, paste0(fp, "KLEMS_gen_income_by_industry", ".csv"))
+
+```
+
+:::

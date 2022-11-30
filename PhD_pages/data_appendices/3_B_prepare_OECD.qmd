@@ -1,191 +1,345 @@
 ---
-title: "Appendix 3.B: Preparing OECD data"
+title: "Appendix 3.B: Preparing OECD industry data"
 format: html
 ---
+
+## Processing steps
+
+The titles in each of the boxes below summarise the steps taken to prepare the OECD industry data. In each case you can expand the box to see the code used.
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load libraries and functions
 
 ```{r}
 library(tidyverse)
 library(rsdmx)
-```
+library(knitr)
 
-## Queries of the OECD API
+source("PhD_pages/scripts/general_functions.R")
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load industry generation of income and employment data
 
 ```{r}
-start_year<- 1950
-end_year<- 2020
+fp<- "PhD_pages/data/original/OECD/"
+
+load(paste0(fp, "industry_accounts", ".Rda"))
+load(paste0(fp, "employment_by_industry", ".Rda"))
+
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Standardize country names
+
+Here is the mapping of country names we use to standardize across data sources.
+```{r}
+
+OECD_country_mapping<- read.csv(paste0(fp, "OECD_country_name_mapping", ".csv"))
+
+kable(OECD_country_mapping)
 
 ```
 
-### Industry-level data on value added and its components
+Here we map the two data sets to these standardized names.
+```{r}
+
+industry_accounts<- map_names(
+  df = industry_accounts, 
+  df_mapping = OECD_country_mapping, 
+  old_country_varname_df = "LOCATION", 
+  old_country_varname_df_mapping = "OECD_country_name",
+  new_country_varname_df_mapping = "Our_World_In_Data_country_name",
+  new_country_varname_final = "country"
+)
+
+employment_by_industry<- map_names(
+  df = employment_by_industry, 
+  df_mapping = OECD_country_mapping, 
+  old_country_varname_df = "LOCATION", 
+  old_country_varname_df_mapping = "OECD_country_name",
+  new_country_varname_df_mapping = "Our_World_In_Data_country_name",
+  new_country_varname_final = "country"
+)
+
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Clean year variable in both files
+
+```{r}
+clean_year<- function(df){
+  df<- df %>%
+    mutate(year = as.numeric(obsTime))
+}
+
+industry_accounts<- clean_year(industry_accounts)
+employment_by_industry<- clean_year(employment_by_industry)
+
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Further tidying of industry generation of income data
 
 ```{r}
 
-select_table<- "SNA_TABLE6A_ARCHIVE" # Value added and its components by activity, ISIC rev4
+# Filter for only current price data and the needed transactions
+industry_accounts<- industry_accounts %>%
+  filter(MEASURE == "C" & 
+           TRANSACT %in% c("B1GA", "D1A","B2G_B3GA", "B2N_B3NA", "D29_D39A"))
 
 
-countries<- "" # leave blank for all entities
-transactions<- "" # i.e. output/GOS/CoE etc. leave blank for all
-activities<- "" # ISIC rev 4 industries. leave blank for all industries and sub-industries
-measures<- "C+VOB" # Prices. C = constant; VOB = indexed to OECD base year
+# Recode transactions from national accounts codes to something more legible
+recoding_transactions <- c(
+  B1GA = "VA", # (Gross) Value added
+  D1A = "COMP", # Compensation of employees
+  B2G_B3GA = "GOS", # Gross operating surplus
+  B2N_B3NA = "NOS", # Net operating surplus (net of depreciation)
+  D29_D39A = "TOP") # Taxes on production
 
-key_query<- paste(countries,transactions,activities,measures, sep = ".")
+industry_accounts<- industry_accounts %>%
+  mutate(TRANSACT = recode(TRANSACT, !!!recoding_transactions))
 
-industry_accounts <- readSDMX(providerId = "OECD",
-                              resource = "data",
-                              flowRef = select_table,
-                              key = key_query,
-                              start = start_year,
-                              end = end_year,
-                              dsd = TRUE)
 
-industry_accounts<- as.data.frame(industry_accounts)
+# flip to wide format
+industry_accounts<- industry_accounts %>%
+  pivot_wider(names_from = TRANSACT, values_from = obsValue)
 
-# Save
-save(industry_accounts, file="PhD_pages/data/original/OECD/industry_accounts.Rda")
+
+# Select and rename needed vars
+industry_accounts<- industry_accounts %>%
+  rename(ind_code = ACTIVITY) %>%
+  select(country, year, ind_code, VA, COMP, GOS, NOS, TOP)
 
 ```
+:::
 
+::: {.callout-note collapse="true" appearance="minimal"}
+### Filter and store generation of income data for main industries and the aggregate economy separately
 
 ```{r}
 
-# GDP AT PPPs ----
+# Main aggregate industries
 
-GDP_PPP<- readSDMX(providerId = "OECD",
-                       resource = "data",
-                      flowRef = "SNA_TABLE1",
-                      key = ".B1_GE.VPVOB",
-                       start = 1950,
-                      end = 2020,
-                      dsd = TRUE)
+main_industry_codes<- c("VA0", "VB", "VC", "VD", "VE", "VF", "VG", "VH", "VI",
+                        "VJ", "VK", "VL", "VM", "VN", "VO", "VP", "VQ", "VR",
+                        "VS", "VT", "VU")
 
+# Filter industry data for main industry codes only
+main_industry_accounts<- industry_accounts %>%
+  filter(ind_code %in% main_industry_codes)
 
-GDP_PPP<- as.data.frame(GDP_PPP)
-
-# Save
-save(GDP_PPP, file="PhD_pages/data/original/OECD/GDP_PPP_raw.Rda")
-
-# HOUSING CONSUMPTION ------
-rental_consumption <- readSDMX(providerId = "OECD",
-                            resource = "data",
-                            flowRef = "SNA_TABLE5",
-                            key = ".P31CP041+P31CP042.C+VOB",
-                            start = 1950,
-                            end = 2020,
-                            dsd = TRUE)
-
-rental_consumption<- as.data.frame(rental_consumption)
-
-# Save
-save(rental_consumption, file="PhD_pages/data/original/OECD/rental_consumption.Rda")
-
-
-# RENT PRICE -----
-# This is the CPI component for actual rentals or else the aggrgeate
-  # of actual and imputed rentals and maintenance. See paper for details.
-
-rent_price_index <- readSDMX(providerId = "OECD",
-                               resource = "data",
-                               flowRef = "HOUSE_PRICES",
-                               key = ".RPI",
-                               start = 1950,
-                               end = 2020,
-                               dsd = TRUE)
-
-rent_price_index<- as.data.frame(rent_price_index)
-
-
-# Save
-save(rent_price_index, file="PhD_pages/data/original/OECD/rent_price_index.Rda")
-
-# CPI ------
-
-CPI <- readSDMX(providerId = "OECD",
-                             resource = "data",
-                             flowRef = "PRICES_CPI",
-                             key = ".CPALTT01.IXOB.A",
-                             start = 1950,
-                             end = 2020,
-                             dsd = TRUE)
-
-CPI<- as.data.frame(CPI)
-
-  # the single subject-measure CPALTT01 - IXOB refers to all items
-    # CPI index. 2015=100
-
-# Save
-save(CPI, file="PhD_pages/data/original/OECD/CPI.Rda")
-
-# GDP deflator ------
-
-GDP_deflator <- readSDMX(providerId = "OECD",
-                resource = "data",
-                flowRef = "EO",
-                key = ".PGDP.A",
-                start = 1950,
-                end = 2020,
-                dsd = TRUE)
-
-GDP_deflator<- as.data.frame(GDP_deflator)
-
-# the single subject-measure CPALTT01 - IXOB refers to all items
-# CPI index. 2015=100
-
-# Save
-save(GDP_deflator, file="PhD_pages/data/original/OECD/GDP_deflator.Rda")
-
-
-
-
-
-# SECTOR ACCOUNTS ------
-
-
-# Grab full dataset
-
-sector_accounts <- readSDMX(providerId = "OECD",
-                        resource = "data",
-                        flowRef = "SNA_TABLE14A",
-                        key = "..S1+S2+S11+S12+S13+S14_S15+S14+S15.C",
-                        start = 1950,
-                        end = 2020,
-                        dsd = TRUE)
-
-sector_accounts<- as.data.frame(sector_accounts)
-
-# Save
-save(sector_accounts, file="PhD_pages/data/original/OECD/sector_accounts.Rda")
-
-
-
-# INDUSTRY LABOUR INPUTS DATA ----
-
-# set paramaters for API query
-
-select_table<- "SNA_TABLE7A_ARCHIVE" # Labour intput by activity, ISIC rev4
-
-start_year<- 1950
-end_year<- 2020
-
-
-countries<- "" # leave blank for all entities
-transactions<- "" # i.e. total employment/employed/self-employed. leave blank for all
-activities<- "" # ISIC rev 4 industries. leave blank for all industries and sub-industries
-measures<- "HRS" # i.e. hours/jobs/fte. HRS = hours in millions
-
-key_query<- paste(countries,transactions,activities,measures, sep = ".")
-
-employment_by_industry <- readSDMX(providerId = "OECD",
-                              resource = "data",
-                              flowRef = select_table,
-                              key = key_query,
-                              start = start_year,
-                              end = end_year,
-                              dsd = TRUE)
-
-employment_by_industry<- as.data.frame(employment_by_industry)
-
-
-# Save
-save(employment_by_industry, file="PhD_pages/data/original/OECD/employment_by_industry.Rda")
+# Store economy-wide aggregates separately
+reported_totals <- industry_accounts %>%
+  filter(ind_code == 'VTOT')
 
 ```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Further tidying of industry employment data.
+
+```{r}
+# Select self-employed and employed hours and flip to wide format
+employment_by_industry<- employment_by_industry %>%
+  filter(TRANSACT %in% c("ESEA", "EEMA")) %>%  # codes for self-employed and employed
+  pivot_wider(id_cols = c(country, year, ACTIVITY), names_from = TRANSACT, values_from = obsValue)
+  
+  
+# Select and rename needed vars
+employment_by_industry<- employment_by_industry %>%
+  rename(self_employed_hrs = ESEA, 
+         employed_hrs = EEMA,
+         ind_code = ACTIVITY)
+
+
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Join generation of income and employment data
+
+```{r}
+main_industry_accounts<- left_join(main_industry_accounts, employment_by_industry)
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Filter out observations where the implied wage is infinite
+
+In the joined data, there are a small number of rows where employed hours = 0 but compensation of employees \> 0 --- implying an infinite wage.
+
+Here we show these illogical rows, grouped by country and industry.
+
+```{r}
+kable(
+  main_industry_accounts %>%
+  filter((COMP>0 & employed_hrs == 0))
+)
+```
+
+We drop these.
+
+```{r}
+main_industry_accounts<- main_industry_accounts %>%
+  filter(!(COMP>0 & employed_hrs == 0))
+
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Filter out country-year-industry observations without all the variables we need
+
+There are some rows where we do not have all the variables we will need for the calculations: VA, COMP, GOS, and employed and self-employed hours.
+
+```{r}
+kable(
+  main_industry_accounts %>%
+    filter(is.na(VA) | is.na(COMP) | is.na(GOS) | is.na(employed_hrs) | is.na(self_employed_hrs)) %>%
+    count(country, ind_code)
+)
+```
+
+We drop these.
+
+```{r}
+main_industry_accounts<-  main_industry_accounts %>%
+    filter(!(is.na(VA) | is.na(COMP) | is.na(GOS) | is.na(employed_hrs) | is.na(self_employed_hrs)))
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+#### Filter out country-year observations with partial industry coverage
+
+The objective is to have complete coverage of the economy. There are some country years where coverage across industries looks decidedly incomplete.
+
+For instance, out of `r length(main_industry_codes)` aggregate industry codes, these country years have data for fewer than 18:
+
+```{r}
+kable( 
+ to_drop<- main_industry_accounts %>%
+   count(country, year) %>%
+   filter(n<18)
+)
+
+```
+
+We drop these country-years with apparently incomplete data.
+
+```{r}
+main_industry_accounts<- left_join(main_industry_accounts, to_drop) %>%
+  filter(is.na(n)) %>%
+  select(-n)
+
+```
+
+But because of differences in national accounting methods, missing data for a given industry does not imply the accounts are incomplete.
+
+In particular, the dataset contains only `r main_industry_accounts %>% filter(ind_code == "VU")%>%count()` country-year observations for `VU` (as compared to `r main_industry_accounts %>% filter(ind_code == "VA0")%>%count()` for `VA0`) and these are in general only NA or 0 values.
+
+```{r}
+summary(main_industry_accounts %>% filter(ind_code == "VU"))
+```
+
+In the table below we show all remaining country years in which at least one industry --- other than `VU` --- is missing.
+
+We assume that these apparent gaps do not indicate incompleteness of the data, rather just differences in national accounting practices.
+
+```{r}
+
+kable( main_industry_accounts %>%
+  select(year, country, ind_code, VA) %>%
+  pivot_wider(names_from = ind_code, values_from = VA) %>%
+  filter(if_any(VA0:VT, ~ is.na(.)))
+)
+
+
+```
+:::
+
+## Sense checking
+
+### How does the sum across all industries compare to the reported economy-wide totals?
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Calculate aggregate across industries and merge with reported economy-wide totals
+
+```{r}
+agg_industries<- main_industry_accounts %>%
+    group_by(country, year) %>%
+    summarise(VA = sum(VA, na.rm = TRUE),
+              COMP = sum(COMP, na.rm = TRUE),
+              GOS = sum(GOS, na.rm = TRUE),
+              NOS = sum(NOS, na.rm = TRUE)
+              )
+
+reported_totals <- reported_totals %>%
+  rename(VA_reported = VA,
+         COMP_reported = COMP,
+         GOS_reported = GOS,
+         NOS_reported = NOS) %>%
+  select(-ind_code)
+
+check_totals<- left_join(agg_industries, reported_totals) %>%
+  mutate(VA_ratio = VA/VA_reported,
+         COMP_ratio = COMP/COMP_reported,
+         GOS_ratio = GOS/GOS_reported,
+         NOS_ratio = NOS/NOS_reported)
+
+tolerance<- 0.005 # half a percent tolerance
+
+```
+:::
+
+In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than `r tolerance*100`%.
+
+Note that in Finland - which is one of the countries we will go on to use this data for - the sum across available industries falls short of the reported aggregate (for value added, compensation of employees and gross operating surplus) by around 5%, with no trend over time.
+
+
+::: {.panel-tabset}
+## Value added
+```{r}
+
+kable(
+  check_totals %>%
+  filter(VA_ratio<(1-tolerance) | VA_ratio>(1+tolerance)) %>%
+    select(country, year, VA_ratio, VA, VA_reported)
+)
+```
+## Comp. of employees
+```{r}
+kable(
+  check_totals %>%
+  filter(COMP_ratio<(1-tolerance) | COMP_ratio>(1+tolerance)) %>%
+    select(country, year, COMP_ratio, COMP, COMP_reported)
+)
+
+```
+## Gross operating surplus
+```{r}
+kable(
+  check_totals %>%
+  filter(GOS_ratio<(1-tolerance) | GOS_ratio>(1+tolerance)) %>%
+    select(country, year, GOS_ratio, GOS, GOS_reported)
+)
+
+```
+
+:::
+
+## Save cleaned data
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Write cleaned data to csv
+```{r}
+fp<- "PhD_pages/data/clean/"
+
+write.csv(main_industry_accounts, paste0(fp, "OECD_gen_income_and_employment_by_industry", ".csv"))
+
+```
+:::

@@ -196,6 +196,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link active">Appendix 3.A: Preparing EU KLEMS industry data</a>
   </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/data_appendices/3_B_prepare_OECD.html" class="sidebar-item-text sidebar-link">Appendix 3.B: Preparing OECD industry data</a>
+  </div>
+</li>
     </ul>
   </li>
     </ul>
@@ -229,10 +234,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#raw-data-files" id="toc-raw-data-files" class="nav-link" data-scroll-target="#raw-data-files">Raw data files</a></li>
-  <li><a href="#preparing-dataframes" id="toc-preparing-dataframes" class="nav-link" data-scroll-target="#preparing-dataframes">Preparing dataframes</a></li>
-  <li><a href="#calculatiing-derived-variables" id="toc-calculatiing-derived-variables" class="nav-link" data-scroll-target="#calculatiing-derived-variables">Calculatiing derived variables</a></li>
+  <li><a href="#processing-steps" id="toc-processing-steps" class="nav-link active" data-scroll-target="#processing-steps">Processing steps</a></li>
+  <li><a href="#sense-checking" id="toc-sense-checking" class="nav-link" data-scroll-target="#sense-checking">Sense checking</a>
+  <ul class="collapse">
+  <li><a href="#how-does-the-sum-across-all-industries-compare-to-the-reported-economy-wide-totals" id="toc-how-does-the-sum-across-all-industries-compare-to-the-reported-economy-wide-totals" class="nav-link" data-scroll-target="#how-does-the-sum-across-all-industries-compare-to-the-reported-economy-wide-totals">How does the sum across all industries compare to the reported economy-wide totals?</a></li>
+  </ul></li>
+  <li><a href="#save-cleaned-data" id="toc-save-cleaned-data" class="nav-link" data-scroll-target="#save-cleaned-data">Save cleaned data</a></li>
   </ul>
 </nav>
     </div>
@@ -255,6 +262,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<section id="processing-steps" class="level2">
+<h2 class="anchored" data-anchor-id="processing-steps">Processing steps</h2>
+<p>The titles in each of the boxes below summarise the steps taken to prepare the KLEMS industry data. In each case you can expand the box to see the code used.</p>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Load libraries and functions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -280,73 +302,4147 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-</div>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-</section>
-<section id="raw-data-files" class="level2">
-<h2 class="anchored" data-anchor-id="raw-data-files">Raw data files</h2>
-<p>Make a list of filenames (both to reference the correct file in the url and as the filename to save locally).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>files<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"32_countries"</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Canada"</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"US_alt"</span>)</span>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) <span class="co"># For handling xls source data files</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The urls where the files can be retrieved</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>download_urls<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"http://www.euklems.net/data/09i/all_countries_09I.txt"</span>,</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"https://www.worldklems.net/data/basic/CAN_WK_07_2012.xlsx"</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>               <span class="st">"https://www.worldklems.net/data/basic/usa_wk_mar_2017.xlsx"</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(download_urls)<span class="ot">&lt;-</span> files</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co"># uses the last part of the download urls as the filenames</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>filenames<span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">".*</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">""</span>, download_urls)</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(filenames)<span class="ot">&lt;-</span> files</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Add directory to specify filepaths in which to save a local copy of each file</span></span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>filepaths<span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"PhD_pages/data/original/KLEMS/"</span>, filenames)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(filepaths)<span class="ot">&lt;-</span> files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"PhD_pages/scripts/general_functions.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Save files locally.</p>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Specify the location of four original data files
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We obtain data from four KLEMS datasets:</p>
+<ul>
+<li>EU KLEMS version …</li>
+<li>Canada…</li>
+<li>An additional series for the US (different industry classification, longer series..)</li>
+<li>Japan</li>
+</ul>
+<p>Here we specify corresponding lists of URLs where the original files are located, short names for the files, and local filepaths where a copy of the original data files will be saved.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (file <span class="cf">in</span> files){</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(file)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(download_urls[file], filepaths[file])</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "32_countries"
-[1] "Canada"
-[1] "US_alt"</code></pre>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>files<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"32_countries"</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>          <span class="st">"CAN"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">"USA"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># The urls where the files can be retrieved</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>download_urls<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"http://www.euklems.net/data/09i/all_countries_09I.txt"</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>               <span class="st">"https://www.worldklems.net/data/basic/CAN_WK_07_2012.xlsx"</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>               <span class="st">"https://www.worldklems.net/data/basic/usa_wk_apr_2013.xlsx"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># JAPAN OLD: "https://www.worldklems.net/data/basic/JPN_wk_may_2013.xlsx"</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(download_urls)<span class="ot">&lt;-</span> files</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># uses the last part of the download urls as the filenames</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>filenames<span class="ot">&lt;-</span> <span class="fu">sub</span>(<span class="st">".*</span><span class="sc">\\</span><span class="st">/"</span>, <span class="st">""</span>, download_urls)</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(filenames)<span class="ot">&lt;-</span> files</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># The directory where the copies will be saved</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>fp<span class="ot">&lt;-</span> <span class="st">"PhD_pages/data/original/KLEMS/"</span></span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Append this directory to the file names to specify file paths</span></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>filepaths<span class="ot">&lt;-</span> <span class="fu">paste0</span>(fp, filenames)</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(filepaths)<span class="ot">&lt;-</span> files</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
-</section>
-<section id="preparing-dataframes" class="level2">
-<h2 class="anchored" data-anchor-id="preparing-dataframes">Preparing dataframes</h2>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Save a local copy of the original data files
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If a new copy of the original data is required, the <code>grab_original</code> variable can be set to <code>TRUE</code>. Otherwise this step is skipped.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>grab_original<span class="ot">&lt;-</span> <span class="cn">FALSE</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (grab_original){</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (file <span class="cf">in</span> files){</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Downloading "</span>, file))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">download.file</span>(download_urls[file], filepaths[file])</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Load locally saved copies of original data as data frames
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_list<span class="ot">&lt;-</span> <span class="fu">list</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p>Importing the main data file - with data for 32 countries.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(filepaths[<span class="st">"32_countries"</span>], <span class="at">quote=</span><span class="st">""</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to long format and rename variables</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"X_"</span>), <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"X_"</span>, <span class="at">values_to =</span><span class="st">"value"</span>,</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">year=</span>as.integer),</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_transform =</span> <span class="fu">list</span>(<span class="at">value=</span>as.character)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">country =</span> X.country,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">transaction =</span> var)</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove quotations (These come from not properly specifying the file structure in the read.csv command above. But I was unable to find the right format spec.)</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">str_replace</span>(country, <span class="st">'"'</span>, <span class="st">''</span>),</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">value =</span> <span class="fu">as.numeric</span>(<span class="fu">str_replace</span>(value, <span class="st">'"'</span>, <span class="st">''</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_list[[<span class="st">"32_countries"</span>]]<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(filepaths[<span class="st">"32_countries"</span>], <span class="at">quote=</span><span class="st">""</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to long format and rename variables</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>df_list[[<span class="st">"32_countries"</span>]]<span class="ot">&lt;-</span> df_list[[<span class="st">"32_countries"</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"X_"</span>), <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"X_"</span>, <span class="at">values_to =</span><span class="st">"value"</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">year=</span>as.integer),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_transform =</span> <span class="fu">list</span>(<span class="at">value=</span>as.character)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">country =</span> X.country,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">transaction =</span> var)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Remove quotations (Ideally this would be handled by specifying the right format in the read.csv command above. But I was unable to find the right format specification)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>df_list[[<span class="st">"32_countries"</span>]]<span class="ot">&lt;-</span> df_list[[<span class="st">"32_countries"</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">str_replace</span>(country, <span class="st">'"'</span>, <span class="st">''</span>),</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>         <span class="at">value =</span> <span class="fu">as.numeric</span>(<span class="fu">str_replace</span>(value, <span class="st">'"'</span>, <span class="st">''</span>)))</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode the Entity name for US: 'USA-NAICS' -&gt; 'USA'</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>df_list[[<span class="st">"32_countries"</span>]]<span class="ot">&lt;-</span> df_list[[<span class="st">"32_countries"</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> <span class="fu">if_else</span>(country <span class="sc">==</span> <span class="st">"USA-NAICS"</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                           <span class="st">"USA"</span>,</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>                           country))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Data for Canada and the alternative series for the US.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>countries<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"CAN"</span>, <span class="st">"USA"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (country <span class="cf">in</span> countries){</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>df_list[[country]]<span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">read_excel</span>(filepaths[country],</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>                                                         <span class="at">sheet =</span> <span class="st">'DATA'</span>))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># convert to long format and rename variables</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>df_list[[country]]<span class="ot">&lt;-</span> df_list[[country]] <span class="sc">%&gt;%</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"_"</span>), <span class="at">names_to =</span> <span class="st">"year"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_prefix =</span> <span class="st">"_"</span>, <span class="at">values_to =</span><span class="st">"value"</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_transform =</span> <span class="fu">list</span>(<span class="at">year=</span>as.integer)) <span class="sc">%&gt;%</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">transaction =</span> Variable) <span class="sc">%&gt;%</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">country =</span> country)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tidying Canada data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop some NA values (- data for 2009 and 2010 is given as missing)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_list[[<span class="st">"CAN"</span>]]<span class="ot">&lt;-</span> df_list[[<span class="st">"CAN"</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(value))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co"># For Canada we need to calculate some industry aggregates to be comparable with other countries</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>agg_industries<span class="ot">&lt;-</span> <span class="fu">list</span>()</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>agg_industries[[<span class="st">'D'</span>]]<span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"15t16"</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"17t19"</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"20"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"21t22"</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"23"</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"24"</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"25"</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"26"</span>,</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"27t28"</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"29"</span>,</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"30t33"</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"34t35"</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"36t37"</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>agg_industries[[<span class="st">'G'</span>]]<span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"50"</span>,</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"52"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>agg_industries[[<span class="st">'I'</span>]]<span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"60t63"</span>,</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"64"</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>agg_industries[[<span class="st">'K'</span>]]<span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>  <span class="st">"70"</span>,</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>  <span class="st">"71t74"</span>)</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (agg_ind <span class="cf">in</span> <span class="fu">names</span>(agg_industries)){</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="fu">paste0</span>(<span class="st">"Adding aggregate data for industry: "</span>, agg_ind))</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>  df_totals<span class="ot">&lt;-</span> df_list[[<span class="st">"CAN"</span>]] <span class="sc">%&gt;%</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(code <span class="sc">%in%</span> agg_industries[[agg_ind]]) <span class="sc">%&gt;%</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(transaction, year) <span class="sc">%&gt;%</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">value =</span> <span class="fu">sum</span>(value)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">code =</span> agg_ind) <span class="sc">%&gt;%</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">country =</span> <span class="st">"CAN"</span>)</span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a>  df_list[[<span class="st">"CAN"</span>]]<span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df_list[[<span class="st">"CAN"</span>]], df_totals)</span>
+<span id="cb14-49"><a href="#cb14-49" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb14-50"><a href="#cb14-50" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Adding aggregate data for industry: D"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'transaction'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Adding aggregate data for industry: G"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'transaction'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Adding aggregate data for industry: I"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'transaction'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Adding aggregate data for industry: K"</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'transaction'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Tidying Japan data - OLD, TO DELETE
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop NA values</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_list[["JPN"]]&lt;- df_list[["JPN"]] %&gt;% filter(is.na(value))</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># # Rename the capital compensation variable, to agree with other files</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="co"># df_list[["JPN"]]&lt;- df_list[["JPN"]] %&gt;%</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(transaction = replace(transaction,</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                                transaction == "CAP_GFCF",</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co">#                                "CAP"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Join the different dataframes together into a single dataframe
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  df_list, <span class="at">.id =</span> <span class="st">"source"</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Make a copy of the original merged dataframe, for use later on.</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>df_orig<span class="ot">&lt;-</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Drop duplicate series for the US
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Data for the US is included in the main data file using the NAICS industry classification.</p>
+<p>A separate source provides a much longer series using SIC classification.</p>
+<p>Here we show the data for aggregate Value Added from the two datasets.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(country <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"USA"</span>),</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>         code <span class="sc">==</span> <span class="st">"TOT"</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a> transaction <span class="sc">==</span> <span class="st">"VA"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> value, <span class="at">shape =</span> source, <span class="at">colour =</span> source, <span class="at">alpha=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 7 rows containing missing values (geom_point).</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="3_A_prepare_KLEMS_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We drop the shorter NAICS data in favour of the SIC data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>(country <span class="sc">==</span> <span class="st">"USA"</span> <span class="sc">&amp;</span> source <span class="sc">==</span> <span class="st">"32_countries"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Standardize country names
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here is the mapping of country names we use to standardize across data sources.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>KLEMS_country_mapping<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">paste0</span>(fp, <span class="st">"KLEMS_country_name_mapping"</span>, <span class="st">".csv"</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(KLEMS_country_mapping)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Country_KLEMS</th>
+<th style="text-align: left;">Our_World_In_Data_country_name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AUS</td>
+<td style="text-align: left;">Australia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AUT</td>
+<td style="text-align: left;">Austria</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BEL</td>
+<td style="text-align: left;">Belgium</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CAN</td>
+<td style="text-align: left;">Canada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CYP</td>
+<td style="text-align: left;">Cyprus</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CZE</td>
+<td style="text-align: left;">Czechia</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DNK</td>
+<td style="text-align: left;">Denmark</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ESP</td>
+<td style="text-align: left;">Spain</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EST</td>
+<td style="text-align: left;">Estonia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FIN</td>
+<td style="text-align: left;">Finland</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FRA</td>
+<td style="text-align: left;">France</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">GER</td>
+<td style="text-align: left;">Germany</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">GRC</td>
+<td style="text-align: left;">Greece</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HUN</td>
+<td style="text-align: left;">Hungary</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">IRL</td>
+<td style="text-align: left;">Ireland</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ITA</td>
+<td style="text-align: left;">Italy</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">JPN</td>
+<td style="text-align: left;">Japan</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">KOR</td>
+<td style="text-align: left;">South Korea</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LVA</td>
+<td style="text-align: left;">Latvia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LTU</td>
+<td style="text-align: left;">Lithuania</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">LUX</td>
+<td style="text-align: left;">Luxembourg</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MLT</td>
+<td style="text-align: left;">Malta</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NLD</td>
+<td style="text-align: left;">Netherlands</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">POL</td>
+<td style="text-align: left;">Poland</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PRT</td>
+<td style="text-align: left;">Portugal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SVK</td>
+<td style="text-align: left;">Slovakia</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SVN</td>
+<td style="text-align: left;">Slovenia</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SWE</td>
+<td style="text-align: left;">Sweden</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">UK</td>
+<td style="text-align: left;">United Kingdom</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">United States</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Here we map the joined KLEMS data sets to these standardized names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">map_names</span>(</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">df =</span> df, </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">df_mapping =</span> KLEMS_country_mapping, </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">old_country_varname_df =</span> <span class="st">"country"</span>, </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">old_country_varname_df_mapping =</span> <span class="st">"Country_KLEMS"</span>,</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_country_varname_df_mapping =</span> <span class="st">"Our_World_In_Data_country_name"</span>,</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">new_country_varname_final =</span> <span class="st">"country"</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Select relevant transactions and convert to wide format
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>We keep only the transactions we need: Value Added, Capital income, Labour income and Compensation of employees. And we spread the data to a wider format.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(transaction <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"VA"</span>, <span class="st">"CAP"</span>, <span class="st">"LAB"</span>, <span class="st">"COMP"</span>))</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">id_cols =</span> <span class="fu">c</span>(country, year, code),</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">names_from =</span> <span class="st">"transaction"</span>,</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">values_from =</span> <span class="st">"value"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Replace some NA values with 0
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are many (554) country-year-industry observations where where CAP is 100% of VA, but LAB is missing.</p>
+<p>Most of these (537) are where both capital income and value added equal zero. Such observations appear only for the following industries:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(VA <span class="sc">==</span> CAP <span class="sc">&amp;</span> <span class="fu">is.na</span>(LAB) <span class="sc">&amp;</span> VA <span class="sc">==</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> <span class="fu">count</span>(code) </span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">code</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">499</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>There are also a small number of such observations where VA&gt;0, listed here:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(VA <span class="sc">==</span> CAP <span class="sc">&amp;</span> <span class="fu">is.na</span>(LAB) <span class="sc">&amp;</span> VA<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: left;">code</th>
+<th style="text-align: right;">VA</th>
+<th style="text-align: right;">COMP</th>
+<th style="text-align: right;">LAB</th>
+<th style="text-align: right;">CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">156.0000</td>
+<td style="text-align: right;">117.0000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">156.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">191.0000</td>
+<td style="text-align: right;">144.0000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">191.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">218.0000</td>
+<td style="text-align: right;">165.0000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">218.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: left;">11</td>
+<td style="text-align: right;">254.0000</td>
+<td style="text-align: right;">192.0000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">254.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">249.4830</td>
+<td style="text-align: right;">90.5473</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">249.4830</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">344.0182</td>
+<td style="text-align: right;">105.4249</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">344.0182</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">594.2383</td>
+<td style="text-align: right;">118.0751</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">594.2383</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">507.3072</td>
+<td style="text-align: right;">135.2138</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">507.3072</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">396.8436</td>
+<td style="text-align: right;">185.2922</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">396.8436</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">735.3965</td>
+<td style="text-align: right;">199.1357</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">735.3965</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">894.1214</td>
+<td style="text-align: right;">185.9800</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">894.1214</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">805.5637</td>
+<td style="text-align: right;">193.9481</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">805.5637</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">927.3327</td>
+<td style="text-align: right;">231.7445</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">927.3327</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">1367.5008</td>
+<td style="text-align: right;">240.9502</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1367.5008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">1852.4656</td>
+<td style="text-align: right;">282.3761</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1852.4656</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">1700.6766</td>
+<td style="text-align: right;">265.8658</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">1700.6766</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: left;">23</td>
+<td style="text-align: right;">997.4276</td>
+<td style="text-align: right;">278.1734</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">997.4276</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>For both cases (i.e.&nbsp;where LAB is NA and either VA = CAP = 0 or VA = CAP &gt; 0) we set LAB = 0.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">LAB =</span> <span class="fu">replace</span>(LAB,</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                       VA<span class="sc">==</span>CAP <span class="sc">&amp;</span> <span class="fu">is.na</span>(LAB),</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>                       <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There is a similar set of country-year-industry observations (n = 38) where VA = LAB but CAP is NA. These we list here.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  df <span class="sc">%&gt;%</span> <span class="fu">filter</span>(VA <span class="sc">==</span> LAB <span class="sc">&amp;</span> <span class="fu">is.na</span>(CAP) <span class="sc">&amp;</span> VA<span class="sc">&gt;</span><span class="dv">0</span>)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: left;">code</th>
+<th style="text-align: right;">VA</th>
+<th style="text-align: right;">COMP</th>
+<th style="text-align: right;">LAB</th>
+<th style="text-align: right;">CAP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">10317</td>
+<td style="text-align: right;">6209</td>
+<td style="text-align: right;">10317</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">13576</td>
+<td style="text-align: right;">8169</td>
+<td style="text-align: right;">13576</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">16521</td>
+<td style="text-align: right;">9947</td>
+<td style="text-align: right;">16521</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1973</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">19519</td>
+<td style="text-align: right;">11752</td>
+<td style="text-align: right;">19519</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">26913</td>
+<td style="text-align: right;">16210</td>
+<td style="text-align: right;">26913</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">34595</td>
+<td style="text-align: right;">20827</td>
+<td style="text-align: right;">34595</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">40810</td>
+<td style="text-align: right;">24563</td>
+<td style="text-align: right;">40810</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">44569</td>
+<td style="text-align: right;">26827</td>
+<td style="text-align: right;">44569</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">57411</td>
+<td style="text-align: right;">34560</td>
+<td style="text-align: right;">57411</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">60662</td>
+<td style="text-align: right;">36541</td>
+<td style="text-align: right;">60662</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">58619</td>
+<td style="text-align: right;">35302</td>
+<td style="text-align: right;">58619</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1981</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">34472</td>
+<td style="text-align: right;">20756</td>
+<td style="text-align: right;">34472</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1982</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">38822</td>
+<td style="text-align: right;">23373</td>
+<td style="text-align: right;">38822</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">46716</td>
+<td style="text-align: right;">28131</td>
+<td style="text-align: right;">46716</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1984</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">56299</td>
+<td style="text-align: right;">33898</td>
+<td style="text-align: right;">56299</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1985</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">82832</td>
+<td style="text-align: right;">49876</td>
+<td style="text-align: right;">82832</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1986</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">92915</td>
+<td style="text-align: right;">55952</td>
+<td style="text-align: right;">92915</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1987</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">95104</td>
+<td style="text-align: right;">57277</td>
+<td style="text-align: right;">95104</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">146391</td>
+<td style="text-align: right;">88180</td>
+<td style="text-align: right;">146391</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">191056</td>
+<td style="text-align: right;">115045</td>
+<td style="text-align: right;">191056</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1990</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">237028</td>
+<td style="text-align: right;">142698</td>
+<td style="text-align: right;">237028</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1991</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">281060</td>
+<td style="text-align: right;">169260</td>
+<td style="text-align: right;">281060</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">391922</td>
+<td style="text-align: right;">235926</td>
+<td style="text-align: right;">391922</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1993</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">496182</td>
+<td style="text-align: right;">298696</td>
+<td style="text-align: right;">496182</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">634342</td>
+<td style="text-align: right;">381825</td>
+<td style="text-align: right;">634342</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">787166</td>
+<td style="text-align: right;">473897</td>
+<td style="text-align: right;">787166</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">953615</td>
+<td style="text-align: right;">565636</td>
+<td style="text-align: right;">953615</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1156377</td>
+<td style="text-align: right;">675663</td>
+<td style="text-align: right;">1156377</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1175469</td>
+<td style="text-align: right;">676051</td>
+<td style="text-align: right;">1175469</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1294462</td>
+<td style="text-align: right;">732933</td>
+<td style="text-align: right;">1294462</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1394832</td>
+<td style="text-align: right;">777341</td>
+<td style="text-align: right;">1394832</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1528958</td>
+<td style="text-align: right;">852090</td>
+<td style="text-align: right;">1528958</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1575779</td>
+<td style="text-align: right;">878183</td>
+<td style="text-align: right;">1575779</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1763435</td>
+<td style="text-align: right;">957074</td>
+<td style="text-align: right;">1763435</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1844274</td>
+<td style="text-align: right;">1012235</td>
+<td style="text-align: right;">1844274</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1881340</td>
+<td style="text-align: right;">1033843</td>
+<td style="text-align: right;">1881340</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">2030387</td>
+<td style="text-align: right;">1114005</td>
+<td style="text-align: right;">2030387</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">2239921</td>
+<td style="text-align: right;">1239479</td>
+<td style="text-align: right;">2239921</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>For these cases (i.e.&nbsp;where CAP is NA and VA = LAB) we set CAP = 0.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CAP =</span> <span class="fu">replace</span>(CAP,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                       VA<span class="sc">==</span>LAB <span class="sc">&amp;</span> <span class="fu">is.na</span>(CAP),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                       <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Filter and store data for main industries and the aggregate economy separately
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This list gives the codes of the main industries</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>main_industry_codes<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"AtB"</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"C"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"D"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"E"</span>,</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"F"</span>,</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"G"</span>,</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"H"</span>,</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"I"</span>,</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"J"</span>,</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"K"</span>,</span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"L"</span>,</span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"M"</span>,</span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"N"</span>,</span>
+<span id="cb36-15"><a href="#cb36-15" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"O"</span>,</span>
+<span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"P"</span>,</span>
+<span id="cb36-17"><a href="#cb36-17" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Q"</span>)</span>
+<span id="cb36-18"><a href="#cb36-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-19"><a href="#cb36-19" aria-hidden="true" tabindex="-1"></a><span class="co"># filter for these codes</span></span>
+<span id="cb36-20"><a href="#cb36-20" aria-hidden="true" tabindex="-1"></a>main_industry_accounts<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb36-21"><a href="#cb36-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(code <span class="sc">%in%</span> main_industry_codes)</span>
+<span id="cb36-22"><a href="#cb36-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-23"><a href="#cb36-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-24"><a href="#cb36-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Store reported totals separately</span></span>
+<span id="cb36-25"><a href="#cb36-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-26"><a href="#cb36-26" aria-hidden="true" tabindex="-1"></a>reported_totals<span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span></span>
+<span id="cb36-27"><a href="#cb36-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(code <span class="sc">==</span> <span class="st">"TOT"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb36-28"><a href="#cb36-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>code)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Drop country-year-industry observations that do not have all variables needed
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>There are some observations (n=4124) without …. . We group these by country and industry.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  main_industry_accounts <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="fu">is.na</span>(VA) <span class="sc">|</span> <span class="fu">is.na</span>(CAP) <span class="sc">|</span> <span class="fu">is.na</span>(LAB)) <span class="sc">%&gt;%</span> <span class="fu">count</span>(country, code)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: left;">code</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Czechia</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Estonia</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Latvia</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Malta</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portugal</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovakia</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">AtB</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">G</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">H</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">I</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">J</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">K</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">L</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">O</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">P</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Slovenia</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Korea</td>
+<td style="text-align: left;">Q</td>
+<td style="text-align: right;">38</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We filter these out.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># </span><span class="al">TODO</span><span class="co"> check if COMP is needed, and add in check here and/or calculate it where missing? if so)</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>main_industry_accounts<span class="ot">&lt;-</span> main_industry_accounts <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span>(<span class="fu">is.na</span>(VA) <span class="sc">&amp;</span> <span class="fu">is.na</span>(CAP) <span class="sc">&amp;</span> <span class="fu">is.na</span>(LAB)) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Add industry code descriptions
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Here are the industry descriptions provided in the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>industry_descriptions<span class="ot">&lt;-</span> df_orig <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(code <span class="sc">%in%</span> main_industry_codes) <span class="sc">%&gt;%</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(code, desc) <span class="sc">%&gt;%</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unique</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(code)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(industry_descriptions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">code</th>
+<th style="text-align: left;">desc</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">AtB</td>
+<td style="text-align: left;">AGRICULTURE, HUNTING, FORESTRY AND FISHING</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">MINING AND QUARRYING</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">TOTAL MANUFACTURING</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">E</td>
+<td style="text-align: left;">ELECTRICITY, GAS AND WATER SUPPLY</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F</td>
+<td style="text-align: left;">CONSTRUCTION</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">G</td>
+<td style="text-align: left;">WHOLESALE AND RETAIL TRADE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">H</td>
+<td style="text-align: left;">HOTELS AND RESTAURANTS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">I</td>
+<td style="text-align: left;">TRANSPORT AND STORAGE AND COMMUNICATION</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">J</td>
+<td style="text-align: left;">FINANCIAL INTERMEDIATION</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">REAL ESTATE, RENTING AND BUSINESS ACTIVITIES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">PUBLIC ADMIN AND DEFENCE; COMPULSORY SOCIAL SECURITY</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">M</td>
+<td style="text-align: left;">EDUCATION</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">N</td>
+<td style="text-align: left;">HEALTH AND SOCIAL WORK</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">O</td>
+<td style="text-align: left;">OTHER COMMUNITY, SOCIAL AND PERSONAL SERVICES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">P</td>
+<td style="text-align: left;">PRIVATE HOUSEHOLDS WITH EMPLOYED PERSONS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Q</td>
+<td style="text-align: left;">EXTRA-TERRITORIAL ORGANIZATIONS AND BODIES</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>We join these back into the clean dataframe.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>main_industry_accounts<span class="ot">&lt;-</span> <span class="fu">left_join</span>(main_industry_accounts, industry_descriptions)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = "code"</code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </section>
-<section id="calculatiing-derived-variables" class="level2">
-<h2 class="anchored" data-anchor-id="calculatiing-derived-variables">Calculatiing derived variables</h2>
+<section id="sense-checking" class="level2">
+<h2 class="anchored" data-anchor-id="sense-checking">Sense checking</h2>
+<section id="how-does-the-sum-across-all-industries-compare-to-the-reported-economy-wide-totals" class="level3">
+<h3 class="anchored" data-anchor-id="how-does-the-sum-across-all-industries-compare-to-the-reported-economy-wide-totals">How does the sum across all industries compare to the reported economy-wide totals?</h3>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Calculate aggregate across industries and merge with reported economy-wide totals
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>agg_industries<span class="ot">&lt;-</span> main_industry_accounts <span class="sc">%&gt;%</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(country, year) <span class="sc">%&gt;%</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">VA =</span> <span class="fu">sum</span>(VA, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">CAP =</span> <span class="fu">sum</span>(CAP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">COMP =</span> <span class="fu">sum</span>(COMP, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>              <span class="at">LAB =</span> <span class="fu">sum</span>(LAB, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>              )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has grouped output by 'country'. You can override using the
+`.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>reported_totals <span class="ot">&lt;-</span> reported_totals <span class="sc">%&gt;%</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">VA_reported =</span> VA,</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">CAP_reported =</span> CAP,</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">COMP_reported =</span> COMP,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">LAB_reported =</span> LAB)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>check_totals<span class="ot">&lt;-</span> <span class="fu">left_join</span>(agg_industries, reported_totals) <span class="sc">%&gt;%</span></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">VA_ratio =</span> VA<span class="sc">/</span>VA_reported,</span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">CAP_ratio =</span> CAP<span class="sc">/</span>CAP_reported,</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">COMP_ratio =</span> COMP<span class="sc">/</span>COMP_reported,</span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">LAB_ratio =</span> LAB<span class="sc">/</span>LAB_reported)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Joining, by = c("country", "year")</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>tolerance<span class="ot">&lt;-</span> <span class="fl">0.001</span> <span class="co"># tenth of a percent tolerance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<p>In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than 0.1%.</p>
+<p>Note that in Canada - which is one of the countries we will go on to use this data for - the sum across available industries falls short of the reported aggregate (for value added, Capital income, Labour income and Compensation of employees) by around 5%, with no trend over time.</p>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Value added</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Capital income</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Labour income</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Comp. of employees</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  check_totals <span class="sc">%&gt;%</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(VA_ratio<span class="sc">&lt;</span>(<span class="dv">1</span><span class="sc">-</span>tolerance) <span class="sc">|</span> VA_ratio<span class="sc">&gt;</span>(<span class="dv">1</span><span class="sc">+</span>tolerance)) <span class="sc">%&gt;%</span></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country, year, VA_ratio, VA, VA_reported)</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">VA_ratio</th>
+<th style="text-align: right;">VA</th>
+<th style="text-align: right;">VA_reported</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1961</td>
+<td style="text-align: right;">0.9543991</td>
+<td style="text-align: right;">36554.77</td>
+<td style="text-align: right;">38301.35</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1962</td>
+<td style="text-align: right;">0.9547846</td>
+<td style="text-align: right;">39485.90</td>
+<td style="text-align: right;">41355.82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1963</td>
+<td style="text-align: right;">0.9555924</td>
+<td style="text-align: right;">42536.19</td>
+<td style="text-align: right;">44512.90</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1964</td>
+<td style="text-align: right;">0.9540809</td>
+<td style="text-align: right;">46321.35</td>
+<td style="text-align: right;">48550.75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1965</td>
+<td style="text-align: right;">0.9557751</td>
+<td style="text-align: right;">50960.06</td>
+<td style="text-align: right;">53318.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">0.9545243</td>
+<td style="text-align: right;">57009.31</td>
+<td style="text-align: right;">59725.36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1967</td>
+<td style="text-align: right;">0.9549014</td>
+<td style="text-align: right;">61215.29</td>
+<td style="text-align: right;">64106.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1968</td>
+<td style="text-align: right;">0.9569902</td>
+<td style="text-align: right;">67084.63</td>
+<td style="text-align: right;">70099.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1969</td>
+<td style="text-align: right;">0.9555310</td>
+<td style="text-align: right;">73716.55</td>
+<td style="text-align: right;">77147.22</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">0.9541383</td>
+<td style="text-align: right;">79404.27</td>
+<td style="text-align: right;">83220.92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">0.9538106</td>
+<td style="text-align: right;">86598.66</td>
+<td style="text-align: right;">90792.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: right;">0.9524503</td>
+<td style="text-align: right;">96285.28</td>
+<td style="text-align: right;">101092.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1973</td>
+<td style="text-align: right;">0.9535149</td>
+<td style="text-align: right;">113318.33</td>
+<td style="text-align: right;">118842.75</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">0.9527752</td>
+<td style="text-align: right;">135379.95</td>
+<td style="text-align: right;">142090.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">0.9523088</td>
+<td style="text-align: right;">155644.81</td>
+<td style="text-align: right;">163439.43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: right;">0.9529810</td>
+<td style="text-align: right;">178538.01</td>
+<td style="text-align: right;">187346.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">0.9578088</td>
+<td style="text-align: right;">198450.96</td>
+<td style="text-align: right;">207192.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: right;">0.9587053</td>
+<td style="text-align: right;">221033.93</td>
+<td style="text-align: right;">230554.63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">0.9563672</td>
+<td style="text-align: right;">253006.84</td>
+<td style="text-align: right;">264549.89</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0.9559176</td>
+<td style="text-align: right;">286567.15</td>
+<td style="text-align: right;">299782.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1981</td>
+<td style="text-align: right;">0.9564291</td>
+<td style="text-align: right;">323771.29</td>
+<td style="text-align: right;">338520.95</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1982</td>
+<td style="text-align: right;">0.9581856</td>
+<td style="text-align: right;">342333.67</td>
+<td style="text-align: right;">357272.81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: right;">0.9565794</td>
+<td style="text-align: right;">372077.81</td>
+<td style="text-align: right;">388966.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1984</td>
+<td style="text-align: right;">0.9559824</td>
+<td style="text-align: right;">406575.80</td>
+<td style="text-align: right;">425296.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1985</td>
+<td style="text-align: right;">0.9547281</td>
+<td style="text-align: right;">437712.09</td>
+<td style="text-align: right;">458467.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1986</td>
+<td style="text-align: right;">0.9509230</td>
+<td style="text-align: right;">455998.68</td>
+<td style="text-align: right;">479532.71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1987</td>
+<td style="text-align: right;">0.9502012</td>
+<td style="text-align: right;">494957.24</td>
+<td style="text-align: right;">520897.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: right;">0.9483133</td>
+<td style="text-align: right;">539483.59</td>
+<td style="text-align: right;">568887.49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: right;">0.9474619</td>
+<td style="text-align: right;">575745.24</td>
+<td style="text-align: right;">607671.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1990</td>
+<td style="text-align: right;">0.9485257</td>
+<td style="text-align: right;">598900.51</td>
+<td style="text-align: right;">631401.43</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1991</td>
+<td style="text-align: right;">0.9502031</td>
+<td style="text-align: right;">604407.22</td>
+<td style="text-align: right;">636082.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">0.9522755</td>
+<td style="text-align: right;">618119.84</td>
+<td style="text-align: right;">649097.69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">0.9527423</td>
+<td style="text-align: right;">641040.30</td>
+<td style="text-align: right;">672837.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: right;">0.9516557</td>
+<td style="text-align: right;">679624.86</td>
+<td style="text-align: right;">714149.90</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">0.9499051</td>
+<td style="text-align: right;">713060.93</td>
+<td style="text-align: right;">750665.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">0.9493590</td>
+<td style="text-align: right;">736536.23</td>
+<td style="text-align: right;">775824.79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0.9465072</td>
+<td style="text-align: right;">773071.20</td>
+<td style="text-align: right;">816762.07</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">0.9463136</td>
+<td style="text-align: right;">801086.93</td>
+<td style="text-align: right;">846534.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">0.9469522</td>
+<td style="text-align: right;">861437.06</td>
+<td style="text-align: right;">909694.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.9490651</td>
+<td style="text-align: right;">948998.89</td>
+<td style="text-align: right;">999930.19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">0.9483122</td>
+<td style="text-align: right;">978821.76</td>
+<td style="text-align: right;">1032172.44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.9483371</td>
+<td style="text-align: right;">1013549.36</td>
+<td style="text-align: right;">1068764.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">0.9478554</td>
+<td style="text-align: right;">1069935.45</td>
+<td style="text-align: right;">1128796.06</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">0.9467770</td>
+<td style="text-align: right;">1137368.85</td>
+<td style="text-align: right;">1201305.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">0.9461535</td>
+<td style="text-align: right;">1211597.10</td>
+<td style="text-align: right;">1280550.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">0.9449413</td>
+<td style="text-align: right;">1279784.35</td>
+<td style="text-align: right;">1354353.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">0.9452838</td>
+<td style="text-align: right;">1352483.77</td>
+<td style="text-align: right;">1430770.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">0.9482168</td>
+<td style="text-align: right;">1431074.17</td>
+<td style="text-align: right;">1509226.80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">1.0013712</td>
+<td style="text-align: right;">297702.40</td>
+<td style="text-align: right;">297294.77</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">1.0013495</td>
+<td style="text-align: right;">372039.87</td>
+<td style="text-align: right;">371538.48</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">1.0012562</td>
+<td style="text-align: right;">455595.93</td>
+<td style="text-align: right;">455024.34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">1.0012633</td>
+<td style="text-align: right;">534559.60</td>
+<td style="text-align: right;">533885.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">1.0012304</td>
+<td style="text-align: right;">587277.17</td>
+<td style="text-align: right;">586555.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">1.0012413</td>
+<td style="text-align: right;">663045.75</td>
+<td style="text-align: right;">662223.74</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">1.0012296</td>
+<td style="text-align: right;">696109.91</td>
+<td style="text-align: right;">695255.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">1.0011908</td>
+<td style="text-align: right;">715923.99</td>
+<td style="text-align: right;">715072.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">1.0011782</td>
+<td style="text-align: right;">745234.17</td>
+<td style="text-align: right;">744357.16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">1.0011344</td>
+<td style="text-align: right;">822596.62</td>
+<td style="text-align: right;">821664.56</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">1.0011452</td>
+<td style="text-align: right;">867281.03</td>
+<td style="text-align: right;">866288.97</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">1.0011104</td>
+<td style="text-align: right;">932334.05</td>
+<td style="text-align: right;">931299.98</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  check_totals <span class="sc">%&gt;%</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(CAP_ratio<span class="sc">&lt;</span>(<span class="dv">1</span><span class="sc">-</span>tolerance) <span class="sc">|</span> CAP_ratio<span class="sc">&gt;</span>(<span class="dv">1</span><span class="sc">+</span>tolerance)) <span class="sc">%&gt;%</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country, year, CAP_ratio, CAP, CAP_reported)</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">CAP_ratio</th>
+<th style="text-align: right;">CAP</th>
+<th style="text-align: right;">CAP_reported</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1961</td>
+<td style="text-align: right;">0.9625938</td>
+<td style="text-align: right;">14214.17</td>
+<td style="text-align: right;">14766.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1962</td>
+<td style="text-align: right;">0.9644522</td>
+<td style="text-align: right;">15254.16</td>
+<td style="text-align: right;">15816.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1963</td>
+<td style="text-align: right;">0.9657920</td>
+<td style="text-align: right;">16799.12</td>
+<td style="text-align: right;">17394.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1964</td>
+<td style="text-align: right;">0.9625310</td>
+<td style="text-align: right;">18332.42</td>
+<td style="text-align: right;">19046.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1965</td>
+<td style="text-align: right;">0.9653495</td>
+<td style="text-align: right;">19898.65</td>
+<td style="text-align: right;">20612.90</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">0.9619558</td>
+<td style="text-align: right;">21945.09</td>
+<td style="text-align: right;">22812.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1967</td>
+<td style="text-align: right;">0.9618834</td>
+<td style="text-align: right;">22632.38</td>
+<td style="text-align: right;">23529.24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1968</td>
+<td style="text-align: right;">0.9668541</td>
+<td style="text-align: right;">25396.66</td>
+<td style="text-align: right;">26267.32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1969</td>
+<td style="text-align: right;">0.9650744</td>
+<td style="text-align: right;">27278.33</td>
+<td style="text-align: right;">28265.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">0.9628729</td>
+<td style="text-align: right;">29323.45</td>
+<td style="text-align: right;">30454.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">0.9628239</td>
+<td style="text-align: right;">31884.02</td>
+<td style="text-align: right;">33115.11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: right;">0.9607137</td>
+<td style="text-align: right;">35231.09</td>
+<td style="text-align: right;">36671.79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1973</td>
+<td style="text-align: right;">0.9643340</td>
+<td style="text-align: right;">43346.28</td>
+<td style="text-align: right;">44949.45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">0.9630893</td>
+<td style="text-align: right;">51921.19</td>
+<td style="text-align: right;">53911.09</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">0.9647368</td>
+<td style="text-align: right;">58599.13</td>
+<td style="text-align: right;">60741.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: right;">0.9658531</td>
+<td style="text-align: right;">66516.25</td>
+<td style="text-align: right;">68867.88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">0.9746197</td>
+<td style="text-align: right;">74225.22</td>
+<td style="text-align: right;">76158.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: right;">0.9771858</td>
+<td style="text-align: right;">86044.40</td>
+<td style="text-align: right;">88053.27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">0.9715939</td>
+<td style="text-align: right;">101770.27</td>
+<td style="text-align: right;">104745.69</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0.9710902</td>
+<td style="text-align: right;">116071.62</td>
+<td style="text-align: right;">119527.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1981</td>
+<td style="text-align: right;">0.9692296</td>
+<td style="text-align: right;">127658.87</td>
+<td style="text-align: right;">131711.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1982</td>
+<td style="text-align: right;">0.9748002</td>
+<td style="text-align: right;">134192.18</td>
+<td style="text-align: right;">137661.20</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: right;">0.9710828</td>
+<td style="text-align: right;">152990.05</td>
+<td style="text-align: right;">157545.84</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1984</td>
+<td style="text-align: right;">0.9697668</td>
+<td style="text-align: right;">169974.00</td>
+<td style="text-align: right;">175273.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1985</td>
+<td style="text-align: right;">0.9674075</td>
+<td style="text-align: right;">181623.77</td>
+<td style="text-align: right;">187742.78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1986</td>
+<td style="text-align: right;">0.9618942</td>
+<td style="text-align: right;">183465.41</td>
+<td style="text-align: right;">190733.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1987</td>
+<td style="text-align: right;">0.9648083</td>
+<td style="text-align: right;">201555.04</td>
+<td style="text-align: right;">208906.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: right;">0.9633154</td>
+<td style="text-align: right;">216698.39</td>
+<td style="text-align: right;">224950.62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: right;">0.9629639</td>
+<td style="text-align: right;">229861.29</td>
+<td style="text-align: right;">238701.87</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1990</td>
+<td style="text-align: right;">0.9647323</td>
+<td style="text-align: right;">234420.11</td>
+<td style="text-align: right;">242989.81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1991</td>
+<td style="text-align: right;">0.9667424</td>
+<td style="text-align: right;">229151.38</td>
+<td style="text-align: right;">237034.60</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">0.9711700</td>
+<td style="text-align: right;">234251.80</td>
+<td style="text-align: right;">241205.77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">0.9701209</td>
+<td style="text-align: right;">249521.30</td>
+<td style="text-align: right;">257206.38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: right;">0.9662084</td>
+<td style="text-align: right;">278719.12</td>
+<td style="text-align: right;">288466.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">0.9653807</td>
+<td style="text-align: right;">298862.93</td>
+<td style="text-align: right;">309580.39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">0.9656315</td>
+<td style="text-align: right;">311364.33</td>
+<td style="text-align: right;">322446.34</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0.9601815</td>
+<td style="text-align: right;">326335.61</td>
+<td style="text-align: right;">339868.66</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">0.9598123</td>
+<td style="text-align: right;">331553.48</td>
+<td style="text-align: right;">345435.76</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">0.9610119</td>
+<td style="text-align: right;">365183.70</td>
+<td style="text-align: right;">379999.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.9643016</td>
+<td style="text-align: right;">411121.37</td>
+<td style="text-align: right;">426341.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">0.9630701</td>
+<td style="text-align: right;">418119.07</td>
+<td style="text-align: right;">434152.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.9618769</td>
+<td style="text-align: right;">429893.07</td>
+<td style="text-align: right;">446931.49</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">0.9585647</td>
+<td style="text-align: right;">458654.13</td>
+<td style="text-align: right;">478480.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">0.9560711</td>
+<td style="text-align: right;">491154.69</td>
+<td style="text-align: right;">513721.93</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">0.9552567</td>
+<td style="text-align: right;">529408.22</td>
+<td style="text-align: right;">554205.18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">0.9511969</td>
+<td style="text-align: right;">551150.94</td>
+<td style="text-align: right;">579428.86</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">0.9510703</td>
+<td style="text-align: right;">582392.75</td>
+<td style="text-align: right;">612355.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">0.9571125</td>
+<td style="text-align: right;">628726.05</td>
+<td style="text-align: right;">656898.77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">1.0048157</td>
+<td style="text-align: right;">85055.48</td>
+<td style="text-align: right;">84647.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">1.0048838</td>
+<td style="text-align: right;">103164.79</td>
+<td style="text-align: right;">102663.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">1.0044902</td>
+<td style="text-align: right;">127870.07</td>
+<td style="text-align: right;">127298.47</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">1.0046163</td>
+<td style="text-align: right;">146782.80</td>
+<td style="text-align: right;">146108.32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">1.0046392</td>
+<td style="text-align: right;">156284.97</td>
+<td style="text-align: right;">155563.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">1.0042223</td>
+<td style="text-align: right;">195505.73</td>
+<td style="text-align: right;">194683.73</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">1.0046042</td>
+<td style="text-align: right;">186524.68</td>
+<td style="text-align: right;">185669.81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">1.0040706</td>
+<td style="text-align: right;">210043.58</td>
+<td style="text-align: right;">209192.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">1.0038414</td>
+<td style="text-align: right;">229181.87</td>
+<td style="text-align: right;">228304.85</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">1.0033416</td>
+<td style="text-align: right;">279862.33</td>
+<td style="text-align: right;">278930.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">1.0032816</td>
+<td style="text-align: right;">303307.05</td>
+<td style="text-align: right;">302314.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">1.0029464</td>
+<td style="text-align: right;">351993.17</td>
+<td style="text-align: right;">350959.10</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  check_totals <span class="sc">%&gt;%</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(LAB_ratio<span class="sc">&lt;</span>(<span class="dv">1</span><span class="sc">-</span>tolerance) <span class="sc">|</span> LAB_ratio<span class="sc">&gt;</span>(<span class="dv">1</span><span class="sc">+</span>tolerance)) <span class="sc">%&gt;%</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country, year, LAB_ratio, LAB, LAB_reported)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">LAB_ratio</th>
+<th style="text-align: right;">LAB</th>
+<th style="text-align: right;">LAB_reported</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1961</td>
+<td style="text-align: right;">0.9492574</td>
+<td style="text-align: right;">22340.60</td>
+<td style="text-align: right;">23534.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1962</td>
+<td style="text-align: right;">0.9487975</td>
+<td style="text-align: right;">24231.74</td>
+<td style="text-align: right;">25539.42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1963</td>
+<td style="text-align: right;">0.9490504</td>
+<td style="text-align: right;">25737.07</td>
+<td style="text-align: right;">27118.76</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1964</td>
+<td style="text-align: right;">0.9486262</td>
+<td style="text-align: right;">27988.93</td>
+<td style="text-align: right;">29504.69</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1965</td>
+<td style="text-align: right;">0.9497406</td>
+<td style="text-align: right;">31061.41</td>
+<td style="text-align: right;">32705.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">0.9499314</td>
+<td style="text-align: right;">35064.23</td>
+<td style="text-align: right;">36912.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1967</td>
+<td style="text-align: right;">0.9508527</td>
+<td style="text-align: right;">38582.90</td>
+<td style="text-align: right;">40577.16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1968</td>
+<td style="text-align: right;">0.9510791</td>
+<td style="text-align: right;">41687.97</td>
+<td style="text-align: right;">43832.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1969</td>
+<td style="text-align: right;">0.9500125</td>
+<td style="text-align: right;">46438.23</td>
+<td style="text-align: right;">48881.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">0.9490972</td>
+<td style="text-align: right;">50080.82</td>
+<td style="text-align: right;">52766.79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">0.9486356</td>
+<td style="text-align: right;">54714.64</td>
+<td style="text-align: right;">57677.19</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: right;">0.9477462</td>
+<td style="text-align: right;">61054.19</td>
+<td style="text-align: right;">64420.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1973</td>
+<td style="text-align: right;">0.9469336</td>
+<td style="text-align: right;">69972.05</td>
+<td style="text-align: right;">73893.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">0.9464694</td>
+<td style="text-align: right;">83458.76</td>
+<td style="text-align: right;">88179.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">0.9449583</td>
+<td style="text-align: right;">97045.68</td>
+<td style="text-align: right;">102698.37</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: right;">0.9454990</td>
+<td style="text-align: right;">112021.76</td>
+<td style="text-align: right;">118478.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">0.9480382</td>
+<td style="text-align: right;">124225.74</td>
+<td style="text-align: right;">131034.53</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: right;">0.9472859</td>
+<td style="text-align: right;">134989.53</td>
+<td style="text-align: right;">142501.36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">0.9463867</td>
+<td style="text-align: right;">151236.56</td>
+<td style="text-align: right;">159804.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0.9458567</td>
+<td style="text-align: right;">170495.53</td>
+<td style="text-align: right;">180255.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1981</td>
+<td style="text-align: right;">0.9482768</td>
+<td style="text-align: right;">196112.42</td>
+<td style="text-align: right;">206809.25</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1982</td>
+<td style="text-align: right;">0.9477709</td>
+<td style="text-align: right;">208141.49</td>
+<td style="text-align: right;">219611.60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: right;">0.9467059</td>
+<td style="text-align: right;">219087.76</td>
+<td style="text-align: right;">231421.14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1984</td>
+<td style="text-align: right;">0.9463192</td>
+<td style="text-align: right;">236601.80</td>
+<td style="text-align: right;">250023.25</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1985</td>
+<td style="text-align: right;">0.9459351</td>
+<td style="text-align: right;">256088.31</td>
+<td style="text-align: right;">270725.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1986</td>
+<td style="text-align: right;">0.9436772</td>
+<td style="text-align: right;">272533.27</td>
+<td style="text-align: right;">288799.26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1987</td>
+<td style="text-align: right;">0.9404204</td>
+<td style="text-align: right;">293402.20</td>
+<td style="text-align: right;">311990.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: right;">0.9385013</td>
+<td style="text-align: right;">322785.20</td>
+<td style="text-align: right;">343936.87</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: right;">0.9374329</td>
+<td style="text-align: right;">345883.95</td>
+<td style="text-align: right;">368969.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1990</td>
+<td style="text-align: right;">0.9383870</td>
+<td style="text-align: right;">364480.40</td>
+<td style="text-align: right;">388411.62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1991</td>
+<td style="text-align: right;">0.9403788</td>
+<td style="text-align: right;">375255.84</td>
+<td style="text-align: right;">399047.52</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">0.9411023</td>
+<td style="text-align: right;">383868.04</td>
+<td style="text-align: right;">407891.91</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">0.9419878</td>
+<td style="text-align: right;">391519.00</td>
+<td style="text-align: right;">415630.65</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: right;">0.9417940</td>
+<td style="text-align: right;">400905.73</td>
+<td style="text-align: right;">425683.03</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">0.9390434</td>
+<td style="text-align: right;">414197.99</td>
+<td style="text-align: right;">441085.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">0.9377859</td>
+<td style="text-align: right;">425171.90</td>
+<td style="text-align: right;">453378.45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0.9367619</td>
+<td style="text-align: right;">446735.59</td>
+<td style="text-align: right;">476893.41</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">0.9370082</td>
+<td style="text-align: right;">469533.45</td>
+<td style="text-align: right;">501098.53</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">0.9368660</td>
+<td style="text-align: right;">496253.36</td>
+<td style="text-align: right;">529695.15</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.9377401</td>
+<td style="text-align: right;">537877.52</td>
+<td style="text-align: right;">573589.12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">0.9375983</td>
+<td style="text-align: right;">560702.70</td>
+<td style="text-align: right;">598020.17</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.9386056</td>
+<td style="text-align: right;">583656.29</td>
+<td style="text-align: right;">621833.37</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">0.9399759</td>
+<td style="text-align: right;">611281.32</td>
+<td style="text-align: right;">650315.96</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">0.9398330</td>
+<td style="text-align: right;">646214.16</td>
+<td style="text-align: right;">687584.06</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">0.9392076</td>
+<td style="text-align: right;">682188.88</td>
+<td style="text-align: right;">726345.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">0.9402639</td>
+<td style="text-align: right;">728633.42</td>
+<td style="text-align: right;">774924.39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">0.9409542</td>
+<td style="text-align: right;">770091.02</td>
+<td style="text-align: right;">818415.02</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">0.9413607</td>
+<td style="text-align: right;">802348.13</td>
+<td style="text-align: right;">852328.04</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">0.9433312</td>
+<td style="text-align: right;">800662.61</td>
+<td style="text-align: right;">848760.89</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">0.9428523</td>
+<td style="text-align: right;">833166.42</td>
+<td style="text-align: right;">883665.92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  check_totals <span class="sc">%&gt;%</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(COMP_ratio<span class="sc">&lt;</span>(<span class="dv">1</span><span class="sc">-</span>tolerance) <span class="sc">|</span> COMP_ratio<span class="sc">&gt;</span>(<span class="dv">1</span><span class="sc">+</span>tolerance)) <span class="sc">%&gt;%</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(country, year, COMP_ratio, COMP, COMP_reported)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">country</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">COMP_ratio</th>
+<th style="text-align: right;">COMP</th>
+<th style="text-align: right;">COMP_reported</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1961</td>
+<td style="text-align: right;">0.9506017</td>
+<td style="text-align: right;">19985.85</td>
+<td style="text-align: right;">21024.42</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1962</td>
+<td style="text-align: right;">0.9494674</td>
+<td style="text-align: right;">21473.99</td>
+<td style="text-align: right;">22616.88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1963</td>
+<td style="text-align: right;">0.9494831</td>
+<td style="text-align: right;">22936.78</td>
+<td style="text-align: right;">24157.12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1964</td>
+<td style="text-align: right;">0.9487159</td>
+<td style="text-align: right;">25069.38</td>
+<td style="text-align: right;">26424.54</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1965</td>
+<td style="text-align: right;">0.9494484</td>
+<td style="text-align: right;">27987.38</td>
+<td style="text-align: right;">29477.51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1966</td>
+<td style="text-align: right;">0.9495458</td>
+<td style="text-align: right;">31657.88</td>
+<td style="text-align: right;">33340.02</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1967</td>
+<td style="text-align: right;">0.9505299</td>
+<td style="text-align: right;">35059.18</td>
+<td style="text-align: right;">36883.83</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1968</td>
+<td style="text-align: right;">0.9505743</td>
+<td style="text-align: right;">38129.53</td>
+<td style="text-align: right;">40112.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1969</td>
+<td style="text-align: right;">0.9492751</td>
+<td style="text-align: right;">42595.70</td>
+<td style="text-align: right;">44871.82</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1970</td>
+<td style="text-align: right;">0.9481144</td>
+<td style="text-align: right;">46130.33</td>
+<td style="text-align: right;">48654.82</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1971</td>
+<td style="text-align: right;">0.9475112</td>
+<td style="text-align: right;">50558.15</td>
+<td style="text-align: right;">53358.89</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1972</td>
+<td style="text-align: right;">0.9464852</td>
+<td style="text-align: right;">56699.65</td>
+<td style="text-align: right;">59905.48</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1973</td>
+<td style="text-align: right;">0.9456647</td>
+<td style="text-align: right;">65274.22</td>
+<td style="text-align: right;">69024.70</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1974</td>
+<td style="text-align: right;">0.9450470</td>
+<td style="text-align: right;">77799.49</td>
+<td style="text-align: right;">82323.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1975</td>
+<td style="text-align: right;">0.9435146</td>
+<td style="text-align: right;">90597.26</td>
+<td style="text-align: right;">96021.04</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1976</td>
+<td style="text-align: right;">0.9440721</td>
+<td style="text-align: right;">104884.25</td>
+<td style="text-align: right;">111097.71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1977</td>
+<td style="text-align: right;">0.9465868</td>
+<td style="text-align: right;">116473.29</td>
+<td style="text-align: right;">123045.55</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1978</td>
+<td style="text-align: right;">0.9457982</td>
+<td style="text-align: right;">126610.80</td>
+<td style="text-align: right;">133866.61</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1979</td>
+<td style="text-align: right;">0.9447934</td>
+<td style="text-align: right;">142259.05</td>
+<td style="text-align: right;">150571.60</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">0.9443936</td>
+<td style="text-align: right;">160774.24</td>
+<td style="text-align: right;">170240.72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1981</td>
+<td style="text-align: right;">0.9470241</td>
+<td style="text-align: right;">185559.31</td>
+<td style="text-align: right;">195939.38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1982</td>
+<td style="text-align: right;">0.9465360</td>
+<td style="text-align: right;">197310.54</td>
+<td style="text-align: right;">208455.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: right;">0.9457760</td>
+<td style="text-align: right;">207924.39</td>
+<td style="text-align: right;">219845.28</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1984</td>
+<td style="text-align: right;">0.9453599</td>
+<td style="text-align: right;">223843.06</td>
+<td style="text-align: right;">236780.79</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1985</td>
+<td style="text-align: right;">0.9447926</td>
+<td style="text-align: right;">241222.84</td>
+<td style="text-align: right;">255318.30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1986</td>
+<td style="text-align: right;">0.9423278</td>
+<td style="text-align: right;">256535.84</td>
+<td style="text-align: right;">272236.29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1987</td>
+<td style="text-align: right;">0.9392030</td>
+<td style="text-align: right;">277929.04</td>
+<td style="text-align: right;">295920.09</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: right;">0.9369549</td>
+<td style="text-align: right;">304283.68</td>
+<td style="text-align: right;">324758.08</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: right;">0.9358756</td>
+<td style="text-align: right;">327411.18</td>
+<td style="text-align: right;">349844.77</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1990</td>
+<td style="text-align: right;">0.9370564</td>
+<td style="text-align: right;">345416.63</td>
+<td style="text-align: right;">368618.81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1991</td>
+<td style="text-align: right;">0.9389252</td>
+<td style="text-align: right;">355717.18</td>
+<td style="text-align: right;">378855.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1992</td>
+<td style="text-align: right;">0.9397520</td>
+<td style="text-align: right;">364015.87</td>
+<td style="text-align: right;">387353.13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1993</td>
+<td style="text-align: right;">0.9406796</td>
+<td style="text-align: right;">370977.70</td>
+<td style="text-align: right;">394371.99</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: right;">0.9406104</td>
+<td style="text-align: right;">380468.41</td>
+<td style="text-align: right;">404490.99</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1995</td>
+<td style="text-align: right;">0.9377237</td>
+<td style="text-align: right;">392340.83</td>
+<td style="text-align: right;">418397.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">0.9361804</td>
+<td style="text-align: right;">401079.16</td>
+<td style="text-align: right;">428420.81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1997</td>
+<td style="text-align: right;">0.9349962</td>
+<td style="text-align: right;">423542.69</td>
+<td style="text-align: right;">452988.68</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1998</td>
+<td style="text-align: right;">0.9353307</td>
+<td style="text-align: right;">444520.00</td>
+<td style="text-align: right;">475254.40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">0.9352534</td>
+<td style="text-align: right;">470128.87</td>
+<td style="text-align: right;">502675.39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">0.9361946</td>
+<td style="text-align: right;">510425.87</td>
+<td style="text-align: right;">545213.41</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">0.9359353</td>
+<td style="text-align: right;">533592.62</td>
+<td style="text-align: right;">570116.98</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">0.9369685</td>
+<td style="text-align: right;">556150.72</td>
+<td style="text-align: right;">593563.93</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2003</td>
+<td style="text-align: right;">0.9382564</td>
+<td style="text-align: right;">582829.03</td>
+<td style="text-align: right;">621183.09</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2004</td>
+<td style="text-align: right;">0.9382860</td>
+<td style="text-align: right;">616881.40</td>
+<td style="text-align: right;">657455.63</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2005</td>
+<td style="text-align: right;">0.9376588</td>
+<td style="text-align: right;">651962.89</td>
+<td style="text-align: right;">695309.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2006</td>
+<td style="text-align: right;">0.9387380</td>
+<td style="text-align: right;">698191.17</td>
+<td style="text-align: right;">743755.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">0.9394022</td>
+<td style="text-align: right;">736970.29</td>
+<td style="text-align: right;">784509.90</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">0.9396815</td>
+<td style="text-align: right;">769147.51</td>
+<td style="text-align: right;">818519.38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">0.9417985</td>
+<td style="text-align: right;">767248.81</td>
+<td style="text-align: right;">814663.43</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">0.9412869</td>
+<td style="text-align: right;">799692.50</td>
+<td style="text-align: right;">849573.60</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="save-cleaned-data" class="level2">
+<h2 class="anchored" data-anchor-id="save-cleaned-data">Save cleaned data</h2>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Write cleaned data to csv
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>fp<span class="ot">&lt;-</span> <span class="st">"PhD_pages/data/clean/"</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(main_industry_accounts, <span class="fu">paste0</span>(fp, <span class="st">"KLEMS_gen_income_by_industry"</span>, <span class="st">".csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
 
 
 </section>
