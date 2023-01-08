@@ -1,0 +1,12 @@
+---
+title: "A test notebook with Shiny app mbedded as an iframe"
+format: html
+---
+
+
+
+```{=html}
+<iframe src="https://shiny-apps.netlify.app/app1/" height="700" width="100%" title="Shinylive test"></iframe>
+```
+
+

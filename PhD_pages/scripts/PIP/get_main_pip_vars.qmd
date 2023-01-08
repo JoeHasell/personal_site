@@ -4,20 +4,20 @@
 
 
  # Build query
-request_url<- paste0( 'https://api.worldbank.org/pip/v1/pip?',
-      'country=all',
-      '&year=', "all",
-      '&povline=', "2.15",
-      'version=20220909_2017_01_02_PROD',
-      '&fill_gaps=false',
-      '&welfare_type=all',
-      '&reporting_level=all',
-      '&format=csv')
+# request_url<- paste0( 'https://api.worldbank.org/pip/v1/pip?',
+#       'country=all',
+#       '&year=', "all",
+#       '&povline=', "2.15",
+#       'version=20220909_2017_01_02_PROD',
+#       '&fill_gaps=false',
+#       '&welfare_type=all',
+#       '&reporting_level=all',
+#       '&format=csv')
 
-pip_main_vars_orig<- read.csv(request_url)
+# pip_main_vars_orig<- read.csv(request_url)
 
 ```
 
 ```{r}
-write.csv(pip_main_vars_orig, "PhD_pages/data/original/pip_main_vars.csv", row.names = FALSE)
+# write.csv(pip_main_vars_orig, "PhD_pages/data/original/pip_main_vars.csv", row.names = FALSE)
 ```

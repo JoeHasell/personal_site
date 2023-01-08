@@ -15,6 +15,7 @@ website:
               - PhD_pages/paper_pages/overview.qmd
               - PhD_pages/paper_pages/paper1.qmd
               - PhD_pages/paper_pages/paper3.qmd
+              - PhD_pages/paper_pages/test_page.qmd
           - section: "Data appendices"
             contents:
               - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
@@ -22,7 +23,9 @@ website:
       - section: "About this site"
         contents:
           - how_to.qmd
+          - test_pages/test_passing_r_to_python.qmd
           - test_pages/test_with_shinylive.qmd
+          - test_pages/test_with_iframe_shiny.qmd
       
 
 format:

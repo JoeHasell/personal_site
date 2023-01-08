@@ -1,30 +1,79 @@
 ---
-title: "A test notebook with Shinylive"
+title: Shinylive in Quarto example
+format: html
+filters:
+  - shinylive
 ---
 
-``` {r}
-library(tidyverse)
-library(here)
+This is a Shinylive application embedded in a Quarto doc.
+
+These are Shiny for Python applications which run completely in the browser, using Pyodide (Python compiled to WebAssembly).
+
+See the [Shilylive quarto extension](https://github.com/quarto-ext/shinylive) for further documentation.
+
+And the documentation on [Shiny for Python](https://shiny.rstudio.com/py/docs/putting-it-together.html).
+
+
+```{shinylive-python}
+#| standalone: true
+
+from shiny import *
+
+app_ui = ui.page_fluid(
+    ui.input_slider("n", "N", 0, 100, 40),
+    ui.output_text_verbatim("txt"),
+)
+
+def server(input, output, session):
+    @output
+    @render.text
+    def txt():
+        return f"The value of n*2 is {input.n() * 2}"
+
+app = App(app_ui, server)
+
 ```
 
+Here is a second app I am testing:
+
+```{shinylive-python}
+#| standalone: true
+#| viewerHeight: 420
+
+from shiny import *
+from plotnine import *
+from pyodide.http import open_url
+import pandas as pd
 
 
-``` {r}
-a<- c(1:10)
-b<- a * 2 + 1
+
+app_ui = ui.page_fluid(
+    ui.output_plot("example_plot"),
+)
 
 
-df<- data.frame(a, b)
+def server(input, output, session):
+    @output
+    @render.plot
+    def example_plot():
+    
+        url = 'https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/JoeHasell/PIP/data/ppp_2017/final/PIP_data_public_download/full_dataset/cons_only/poverty_cons_only.csv'
+        
+        df = pd.read_csv(open_url(url))
 
-fp<- paste0(here(),"/shiny_apps/app1/data.csv")
+        plot = (ggplot(df, aes('Year', 'headcount_ratio_365', color = 'Entity'))
+        + geom_line())
 
-write.csv(df, fp)
+        # d = {'col1': [1, 2], 'col2': [3, 4]}
+        # df = pd.DataFrame(data=d)
+        # plot = (ggplot(df, aes('col1', 'col2'))
+        # + geom_point())
+
+
+        return plot
+
+
+app = App(app_ui, server)
 
 ```
-
-
-```{=html}
-<iframe src="https://shiny-apps.netlify.app/app1/" height="700" width="100%" title="Shinylive test"></iframe>
-```
-
 

@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Joe Hasell - A test passing an object from R to python</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">A test passing an object from R to python</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Joe Hasell</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Papers</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhD_pages/paper_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhD_pages/paper_pages/paper1.html" class="sidebar-item-text sidebar-link">Paper 1: Triangulating trends in inequality around the world from secondary databases</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhD_pages/paper_pages/paper3.html" class="sidebar-item-text sidebar-link">Paper 3: Housing and the capital share of income</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  PhD_pages/paper_pages/test_page.qmd
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Data appendices</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link">Appendix 3.A: Preparing EU KLEMS industry data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../PhD_pages/data_appendices/3_B_prepare_OECD.html" class="sidebar-item-text sidebar-link">Appendix 3.B: Preparing OECD industry data</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../test_pages/test_passing_r_to_python.html" class="sidebar-item-text sidebar-link active">A test passing an object from R to python</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../test_pages/test_with_shinylive.html" class="sidebar-item-text sidebar-link">Shinylive in Quarto example</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../test_pages/test_with_iframe_shiny.html" class="sidebar-item-text sidebar-link">A test notebook with Shiny app mbedded as an iframe</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">A test passing an object from R to python</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'reticulate' was built under R version 4.1.2</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">py_install</span>(<span class="st">"pandas"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>+ '/Users/joehasell/Library/r-miniconda/bin/conda' 'install' '--yes' '--prefix' '/Users/joehasell/Library/r-miniconda/envs/r-reticulate' '-c' 'conda-forge' 'pandas'</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"PhD_pages/data/pip_dataset (2).csv"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  country year reporting_level welfare_type ppp_version survey_year
+1 Albania 1996        national  consumption        2011        1996
+2 Albania 2002        national  consumption        2011        2002
+3 Albania 2005        national  consumption        2011        2005
+4 Albania 2008        national  consumption        2011        2008
+5 Albania 2012        national  consumption        2011        2012
+6 Albania 2014        national  consumption        2011        2014
+  survey_comparability headcount_ratio_international_povline
+1                    0                             0.9206690
+2                    1                             1.5708434
+3                    1                             0.8605271
+4                    1                             0.3136496
+5                    1                             0.8497544
+6                    2                             1.5808972
+  headcount_ratio_lower_mid_income_povline
+1                                11.174149
+2                                14.132118
+3                                 8.715685
+4                                 5.250542
+5                                 6.182414
+6                                11.615621
+  headcount_ratio_upper_mid_income_povline headcount_ratio_100
+1                                 44.61842          0.05741581
+2                                 49.66964          0.04637062
+3                                 38.54525          0.02762022
+4                                 31.11034          0.00000000
+5                                 34.52891          0.11132100
+6                                 37.03384          0.00000000
+  headcount_ratio_1000 headcount_ratio_2000 headcount_ratio_3000
+1             86.17521             99.63208             99.91247
+2             85.33832             98.08006             99.63839
+3             79.98713             97.57660             99.43446
+4             75.85102             97.09978             99.01586
+5             77.06984             97.77263             99.61830
+6             71.58569             95.18214             99.12649
+  headcount_ratio_4000 headcount_ratio_40_median headcount_ratio_50_median
+1             99.95166                  2.768821                  7.548123
+2             99.84308                  3.212283                  8.406373
+3             99.75174                  4.095002                  8.991533
+4             99.67825                  2.118535                  7.227714
+5             99.88598                  3.492413                  7.753112
+6             99.81976                  7.514618                 14.375828
+  headcount_ratio_60_median headcount_international_povline
+1                  14.80251                           29167
+2                  16.02055                           47927
+3                  16.67577                           25915
+4                  14.13715                            9244
+5                  14.84282                           24646
+6                  22.21602                           45674
+  headcount_lower_mid_income_povline headcount_upper_mid_income_povline
+1                             354001                            1413526
+2                             431172                            1515426
+3                             262472                            1160785
+4                             154750                             916920
+5                             179315                            1001477
+6                             335587                            1069946
+  headcount_100 headcount_1000 headcount_2000 headcount_3000 headcount_4000
+1          1819        2730059        3156377        3165260        3166501
+2          1415        2603681        2992432        3039977        3046222
+3           832        2408802        2938507        2994456        3004011
+4             0        2235568        2861836        2918308        2937831
+5          3229        2235334        2835798        2889330        2897094
+6             0        2068185        2749911        2863867        2883897
+  headcount_40_median headcount_50_median headcount_60_median
+1               87717              239127              468949
+2               98007              256479              488789
+3              123320              270779              502189
+4               62440              213023              416666
+5              101294              224871              430501
+6              217105              415333              641844
+  avg_shortfall_international_povline avg_shortfall_lower_mid_income_povline
+1                           0.2890260                              0.5999076
+2                           0.3166081                              0.6466790
+3                           0.2899562                              0.6467713
+4                           0.3104121                              0.4577278
+5                           0.3781038                              0.6586981
+6                           0.2546938                              0.7016316
+  avg_shortfall_upper_mid_income_povline avg_shortfall_100 avg_shortfall_1000
+1                               1.583098        0.20422681           4.459419
+2                               1.671541        0.53508932           4.719031
+3                               1.514365        0.00832818           4.228461
+4                               1.307345                NA           3.881222
+5                               1.377123        0.10741674           4.030469
+6                               1.742768                NA           4.431036
+  avg_shortfall_2000 avg_shortfall_3000 avg_shortfall_4000
+1           13.50430           23.45916           33.44882
+2           13.70162           23.42240           33.36826
+3           12.91856           22.61159           32.52479
+4           12.36353           22.06975           31.89560
+5           12.54608           22.24632           32.17559
+6           12.47453           21.84794           31.67118
+  avg_shortfall_40_median avg_shortfall_50_median avg_shortfall_60_median
+1               0.3446150               0.4981147               0.6845159
+2               0.3854980               0.5177960               0.6859527
+3               0.4360586               0.6565995               0.8516646
+4               0.4295745               0.5748611               0.8030727
+5               0.5437887               0.7146906               0.8884043
+6               0.5253690               0.7801093               1.0620848
+  total_shortfall_international_povline
+1                              8430.020
+2                             15174.078
+3                              7514.215
+4                              2869.449
+5                              9318.746
+6                             11632.883
+  total_shortfall_lower_mid_income_povline
+1                                212367.88
+2                                278829.87
+3                                169759.35
+4                                 70833.38
+5                                118114.46
+6                                235458.46
+  total_shortfall_upper_mid_income_povline total_shortfall_100
+1                                  2237750          371.488565
+2                                  2533096          757.151389
+3                                  1757852            6.929046
+4                                  1198731            0.000000
+5                                  1379157          346.848655
+6                                  1864668            0.000000
+  total_shortfall_1000 total_shortfall_2000 total_shortfall_3000
+1             12174477             42624656             74254340
+2             12286852             41001158             71203557
+3             10185526             37961293             67709400
+4              8676735             35382386             64406320
+5              9009444             35578150             64276958
+6              9164201             34303852             62569586
+  total_shortfall_4000 total_shortfall_40_median total_shortfall_50_median
+1            105915713                  30228.59                  119112.7
+2            101647115                  37781.50                  132803.8
+3             97704835                  53774.75                  177793.4
+4             93703870                  26822.63                  122458.6
+5             93215717                  55082.53                  160713.2
+6             91336415                 114060.23                  324005.1
+  total_shortfall_60_median income_gap_ratio_international_povline
+1                  321003.0                               15.21189
+2                  335286.1                               16.66359
+3                  427696.6                               15.26085
+4                  334613.1                               16.33748
+5                  382458.9                               19.90020
+6                  681692.8                               13.40493
+  income_gap_ratio_lower_mid_income_povline
+1                                  18.74711
+2                                  20.20872
+3                                  20.21160
+4                                  14.30399
+5                                  20.58432
+6                                  21.92599
+  income_gap_ratio_upper_mid_income_povline income_gap_ratio_100
+1                                  28.78360            20.422681
+2                                  30.39165            53.508932
+3                                  27.53390             0.832818
+4                                  23.76991                   NA
+5                                  25.03859            10.741674
+6                                  31.68669                   NA
+  income_gap_ratio_1000 income_gap_ratio_2000 income_gap_ratio_3000
+1              44.59419              67.52149              78.19720
+2              47.19031              68.50809              78.07467
+3              42.28461              64.59282              75.37195
+4              38.81222              61.81763              73.56582
+5              40.30469              62.73040              74.15440
+6              44.31036              62.37266              72.82646
+  income_gap_ratio_4000 income_gap_ratio_40_median income_gap_ratio_50_median
+1              83.62204                   14.91890                   17.25131
+2              83.42064                   17.39735                   18.69432
+3              81.31198                   16.87440                   20.32703
+4              79.73899                   15.43531                   16.52455
+5              80.43898                   19.91816                   20.94243
+6              79.17794                   19.11590                   22.70784
+  income_gap_ratio_60_median poverty_gap_index_international_povline
+1                   19.75582                              0.14005071
+2                   20.63782                              0.26176109
+3                   21.97156                              0.13132549
+4                   19.23714                              0.05124112
+5                   21.69394                              0.16910086
+6                   25.76311                              0.21191933
+  poverty_gap_index_lower_mid_income_povline
+1                                  2.0948318
+2                                  2.8559177
+3                                  1.7615814
+4                                  0.7510374
+5                                  1.2726091
+6                                  2.5468370
+  poverty_gap_index_upper_mid_income_povline poverty_gap_index_100
+1                                  12.842785          0.0117261583
+2                                  15.095426          0.0248164178
+3                                  10.613009          0.0002300872
+4                                   7.394906          0.0000000000
+5                                   8.645555          0.0119586449
+6                                  11.734796          0.0000000000
+  poverty_gap_index_1000 poverty_gap_index_2000 poverty_gap_index_3000
+1               38.42913               67.27306               78.12875
+2               40.27143               67.19276               77.79233
+3               33.82225               63.02749               74.94570
+4               29.43947               60.02480               72.84183
+5               31.06275               61.33316               73.87135
+6               31.71987               59.36763               72.19030
+  poverty_gap_index_4000     mean   median decile1_avg decile2_avg decile3_avg
+1               83.58161 6.570821 5.774805    2.538496    3.475535    4.191319
+2               83.28973 6.715828 5.539607    2.346511    3.263519    3.923426
+3               81.11013 7.591930 6.460357    2.643917    3.735312    4.537911
+4               79.48243 8.314345 6.957659    3.104265    4.270897    5.062166
+5               80.34727 7.882867 6.825289    2.884756    4.093648    4.842953
+6               79.03524 8.399775 6.870837    2.396459    3.505870    4.387129
+  decile4_avg decile5_avg decile6_avg decile7_avg decile8_avg decile9_avg
+1    4.811182    5.506126    6.146939    7.111657    8.196356    9.790226
+2    4.525262    5.139692    5.936429    6.869341    8.048536   10.023425
+3    5.254513    6.064554    6.860879    7.874459    9.206284   11.261826
+4    5.806393    6.578375    7.419832    8.562724    9.918245   12.085071
+5    5.542227    6.372377    7.297124    8.289193    9.690645   11.736908
+6    5.301601    6.310224    7.503401    8.898472   10.688325   13.549610
+  decile10_avg decile1_share decile2_share decile3_share decile4_share
+1     13.94037      3.863286      5.289347      6.378683      7.322042
+2     17.08214      3.494002      4.859444      5.842059      6.738204
+3     18.47964      3.482536      4.920109      5.977283      6.921183
+4     20.33548      3.733625      5.136781      6.088472      6.983584
+5     18.07883      3.659527      5.193095      6.143644      7.030726
+6     21.45666      2.853004      4.173767      5.222913      6.311599
+  decile5_share decile6_share decile7_share decile8_share decile9_share
+1      8.379662      9.354903      10.82309      12.47387      14.89955
+2      7.653102      8.839459      10.22859      11.98443      14.92508
+3      7.988158      9.037069      10.37214      12.12641      14.83394
+4      7.912079      8.924133      10.29873      11.92908      14.53520
+5      8.083833      9.256943      10.51546      12.29330      14.88914
+6      7.512373      8.932860      10.59370      12.72454      16.13092
+  decile10_share decile1_thr decile2_thr decile3_thr decile4_thr decile6_thr
+1       21.21557        3.06        3.88        4.48        5.16        6.66
+2       25.43564        2.91        3.62        4.22        4.85        6.35
+3       24.34117        3.30        4.18        4.93        5.63        7.32
+4       24.45831        3.81        4.70        5.43        6.20        7.93
+5       22.93434        3.65        4.49        5.17        5.93        7.74
+6       25.54432        3.05        3.96        4.82        5.82        8.14
+  decile7_thr decile8_thr decile9_thr      gini       mld polarization
+1        7.61        8.85       10.92 0.2701034 0.1191043    0.2412933
+2        7.38        8.83       11.58 0.3173898 0.1648116    0.2689816
+3        8.51       10.02       12.78 0.3059566 0.1544128    0.2545287
+4        9.24       10.74       13.62 0.2998467 0.1488934    0.2473111
+5        8.91       10.52       13.26 0.2896048 0.1384171    0.2499879
+6        9.71       11.74       15.78 0.3459890 0.1986616    0.3243097
+  palma_ratio s80_s20_ratio p90_p10_ratio p90_p50_ratio p50_p10_ratio
+1   0.9283351      3.945872      3.568627      1.889273      1.888889
+2   1.2150564      4.831625      3.979381      2.090253      1.903780
+3   1.1427183      4.662236      3.872727      1.978328      1.957576
+4   1.1146566      4.395911      3.574803      1.956897      1.826772
+5   1.0411926      4.272573      3.632877      1.941435      1.871233
+6   1.3762154      5.930924      5.173770      2.296943      2.252459</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>df_py <span class="op">=</span> r.df</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>df_py.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   country  year reporting_level  ... p90_p10_ratio  p90_p50_ratio  p50_p10_ratio
+0  Albania  1996        national  ...      3.568627       1.889273       1.888889
+1  Albania  2002        national  ...      3.979381       2.090253       1.903780
+2  Albania  2005        national  ...      3.872727       1.978328       1.957576
+3  Albania  2008        national  ...      3.574803       1.956897       1.826772
+4  Albania  2012        national  ...      3.632877       1.941435       1.871233
+
+[5 rows x 108 columns]</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># import numpy as np</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># import matplotlib.pyplot as plt</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># r = np.arange(0, 2, 0.01)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># theta = 2 * np.pi * r</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fig, ax = plt.subplots(</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   subplot_kw = {'projection': 'polar'} </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co"># )</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ax.plot(theta, r)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># ax.set_rticks([0.5, 1, 1.5, 2])</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ax.grid(True)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.show()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

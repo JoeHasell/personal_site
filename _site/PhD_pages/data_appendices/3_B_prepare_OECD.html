@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-0.9.655">
+<meta name="generator" content="quarto-1.2.269">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -11,10 +11,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -53,7 +58,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -66,7 +71,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -96,7 +101,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -151,86 +156,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
-      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-        <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Papers</a>
-      <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
-        <li class="sidebar-item">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Papers</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../PhD_pages/paper_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../PhD_pages/paper_pages/paper1.html" class="sidebar-item-text sidebar-link">Paper 1: Triangulating trends in inequality around the world from secondary databases</a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../PhD_pages/paper_pages/paper3.html" class="sidebar-item-text sidebar-link">Paper 3: Housing and the capital share of income</a>
   </div>
 </li>
-    </ul>
+          <li class="sidebar-item">
+  PhD_pages/paper_pages/test_page.qmd
   </li>
-        <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data appendices</a>
-      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
-        <li class="sidebar-item">
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link">Appendix 3.A: Preparing EU KLEMS industry data</a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../PhD_pages/data_appendices/3_B_prepare_OECD.html" class="sidebar-item-text sidebar-link active">Appendix 3.B: Preparing OECD industry data</a>
   </div>
 </li>
-    </ul>
+      </ul>
   </li>
-    </ul>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-    <div class="sidebar-item-container"> 
-        <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
-      <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
-        <i class="bi bi-chevron-right ms-2"></i>
-      </a>
-    </div>
-    <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
-        <li class="sidebar-item">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../test_pages/test_with_shinylive.html" class="sidebar-item-text sidebar-link">A test notebook with Shinylive</a>
+  <a href="../../test_pages/test_passing_r_to_python.html" class="sidebar-item-text sidebar-link">A test passing an object from R to python</a>
   </div>
 </li>
-    </ul>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_shinylive.html" class="sidebar-item-text sidebar-link">Shinylive in Quarto example</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_iframe_shiny.html" class="sidebar-item-text sidebar-link">A test notebook with Shiny app mbedded as an iframe</a>
+  </div>
+</li>
+      </ul>
   </li>
     </ul>
     </div>
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
@@ -256,6 +274,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -672,7 +691,7 @@ Further tidying of industry generation of income data
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter for only current price data and the needed transactions</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(MEASURE <span class="sc">==</span> <span class="st">"C"</span> <span class="sc">&amp;</span> </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           TRANSACT <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B1GA"</span>, <span class="st">"D1A"</span>,<span class="st">"B2G_B3GA"</span>, <span class="st">"B2N_B3NA"</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>           TRANSACT <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B1GA"</span>, <span class="st">"D1A"</span>,<span class="st">"B2G_B3GA"</span>, <span class="st">"B2N_B3NA"</span>, <span class="st">"D29_D39A"</span>))</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Recode transactions from national accounts codes to something more legible</span></span>
@@ -680,21 +699,22 @@ Further tidying of industry generation of income data
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">B1GA =</span> <span class="st">"VA"</span>, <span class="co"># (Gross) Value added</span></span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">D1A =</span> <span class="st">"COMP"</span>, <span class="co"># Compensation of employees</span></span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">B2G_B3GA =</span> <span class="st">"GOS"</span>, <span class="co"># Gross operating surplus</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">B2N_B3NA =</span> <span class="st">"NOS"</span>) <span class="co"># Net operating surplus (net of depreciation)</span></span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRANSACT =</span> <span class="fu">recode</span>(TRANSACT, <span class="sc">!!!</span>recoding_transactions))</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">B2N_B3NA =</span> <span class="st">"NOS"</span>, <span class="co"># Net operating surplus (net of depreciation)</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">D29_D39A =</span> <span class="st">"TOP"</span>) <span class="co"># Taxes on production</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TRANSACT =</span> <span class="fu">recode</span>(TRANSACT, <span class="sc">!!!</span>recoding_transactions))</span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># flip to wide format</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TRANSACT, <span class="at">values_from =</span> obsValue)</span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="co"># flip to wide format</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> TRANSACT, <span class="at">values_from =</span> obsValue)</span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and rename needed vars</span></span>
-<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
-<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ind_code =</span> ACTIVITY) <span class="sc">%&gt;%</span></span>
-<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, ind_code, VA, COMP, GOS, NOS)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and rename needed vars</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>industry_accounts<span class="ot">&lt;-</span> industry_accounts <span class="sc">%&gt;%</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">ind_code =</span> ACTIVITY) <span class="sc">%&gt;%</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, year, ind_code, VA, COMP, GOS, NOS, TOP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -807,8 +827,9 @@ Filter out observations where the implied wage is infinite
 <col style="width: 10%">
 <col style="width: 9%">
 <col style="width: 9%">
-<col style="width: 14%">
-<col style="width: 19%">
+<col style="width: 4%">
+<col style="width: 13%">
+<col style="width: 18%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -819,6 +840,7 @@ Filter out observations where the implied wage is infinite
 <th style="text-align: right;">COMP</th>
 <th style="text-align: right;">GOS</th>
 <th style="text-align: right;">NOS</th>
+<th style="text-align: right;">TOP</th>
 <th style="text-align: right;">employed_hrs</th>
 <th style="text-align: right;">self_employed_hrs</th>
 </tr>
@@ -833,6 +855,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">-1.0000</td>
 <td style="text-align: right;">-1.0000</td>
 <td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0000</td>
 </tr>
 <tr class="even">
@@ -843,6 +866,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">1.0000</td>
 <td style="text-align: right;">-1.0000</td>
 <td style="text-align: right;">-1.0000</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0000</td>
 </tr>
@@ -854,6 +878,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">17.8558</td>
 <td style="text-align: right;">231.5661</td>
 <td style="text-align: right;">228.7061</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0754</td>
 </tr>
@@ -865,6 +890,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">3.8250</td>
 <td style="text-align: right;">356.1376</td>
 <td style="text-align: right;">354.9061</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0982</td>
 </tr>
@@ -876,6 +902,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">5.8069</td>
 <td style="text-align: right;">326.8111</td>
 <td style="text-align: right;">324.5453</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0974</td>
 </tr>
@@ -887,6 +914,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">12.7335</td>
 <td style="text-align: right;">264.5663</td>
 <td style="text-align: right;">261.9393</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0954</td>
 </tr>
@@ -898,6 +926,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">13.8233</td>
 <td style="text-align: right;">296.0805</td>
 <td style="text-align: right;">292.7195</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0930</td>
 </tr>
@@ -909,6 +938,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">19.2799</td>
 <td style="text-align: right;">348.4009</td>
 <td style="text-align: right;">345.6643</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0884</td>
 </tr>
@@ -920,6 +950,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">10.5000</td>
 <td style="text-align: right;">357.6314</td>
 <td style="text-align: right;">351.5447</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0879</td>
 </tr>
@@ -931,6 +962,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">17.3108</td>
 <td style="text-align: right;">334.3040</td>
 <td style="text-align: right;">330.2204</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0891</td>
 </tr>
@@ -942,6 +974,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">12.6489</td>
 <td style="text-align: right;">200.1431</td>
 <td style="text-align: right;">196.3832</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0963</td>
 </tr>
@@ -953,6 +986,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">886.5291</td>
 <td style="text-align: right;">-60.0869</td>
 <td style="text-align: right;">-60.0869</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0004</td>
 </tr>
@@ -964,6 +998,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">988.7751</td>
 <td style="text-align: right;">-58.6219</td>
 <td style="text-align: right;">-58.6219</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0008</td>
 </tr>
@@ -975,6 +1010,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">1026.0100</td>
 <td style="text-align: right;">-45.3357</td>
 <td style="text-align: right;">-45.3357</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0004</td>
 </tr>
@@ -986,6 +1022,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">1066.8373</td>
 <td style="text-align: right;">-42.0630</td>
 <td style="text-align: right;">-42.0630</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0020</td>
 </tr>
@@ -997,6 +1034,7 @@ Filter out observations where the implied wage is infinite
 <td style="text-align: right;">1155.6890</td>
 <td style="text-align: right;">-48.4890</td>
 <td style="text-align: right;">-48.4890</td>
+<td style="text-align: right;">NA</td>
 <td style="text-align: right;">0</td>
 <td style="text-align: right;">0.0019</td>
 </tr>
@@ -2234,14 +2272,14 @@ Filter out country-year observations with partial industry coverage
                     3rd Qu.:2011                      3rd Qu.:0   3rd Qu.:0  
                     Max.   :2017                      Max.   :0   Max.   :0  
                                                                              
-      GOS         NOS     employed_hrs    self_employed_hrs 
- Min.   :0   Min.   :0   Min.   :0.0000   Min.   :0.000000  
- 1st Qu.:0   1st Qu.:0   1st Qu.:0.0000   1st Qu.:0.000000  
- Median :0   Median :0   Median :0.0000   Median :0.000000  
- Mean   :0   Mean   :0   Mean   :0.1579   Mean   :0.002428  
- 3rd Qu.:0   3rd Qu.:0   3rd Qu.:0.0000   3rd Qu.:0.000000  
- Max.   :0   Max.   :0   Max.   :8.4030   Max.   :0.315100  
-             NA's   :5                                      </code></pre>
+      GOS         NOS         TOP     employed_hrs    self_employed_hrs 
+ Min.   :0   Min.   :0   Min.   :0   Min.   :0.0000   Min.   :0.000000  
+ 1st Qu.:0   1st Qu.:0   1st Qu.:0   1st Qu.:0.0000   1st Qu.:0.000000  
+ Median :0   Median :0   Median :0   Median :0.0000   Median :0.000000  
+ Mean   :0   Mean   :0   Mean   :0   Mean   :0.1579   Mean   :0.002428  
+ 3rd Qu.:0   3rd Qu.:0   3rd Qu.:0   3rd Qu.:0.0000   3rd Qu.:0.000000  
+ Max.   :0   Max.   :0   Max.   :0   Max.   :8.4030   Max.   :0.315100  
+             NA's   :5                                                  </code></pre>
 </div>
 </div>
 <p>In the table below we show all remaining country years in which at least one industry — other than <code>VU</code> — is missing.</p>
@@ -7324,7 +7362,7 @@ Write cleaned data to csv
 <div class="cell">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>fp<span class="ot">&lt;-</span> <span class="st">"PhD_pages/data/clean/"</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(main_industry_accounts, <span class="fu">paste0</span>(fp, <span class="st">"OECD_gen_income_by_industry"</span>, <span class="st">".csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(main_industry_accounts, <span class="fu">paste0</span>(fp, <span class="st">"OECD_gen_income_and_employment_by_industry"</span>, <span class="st">".csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -7336,6 +7374,24 @@ Write cleaned data to csv
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -7357,7 +7413,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -7385,31 +7458,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>

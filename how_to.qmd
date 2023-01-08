@@ -9,8 +9,6 @@ This site is built on three main ingredients:
 
 -   These are published to the web via Netlify
 
--   Text editing is done using Google Docs, pulled in to the Quarto notebooks using the R **trackdown** package
-
 <!-- To create a folder of shinylive apps deployed to netlify within your repo... -->
 
 <!-- 1.  Get netlify CLI up an running - see here: [https://docs.netlify.com/cli/get-started](https://docs.netlify.com/cli/get-started/) -->
