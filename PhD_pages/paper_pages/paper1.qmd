@@ -1,5 +1,6 @@
 ---
 title: "Paper 1: Triangulating trends in inequality around the world from secondary databases"
+format: html
 ---
 
 ::: {.callout-note collapse="true" appearance="minimal"}
@@ -37,109 +38,7 @@ b\) Untangle which methods, definitions affect the different conclusions arrived
 
 ### PIP
 
-::: {.callout-note collapse="true" appearance="minimal"}
-### Load PIP data
-
-```{r}
-# df_pip<- read.csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
-
-df_pip<- read.csv("PhD_pages/data/pip_dataset (2).csv")
-
-df_pip<- df_pip %>%
-  filter(ppp_version == 2017) %>%
-  rename("Gini" = "gini",
-         "Top_10_share" = "decile10_share",
-         "Entity" = "country",
-         "Year" = "year")
-
-# drop subnational data where national data is available
-df_pip<- df_pip %>%
-  filter((!Entity %in% c("China", "India", "Indonesia")) | reporting_level == "national")
-
-# drop income if both income and consumption are available
-df_pip<- df_pip %>%
-  group_by(Entity, reporting_level, Year) %>%
-  mutate(n = n()) %>%
-  filter(n<2 | welfare_type == "consumption") %>%
-  ungroup()
-
-
- #drop regional aggregates
-drop_aggs<- c(
-  "East Asia and Pacific",
-  "Europe and Central Asia",
-  "High income countries",
-  "Latin America and the Caribbean",
-  "Middle East and North Africa",
-  "Sub-Saharan Africa",
-  "World"
-)
-
-df_pip<- df_pip %>%
-  filter(!Entity %in% drop_aggs)
-
-
-```
-:::
-
 ### WID
-
-::: {.callout-note collapse="true" appearance="minimal"}
-### Load WID data
-
-```{r}
-# df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
-
-df_wid<- read.csv("PhD_pages/data/wid.csv")
-
-df_wid<- df_wid %>%
-  rename("Gini" = "Gini.coefficient",
-         "Top_10_share" = "P90.P100...share.of.the.top.10.")
-
-drop_entities<- c(
-"China - rural",
-"China - urban",
-"East Germany",
-"Other Russia and Central Asia",
-"Other East Asia",
-"Other Western Europe",
-"Other Latin America",
-"Other MENA",
-"Other South & South-East Asia",
-"Other Sub-Saharan Africa",
-"Africa",
-"Asia",
-"Europe",
-"Oceania",
-"Central Asia",
-"East Africa",
-"East Asia",
-"Eastern Europe",
-"Middle Africa",
-"North Africa",
-"North America",
-"South-East Asia",
-"South Africa region",
-"West Africa",
-"West Asia",
-"Western Europe",
-"European Union",
-"World",
-"Asia (excluding Middle East)",
-"North America and Oceania",
-"Sub-Saharan Africa",
-"Latin America",
-"Middle East",
-"MENA",
-"Russia and Central Asia",
-"South & South-East Asia"
-)
-
-df_wid<- df_wid %>%
-  filter(!Entity %in% drop_entities)
-```
-
-:::
 
 ### LIS
 
@@ -153,41 +52,6 @@ What about GCIP? For trying to flip between income and consumption...
 
 Give an overview of coverage in each dataset.
 
-::: {.callout-note collapse="true" appearance="minimal"}
-### Standardize coutry names across datasets
-```{r}
-
-pip_countries<- df_pip %>%
-  select(Entity) %>%
-  unique() %>%
-  mutate(Entity_pip = Entity)
-
-wid_countries<- df_wid %>%
-  select(Entity) %>%
-  unique() %>%
-  mutate(Entity_wid = Entity)
-
-countries<- full_join(pip_countries, wid_countries, keep = TRUE) %>%
-  select(Entity_pip, Entity_wid)
-
-```
-
-Countries that are in the PIP data but not the WID data:
-```{r}
-kable(
-  countries %>%
-       filter(is.na(Entity_wid))
-)
-```
-Countries that are in the WID data but not the PIP data:
-(TO-DO: drop regions and sub-national data from the WID data at an eariler step.)
-```{r}
-kable(
-  countries %>%
-       filter(is.na(Entity_pip))
-)
-```
-:::
 
 ## Comparing databases
 

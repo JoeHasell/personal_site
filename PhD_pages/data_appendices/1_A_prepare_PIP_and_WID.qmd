@@ -1,0 +1,368 @@
+---
+title: "Appendix 1.A: Preparing PIP and WID inequality data"
+format: html
+warning: false
+---
+
+# Processing steps
+
+The titles in each of the boxes below summarise the steps taken to prepare the PIP and WID data. In each case you can expand the box to see the code used.
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load packages
+
+```{r}
+library(tidyverse)
+library(knitr)
+
+```
+:::
+
+## PIP data
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load PIP data
+We load the data from a file prepared from the PIP API by Our World in Data.
+```{r}
+# df_pip<- read.csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
+
+#  A local version, in case internet isn't available 
+df_pip<- read.csv("PhD_pages/data/pip_dataset (2).csv")
+
+```
+
+The dataframe looks like this:
+```{r}
+kable(
+
+    head(df_pip, 50)
+    
+)
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop sub-national data
+
+The PIP data includes observations for national, urban and rural populations (`reporting_level`):
+
+```{r}
+kable(
+    df_pip %>%
+        count(reporting_level)
+)
+```
+
+Here we add a count of the number of reporting levels per country-year.
+```{r}
+
+count_reporting_levels<- df_pip %>%
+    group_by(country, year) %>%
+    count(reporting_level) %>%
+    group_by(country, year) %>%
+    summarise(n_reporting_levels = n())
+
+df_pip<- left_join(df_pip, count_reporting_levels) %>%
+    relocate(n_reporting_levels, .after=reporting_level)
+
+
+
+kable(
+
+    head(df_pip, 20)
+
+)
+```
+
+We only want one reporting level for each country-year.
+
+That is already true for most country-years. But some include all three reporting levels.
+```{r}
+kable(
+
+    df_pip %>%
+        count(n_reporting_levels)
+
+)
+
+```
+
+Here are the countries which include all three reporting levels:
+```{r}
+multi_reporting_level_countries<- 
+    df_pip %>%
+        filter(n_reporting_levels == 3) %>%
+        select(country) %>%
+        unique() %>%
+        pull(country)
+
+print(multi_reporting_level_countries)
+
+```
+
+For the country-years with 3 reporting levels, we keep only the national estimates. 
+```{r}
+df_pip<- df_pip %>%
+    filter(n_reporting_levels != 3 | reporting_level == 'national' )
+
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop regional data
+
+The dataset includes aggregated estiates for world regions.
+
+Here we define a list of these aggregate entities and drop them from the data.
+```{r}
+drop_aggs<- c(
+  "East Asia and Pacific",
+  "Europe and Central Asia",
+  "High income countries",
+  "Latin America and the Caribbean",
+  "Middle East and North Africa",
+  "Sub-Saharan Africa",
+  "World"
+)
+
+df_pip<- df_pip %>%
+  filter(!country %in% drop_aggs)
+
+```
+:::
+
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Select 2017 PPPs
+
+The data is provided by the World Bank in both 2011 and 2017 PPPs.
+
+We will be using 2017 PPPs for Paper 1.
+
+```{r}
+
+df_pip<- df_pip %>%
+  filter(ppp_version == 2017)
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Rename and select needed columns
+```{r}
+
+df_pip<- df_pip %>%
+  rename("Gini" = "gini",
+         "Top_10_share" = "decile10_share",
+         "MLD" = "mld",
+         "P90_P10_ratio" = "p90_p10_ratio",
+         "Entity" = "country",
+         "Year" = "year")
+
+
+df_pip<- df_pip %>%
+    select(
+        Year,
+        Entity,
+        Gini,
+        Top_10_share,
+        MLD,
+        P90_P10_ratio,
+        welfare_type)
+
+
+
+
+
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### See the prepared PIP data
+
+The first 100 rows of the dataframe looks like this:
+```{r}
+kable(
+
+    head(df_pip, 100)
+    
+)
+```
+:::
+
+
+## WID data
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load WID data
+We load the data from a file prepared from the WID Stata package by Our World in Data.
+
+```{r}
+# df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
+
+# A local version, in case internet isn't available 
+df_wid<- read.csv("PhD_pages/data/wid.csv")
+
+```
+
+The dataframe looks like this:
+```{r}
+kable(
+
+    head(df_wid, 50)
+    
+)
+```
+:::
+
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop subnational, regional and historical geographical entities
+
+Here we create a list of entities in the WID data that do not correspond to countries in existence today. These we drop from the data.
+```{r}
+drop_entities<- c(
+"China - rural",
+"China - urban",
+"East Germany",
+"Other Russia and Central Asia",
+"Other East Asia",
+"Other Western Europe",
+"Other Latin America",
+"Other MENA",
+"Other South & South-East Asia",
+"Other Sub-Saharan Africa",
+"Africa",
+"Asia",
+"Europe",
+"Oceania",
+"Central Asia",
+"East Africa",
+"East Asia",
+"Eastern Europe",
+"Middle Africa",
+"North Africa",
+"North America",
+"South-East Asia",
+"South Africa region",
+"West Africa",
+"West Asia",
+"Western Europe",
+"European Union",
+"World",
+"Asia (excluding Middle East)",
+"North America and Oceania",
+"Sub-Saharan Africa",
+"Latin America",
+"Middle East",
+"MENA",
+"Russia and Central Asia",
+"South & South-East Asia"
+)
+
+df_wid<- df_wid %>%
+  filter(!Entity %in% drop_entities)
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Calculate some additional inequality metrics
+
+
+```{r}
+
+#  Calculate P90_P10_ratio
+df_wid<- df_wid %>%
+    mutate(P90_P10_ratio = `P90...income.threshold.of.the.top.10.`/P10...income.threshold)
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Rename and select needed variables
+
+
+```{r}
+df_wid<- df_wid %>%
+    rename("Gini" = "Gini.coefficient",
+         "Top_10_share" = "P90.P100...share.of.the.top.10.") %>%
+    select(
+        Year,
+        Entity,
+        Gini,
+        Top_10_share,
+        # MLD,
+        P90_P10_ratio)
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### See the prepared WID data
+
+The first 100 rows of the dataframe looks like this:
+```{r}
+kable(
+
+    head(df_wid, 100)
+    
+)
+```
+:::
+
+
+
+
+## Important notes
+
+### Income and consumption data in PIP
+The PIP data includes a mix of income and consumption observations – including both for some country-years.
+
+
+### Coverage
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Compare countries available across datasets
+```{r}
+
+pip_countries<- df_pip %>%
+  select(Entity) %>%
+  unique() %>%
+  mutate(Entity_pip = Entity)
+
+wid_countries<- df_wid %>%
+  select(Entity) %>%
+  unique() %>%
+  mutate(Entity_wid = Entity)
+
+countries<- full_join(pip_countries, wid_countries, keep = TRUE) %>%
+  select(Entity_pip, Entity_wid)
+
+```
+
+Countries that are in the PIP data but not the WID data:
+```{r}
+kable(
+  countries %>%
+       filter(is.na(Entity_wid))
+)
+```
+Countries that are in the WID data but not the PIP data:
+```{r}
+kable(
+  countries %>%
+       filter(is.na(Entity_pip))
+)
+```
+:::

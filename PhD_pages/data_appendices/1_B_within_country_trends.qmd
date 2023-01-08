@@ -1,0 +1,66 @@
+---
+title: "Appendix 1.B: Analysing global trends in within-country inequality"
+format: html
+warning: false
+filters:
+  - shinylive
+---
+
+A key difficulty of comparing trends is that the data is incomplete coverage. The paper uses two methods to calculate and compare aggregate within-country trends across incomplete data: using reference years and using year fixed effects in a regression.
+
+
+## Method 1: Reference years
+
+I need to allow for the income/consumption issue (currently the data includes both – i.e. multi observations per country year).
+
+## Method 2: regression analysis
+
+
+## Explore the date
+
+I plan to build a Shiny app to help compare trends across datasets (using Shinylive – built on Shiny for Python - ).
+
+Here is a test app just so I can test the wiring of how such an app works.
+
+
+```{shinylive-python}
+#| standalone: true
+#| viewerHeight: 420
+
+from shiny import *
+from plotnine import *
+from pyodide.http import open_url
+import pandas as pd
+
+
+
+app_ui = ui.page_fluid(
+    ui.output_plot("example_plot"),
+)
+
+
+def server(input, output, session):
+    @output
+    @render.plot
+    def example_plot():
+    
+        url = 'https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/JoeHasell/PIP/data/ppp_2017/final/PIP_data_public_download/full_dataset/cons_only/poverty_cons_only.csv'
+        
+        df = pd.read_csv(open_url(url))
+
+        plot = (ggplot(df, aes('Year', 'headcount_ratio_365', color = 'Entity'))
+        + geom_line())
+
+        # d = {'col1': [1, 2], 'col2': [3, 4]}
+        # df = pd.DataFrame(data=d)
+        # plot = (ggplot(df, aes('col1', 'col2'))
+        # + geom_point())
+
+
+        return plot
+
+
+app = App(app_ui, server)
+
+```
+
