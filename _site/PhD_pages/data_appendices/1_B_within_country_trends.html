@@ -20,6 +20,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -63,6 +126,25 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+        <script type="text/javascript">
+        window.PlotlyConfig = {MathJaxConfig: 'local'};
+        if (window.MathJax) {MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+        if (typeof require !== 'undefined') {
+        require.undef("plotly");
+        requirejs.config({
+            paths: {
+                'plotly': ['https://cdn.plot.ly/plotly-2.6.3.min']
+            }
+        });
+        require(['plotly'], function(Plotly) {
+            window._Plotly = Plotly;
+        });
+        }
+        </script>
+        
 
 
 <link rel="stylesheet" href="../../styles.css">
@@ -190,10 +272,24 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#method-1-reference-years" id="toc-method-1-reference-years" class="nav-link active" data-scroll-target="#method-1-reference-years">Method 1: Reference years</a>
+  <ul class="collapse">
+  <li><a href="#mapping-data-to-a-reference-year" id="toc-mapping-data-to-a-reference-year" class="nav-link" data-scroll-target="#mapping-data-to-a-reference-year">Mapping data to a reference year</a></li>
+  <li><a href="#obtaining-a-pair-of-observations" id="toc-obtaining-a-pair-of-observations" class="nav-link" data-scroll-target="#obtaining-a-pair-of-observations">Obtaining a pair of observations</a></li>
+  <li><a href="#merging-reference-year-aligned-data-from-wid-and-pip-datasets" id="toc-merging-reference-year-aligned-data-from-wid-and-pip-datasets" class="nav-link" data-scroll-target="#merging-reference-year-aligned-data-from-wid-and-pip-datasets">Merging reference year aligned data from WID and PIP datasets</a></li>
+  </ul></li>
+  <li><a href="#plot" id="toc-plot" class="nav-link" data-scroll-target="#plot">Plot</a></li>
+  <li><a href="#method-2-regression-analysis" id="toc-method-2-regression-analysis" class="nav-link" data-scroll-target="#method-2-regression-analysis">Method 2: regression analysis</a></li>
+  <li><a href="#explore-the-date" id="toc-explore-the-date" class="nav-link" data-scroll-target="#explore-the-date">Explore the date</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -212,7 +308,582 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>I plan to build a Shiny app to help compare trends across datasets (using Shinylive – built on Shiny for Python - ). Here is a test app just so I can test the wiring of how such an app works.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Load in the data</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df_wid = pd.read_csv("data/clean/wid.csv")</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_pip = pd.read_csv("data/clean/pip.csv")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_wid <span class="op">=</span> pd.read_csv(<span class="st">"PhD_pages/data_appendices/data/clean/wid.csv"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_pip <span class="op">=</span> pd.read_csv(<span class="st">"PhD_pages/data_appendices/data/clean/pip.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A key difficulty of comparing trends is that the data is incomplete coverage. The paper uses two methods to calculate and compare aggregate within-country trends across incomplete data: using reference years and using year fixed effects in a regression.</p>
+<section id="method-1-reference-years" class="level2">
+<h2 class="anchored" data-anchor-id="method-1-reference-years">Method 1: Reference years</h2>
+<p>I need to allow for the income/consumption issue (currently the data includes both – i.e.&nbsp;multi observations per country year).</p>
+<section id="mapping-data-to-a-reference-year" class="level3">
+<h3 class="anchored" data-anchor-id="mapping-data-to-a-reference-year">Mapping data to a reference year</h3>
+<p>This function grabs the observation, by a grouping variable (e.g.&nbsp;by country), for which a reference variable (e.g.&nbsp;year) is closest to a reference value (e.g.&nbsp;2002). You can specify a maximum distance from the reference value, beyond which no match will be returned. Because there may be tie-breaks – matches equally distant above or below the reference value – there is an argmuent to specify how these tie-breaks should resolved.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Function get matching for ref years</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> closest_to_reference(df, reference_val, max_dist_from_ref, reference_col, group_by_col, value_col, tie_break):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.loc[:, [reference_col, group_by_col, value_col]]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop NAs</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.dropna()</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate absolute distance from reference value</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">'ref_diff'</span>] <span class="op">=</span> <span class="bu">abs</span>(df[reference_col] <span class="op">-</span> reference_val)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop any rows with a distance beyond threshold</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> pd.isna(max_dist_from_ref):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      df <span class="op">=</span> df.loc[df[<span class="st">'ref_diff'</span>] <span class="op">&lt;=</span> max_dist_from_ref]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep closest observation to reference value – including tie-breaks (where there is a match above and below the ref value)</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(group_by_col)[<span class="st">'ref_diff'</span>].transform(<span class="st">'min'</span>) <span class="op">==</span> df[<span class="st">'ref_diff'</span>]].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Settle tie-breaks</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> tie_break <span class="op">==</span> <span class="st">'below'</span>:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>      df <span class="op">=</span> df[df.groupby(group_by_col)[reference_col].transform(<span class="st">'min'</span>) <span class="op">==</span> df[reference_col]].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> tie_break <span class="op">==</span> <span class="st">'above'</span>:</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>      df <span class="op">=</span> df[df.groupby(group_by_col)[reference_col].transform(<span class="st">'max'</span>) <span class="op">==</span> df[reference_col]].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.drop(<span class="st">'ref_diff'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I test this function here:</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> closest_to_reference(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df_wid, </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  reference_val <span class="op">=</span> <span class="dv">2002</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  max_dist_from_ref <span class="op">=</span> <span class="dv">5</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  reference_col <span class="op">=</span> <span class="st">'Year'</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  group_by_col <span class="op">=</span> <span class="st">'Entity'</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  value_col <span class="op">=</span> <span class="st">'Gini'</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  tie_break <span class="op">=</span> <span class="st">'below'</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>test.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Year</th>
+      <th>Entity</th>
+      <th>Gini</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1998</td>
+      <td>United Arab Emirates</td>
+      <td>0.656802</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2002</td>
+      <td>Albania</td>
+      <td>0.481698</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>Armenia</td>
+      <td>0.535265</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2000</td>
+      <td>Angola</td>
+      <td>0.682466</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2002</td>
+      <td>Argentina</td>
+      <td>0.666745</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="obtaining-a-pair-of-observations" class="level3">
+<h3 class="anchored" data-anchor-id="obtaining-a-pair-of-observations">Obtaining a pair of observations</h3>
+<p>This function runs the <code>closest_to_reference</code> function twice, over a pair of reference values. Tie-breaks are settled so as to maximise the gap between the two reference values. You can also specify a minimum distance between the two observations (e.g.&nbsp;pairs of matches that fall less than X years apart will be dropped).</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge matches for different reference points</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge_two_ref_matches(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make sure the pair of reference values are in ascending order</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  reference_vals.sort()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Maximise distance between two refs by settling tie-breaks below the lowest ref and above the highest ref </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find matches for lower reference value</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  lower_ref_matches <span class="op">=</span> closest_to_reference(df, reference_vals[<span class="dv">0</span>], max_dist_from_refs[<span class="dv">0</span>], reference_col, group_by_col, value_col, <span class="st">'below'</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Find matches for higher reference value</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  higher_ref_matches <span class="op">=</span> closest_to_reference(df, reference_vals[<span class="dv">1</span>], max_dist_from_refs[<span class="dv">1</span>], reference_col, group_by_col, value_col, <span class="st">'above'</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Merge the two sets of matches</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  merged_df <span class="op">=</span> pd.merge(lower_ref_matches, higher_ref_matches, on<span class="op">=</span>group_by_col, suffixes<span class="op">=</span>(reference_vals[<span class="dv">0</span>], reference_vals[<span class="dv">1</span>]))</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop obs that do not have data for both ref values</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  merged_df <span class="op">=</span> merged_df.dropna()</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop obs where the matched data does not meet the min distance requirement</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> pd.isna(min_dist_between):</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store the names of the reference column returned from the two matches</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    ref_var_high <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    ref_var_low <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep only rows &gt;= to the min distance</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    merged_df <span class="op">=</span> merged_df.loc[(merged_df[ref_var_high] <span class="op">-</span> merged_df[ref_var_low]) <span class="op">&gt;=</span> min_dist_between, :]</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> merged_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I test this function here:</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> merge_two_ref_matches(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df_wid, </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  reference_vals <span class="op">=</span> [<span class="dv">2000</span>, <span class="dv">2010</span>], </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  max_dist_from_refs <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">4</span>],</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  min_dist_between <span class="op">=</span> <span class="dv">9</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  reference_col <span class="op">=</span> <span class="st">'Year'</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  group_by_col <span class="op">=</span> <span class="st">'Entity'</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  value_col <span class="op">=</span> <span class="st">'Gini'</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>test.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Year2000</th>
+      <th>Entity</th>
+      <th>Gini2000</th>
+      <th>Year2010</th>
+      <th>Gini2010</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1998</td>
+      <td>United Arab Emirates</td>
+      <td>0.656802</td>
+      <td>2009</td>
+      <td>0.676088</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2002</td>
+      <td>Albania</td>
+      <td>0.481698</td>
+      <td>2012</td>
+      <td>0.467515</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1999</td>
+      <td>Armenia</td>
+      <td>0.552912</td>
+      <td>2010</td>
+      <td>0.498014</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001</td>
+      <td>Argentina</td>
+      <td>0.660888</td>
+      <td>2010</td>
+      <td>0.570943</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2000</td>
+      <td>Australia</td>
+      <td>0.474796</td>
+      <td>2010</td>
+      <td>0.475651</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="allowing-for-the-different-welfare-concepts-in-the-pip-data" class="level4">
+<h4 class="anchored" data-anchor-id="allowing-for-the-different-welfare-concepts-in-the-pip-data">Allowing for the different welfare concepts in the PIP data</h4>
+<p>As noted in …. (add backlink) … the PIP data contains both income and consumption observations. This function produces matched pairs of observations from that data in which only one pair is selected for each value of the grouping variable (i.e.&nbsp;each country). Priority is given to pairs for which both observations relate to income. Second priority is given to pairs where both observations relate to consumption. Only if neither pair is available then it will return a mixed pair of observations if that is available.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For PIP run this three times – first filtering data for just consumpion only, then with income only, then with a dataset that prefers income over consumption</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pip_welfare_routine(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Specify the name of the column in which the income/consumption welfare definition is stored</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  welfare_colname <span class="op">=</span> <span class="st">'welfare_type'</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creat dataframes for thee scenarios:</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scenario 1: only allow income data</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  df_inc_filter <span class="op">=</span> df.loc[df[welfare_colname] <span class="op">==</span> <span class="st">"income"</span>, :]</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  df_inc_filter.name <span class="op">=</span> <span class="st">"Income"</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scenario 2: only allow consumption data</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  df_cons_filter <span class="op">=</span> df.loc[df[welfare_colname] <span class="op">==</span> <span class="st">"consumption"</span>, :]</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  df_cons_filter.name <span class="op">=</span> <span class="st">"Consumption"</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scenario 3: allow a mix – dropping consumption data where income data is available in the same year</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  df_mixed <span class="op">=</span> df.copy()</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  df_mixed[<span class="st">'welfare_count'</span>] <span class="op">=</span> df_mixed.groupby([reference_col, group_by_col])[welfare_colname].transform(<span class="st">'count'</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  df_mixed <span class="op">=</span> df_mixed.loc[(df_mixed[<span class="st">'welfare_count'</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">|</span> (df_mixed[welfare_colname] <span class="op">==</span> <span class="st">"income"</span>)]</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  df_mixed.name <span class="op">=</span> <span class="st">"Mixed"</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  Store the scneario dataframes in a list</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  df_scenarios <span class="op">=</span> [df_inc_filter, df_cons_filter, df_mixed]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run the matching function on each scenario</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  scenario_matches <span class="op">=</span> [merge_two_ref_matches(</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    df_scenario, </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    reference_vals, </span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs, </span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    min_dist_between, </span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    reference_col, </span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    group_by_col, </span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    value_col) <span class="cf">for</span> df_scenario <span class="kw">in</span> df_scenarios]</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the first two scenarios.</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> pd.concat([scenario_matches[<span class="dv">0</span>], scenario_matches[<span class="dv">1</span>]], keys<span class="op">=</span>[df_scenarios[<span class="dv">0</span>].name, df_scenarios[<span class="dv">1</span>].name])</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tidy up indexes</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.reset_index()</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.drop(<span class="st">'level_1'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches<span class="op">\</span></span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">"level_0"</span>: <span class="st">"pip_welfare"</span>})</span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add in third scenario.</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> pd.concat([df_combined_matches, scenario_matches[<span class="dv">2</span>]])</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add scenario name to te pip_welfare column</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>  df_combined_matches[<span class="st">'pip_welfare'</span>] <span class="op">=</span> df_combined_matches[<span class="st">'pip_welfare'</span>].fillna(df_scenarios[<span class="dv">2</span>].name)</span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Keep only one match per group (e.g. per Country) - in the priority laid out in the df_scenarios list above (income only -&gt; consumption only -&gt; mixed)</span></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First count the matches</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>  df_combined_matches[<span class="st">'match_count'</span>] <span class="op">=</span> df_combined_matches.groupby(group_by_col)[<span class="st">'pip_welfare'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Then drop any matches from the lowest priority where there are multiple matches</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.loc[(df_combined_matches[<span class="st">'match_count'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">|</span> <span class="op">~</span>(df_combined_matches[<span class="st">'pip_welfare'</span>]<span class="op">==</span>df_scenarios[<span class="dv">2</span>].name)]</span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Repeat at the next level of priority</span></span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>  df_combined_matches[<span class="st">'match_count'</span>] <span class="op">=</span> df_combined_matches.groupby(group_by_col)[<span class="st">'pip_welfare'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.loc[(df_combined_matches[<span class="st">'match_count'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">|</span> <span class="op">~</span>(df_combined_matches[<span class="st">'pip_welfare'</span>]<span class="op">==</span>df_scenarios[<span class="dv">1</span>].name)]</span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb8-62"><a href="#cb8-62" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop the match count column</span></span>
+<span id="cb8-63"><a href="#cb8-63" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.drop(<span class="st">'match_count'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-64"><a href="#cb8-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-65"><a href="#cb8-65" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> df_combined_matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I test this function here:</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>test <span class="op">=</span> pip_welfare_routine(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df_pip,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  reference_vals <span class="op">=</span> [<span class="dv">1986</span>, <span class="dv">2016</span>], </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  max_dist_from_refs <span class="op">=</span> [<span class="dv">5</span>, <span class="dv">5</span>], </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  min_dist_between <span class="op">=</span> <span class="dv">30</span>, </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  reference_col <span class="op">=</span> <span class="st">'Year'</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  group_by_col <span class="op">=</span> <span class="st">'Entity'</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  value_col <span class="op">=</span> <span class="st">'Gini'</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>test.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>pip_welfare</th>
+      <th>Year1986</th>
+      <th>Entity</th>
+      <th>Gini1986</th>
+      <th>Year2016</th>
+      <th>Gini2016</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Income</td>
+      <td>1986</td>
+      <td>Argentina</td>
+      <td>0.428089</td>
+      <td>2016</td>
+      <td>0.420325</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Income</td>
+      <td>1985</td>
+      <td>Australia</td>
+      <td>0.324977</td>
+      <td>2016</td>
+      <td>0.336858</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Income</td>
+      <td>1985</td>
+      <td>Belgium</td>
+      <td>0.252039</td>
+      <td>2016</td>
+      <td>0.275810</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Income</td>
+      <td>1986</td>
+      <td>Brazil</td>
+      <td>0.584646</td>
+      <td>2016</td>
+      <td>0.533428</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Income</td>
+      <td>1987</td>
+      <td>Chile</td>
+      <td>0.562102</td>
+      <td>2017</td>
+      <td>0.444410</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="merging-reference-year-aligned-data-from-wid-and-pip-datasets" class="level3">
+<h3 class="anchored" data-anchor-id="merging-reference-year-aligned-data-from-wid-and-pip-datasets">Merging reference year aligned data from WID and PIP datasets</h3>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prep_wid_pip_data(reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  pip_matches <span class="op">=</span> pip_welfare_routine(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df_pip,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    value_col <span class="op">=</span> value_col</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  wid_matches <span class="op">=</span> merge_two_ref_matches(</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df_wid,</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>    value_col <span class="op">=</span> value_col</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  ref_pairs <span class="op">=</span> pd.concat([pip_matches, wid_matches,], keys<span class="op">=</span>[<span class="st">'pip'</span>, <span class="st">'wid'</span>])</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tidy up indexes</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  ref_pairs <span class="op">=</span> ref_pairs.reset_index()</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  ref_pairs <span class="op">=</span> ref_pairs.drop(<span class="st">'level_1'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  ref_pairs <span class="op">=</span> ref_pairs<span class="op">\</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">"level_0"</span>: <span class="st">"source"</span>})</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ref_pairs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="plot" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="plot">Plot</h2>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Specifications</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>reference_vals <span class="op">=</span> [<span class="dv">1990</span>, <span class="dv">2018</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>max_dist_from_refs <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">4</span>]</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>min_dist_between <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>value_col <span class="op">=</span> <span class="st">'Bottom_50_share'</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 'Gini'</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 'Top_10_share'</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 'Bottom_50_share'</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 'MLD'</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 'P90_P10_ratio' – not that helpful due to accuracy of low incomes</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Data from both sources is needed?</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If this = 1 then a country will be incldued even if it is only availalbe from one source.</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># If = 2, then only countries with data for both sources will be included</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>source_count_requirement <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the value which constitutes a significant change in the value being measured</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># E.g. for Gini tolerance = 0.02 (2 points) </span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> value_col <span class="op">==</span> <span class="st">'Gini'</span>:</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>  tolerance <span class="op">=</span> <span class="fl">0.02</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>  outlier_cut_off_upper <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> value_col <span class="op">==</span> <span class="st">'Top_10_share'</span>:</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>  tolerance <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>  outlier_cut_off_upper <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> value_col <span class="op">==</span> <span class="st">'Bottom_50_share'</span>:</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>  tolerance <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>  outlier_cut_off_upper <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> value_col <span class="op">==</span> <span class="st">'P90_P10_ratio'</span>:</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a>  tolerance <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a>  outlier_cut_off_upper <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co"># These parameters are unlikely to change:</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>reference_col <span class="op">=</span> <span class="st">'Year'</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>group_by_col <span class="op">=</span> <span class="st">'Entity'</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>plot_and_tables <span class="op">=</span> prep_plot_and_tables(</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>  reference_vals <span class="op">=</span> reference_vals, </span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>  max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>  min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>  reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>  group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>  value_col <span class="op">=</span> value_col,</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>  tolerance <span class="op">=</span> tolerance,</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>  outlier_cut_off_upper <span class="op">=</span> outlier_cut_off_upper,</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>  source_count_requirement <span class="op">=</span> source_count_requirement</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plot_and_tables[<span class="st">'plot'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1_B_within_country_trends_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>&lt;ggplot: (373154657)&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plot_and_tables[<span class="st">'summary'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>source</th>
+      <th>pip</th>
+      <th>wid</th>
+    </tr>
+    <tr>
+      <th>summary</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>fall</th>
+      <td>26</td>
+      <td>34</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>14</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>20</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>avg_change</th>
+      <td>-0.09</td>
+      <td>-1.54</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>60</td>
+      <td>60</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="column-page">
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plot_and_tables[<span class="st">'table'</span>].show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<div>                            <div id="20426469-db8b-49e1-828f-98b14ad28233" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("20426469-db8b-49e1-828f-98b14ad28233")) {                    Plotly.newPlot(                        "20426469-db8b-49e1-828f-98b14ad28233",                        [{"cells":{"values":[["pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","pip","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid","wid"],["Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Income","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Consumption","Mixed","Mixed",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[1989,1988,1992,1991,1992,1992,1993,1991,1989,1991,1989,1987,1992,1993,1993,1991,1989,1990,1991,1989,1989,1992,1987,1990,1992,1992,1991,1991,1991,1991,1993,1994,1990,1988,1990,1994,1991,1990,1990,1992,1992,1986,1987,1992,1992,1990,1991,1993,1993,1990,1991,1990,1990,1987,1989,1992,1992,1991,1993,1993,1990,1991,1991,1994,1990,1993,1993,1990,1990,1988,1990,1988,1990,1990,1988,1990,1990,1990,1990,1990,1991,1990,1990,1990,1992,1990,1992,1993,1992,1990,1993,1988,1991,1988,1987,1989,1992,1992,1990,1990,1991,1990,1990,1990,1990,1990,1992,1988,1994,1990,1990,1987,1990,1991,1992,1989,1990,1992,1993,1991],["Australia","Belgium","Bulgaria","Canada","Czechia","Denmark","Estonia","Finland","France","Germany","Hungary","Ireland","Israel","Latvia","Lithuania","Luxembourg","Malaysia","Netherlands","Norway","Poland","Romania","Slovakia","Slovenia","Spain","Sweden","Switzerland","Taiwan","United Kingdom","United States","Bangladesh","Botswana","Burkina Faso","China","Cote d'Ivoire","Egypt","Eswatini","Ghana","Indonesia","Iran","Kenya","Laos","Lesotho","Mauritania","Niger","Nigeria","Pakistan","Philippines","Russia","South Africa","Sri Lanka","Tanzania","Thailand","Tunisia","Turkey","Uganda","Ukraine","Vietnam","Zambia","Belarus","Kazakhstan","Australia","Bangladesh","Belgium","Burkina Faso","Bulgaria","Botswana","Belarus","Canada","Switzerland","Cote d'Ivoire","China","Czechia","Germany","Denmark","Estonia","Egypt","Spain","Finland","France","United Kingdom","Ghana","Hungary","Indonesia","Ireland","Israel","Iran","Kenya","Kazakhstan","Laos","Sri Lanka","Lesotho","Lithuania","Luxembourg","Latvia","Mauritania","Malaysia","Niger","Nigeria","Netherlands","Norway","Philippines","Pakistan","Poland","Romania","Russia","Sweden","Slovenia","Slovakia","Eswatini","Thailand","Tunisia","Turkey","Taiwan","Tanzania","Ukraine","Uganda","United States","Vietnam","South Africa","Zambia"],["27.29","32.49","29.33","28.82","36.18","33.28","24.19","34.27","28.25","29.78","32.97","26.21","25.82","31.41","28.03","31.79","20.10","29.11","32.86","31.47","33.82","36.22","33.91","28.33","32.75","27.23","29.76","25.71","24.07","31.44","13.20","19.69","28.36","25.21","28.82","12.83","24.54","28.69","21.28","14.87","27.30","14.16","20.47","26.45","19.29","27.92","21.38","19.11","12.17","28.81","26.44","20.89","23.22","22.11","20.64","29.64","26.43","9.62","35.26","27.65","18.45","18.86","21.10","10.09","25.98","6.15","25.16","19.25","23.76","11.58","21.46","30.88","21.62","24.77","24.54","16.97","18.94","24.77","20.93","19.52","14.08","30.62","14.38","22.56","13.24","12.67","7.22","19.56","14.27","16.35","5.31","24.78","21.39","26.36","12.10","14.57","15.01","11.54","24.76","28.39","11.85","16.31","26.08","26.23","28.37","26.73","26.68","27.31","6.45","9.56","13.46","10.50","16.44","15.77","17.73","11.74","16.86","13.91","13.71","5.56"],[2018,2018,2018,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2015,2018,2018,2018,2018,2018,2018,2018,2018,2018,2016,2017,2018,2016,2015,2018,2018,2018,2017,2016,2016,2018,2018,2015,2018,2017,2014,2018,2018,2018,2018,2018,2014,2016,2018,2018,2015,2018,2019,2018,2018,2015,2018,2018,2018,2016,2017,2014,2018,2015,2018,2018,2017,2015,2016,2018,2017,2017,2018,2017,2017,2017,2018,2017,2016,2018,2017,2018,2016,2017,2015,2017,2018,2016,2017,2017,2017,2018,2014,2015,2014,2018,2017,2017,2018,2018,2018,2018,2017,2017,2018,2018,2016,2018,2015,2018,2017,2017,2018,2016,2018,2018,2014,2015],["26.99","31.77","23.36","27.38","33.26","31.23","28.73","31.63","28.77","28.84","29.95","29.58","23.57","26.35","26.03","26.10","22.64","31.05","31.36","29.65","25.20","32.75","33.32","26.28","29.68","27.72","28.82","26.28","22.34","28.59","15.81","19.55","24.14","25.14","29.40","15.18","20.98","24.37","22.37","23.06","24.61","19.76","27.73","25.96","26.16","30.52","24.92","25.29","10.65","24.68","23.86","25.44","27.80","22.55","22.58","32.30","26.12","13.44","32.93","31.28","16.59","17.09","21.15","15.04","16.23","8.12","22.65","16.17","22.59","12.80","14.11","25.34","18.58","21.67","18.12","14.85","20.63","21.55","22.77","20.34","12.21","22.45","15.35","19.90","13.17","13.84","13.01","16.56","12.89","14.14","11.28","16.96","18.70","17.26","16.78","17.30","15.72","15.50","22.12","24.25","14.35","17.30","19.60","15.20","17.34","24.08","23.07","24.15","7.86","13.38","16.61","13.68","11.79","12.95","22.74","12.13","13.32","14.63","5.80","6.95"]]},"header":{"values":["source","pip_welfare","Year1990","Entity","Bottom_50_share1990","Year2018","Bottom_50_share2018"]},"type":"table"}],                        {"template":{"data":{"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"choropleth":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"choropleth"}],"contour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"contour"}],"contourcarpet":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"contourcarpet"}],"heatmap":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmap"}],"heatmapgl":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"heatmapgl"}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"histogram2d":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2d"}],"histogram2dcontour":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"histogram2dcontour"}],"mesh3d":[{"colorbar":{"outlinewidth":0,"ticks":""},"type":"mesh3d"}],"parcoords":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"parcoords"}],"pie":[{"automargin":true,"type":"pie"}],"scatter":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter"}],"scatter3d":[{"line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatter3d"}],"scattercarpet":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattercarpet"}],"scattergeo":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergeo"}],"scattergl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattergl"}],"scattermapbox":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scattermapbox"}],"scatterpolar":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolar"}],"scatterpolargl":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterpolargl"}],"scatterternary":[{"marker":{"colorbar":{"outlinewidth":0,"ticks":""}},"type":"scatterternary"}],"surface":[{"colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"type":"surface"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}]},"layout":{"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"autotypenumbers":"strict","coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]],"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]},"colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"geo":{"bgcolor":"white","lakecolor":"white","landcolor":"#E5ECF6","showlakes":true,"showland":true,"subunitcolor":"white"},"hoverlabel":{"align":"left"},"hovermode":"closest","mapbox":{"style":"light"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","gridwidth":2,"linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white"}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"ternary":{"aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"bgcolor":"#E5ECF6","caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"title":{"x":0.05},"xaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2},"yaxis":{"automargin":true,"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","zerolinewidth":2}}}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('20426469-db8b-49e1-828f-98b14ad28233');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+</div>
+</section>
+<section id="method-2-regression-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="method-2-regression-analysis">Method 2: regression analysis</h2>
+</section>
+<section id="explore-the-date" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-date">Explore the date</h2>
+<p>I plan to build a Shiny app to help compare trends across datasets (using Shinylive – built on Shiny for Python - ).</p>
+<p>Here is a test app just so I can test the wiring of how such an app works.</p>
 <pre class="shinylive-python"><code>#| standalone: true
 #| viewerHeight: 420
 
@@ -253,6 +924,7 @@ app = App(app_ui, server)
 </code></pre>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

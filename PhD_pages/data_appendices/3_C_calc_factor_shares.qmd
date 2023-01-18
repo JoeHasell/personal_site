@@ -1,7 +1,13 @@
 ---
 title: "Calculating housing and factor shares from industry data"
 editor: visual
+execute:
+  freeze: true  # never re-render during project render
 ---
+
+# To-do:
+
+- I moved the data folder, but haven't yet relected this in the code below.
 
 ## Summary
 

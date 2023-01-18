@@ -54,3 +54,5 @@ rsconnect/
 .netlify
 
 /.luarc.json
+
+/env/

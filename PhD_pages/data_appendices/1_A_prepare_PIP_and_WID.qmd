@@ -16,6 +16,12 @@ library(tidyverse)
 library(knitr)
 
 ```
+
+```{python}
+# For some reason I can't get the owid package working when rendering... only when running in the interactive window in vs code
+# from owid import catalog
+import pandas as pd
+```
 :::
 
 ## PIP data
@@ -27,7 +33,7 @@ We load the data from a file prepared from the PIP API by Our World in Data.
 # df_pip<- read.csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
 
 #  A local version, in case internet isn't available 
-df_pip<- read.csv("PhD_pages/data/pip_dataset (2).csv")
+df_pip<- read.csv("PhD_pages/data_appendices/data/original/pip_dataset.csv")
 
 ```
 
@@ -120,6 +126,7 @@ Here we define a list of these aggregate entities and drop them from the data.
 ```{r}
 drop_aggs<- c(
   "East Asia and Pacific",
+  "South Asia",
   "Europe and Central Asia",
   "High income countries",
   "Latin America and the Caribbean",
@@ -152,6 +159,59 @@ df_pip<- df_pip %>%
 :::
 
 
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop extremely low P10 values
+
+
+There are some very low values of P10. These lead to exaggerated values of the P90/P10 ratio.
+
+```{r}
+
+
+kable(
+    df_pip %>% filter(decile1_thr<0.02)
+
+  )
+
+```
+
+We set these values of P10 to NA, and thereby precluding a value for P90/P10 ratio when it is calculated below.
+
+```{r}
+
+df_pip<- df_pip %>%
+  mutate(decile1_thr = if_else(decile1_thr<0.02,
+                              as.numeric(NA),
+                              decile1_thr))
+
+
+kable(
+    df_pip %>% filter(is.na(decile1_thr))
+
+  )
+
+
+```
+
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Calculate additional variables
+
+
+```{r}
+
+df_pip<- df_pip %>%
+  mutate(Bottom_50_share = decile1_share + decile2_share + decile3_share + decile4_share + decile5_share,
+          P90_P10_ratio = decile9_thr/decile1_thr)
+
+
+```
+:::
+
 ::: {.callout-note collapse="true" appearance="minimal"}
 ### Rename and select needed columns
 ```{r}
@@ -160,7 +220,6 @@ df_pip<- df_pip %>%
   rename("Gini" = "gini",
          "Top_10_share" = "decile10_share",
          "MLD" = "mld",
-         "P90_P10_ratio" = "p90_p10_ratio",
          "Entity" = "country",
          "Year" = "year")
 
@@ -171,17 +230,16 @@ df_pip<- df_pip %>%
         Entity,
         Gini,
         Top_10_share,
+        Bottom_50_share,
         MLD,
         P90_P10_ratio,
         welfare_type)
 
 
 
-
-
-
 ```
 :::
+
 
 
 ::: {.callout-note collapse="true" appearance="minimal"}
@@ -194,6 +252,18 @@ kable(
     head(df_pip, 100)
     
 )
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Save the data
+I save the prepared data locally:
+```{r}
+
+write.csv(df_pip, 
+      "PhD_pages/data_appendices/data/clean/pip.csv", row.names=FALSE)
+
 ```
 :::
 
@@ -208,7 +278,7 @@ We load the data from a file prepared from the WID Stata package by Our World in
 # df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
 
 # A local version, in case internet isn't available 
-df_wid<- read.csv("PhD_pages/data/wid.csv")
+df_wid<- read.csv("PhD_pages/data_appendices/data/original/wid.csv")
 
 ```
 
@@ -247,6 +317,7 @@ drop_entities<- c(
 "Central Asia",
 "East Africa",
 "East Asia",
+"South Asia",
 "Eastern Europe",
 "Middle Africa",
 "North Africa",
@@ -273,6 +344,42 @@ df_wid<- df_wid %>%
 ```
 :::
 
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop extremely low P10 values
+
+
+There are some very low values of P10. These lead to exaggerated values of the P90/P10 ratio. Here are all values less than $1 a day (using pretax national income)
+
+```{r}
+
+
+kable(
+    df_wid %>% filter(P10...income.threshold/365<1)
+
+  )
+
+```
+
+We set these values of P10 to NA, and thereby precluding a value for P90/P10 ratio when it is calculated below.
+
+```{r}
+
+df_wid<- df_wid %>%
+  mutate(P10...income.threshold = if_else(P10...income.threshold/365<1,
+                              as.numeric(NA),
+                              P10...income.threshold))
+
+                              kable(
+    df_wid %>% filter(is.na(P10...income.threshold))
+
+  )
+
+```
+
+:::
+
 ::: {.callout-note collapse="true" appearance="minimal"}
 ### Calculate some additional inequality metrics
 
@@ -294,14 +401,20 @@ df_wid<- df_wid %>%
 ```{r}
 df_wid<- df_wid %>%
     rename("Gini" = "Gini.coefficient",
-         "Top_10_share" = "P90.P100...share.of.the.top.10.") %>%
+         "Top_10_share" = "P90.P100...share.of.the.top.10.",
+         "Bottom_50_share"= "P0.P50...share.of.the.bottom.50.",
+         "P90" = "P90...income.threshold.of.the.top.10.",
+         "P10" = "P10...income.threshold") %>%
     select(
         Year,
         Entity,
         Gini,
         Top_10_share,
         # MLD,
-        P90_P10_ratio)
+        P90_P10_ratio,
+        Bottom_50_share,
+        P90,
+        P10)
 
 ```
 :::
@@ -318,7 +431,108 @@ kable(
     
 )
 ```
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Save the data
+I save the prepared data locally:
+```{r}
+
+write.csv(df_wid, 
+      "PhD_pages/data_appendices/data/clean/wid.csv", row.names=FALSE)
+
+
+```
 :::
+:::
+
+## Additional variables
+::: {.callout-note collapse="true" appearance="minimal"}
+### Region classfications
+For regional classifications I take WID definitions, as specified on their website [here](https://wid.world/codes-dictionary/#country-code).
+
+I read in a csv prepared from the table in that webpage, which has been mapped to the Our World in Data standarized country names used throughout this project.
+```{r}
+
+df_regions<- read.csv("PhD_pages/data_appendices/data/original/WID_regions_country_standardized.csv")
+
+```
+
+I create a clean region mapping table using two regional definitions. One is the 'standard' definitions used by WID. In an alternative set I split Western and Eastern Europe, ccombining the latter with Russia & Central Asia to make a joint Eastern Europe and Central Asia region. 
+```{r}
+
+df_regions<- df_regions %>%
+  select(Our.World.In.Data.Name, `region..standard.`, sub.region) %>%
+  rename(Entity = Our.World.In.Data.Name,
+        WID_region = `region..standard.`) %>%
+  mutate(region_alt = if_else(sub.region == 'Western Europe',
+  'Western Europe',
+  WID_region)) %>%
+  mutate(region_alt = if_else((sub.region == 'Eastern Europe' | WID_region == "Russia & Central Asia"),
+  'Eastern Europe & Central Asia',
+  WID_region)) %>%
+  select(Entity, WID_region, region_alt)
+
+
+kable(
+  df_regions
+)
+```
+
+Check that no countries are not matched for either dataset.
+```{r}
+# Merge in the regions dataset
+df_pip<- left_join(df_pip, df_regions)
+df_wid<- left_join(df_wid, df_regions)
+
+
+# PIP check
+kable(
+  df_pip %>% 
+    select(Entity, WID_region, region_alt) %>%
+    unique() %>%
+    filter(is.na(WID_region))
+)
+
+# WID check
+kable(
+  df_wid %>% 
+    select(Entity, WID_region, region_alt) %>%
+    unique() %>%
+    filter(is.na(WID_region))
+)
+
+```
+
+Save the region mapping
+```{r}
+write.csv(df_regions, 
+      "PhD_pages/data_appendices/data/clean/WID_region_mapping.csv", row.names=FALSE)
+
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Region classfications
+
+```{python}
+# For some reason I can't get the owid package working when rendering... only when running in the interactive window in vs code
+# results = catalog.find('population')
+# owid_pop = results[results['path'] == 'garden/owid/latest/key_indicators/population']
+
+# df_pop = owid_pop.iloc[0].load().reset_index().rename(columns={'year':'Year', 'country': 'Entity'})
+
+# df_pop.head()
+
+```
+
+Save the population data
+```{python}
+# df_pop.to_csv('PhD_pages/data_appendices/data/clean/population.csv')
+
+```
+:::
+
 
 
 
@@ -365,4 +579,29 @@ kable(
        filter(is.na(Entity_pip))
 )
 ```
+:::
+
+### Outliers
+::: {.callout-note collapse="true" appearance="minimal"}
+### P90/P10 ratio
+
+For the P90/P10 ratio, a few observations have extreme values. In the PIP data
+```{r}
+kable(
+
+  df_pip %>% arrange(-P90_P10_ratio) %>% head()
+)
+
+```
+
+And the WID data:
+
+```{r}
+kable(
+
+  df_wid %>% arrange(-P90_P10_ratio) %>% head(100)
+)
+
+```
+
 :::
