@@ -42,11 +42,6 @@ b\) Untangle which methods, definitions affect the different conclusions arrived
 
 ### LIS
 
-### Other sources
-
-Should we use Solt? As another check on results?
-
-What about GCIP? For trying to flip between income and consumption...
 
 ### Coverage
 
@@ -55,410 +50,66 @@ Give an overview of coverage in each dataset.
 
 ## Comparing databases
 
-#### Method 1: Reference years, with a certain tolerance 
+### Comparing metrics
 
-::: {.callout-note collapse="true" appearance="minimal"} 
-## A function for selecting data around a set of reference years, within a certain tolerance
+Does it make a difference whether we look at Gini or top 10%?
 
-```{r}
-## This has been superseded by the function below
-# select_ref_years<- function(df, target_varname, group_by_varname, ref_varname, ref_values,tolerance,tie_break_round_up){
-#   
-#   ## Example arguments for testing
-#   # df_in<- df_wid
-#   # target_varname<- "Gini.coefficient"
-#   # group_by_varname<- "Entity"
-#   # ref_varname<- "Year"
-#   # ref_values<- c(1990, 2020)
-#   # tolerance<- 5
-#   # tie_break_round_up<- TRUE
-#   
-#     # rename vars toß make nonstandard evaluation easier
-#    df_in<- df %>%
-#     rename(target_var = !!target_varname,
-#            group_by_var = !!group_by_varname,
-#            ref_var = !!ref_varname)
-#    
-#    out_list<- list()
-#    
-#    for(ref in ref_values){
-#      
-#      df_ref<- df_in %>%
-#        select(target_var, group_by_var, ref_var) %>%
-#        drop_na() %>%
-#        mutate(distance = ref_var - ref) %>%
-#        mutate(abs_distance = abs(distance)) %>%
-#        group_by(group_by_var) %>%
-#        mutate(min_distance = min(abs_distance)) %>%
-#        filter(abs_distance == min_distance) %>%
-#        group_by(group_by_var, min_distance) %>%
-#        mutate(n = n()) %>%
-#        ungroup()
-#      
-#     # address tie-breaks. If 'round_up' is true, the higher value wins out - i.e. the distance to the reference value must positive. And visa versa.
-#      if(tie_break_round_up){
-#        df_ref<- df_ref %>%
-#          filter(n==1 | distance>0)
-#      } else {
-#        df_ref<- df_ref %>%
-#          filter(n==1 | distance<0)
-#      }
-#      
-#      out_list[[as.character(ref)]]<- df_ref
-#      
-#      
-#    }
-#  
-#   
-#   df_out<- bind_rows(out_list, .id = paste0("reference_", ref_varname))
-#   
-#   # If a tolerance has been set, filter out matches beyond tolerance
-#   if(!is.na(tolerance)){
-#       df_out<- df_out %>%
-#          filter(abs_distance <= tolerance)
-#      }
-#   
-#   # names back to original and drop not needed vars
-#    df_out<- df_out %>%
-#     rename(!!target_varname := target_var,
-#            !!group_by_varname := group_by_var,
-#            !!ref_varname := ref_var) %>%
-#      select(-c(distance, min_distance, n))
-#    
-# }
+People worry about whether Gini masks what's happening at the top.
 
-```
+Empirically: 
+    - Make a linear model of top 10% on Gini, for each source separately
+    - Make predicted top 10%
+    - Take a look at the R2
+    - Investigate individual countries with very poor predictions
 
-```{r}
-# Next, we define a function that takes a dataframe, a pair of years (year1 < year2), a distance, a list of variable names, and a list of ID columns as arguments
-# # calculate_change <- function(data, year1, year2, distance, vars, id_cols) {
-  
-    
-# #   calc_distances<- list()
-  
-# #   for(ref in c(year1, year2)){
-    
-# #   # We add a column stating the reference year and group the data by the ID columns
-# #   data_subset <- data %>%
-# #     mutate(ref_year = ref) %>%
-# #     group_by(across(all_of(id_cols)))
+Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.
 
-# #     # We calculate the difference and absolute difference from the reference year
-# #   data_subset$diff <- data_subset$Year - ref
-# #   data_subset$abs_diff <- abs(data_subset$diff)
-  
-# #   # Store in list
-# #   calc_distances[[ref]]<- data_subset %>% ungroup()
-# #   }
-  
-# #   data_long<- bind_rows(calc_distances)
-
-# #   # A list where we will store the matched observations and changes for each variable
-# #   return_matches<- list()
-
-# #   # na_treatment<- "obs_for_all_vars"
-# #   vars_plus<- c(vars, "obs_for_all_vars_case")
-  
-# #     #For each var...
-# #     for(var in vars_plus){
-
-# #       # Filter out observations with missing values in var of interest and calculate the min absolute distance from the two reference years
-# #     if(var == "obs_for_all_vars_case"){
-# #       matches <- data_long %>%
-# #         filter_at(vars,all_vars(!is.na(.)))
-# #     } else {
-# #       matches <- data_long %>%
-# #       filter(!is.na(!!sym(var)))
-# #     }
-    
-# #     matches <- matches %>%
-# #       group_by(across(all_of(c(id_cols, "ref_year")))) %>% 
-# #       mutate(min_diff = min(abs_diff)) %>%
-# #       filter(abs_diff == min_diff)
-
-# #      # If there is a tie-break (with two matches, one above and one below the reference year), settle the tie-break so as to maximise the gap between the two observations. That means for the early year, below matches win; for the later year, above matches win.
-
-# #     matches <- matches %>%
-# #       group_by(across(all_of(c(id_cols, "ref_year", "min_diff")))) %>%
-# #       mutate(n = n()) %>% # count number of matches (n>1 if there is a tie-break) %>%
-# #     ungroup()
-    
-# #     matches <- matches %>% 
-# #       group_by(across(all_of(c(id_cols, "ref_year")))) %>% 
-# #       filter(n==1 | (ref_year == year1 & diff<0) | (ref_year == year2 & diff>0))
-     
-# #     # If the same year is matched for the two reference years, drop the observations
-# #      matches <- matches %>% 
-# #       group_by(across(all_of(c(id_cols, "Year")))) %>% 
-# #       mutate(n = n()) %>% # count number of times a year is matched
-# #       filter(!n>1) # Drop if same year is matched
-      
-# #     if(var == "obs_for_all_vars_case"){
-# #       keep_vars<- c(id_cols, "Year", vars, "ref_year" )
-# #     } else {
-# #       keep_vars<- c(id_cols, "Year", var, "ref_year" )
-# #     }
-     
-# #      matches <- matches %>%
-# #        select_at(keep_vars)
-     
-# #      # Make a list to store the matched observations, and also the calculated distances
-# #     return_matches[[var]]<- matches
-    
-# #     }
-  
- 
-# #   # Finally, we return the ...
-# #   return(return_matches)
-# # }
-
-# # # To test the function, we can create a sample dataframe
-# # data <- data.frame(Year = c(1999, 2000, 2001, 2002, 2003, 2004, 2003),
-# #                    Entity = c("A","A", "A", "A", "B", "B", "C"),
-# #                    Var1 = c(40, NA, 20, 30, 40, 50, 60),
-# #                    Var2 = c(30, 100, 200, 300, 400, 500, 400))
+### Since 1990
 
 
-# # year1<- 2000
-# # year2<- 2005
-# # distance<- 2
-# # vars<- c("Var1","Var2")
-# # id_cols<- c("Entity")
+Similarities:
 
-# # # Then, we can call the function with a pair of years, a distance, a list of variable names, and a list of ID columns
-# # calculate_change(data, 2000, 2004, 2, c("Var1", "Var2"), c("Entity"))
+Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)
 
+Indeed for some regions very similar picture:
 
-# ```
+    - MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)
 
-# ```{r}
-# compare_ref_years<- function(df_list, target_varname, group_by_varname, ref_varname, ref_values,tolerance,tie_break_round_up, rise_fall_threshold) {
-  
-#   # Example arguments for testing
-#   df_list<- list("pip" = df_pip, "wid" = df_wid)
-#   target_varname<- "Gini"
-#   group_by_varname<- "Entity"
-#   ref_varname<- "Year"
-#   ref_values<- c(1990, 2020)
-#   tolerance<- 5
-#   tie_break_round_up<- TRUE
-#   rise_fall_threshold<- 0.01
-  
-#   # Store the names of the two dataframes as a vector
-#   df_names<- names(df_list)
-  
-#   # Initiate a list to store the processed data for each dataframe
-#   df_out_list<- list()
-  
-  
-#   # loop through both data frame names
-#   for(i in 1:2){
-#     df_name<- df_names[i]
-    
-#     # rename vars to avoid nonstandard evaluation later on
-#     df_in<- df_list[[df_name]] %>%
-#       rename(target_var = !!target_varname,
-#            group_by_var = !!group_by_varname,
-#            ref_var = !!ref_varname)
-   
-#     # initiate a list to store the filtered data for each reference (e.g. reference year)
-#     ref_list_list<- list()
-   
-#     # Loop through the references
-#     for(ref in ref_values){
-     
-#       # filter for the closest observation, by group (e.g. by country)
-#       df_ref<- df_in %>%
-#         select(target_var, group_by_var, ref_var) %>%
-#         drop_na() %>%
-#         mutate(distance = ref_var - ref) %>%
-#         mutate(abs_distance = abs(distance)) %>%
-#         group_by(group_by_var) %>%
-#         mutate(min_distance = min(abs_distance)) %>%
-#         filter(abs_distance == min_distance) %>%
-#         group_by(group_by_var, min_distance) %>%
-#         mutate(n = n()) %>% # count number of matches (n>1 if there is a tie-break)
-#         ungroup()
-     
-#       # Settle tie-breaks. If 'round_up' is true, the higher value wins out - i.e. the distance to the reference value must positive. And visa versa.
-#       if(tie_break_round_up){
-#         df_ref<- df_ref %>%
-#          filter(n==1 | distance>0)
-#       } else {
-#         df_ref<- df_ref %>%
-#          filter(n==1 | distance<0)
-#       }
-     
-#       ref_list_list[[as.character(ref)]]<- df_ref
-     
-#     }
- 
-#     # Collate the matches for each reference observation
-#     df_out<- bind_rows(ref_list_list, .id = "reference")
-  
-    
-#     # If a tolerance has been set, filter out matches beyond tolerance
-#     if(!is.na(tolerance)){
-#         df_out<- df_out %>%
-#          filter(abs_distance <= tolerance)
-#      }
-  
-#     # drop not needed vars
-#     df_out<- df_out %>%
-#       select(-c(distance, min_distance, n))
-    
-#     # code rise, fall, stable
-#     df_out<- df_out %>%
-#       drop_na() %>%
-#       pivot_longer(cols = c(target_var, ref_var, abs_distance), names_to="metric", values_to = "value" ) %>%
-#       pivot_wider(id_cols = group_by_var, names_from = c(metric,reference), values_from = value) %>%
-#   drop_na() %>%
-#   mutate(change = !!sym(paste0("target_var_", max(ref_values))) - !!sym(paste0("target_var_", min(ref_values)))) %>%
-#   mutate(rise_fall = "stable") %>%
-#   mutate(rise_fall = if_else(change< -(rise_fall_threshold),
-#                              "fall",
-#                              rise_fall)) %>%
-#   mutate(rise_fall = if_else(change > rise_fall_threshold,
-#                              "rise",
-#                              rise_fall))
-    
-#     # Store the results in a list
-#     df_out_list[[df_name]]<- df_out
-    
-#   }
-  
-  
-#   # Join the results gathered from each input dataframe
-#   df_out_list[["joint"]]<- full_join(
-#     df_out_list[[df_names[1]]], df_out_list[[df_names[2]]],
-#     by = c("group_by_var"),
-#     suffix = c(paste0("_",df_names[1]), paste0("_",df_names[2])),
-#     keep = TRUE
-#     ) 
-  
+    - South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise
 
-#   # Make a list of fall/rise summaries 
-  
-#     # Initiate the list
-#     rise_fall_list<- list()
-    
-#     #Loop through the two sources
-#     for(df_name in df_names){
-      
-#        # For the individual source observations
-#         rise_fall_list[[paste0(df_name, "_allObs")]]<- df_out_list[[df_name]] %>%
-#           count(rise_fall)
-      
-#         # for the observations that are in both sources
-#         rise_fall_list[[paste0(df_name, "_sharedObs")]]<- df_out_list[["joint"]] %>% 
-#       drop_na() %>%
-#       count(across(paste0("rise_fall_", df_name)))
-#     }
-  
-#   # Make a list of the averages in the two reference periods
-    
-#     # Initiate the list
-#     average_list<- list()
-    
-#     #Loop through the two sources
-#     for(df_name in df_names){
-      
-#        # For the individual source observations
-#         average_list[[paste0(df_name, "_allObs")]]<- df_out_list[[df_name]] %>%
-#           summarise(!!sym(paste0("avg_", ref_values[1])) := mean(!!sym(paste0("target_var_", ref_values[1]))),
-#                     !!sym(paste0("avg_", ref_values[2])) := mean(!!sym(paste0("target_var_", ref_values[2]))))
-        
-    
-    
-#         # for the observations that are in both sources
-#         average_list[[paste0(df_name, "_sharedObs")]]<- df_out_list[["joint"]] %>% 
-#       drop_na() %>%
-#       summarise(!!sym(paste0("avg_", ref_values[1])) := mean(!!sym(paste("target_var", ref_values[1], df_name, sep= "_"))),
-#                     !!sym(paste0("avg_", ref_values[2])) := mean(!!sym(paste("target_var", ref_values[1], df_name, sep= "_"))))
-    
-#     }
-  
-  
-#   # Undo the renaming (used early to avoid nonstandard evaluation problems)
-#   for(df_name in names(df_out_list)){
-    
-#   names(df_out_list[[df_name]]) <- gsub(x = names(df_out_list[[df_name]]), pattern = "target_var", replacement = target_varname)
+    -  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)
 
-#   names(df_out_list[[df_name]]) <- gsub(x = names(df_out_list[[df_name]]), pattern = "group_by_var", replacement = group_by_varname)
-
-#   names(df_out_list[[df_name]]) <- gsub(x = names(df_out_list[[df_name]]), pattern = "ref_var", replacement = ref_varname)
-# }
-  
-#  outputs<- list("dataframes" = df_out_list,
-#                 "summaries" = summary_list)
- 
-# return(outputs)
-# }
-
-```
-
-```{r}
-
-# compare_pip_wid<- list()
-
-# for(var in c("Gini", "Top_10_share")){
-  
-#   if(var == "Gini"){rise_fall_threshold<- 0.1}
-#   if(var == "Top_10_share"){rise_fall_threshold<- 1}
-
-# compare_for_var<- compare_ref_years(
-#     df_list = list("pip" = df_pip, "wid" = df_wid),
-#     target_varname = var,
-#     group_by_varname = "Entity",
-#     ref_varname = "Year",
-#     ref_values = c(1990, 2020),
-#     tolerance = 5,
-#     tie_break_round_up = FALSE,
-#     rise_fall_threshold = rise_fall_threshold
-#     )
-
-# compare_pip_wid[[var]]<- compare_for_var 
-# }
+    - Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).
 
 
-  
-```
+Differences:
 
-A scatter chart to compare
-```{r}
+Verry different bottom line at the global level:
 
+- PIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That's without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)
 
-```
+- WID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e. % increase rather than % point increase? A point rise means 'less' in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia 
 
-A table to compare rises and falls
-```{r}
-
-# tab_compare_rise_and_falls<- function(summaries_list){
-  
-#   summaries_list<- compare_pip_wid[["Gini"]][["summaries"]]
-#   tab<- data.frame(rise_fall = c("rise", "stable", "fall"))
-  
-#   source_names<- names(summaries_list)
-  
-#   for(source_name in source_names) {
-#   tab<- left_join(tab, summaries_list[[source_name]]) %>%
-#     rename(!!(paste0(source_name, "_all")) := n)
-#   }
-  
-#   # Adding data for shared observations
-  
-  
-# } 
-                                        
+That difference is driven by particular regions:
+- 
 
 
-```
-
-Averages
-```{r}
+More countries with rises. LArger rises. Especially larger populations. Average view very different:
 
 
-```
+
+
+
+Countries where the sources paint a radically different picture that affect the aggregate results:
+
+- India: Insane rise in WID 34->56
+- China:
+- Russia: Massive drop in PIP. Insane rise in WID.
+- USA: Much larger rise in WID.
+
+What explains the different trends in these countries? (We can maybe look in more detail, at different welfare concepts etc.)
+
+It sometimes goes the other way: Indonesia – Rise in PIP, fall in WID.
 
 :::
 
@@ -471,243 +122,6 @@ Averages
 
 ::: {.callout-note collapse="true" appearance="minimal"} 
 ## Calculations for comparisons
-
-
-Calculations for Gini
-```{r}
-
-# group_by_varname<- "Entity"
-# ref_varname<- "Year"
-# ref_values<- c(1990, 2020)
-# tolerance<- 5
-# tie_break_round_up<- FALSE
-
-# target_varname<- "Gini"
-
-# compare_gini<- compare_pip_and_wid_ref_years(target_varname = "Gini")
-
-
-# # Spread wide and calculate change over time
-
-# # PIP only
-# compare_gini_wide_pip<- compare_gini
-
-# names(compare_gini_wide_pip) <- gsub(x = names(compare_gini_wide_pip), pattern = "_pip", replacement = "")
-
-# compare_gini_wide_pip<- compare_gini_wide_pip %>%
-#   select(Entity, reference_Year, Gini) %>%
-#   drop_na() %>%
-#   pivot_wider(id_cols = Entity, names_from = reference_Year, values_from = Gini) %>%
-#   drop_na() %>%
-#   mutate(change = `2020` - `1990`) %>%
-#   mutate(rise_fall = "stable") %>%
-#   mutate(rise_fall = if_else(change< -0.01,
-#                              "fall",
-#                              rise_fall)) %>%
-#   mutate(rise_fall = if_else(change > 0.01,
-#                              "rise",
-#                              rise_fall))
-
-
-# compare_gini_pip_summary<- compare_gini_wide_pip %>%
-#   count(rise_fall)
-
-# # WID only
-# compare_gini_wide_wid<- compare_gini
-
-# names(compare_gini_wide_wid) <- gsub(x = names(compare_gini_wide_wid), pattern = "_wid", replacement = "")
-
-# compare_gini_wide_wid<- compare_gini_wide_wid %>%
-#   select(Entity, reference_Year, Gini) %>%
-#   drop_na() %>%
-#   pivot_wider(id_cols = Entity, names_from = reference_Year, values_from = Gini) %>%
-#   drop_na() %>%
-#   mutate(change = `2020` - `1990`) %>%
-#   mutate(rise_fall = "stable") %>%
-#   mutate(rise_fall = if_else(change< -0.01,
-#                              "fall",
-#                              rise_fall)) %>%
-#   mutate(rise_fall = if_else(change > 0.01,
-#                              "rise",
-#                              rise_fall))
-
-
-# compare_gini_wid_summary<- compare_gini_wide_wid %>%
-#   count(rise_fall)
-
-
-# # In both PIP and WID
-
-# compare_gini_pip_and_wid<- full_join(compare_gini_wide_pip, compare_gini_wide_wid, by= c("Entity"), keep = TRUE) %>%
-#   drop_na() %>%
-#   rename(rise_fall_pip = rise_fall.x,
-#          rise_fall_wid = rise_fall.y)
-
-# compare_gini_pip_wid_summary_pip<- compare_gini_pip_and_wid %>%
-#   count(rise_fall_pip)
-
-# compare_gini_pip_wid_summary_wid<- compare_gini_pip_and_wid %>%
-#   count(rise_fall_wid)
-
-
-# # Make a table
-
-# df_gini_table<- data.frame(
-#   rise_fall = c("rise", "fall", "stable")
-# )
-
-# df_gini_table<- left_join(df_gini_table, compare_gini_pip_summary) %>%
-#   rename(pip_all = n)
-
-# df_gini_table<- left_join(df_gini_table, compare_gini_pip_wid_summary_pip, by = c("rise_fall" = "rise_fall_pip")) %>%
-#   rename(pip_shared = n)
-
-
-# df_gini_table<- left_join(df_gini_table, compare_gini_wid_summary) %>%
-#   rename(wid_all = n)
-
-# df_gini_table<- left_join(df_gini_table, compare_gini_pip_wid_summary_wid, by = c("rise_fall" = "rise_fall_wid")) %>%
-#   rename(wid_shared = n)
-
-# # country by country table for rise and fall
-# df_gini_country_rise_fall_table<- full_join(compare_gini_wide_pip, compare_gini_wide_wid, by= c("Entity"), keep = TRUE) %>%
-#   filter(rise_fall.x != rise_fall.y) %>%
-#   mutate(Entity = Entity.x) %>%
-#   mutate(Entity = if_else(!is.na(Entity.y),
-#                           Entity.y,
-#                           Entity.x)) %>%
-#   select(Entity, rise_fall.x, rise_fall.y) %>%
-#   rename(pip = rise_fall.x,
-#          wid = rise_fall.y)
- 
-```
-
-
-Calculations for Top 10% share
-```{r}
-
-# compare_top_10<- compare_pip_and_wid_ref_years(target_varname = "Top_10_share")
-
-
-# # Spread wide and calculate change over time
-
-# # PIP only
-# compare_top_10_wide_pip<- compare_top_10
-
-# names(compare_top_10_wide_pip) <- gsub(x = names(compare_top_10_wide_pip), pattern = "_pip", replacement = "")
-
-# compare_top_10_wide_pip<- compare_top_10_wide_pip %>%
-#   select(Entity, reference_Year, Top_10_share) %>%
-#   drop_na() %>%
-#   pivot_wider(id_cols = Entity, names_from = reference_Year, values_from = Top_10_share) %>%
-#   drop_na() %>%
-#   mutate(change = `2020` - `1990`) %>%
-#   mutate(rise_fall = "stable") %>%
-#   mutate(rise_fall = if_else(change< -1,
-#                              "fall",
-#                              rise_fall)) %>%
-#   mutate(rise_fall = if_else(change > 1,
-#                              "rise",
-#                              rise_fall))
-
-
-# compare_top_10_pip_summary<- compare_top_10_wide_pip %>%
-#   count(rise_fall)
-
-# # WID only
-# compare_top_10_wide_wid<- compare_top_10
-
-# names(compare_top_10_wide_wid) <- gsub(x = names(compare_top_10_wide_wid), pattern = "_wid", replacement = "")
-
-# compare_top_10_wide_wid<- compare_top_10_wide_wid %>%
-#   select(Entity, reference_Year, Top_10_share) %>%
-#   drop_na() %>%
-#   pivot_wider(id_cols = Entity, names_from = reference_Year, values_from = Top_10_share) %>%
-#   drop_na() %>%
-#   mutate(change = `2020` - `1990`) %>%
-#   mutate(rise_fall = "stable") %>%
-#   mutate(rise_fall = if_else(change< -1,
-#                              "fall",
-#                              rise_fall)) %>%
-#   mutate(rise_fall = if_else(change > 1,
-#                              "rise",
-#                              rise_fall))
-
-
-# compare_top_10_wid_summary<- compare_top_10_wide_wid %>%
-#   count(rise_fall)
-
-
-# # In both PIP and WID
-
-# compare_top_10_pip_and_wid<- full_join(compare_top_10_wide_pip, compare_top_10_wide_wid, by= c("Entity"), keep = TRUE) %>%
-#   drop_na() %>%
-#   rename(rise_fall_pip = rise_fall.x,
-#          rise_fall_wid = rise_fall.y)
-
-# compare_top_10_pip_wid_summary_pip<- compare_top_10_pip_and_wid %>%
-#   count(rise_fall_pip)
-
-# compare_top_10_pip_wid_summary_wid<- compare_top_10_pip_and_wid %>%
-#   count(rise_fall_wid)
-
-
-# # Make a table
-
-# df_top_10_table<- data.frame(
-#   rise_fall = c("rise", "fall", "stable")
-# )
-
-# df_top_10_table<- left_join(df_top_10_table, compare_top_10_pip_summary) %>%
-#   rename(pip_all = n)
-
-# df_top_10_table<- left_join(df_top_10_table, compare_top_10_pip_wid_summary_pip, by = c("rise_fall" = "rise_fall_pip")) %>%
-#   rename(pip_shared = n)
-
-
-# df_top_10_table<- left_join(df_top_10_table, compare_top_10_wid_summary) %>%
-#   rename(wid_all = n)
-
-# df_top_10_table<- left_join(df_top_10_table, compare_top_10_pip_wid_summary_wid, by = c("rise_fall" = "rise_fall_wid")) %>%
-#   rename(wid_shared = n)
-
-# # country by country table for rise and fall
-# df_top_10_country_rise_fall_table<- full_join(compare_top_10_wide_pip, compare_top_10_wide_wid, by= c("Entity"), keep = TRUE) %>%
-#   filter(rise_fall.x != rise_fall.y) %>%
-#   mutate(Entity = Entity.x) %>%
-#   mutate(Entity = if_else(!is.na(Entity.y),
-#                           Entity.y,
-#                           Entity.x)) %>%
-#   select(Entity, rise_fall.x, rise_fall.y) %>%
-#   rename(pip = rise_fall.x,
-#          wid = rise_fall.y)
- 
-```
-
-:::
-
-
-
-#### Comparison between 1990 and 2020 (+/- 5 years))
-::: {.panel-tabset}
-### Gini
-```{r}
-# kable(df_gini_table)
-
-# kable(df_gini_country_rise_fall_table)
-
-```
-
-### Top 10% share
-```{r}
-# kable(df_top_10_table)
-
-# kable(df_top_10_country_rise_fall_table)
-
-```
-
-### MLD
-::: 
 
 
 

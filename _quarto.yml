@@ -1,6 +1,6 @@
 project:
   type: website
-  execute-dir: project
+  execute-dir: file
 
 website:
   title: "Joe Hasell"
@@ -18,6 +18,8 @@ website:
               - PhD_pages/paper_pages/test_page.qmd
           - section: "Data appendices"
             contents:
+              - PhD_pages/data_appendices/1_A_prepare_PIP_and_WID.qmd
+              - PhD_pages/data_appendices/1_B_within_country_trends.qmd
               - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
               - PhD_pages/data_appendices/3_B_prepare_OECD.qmd
       - section: "About this site"

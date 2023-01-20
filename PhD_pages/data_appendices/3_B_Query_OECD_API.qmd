@@ -2,7 +2,7 @@
 title: "Appendix 3.B: Preparing OECD data"
 format: html
 execute:
-  freeze: true  # never re-render during project render
+  eval: false  # never run
 ---
 
 # To-do:

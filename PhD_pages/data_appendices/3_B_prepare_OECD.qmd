@@ -2,7 +2,7 @@
 title: "Appendix 3.B: Preparing OECD industry data"
 format: html
 execute:
-  freeze: true  # never re-render during project render
+  eval: false  # never run
 ---
 
 # To-do:
@@ -224,7 +224,7 @@ main_industry_accounts<-  main_industry_accounts %>%
 
 The objective is to have complete coverage of the economy. There are some country years where coverage across industries looks decidedly incomplete.
 
-For instance, out of `r length(main_industry_codes)` aggregate industry codes, these country years have data for fewer than 18:
+For instance, out of r length(main_industry_codes)` aggregate industry codes, these country years have data for fewer than 18:
 
 ```{r}
 kable( 
@@ -246,7 +246,7 @@ main_industry_accounts<- left_join(main_industry_accounts, to_drop) %>%
 
 But because of differences in national accounting methods, missing data for a given industry does not imply the accounts are incomplete.
 
-In particular, the dataset contains only `r main_industry_accounts %>% filter(ind_code == "VU")%>%count()` country-year observations for `VU` (as compared to `r main_industry_accounts %>% filter(ind_code == "VA0")%>%count()` for `VA0`) and these are in general only NA or 0 values.
+In particular, the dataset contains only r main_industry_accounts %>% filter(ind_code == "VU")%>%count()` country-year observations for `VU` (as compared to r main_industry_accounts %>% filter(ind_code == "VA0")%>%count()` for `VA0`) and these are in general only NA or 0 values.
 
 ```{r}
 summary(main_industry_accounts %>% filter(ind_code == "VU"))
@@ -302,7 +302,7 @@ tolerance<- 0.005 # half a percent tolerance
 ```
 :::
 
-In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than `r tolerance*100`%.
+In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than r tolerance*100`%.
 
 Note that in Finland - which is one of the countries we will go on to use this data for - the sum across available industries falls short of the reported aggregate (for value added, compensation of employees and gross operating surplus) by around 5%, with no trend over time.
 

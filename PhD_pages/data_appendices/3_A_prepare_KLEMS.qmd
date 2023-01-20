@@ -2,7 +2,7 @@
 title: "Appendix 3.A: Preparing EU KLEMS industry data"
 format: html
 execute:
-  freeze: true  # never re-render during project render
+  eval: false  # never run
 ---
 
 # To-do:
@@ -311,9 +311,9 @@ df<- df %>%
 ::: {.callout-note collapse="true" appearance="minimal"}
 ### Replace some NA values with 0
 
-There are many (`r df %>% filter(VA == CAP & is.na(LAB)) %>% count() %>% as.numeric()`) country-year-industry observations where where CAP is 100% of VA, but LAB is missing.
+There are many (r df %>% filter(VA == CAP & is.na(LAB)) %>% count() %>% as.numeric()) country-year-industry observations where where CAP is 100% of VA, but LAB is missing.
 
-Most of these (`r df %>% filter(VA == CAP & is.na(LAB) & VA == 0) %>% count() %>% as.numeric()`) are where both capital income and value added equal zero. Such observations appear only for the following industries:
+Most of these (r df %>% filter(VA == CAP & is.na(LAB) & VA == 0) %>% count() %>% as.numeric()) are where both capital income and value added equal zero. Such observations appear only for the following industries:
 
 ```{r}
 kable(
@@ -340,7 +340,7 @@ df<- df %>%
 ```
 
 
-There is a similar set of country-year-industry observations (n = `r df %>% filter(VA == LAB & is.na(CAP)) %>% count() %>% as.numeric()`) where VA = LAB but CAP is NA. These we list here.
+There is a similar set of country-year-industry observations (n = r df %>% filter(VA == LAB & is.na(CAP)) %>% count() %>% as.numeric()) where VA = LAB but CAP is NA. These we list here.
 
 ```{r}
 kable(
@@ -402,7 +402,7 @@ reported_totals<- df %>%
 ::: {.callout-note collapse="true" appearance="minimal"}
 ### Drop country-year-industry observations that do not have all variables needed
 
-There are some observations (n=`r main_industry_accounts %>% filter(is.na(VA) & is.na(CAP) & is.na(LAB)) %>% count() %>% as.numeric()`) without .... . We group these by country and industry.
+There are some observations (n=r main_industry_accounts %>% filter(is.na(VA) & is.na(CAP) & is.na(LAB)) %>% count() %>% as.numeric()`) without .... . We group these by country and industry.
 
 ```{r}
 kable(
@@ -481,7 +481,7 @@ tolerance<- 0.001 # tenth of a percent tolerance
 ```
 :::
 
-In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than `r tolerance*100`%.
+In general the sum across industries is very close to to the reported economy-wide aggregate. In the table below we show all observations where the ratio deviates from 100% by more than r tolerance*100`%.
 
 Note that in Canada - which is one of the countries we will go on to use this data for - the sum across available industries falls short of the reported aggregate (for value added, Capital income, Labour income and Compensation of employees) by around 5%, with no trend over time.
 

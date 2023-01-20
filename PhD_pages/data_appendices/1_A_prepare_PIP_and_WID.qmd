@@ -2,6 +2,7 @@
 title: "Appendix 1.A: Preparing PIP and WID inequality data"
 format: html
 warning: false
+
 ---
 
 # Processing steps
@@ -33,7 +34,7 @@ We load the data from a file prepared from the PIP API by Our World in Data.
 # df_pip<- read.csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
 
 #  A local version, in case internet isn't available 
-df_pip<- read.csv("PhD_pages/data_appendices/data/original/pip_dataset.csv")
+df_pip<- read.csv("data/original/pip_dataset.csv")
 
 ```
 
@@ -262,7 +263,7 @@ I save the prepared data locally:
 ```{r}
 
 write.csv(df_pip, 
-      "PhD_pages/data_appendices/data/clean/pip.csv", row.names=FALSE)
+      "data/clean/pip.csv", row.names=FALSE)
 
 ```
 :::
@@ -278,7 +279,7 @@ We load the data from a file prepared from the WID Stata package by Our World in
 # df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
 
 # A local version, in case internet isn't available 
-df_wid<- read.csv("PhD_pages/data_appendices/data/original/wid.csv")
+df_wid<- read.csv("data/original/wid.csv")
 
 ```
 
@@ -438,7 +439,7 @@ I save the prepared data locally:
 ```{r}
 
 write.csv(df_wid, 
-      "PhD_pages/data_appendices/data/clean/wid.csv", row.names=FALSE)
+      "data/clean/wid.csv", row.names=FALSE)
 
 
 ```
@@ -453,63 +454,88 @@ For regional classifications I take WID definitions, as specified on their websi
 I read in a csv prepared from the table in that webpage, which has been mapped to the Our World in Data standarized country names used throughout this project.
 ```{r}
 
-df_regions<- read.csv("PhD_pages/data_appendices/data/original/WID_regions_country_standardized.csv")
+# df_regions<- read.csv("data/original/WID_regions_country_standardized.csv")
+
+```
+
+```{python}
+
+df_regions = pd.read_csv("data/original/WID_regions_country_standardized.csv")
 
 ```
 
 I create a clean region mapping table using two regional definitions. One is the 'standard' definitions used by WID. In an alternative set I split Western and Eastern Europe, ccombining the latter with Russia & Central Asia to make a joint Eastern Europe and Central Asia region. 
 ```{r}
 
-df_regions<- df_regions %>%
-  select(Our.World.In.Data.Name, `region..standard.`, sub.region) %>%
-  rename(Entity = Our.World.In.Data.Name,
-        WID_region = `region..standard.`) %>%
-  mutate(region_alt = if_else(sub.region == 'Western Europe',
-  'Western Europe',
-  WID_region)) %>%
-  mutate(region_alt = if_else((sub.region == 'Eastern Europe' | WID_region == "Russia & Central Asia"),
-  'Eastern Europe & Central Asia',
-  WID_region)) %>%
-  select(Entity, WID_region, region_alt)
+# df_regions<- df_regions %>%
+#   select(Our.World.In.Data.Name, `region..standard.`, sub.region) %>%
+#   rename(Entity = Our.World.In.Data.Name,
+#         WID_region = `region..standard.`) %>%
+#   mutate(region_alt = if_else(sub.region == 'Western Europe',
+#   'Western Europe',
+#   WID_region)) %>%
+#   mutate(region_alt = if_else((sub.region == 'Eastern Europe' | WID_region == "Russia & Central Asia"),
+#   'Eastern Europe & Central Asia',
+#   WID_region)) %>%
+#   select(Entity, WID_region, region_alt)
 
 
-kable(
-  df_regions
-)
+# kable(
+#   df_regions
+# )
+```
+
+```{python}
+
+df_regions = df_regions[['Our World In Data Name', 'region (standard)', 'sub-region']].rename(columns={'Our World In Data Name': 'Entity', 'region (standard)': 'WID_region'})
+
+# Define an alt region classification
+df_regions['region_alt'] = df_regions['WID_region']
+
+df_regions.loc[df_regions['sub-region'] == 'Western Europe','region_alt'] = 'Western Europe'
+
+df_regions.loc[(df_regions['sub-region'] == 'Eastern Europe') | (df_regions['WID_region'] == 'Russia & Central Asia'),'region_alt'] = 'Eastern Europe & Central Asia'
+
+
 ```
 
 Check that no countries are not matched for either dataset.
 ```{r}
-# Merge in the regions dataset
-df_pip<- left_join(df_pip, df_regions)
-df_wid<- left_join(df_wid, df_regions)
+# # Merge in the regions dataset
+# df_pip<- left_join(df_pip, df_regions)
+# df_wid<- left_join(df_wid, df_regions)
 
 
-# PIP check
-kable(
-  df_pip %>% 
-    select(Entity, WID_region, region_alt) %>%
-    unique() %>%
-    filter(is.na(WID_region))
-)
+# # PIP check
+# kable(
+#   df_pip %>% 
+#     select(Entity, WID_region, region_alt) %>%
+#     unique() %>%
+#     filter(is.na(WID_region))
+# )
 
-# WID check
-kable(
-  df_wid %>% 
-    select(Entity, WID_region, region_alt) %>%
-    unique() %>%
-    filter(is.na(WID_region))
-)
+# # WID check
+# kable(
+#   df_wid %>% 
+#     select(Entity, WID_region, region_alt) %>%
+#     unique() %>%
+#     filter(is.na(WID_region))
+# )
 
 ```
 
 Save the region mapping
 ```{r}
-write.csv(df_regions, 
-      "PhD_pages/data_appendices/data/clean/WID_region_mapping.csv", row.names=FALSE)
+# write.csv(df_regions, 
+#       "data/clean/WID_region_mapping.csv", row.names=FALSE)
 
 ```
 
+```{python}
+
+df_regions.to_csv('data/clean/WID_region_mapping.csv')
+
+```
 :::
 
 ::: {.callout-note collapse="true" appearance="minimal"}
@@ -526,11 +552,47 @@ write.csv(df_regions,
 
 ```
 
-Save the population data
+
+Check we have population for each country
 ```{python}
-# df_pop.to_csv('PhD_pages/data_appendices/data/clean/population.csv')
+# df_pop = pd.read_csv('data/clean/population.csv')
+
+# df_wid = pd.read_csv("data/clean/wid.csv")
+# df_pip = pd.read_csv("data/clean/pip.csv")
+
+# check_pip = pd.merge(df_pip, df_pop, how = 'left')
+# check_pip[check_pip['population'].isna()]
+
+# check_wid = pd.merge(df_wid, df_pop, how = 'left')
+# check_wid[check_wid['population'].isna()]
+
+# # There's no population for Zanzibar in the OWID data
+# # For now I make up a population series based on two data points from Wikipedia. At some point I can come back and replaces this with the WID population data
+
+# zanz_pop_1978 = 476111
+# zanz_pop_2022 = 1889773
+
+# # Assume a constant growth rate
+# zanz_g = pow(zanz_pop_2022/zanz_pop_1978, 1/(2022-1978))-1
+
+# year = 2022
+# pop = zanz_pop_1978 * pow(1+zanz_g, year - 1978)
+
+# df_zanz_pop = df_wid[df_wid['Entity'] == "Zanzibar"].copy()
+# df_zanz_pop['population'] = zanz_pop_1978 * pow(1+zanz_g, df_zanz_pop['Year'] - 1978)
+
+# df_zanz_pop = df_zanz_pop[['Entity', 'Year', 'population']]
+
+# df_pop = pd.concat([df_pop, df_zanz_pop])
 
 ```
+
+Save the population data
+```{python}
+# df_pop.to_csv('data/clean/population.csv')
+
+```
+
 :::
 
 

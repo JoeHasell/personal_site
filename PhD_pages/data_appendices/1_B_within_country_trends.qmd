@@ -4,6 +4,7 @@ format: html
 warning: false
 filters:
   - shinylive
+
 ---
 ```{python}
 
@@ -20,6 +21,7 @@ Load in the data
 df_wid = pd.read_csv("data/clean/wid.csv")
 df_pip = pd.read_csv("data/clean/pip.csv")
 df_regions = pd.read_csv("data/clean/WID_region_mapping.csv")
+df_pop = pd.read_csv("data/clean/population.csv")
 
 
 ```
@@ -30,6 +32,7 @@ df_regions = pd.read_csv("data/clean/WID_region_mapping.csv")
 # df_wid = pd.read_csv("PhD_pages/data_appendices/data/clean/wid.csv")
 # df_pip = pd.read_csv("PhD_pages/data_appendices/data/clean/pip.csv")
 # df_regions = pd.read_csv("PhD_pages/data_appendices/data/clean/WID_region_mapping.csv")
+# df_pop = pd.read_csv("PhD_pages/data_appendices/data/clean/population.csv")
 
 ```
 
@@ -324,6 +327,10 @@ def prep_plot_and_tables(
   x_axis = f'{value_col}{reference_vals[0]}'
   y_axis = f'{value_col}{reference_vals[1]}'
 
+  x_ref_val = f'{reference_col}{reference_vals[0]}'
+  y_ref_val = f'{reference_col}{reference_vals[1]}'
+
+
   # Apply outlier cut off, if specified
   if not pd.isna(outlier_cut_off_upper):
     plot_data = plot_data.loc[plot_data[x_axis] <= outlier_cut_off_upper]
@@ -341,6 +348,24 @@ def prep_plot_and_tables(
 
   # Add in region classification
   plot_data = pd.merge(plot_data, df_regions, how = 'left')
+
+  # Add in population data
+    # For first ref
+  df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[0], ['Entity', 'population'] ]
+
+  plot_data = pd.merge(plot_data, df_pop_ref, how = 'left')
+
+  plot_data = plot_data.rename(columns={'population':'population_ref1'})
+
+    # For second ref
+  df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[1], ['Entity', 'population'] ]
+
+  plot_data = pd.merge(plot_data, df_pop_ref, how = 'left')
+
+  plot_data = plot_data.rename(columns={'population':'population_ref2'})
+
+    # Calculate average population two reference periods
+  plot_data['avg_pop'] = (plot_data['population_ref1'] + plot_data['population_ref2'])/2
 
   # Make nicely formatted table
   plot_data_formatted = plot_data.copy()
@@ -368,103 +393,108 @@ def prep_plot_and_tables(
 
 
   plot = (ggplot(plot_data
-  , aes(x_axis, y_axis))
-  + geom_point(aes(color=region_col))
+  , aes(x_axis, y_axis, alpha=0.5))
+  + geom_point(aes(color=region_col, size='avg_pop', alpha = 0.6))
   + facet_wrap('~ source')
-  + geom_polygon(aes(x='x', y='y'), data=shaded_coord, fill="#FF000066"))
+  + geom_polygon(aes(x='x', y='y', alpha = 0.2), data=shaded_coord)
+  + theme_light())
 
 
   # ---- Prep summary table ----
 
-  # Count by rise/stable/fall bins
 
   # Calculate the change between the two ref periods
   plot_data['change'] = (plot_data[y_axis] - plot_data[x_axis])
 
-  # Define the thresholds using the tolerance specified
-  bin_thresholds = [-float("inf"), -tolerance, tolerance, float("inf")]
-  bin_labels = ['fall', 'stable', 'rise']
 
-  bins = pd.cut(plot_data['change'], bins=bin_thresholds, labels=bin_labels)
+  group_yes_vars = ['source', region_col]
+  group_no_vars = ['source']
 
-  # By region:
+  group_scenarios = [group_no_vars, group_yes_vars] 
 
-  # Count observations in bins defined by the thresholds
-  threshold_counts = plot_data\
-    .groupby(['source', region_col, bins])\
-    .size()\
-    .unstack()\
-    .unstack(level=region_col)\
-    .T\
-    .reset_index()\
-    .rename(columns={"change": "summary"})
-    
-    
-  # Calculate average change and n
-  mean_and_count = pd.DataFrame(plot_data.groupby(['source', region_col])['change']\
-    .agg(['mean', 'count']))\
-    .unstack()\
-    .T\
-    .reset_index()\
-    .rename(columns={"level_0": "summary"})
-
-  # rename the labels coming out of the aggregation
-  mean_and_count['summary'] = mean_and_count['summary'].replace(['mean', 'count'], ['avg change', 'n'])
-
-  # Concat together and present in a table
-  df_summary_region = pd.concat([threshold_counts, mean_and_count])
+  aggs = []
   
-  df_summary_region['summary'] = pd.Categorical(df_summary_region['summary'], categories=['fall', 'stable', 'rise','n', 'avg change'], ordered=True)
+  for group_vars in group_scenarios:
   
-  df_summary_region = df_summary_region.sort_values([region_col,'summary'])
+  # Prepare pop-weighted average change
+    agg_level = plot_data.copy()
 
-  # Set the index
-  df_summary_region = df_summary_region.set_index([region_col,'summary'])
+    # Calulate pop weights by source and region
+    agg_level['regional_pop_weights'] = agg_level.groupby(group_vars)['avg_pop'].transform(lambda x: x/x.sum()) 
+
+    agg_level['global_pop_weights'] = agg_level.groupby('source')['avg_pop'].transform(lambda x: x/x.sum()) 
+
+    # Multiply the change by the pop weights 
+    agg_level['region_weighted_change'] = agg_level['change'] * agg_level['regional_pop_weights']
 
 
+  # Prepare fall/stable/rise categories
+    agg_level['fall'] = agg_level['change'] < -tolerance
+
+    agg_level['stable'] = (agg_level['change'] <= tolerance) & (agg_level['change'] >= -tolerance)
+
+    agg_level['rise'] = agg_level['change'] > tolerance
+
+    agg_level[['fall', 'stable', 'rise']] = agg_level[['fall', 'stable', 'rise']].astype(int)
+
+    agg_level = agg_level.groupby(group_vars)[['change', 'region_weighted_change', 'global_pop_weights', 'fall', 'stable', 'rise']]\
+      .agg(['sum', 'mean', 'count'])
+
+  # Aggregate by source and region
+    if group_vars == group_yes_vars:
+
+      agg_level = agg_level\
+        .unstack().T.reset_index()
+
+    elif group_vars == group_no_vars: 
+
+      agg_level = agg_level\
+        .T.reset_index()
+
+      agg_level[region_col] = "World"
+
+    aggs.append(agg_level) 
+
+  df_summary = pd.concat(aggs)
+
+    # filter for the aggregations we need and label in the 'summary' column
+  df_summary.loc[(df_summary['level_0'] == 'change') & (df_summary['level_1'] == 'mean'), 'summary'] = 'avg change'
+
+  df_summary.loc[(df_summary['level_0'] == 'region_weighted_change') & (df_summary['level_1'] == 'sum'), 'summary'] = 'Regional pop-weighted avg change'
+
+  df_summary.loc[(df_summary['level_0'] == 'global_pop_weights') & (df_summary['level_1'] == 'sum'), 'summary'] = 'Global pop weights'
+
+  df_summary.loc[(df_summary['level_0'] == 'change') & (df_summary['level_1'] == 'count'), 'summary'] = 'n'
+
+  df_summary.loc[(df_summary['level_0'] == 'fall') & (df_summary['level_1'] == 'sum'), 'summary'] = 'fall'
+
+  df_summary.loc[(df_summary['level_0'] == 'stable') & (df_summary['level_1'] == 'sum'), 'summary'] = 'stable'
+
+  df_summary.loc[(df_summary['level_0'] == 'rise') & (df_summary['level_1'] == 'sum'), 'summary'] = 'rise'
+
+  df_summary = df_summary[df_summary['summary'].notnull()]
+
+
+  df_summary = df_summary.drop(['level_0', 'level_1'], axis = 1)
+
+
+  df_summary['summary'] = pd.Categorical(df_summary['summary'], categories=['fall', 'stable', 'rise','n', 'avg change', 'Regional pop-weighted avg change', 'Global pop weights'], ordered=True)
+
+
+  df_summary = df_summary.sort_values([region_col,'summary']).set_index([region_col,'summary'])
+  
+  
   # format to show appropriate d.p. I run a loop over each row for want of figuring out a better way!
-  repeat_length = 5
-  for i in range(0, len(df_summary_region.index.levels[0].unique())):
-    df_summary_region.iloc[i*repeat_length,:] = df_summary_region.iloc[i*repeat_length,:].map('{:.0f}'.format)
-    df_summary_region.iloc[1 + i*repeat_length,:] = df_summary_region.iloc[1 + i*repeat_length,:].map('{:.0f}'.format)
-    df_summary_region.iloc[2 + i*repeat_length,:] = df_summary_region.iloc[2 + i*repeat_length,:].map('{:.0f}'.format)
-    df_summary_region.iloc[3 + i*repeat_length,:] = df_summary_region.iloc[3 + i*repeat_length,:].map('{:.0f}'.format)
-    df_summary_region.iloc[4 + i*repeat_length,:] = df_summary_region.iloc[4 + i*repeat_length,:].map('{:.2f}'.format)
+  repeat_length = 7
+  for i in range(0, len(df_summary.index.levels[0].unique())):
+    df_summary.iloc[i*repeat_length,:] = df_summary.iloc[i*repeat_length,:].map('{:.0f}'.format)
+    df_summary.iloc[1 + i*repeat_length,:] = df_summary.iloc[1 + i*repeat_length,:].map('{:.0f}'.format)
+    df_summary.iloc[2 + i*repeat_length,:] = df_summary.iloc[2 + i*repeat_length,:].map('{:.0f}'.format)
+    df_summary.iloc[3 + i*repeat_length,:] = df_summary.iloc[3 + i*repeat_length,:].map('{:.0f}'.format)
+    df_summary.iloc[4 + i*repeat_length,:] = df_summary.iloc[4 + i*repeat_length,:].map('{:.2f}'.format)
+    df_summary.iloc[5 + i*repeat_length,:] = df_summary.iloc[5 + i*repeat_length,:].map('{:.2f}'.format)
+    df_summary.iloc[6 + i*repeat_length,:] = df_summary.iloc[6 + i*repeat_length,:].map('{:.2f}'.format)
 
-
-  # World summary 
-
-  # Count observations in bins defined by the thresholds
-  threshold_counts = plot_data\
-    .groupby(['source', bins])\
-    .size()\
-    .unstack(level='source')\
-    .reset_index()\
-    .rename(columns={"change": "summary"})
-
-  # Calculate average change and n
-  mean_and_count = pd.DataFrame(plot_data.groupby(['source'])['change']\
-    .agg(['mean', 'count']))\
-    .T\
-    .reset_index()\
-    .rename(columns={"index": "summary"})
-
-  # rename the labels coming out of the aggregation
-  mean_and_count['summary'] = mean_and_count['summary'].replace(['mean', 'count'], ['avg change', 'n'])
-
-  # Concat together and present in a table
-  df_summary_world = pd.concat([threshold_counts, mean_and_count])
-  
-  df_summary_world['summary'] = pd.Categorical(df_summary_world['summary'], categories=['fall', 'stable', 'rise','n', 'avg change'], ordered=True)
-  
-  df_summary_world = df_summary_world.sort_values(['summary']).set_index('summary')
-
-  # format to show appropriate d.p. I do it row by row for want of figuring out a better way!
-  df_summary_world.iloc[0,:] = df_summary_world.iloc[0,:].map('{:.0f}'.format)
-  df_summary_world.iloc[1,:] = df_summary_world.iloc[1,:].map('{:.0f}'.format)
-  df_summary_world.iloc[2,:] = df_summary_world.iloc[2,:].map('{:.0f}'.format)
-  df_summary_world.iloc[3,:] = df_summary_world.iloc[3,:].map('{:.0f}'.format)
-  df_summary_world.iloc[4,:] = df_summary_world.iloc[4,:].map('{:.2f}'.format)
 
 
   # ----- Return outputs ------
@@ -472,8 +502,7 @@ def prep_plot_and_tables(
     "table_data": plot_data,
     "table": plot_data_table,
     "plot": plot,
-    "summary_world": df_summary_world,
-    "summary_region": df_summary_region
+    "summary": df_summary
   }
   
   return plot_and_tables
@@ -482,48 +511,101 @@ def prep_plot_and_tables(
 ```
 
 ```{python}
+pd.set_option('display.max_rows', None)
 
+```
+
+
+## 1990-2017
+```{python}
 # Specifications
-reference_vals = [1990, 2018]
+reference_vals = [1990, 2017]
 max_dist_from_refs = [4, 4]
-min_dist_between = 20
-value_col = 'Bottom_50_share'
-# 'Gini'
-# 'Top_10_share'
-# 'Bottom_50_share'
-# 'MLD'
-# 'P90_P10_ratio' – not that helpful due to accuracy of low incomes
-
-# Data from both sources is needed?
-  # If this = 1 then a country will be incldued even if it is only availalbe from one source.
-  # If = 2, then only countries with data for both sources will be included
-source_count_requirement = 2
-
-
-# Set the value which constitutes a significant change in the value being measured
-  # E.g. for Gini tolerance = 0.02 (2 points) 
-
-if value_col == 'Gini':
-  tolerance = 0.02
-  outlier_cut_off_upper = None
-
-if value_col == 'Top_10_share':
-  tolerance = 1
-  outlier_cut_off_upper = None
-
-if value_col == 'Bottom_50_share':
-  tolerance = 1
-  outlier_cut_off_upper = None
-
-if value_col == 'P90_P10_ratio':
-  tolerance = 0.5
-  outlier_cut_off_upper = 40
+min_dist_between = 23
 
 
 # These parameters are unlikely to change:
 reference_col = 'Year'
 group_by_col = 'Entity'
 
+```
+
+::: {.panel-tabset}
+## Gini  
+
+```{python}
+# | echo: false
+# Specifications
+
+value_col = 'Gini'
+# 'Gini'
+# 'Top_10_share'
+# 'Bottom_50_share'
+# 'MLD'
+# 'P90_P10_ratio' – not that helpful due to accuracy of low incomes
+
+# Set the value which constitutes a significant change in the value being measured
+  # E.g. for Gini tolerance = 0.02 (2 points) 
+
+tolerance = 0.02
+outlier_cut_off_upper = None
+
+
+
+
+```
+::: {.panel-tabset}
+## All countries
+```{python}
+# | echo: false
+
+# Data from both sources is needed?
+  # If this = 1 then a country will be incldued even if it is only availalbe from one source.
+  # If = 2, then only countries with data for both sources will be included
+source_count_requirement = 1
+
+plot_and_tables = prep_plot_and_tables(
+  reference_vals = reference_vals, 
+  max_dist_from_refs = max_dist_from_refs,
+  min_dist_between = min_dist_between,
+  reference_col = reference_col,
+  group_by_col = group_by_col,
+  value_col = value_col,
+  tolerance = tolerance,
+  outlier_cut_off_upper = outlier_cut_off_upper,
+  source_count_requirement = source_count_requirement
+  )
+
+```
+::: {.panel-tabset}
+## Plot
+```{python}
+plot_and_tables['plot']
+```
+
+## Summary
+```{python}
+plot_and_tables['summary']
+```
+
+## Data
+```{python}
+
+plot_data_results = plot_and_tables['table_data']
+plot_data_results
+```
+:::
+
+## Countries with data for both sources
+
+```{python}
+# | echo: false
+
+
+# Data from both sources is needed?
+  # If this = 1 then a country will be incldued even if it is only availalbe from one source.
+  # If = 2, then only countries with data for both sources will be included
+source_count_requirement = 2
 
 
 plot_and_tables = prep_plot_and_tables(
@@ -539,28 +621,135 @@ plot_and_tables = prep_plot_and_tables(
   )
 
 ```
-
+::: {.panel-tabset}
+## Plot
 ```{python}
 plot_and_tables['plot']
 ```
 
+## Summary
 ```{python}
 plot_and_tables['summary']
 ```
 
-:::{.column-page}
-```{python}
-
-plot_and_tables['table'].show()
-
-```
-
+## Data
 ```{python}
 
 plot_data_results = plot_and_tables['table_data']
-
+plot_data_results
 ```
 :::
+:::
+
+## Top 10% share
+
+```{python}
+# | echo: false
+# Specifications
+
+value_col = 'Top_10_share'
+
+# Set the value which constitutes a significant change in the value being measured
+  # E.g. for Gini tolerance = 0.02 (2 points) 
+
+tolerance = 1
+outlier_cut_off_upper = None
+
+
+
+```
+::: {.panel-tabset}
+## All countries
+```{python}
+# | echo: false
+
+# Data from both sources is needed?
+  # If this = 1 then a country will be incldued even if it is only availalbe from one source.
+  # If = 2, then only countries with data for both sources will be included
+source_count_requirement = 1
+
+plot_and_tables = prep_plot_and_tables(
+  reference_vals = reference_vals, 
+  max_dist_from_refs = max_dist_from_refs,
+  min_dist_between = min_dist_between,
+  reference_col = reference_col,
+  group_by_col = group_by_col,
+  value_col = value_col,
+  tolerance = tolerance,
+  outlier_cut_off_upper = outlier_cut_off_upper,
+  source_count_requirement = source_count_requirement
+  )
+
+```
+::: {.panel-tabset}
+## Plot
+```{python}
+plot_and_tables['plot']
+```
+
+## Summary
+```{python}
+plot_and_tables['summary']
+```
+
+## Data
+```{python}
+
+plot_data_results = plot_and_tables['table_data']
+plot_data_results
+```
+:::
+
+## Countries with data for both sources
+
+```{python}
+# | echo: false
+
+
+# Data from both sources is needed?
+  # If this = 1 then a country will be incldued even if it is only availalbe from one source.
+  # If = 2, then only countries with data for both sources will be included
+source_count_requirement = 2
+
+
+plot_and_tables = prep_plot_and_tables(
+  reference_vals = reference_vals, 
+  max_dist_from_refs = max_dist_from_refs,
+  min_dist_between = min_dist_between,
+  reference_col = reference_col,
+  group_by_col = group_by_col,
+  value_col = value_col,
+  tolerance = tolerance,
+  outlier_cut_off_upper = outlier_cut_off_upper,
+  source_count_requirement = source_count_requirement
+  )
+
+```
+::: {.panel-tabset}
+## Plot
+```{python}
+plot_and_tables['plot']
+```
+
+## Summary
+```{python}
+plot_and_tables['summary']
+```
+
+## Data
+```{python}
+
+plot_data_results = plot_and_tables['table_data']
+plot_data_results
+```
+:::
+
+:::
+
+Next measure
+
+:::
+
 
 ## Method 2: regression analysis
 

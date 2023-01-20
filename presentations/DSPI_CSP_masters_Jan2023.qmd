@@ -1,0 +1,57 @@
+---
+title: "From $1.90 to $2.15: the updated International Poverty Line"
+author: "Joe Hasell"
+format: revealjs
+---
+
+## The International Poverty Line {.smaller}
+:::: {.columns}
+
+::: {.column width="30%"}
+Left column
+
+- some point
+- another point
+:::
+
+::: {.column width="70%"}
+```{=html}
+<iframe src="https://ourworldindata.org/grapher/share-of-population-in-extreme-poverty?country=BGD~BOL~MDG~IND~CHN~ETH" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+
+:::
+
+::::
+
+
+## The IPL has been updated from $1.90 to $2.15
+
+
+
+
+## Basic story {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+
+- An adjustment for inflation
+- $1 in 2017 prices < $1 in 2011 prices
+- The value of the IPL has, broadly speaking, been maintined
+- Global extreme poverty very similar measured in either terms.
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/explorers/poverty-explorer-2011-vs-2017-ppp?time=2013..latest&hideControls=true&Metric=Share+in+poverty&International-%24=Compare+2017+and+2011+prices&Poverty+line=International+Poverty+Line&Household+survey+data+type=Show+data+from+both+income+and+expenditure+surveys&country=~OWID_WRL" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+:::
+
+::::
+

@@ -2,7 +2,7 @@
 title: "Calculating housing and factor shares from industry data"
 editor: visual
 execute:
-  freeze: true  # never re-render during project render
+  eval: false  # never run
 ---
 
 # To-do:
