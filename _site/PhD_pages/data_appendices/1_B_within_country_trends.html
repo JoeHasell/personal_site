@@ -233,12 +233,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Presentations</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.html" class="sidebar-item-text sidebar-link">From $1.90 to $2.15: the updated International Poverty Line</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
@@ -760,7 +775,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="1_B_within_country_trends_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="16">
-<pre><code>&lt;ggplot: (374009622)&gt;</code></pre>
+<pre><code>&lt;ggplot: (377945233)&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -4011,7 +4026,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="1_B_within_country_trends_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="20">
-<pre><code>&lt;ggplot: (374177639)&gt;</code></pre>
+<pre><code>&lt;ggplot: (378121325)&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -6405,7 +6420,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="1_B_within_country_trends_files/figure-html/cell-26-output-1.png" class="img-fluid"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="25">
-<pre><code>&lt;ggplot: (374278169)&gt;</code></pre>
+<pre><code>&lt;ggplot: (378220319)&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -9656,7 +9671,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="1_B_within_country_trends_files/figure-html/cell-30-output-1.png" class="img-fluid"></p>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="29">
-<pre><code>&lt;ggplot: (374387679)&gt;</code></pre>
+<pre><code>&lt;ggplot: (378327013)&gt;</code></pre>
 </div>
 </div>
 </div>
@@ -12053,6 +12068,539 @@ from shiny import *
 from plotnine import *
 from pyodide.http import open_url
 import pandas as pd
+import numpy as np
+
+
+
+
+
+#  ---------------------------------
+#  ---------- Data prep functions -------------
+#  ----------------------------------
+
+#  Function get matching for ref years
+def closest_to_reference(df, reference_val, max_dist_from_ref, reference_col, group_by_col, value_col, tie_break):
+  
+  df = df.loc[:, [reference_col, group_by_col, value_col]]
+
+  # Drop NAs
+  df = df.dropna()
+
+  # Calculate absolute distance from reference value
+  df['ref_diff'] = abs(df[reference_col] - reference_val)
+
+  # Drop any rows with a distance beyond threshold
+  if not pd.isna(max_dist_from_ref):
+    df = df.loc[df['ref_diff'] &lt;= max_dist_from_ref]
+
+  # Keep closest observation to reference value – including tie-breaks (where there is a match above and below the ref value)
+  df = df[df.groupby(group_by_col)['ref_diff'].transform('min') == df['ref_diff']].reset_index(drop=True)
+
+  # Settle tie-breaks
+  if tie_break == 'below':
+    df = df[df.groupby(group_by_col)[reference_col].transform('min') == df[reference_col]].reset_index(drop=True)
+    
+  elif tie_break == 'above':
+    df = df[df.groupby(group_by_col)[reference_col].transform('max') == df[reference_col]].reset_index(drop=True)
+
+  df = df.drop('ref_diff', axis=1)
+
+  return df
+
+
+
+
+# Merge matches for different reference points
+def merge_two_ref_matches(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):
+
+# Make sure the pair of reference values are in ascending order
+  reference_vals.sort()
+
+# Maximise distance between two refs by settling tie-breaks below the lowest ref and above the highest ref 
+
+# Find matches for lower reference value
+  lower_ref_matches = closest_to_reference(df, reference_vals[0], max_dist_from_refs, reference_col, group_by_col, value_col, 'below')
+
+# Find matches for higher reference value
+  higher_ref_matches = closest_to_reference(df, reference_vals[1], max_dist_from_refs, reference_col, group_by_col, value_col, 'above')
+
+# Merge the two sets of matches
+  merged_df = pd.merge(lower_ref_matches, higher_ref_matches, on=group_by_col, suffixes=(reference_vals[0], reference_vals[1]))
+
+# Drop obs that do not have data for both ref values
+  merged_df = merged_df.dropna()
+
+# Drop obs where the matched data does not meet the min distance requirement
+  if not pd.isna(min_dist_between):
+  
+  # Store the names of the reference column returned from the two matches
+    ref_var_high = f'{reference_col}{reference_vals[1]}'
+    ref_var_low = f'{reference_col}{reference_vals[0]}'
+
+  # Keep only rows &gt;= to the min distance
+    merged_df = merged_df.loc[(merged_df[ref_var_high] - merged_df[ref_var_low]) &gt;= min_dist_between, :]
+
+
+  return merged_df
+
+
+
+  # For PIP run this three times – first filtering data for just consumpion only, then with income only, then with a dataset that prefers income over consumption
+def pip_welfare_routine(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):
+
+    # Specify the name of the column in which the income/consumption welfare definition is stored
+    welfare_colname = 'welfare_type'
+
+    # Creat dataframes for thee scenarios:
+    # Scenario 1: only allow income data
+    df_inc_filter = df.loc[df[welfare_colname] == "income", :]
+    df_inc_filter.name = "Income"
+
+    # Scenario 2: only allow consumption data
+    df_cons_filter = df.loc[df[welfare_colname] == "consumption", :]
+    df_cons_filter.name = "Consumption"
+    # Scenario 3: allow a mix – dropping consumption data where income data is available in the same year
+    df_mixed = df.copy()
+
+    df_mixed['welfare_count'] = df_mixed.groupby([reference_col, group_by_col])[welfare_colname].transform('count')
+
+    df_mixed = df_mixed.loc[(df_mixed['welfare_count'] == 1) | (df_mixed[welfare_colname] == "income")]
+
+    df_mixed.name = "Mixed"
+    #  Store the scneario dataframes in a list
+    df_scenarios = [df_inc_filter, df_cons_filter, df_mixed]
+
+    # Run the matching function on each scenario
+    scenario_matches = [merge_two_ref_matches(
+      df_scenario, 
+      reference_vals, 
+      max_dist_from_refs, 
+      min_dist_between, 
+      reference_col, 
+      group_by_col, 
+      value_col) for df_scenario in df_scenarios]
+    
+    # Combine the first two scenarios.
+    df_combined_matches = pd.concat([scenario_matches[0], scenario_matches[1]], keys=[df_scenarios[0].name, df_scenarios[1].name])
+
+    # Tidy up indexes
+    df_combined_matches = df_combined_matches.reset_index()
+    
+    df_combined_matches = df_combined_matches.drop('level_1', axis=1)
+
+    df_combined_matches = df_combined_matches\
+      .rename(columns={"level_0": "pip_welfare"})
+
+    # Add in third scenario.
+    df_combined_matches = pd.concat([df_combined_matches, scenario_matches[2]])
+
+    # add scenario name to te pip_welfare column
+    df_combined_matches['pip_welfare'] = df_combined_matches['pip_welfare'].fillna(df_scenarios[2].name)
+
+    # Keep only one match per group (e.g. per Country) - in the priority laid out in the df_scenarios list above (income only -&gt; consumption only -&gt; mixed)
+      # First count the matches
+    df_combined_matches['match_count'] = df_combined_matches.groupby(group_by_col)['pip_welfare'].transform('count')
+      # Then drop any matches from the lowest priority where there are multiple matches
+    df_combined_matches = df_combined_matches.loc[(df_combined_matches['match_count']==1) | ~(df_combined_matches['pip_welfare']==df_scenarios[2].name)]
+      #  Repeat at the next level of priority
+    df_combined_matches['match_count'] = df_combined_matches.groupby(group_by_col)['pip_welfare'].transform('count')
+    df_combined_matches = df_combined_matches.loc[(df_combined_matches['match_count']==1) | ~(df_combined_matches['pip_welfare']==df_scenarios[1].name)]
+    
+    # Drop the match count column
+    df_combined_matches = df_combined_matches.drop('match_count', axis=1)
+
+    return df_combined_matches
+
+
+#  ---------------------------------
+#  ---------- Specifications -------------
+#  ----------------------------------
+
+# These parameters are not controlled in the app.
+reference_col = 'Year'
+group_by_col = 'Entity'
+
+tolerance = 1
+outlier_cut_off_upper = None
+
+source_count_requirement = 2
+
+
+
+
+
+#  ---------------------------------
+#  ---------- App code -------------
+#  ----------------------------------
+
+def panel_box(*args, **kwargs):
+    return ui.div(
+        ui.div(*args, class_="card-body"),
+        **kwargs,
+        class_="card mb-3",
+    )
+
+app_ui = ui.page_fluid(
+    {"class": "p-4"},
+    ui.row(
+        ui.column(
+            4,
+            panel_box(
+                ui.input_slider("reference_vals", "Reference years", 1975, 2020, value=[1990,2018]),
+                ui.input_numeric(
+                            "max_dist_from_refs",
+                            "=/- (years)",
+                            4,
+                        ),
+                ui.input_numeric(
+                            "min_dist_between",
+                            "Min distance between observations (years)",
+                            23,
+                        ),
+                ui.input_action_button(
+                    "download", "Download data and image", class_="btn-primary w-100"
+                ),
+            ),
+            ui.navset_tab_card(
+                ui.nav(
+                    "Compare sources",
+                    ui.input_select(
+                "metric",
+                "Metric",
+                {
+                    "Gini": "Gini",
+                    "Top_10_share": "Top 10p.c. share",
+                },
+            ),
+            ),
+                ui.nav(
+                  "Compare metrics"),
+            ),
+        ),
+        ui.column(
+            8,
+            ui.output_plot("example_plot")
+            ),
+    ),
+)
+
+
+def server(input, output, session):
+    @output
+    @render.plot
+    def example_plot():
+    
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/pip.csv'
+        
+      df_pip = pd.read_csv(open_url(url))
+
+
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/wid.csv'
+
+      df_wid = pd.read_csv(open_url(url))
+
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/WID_region_mapping.csv'
+
+      df_regions = pd.read_csv(open_url(url))
+
+
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/population.csv'
+
+      df_pop = pd.read_csv(open_url(url))
+
+
+
+
+
+
+
+
+
+
+
+
+
+      def prep_wid_pip_data(reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):
+        
+        pip_matches = pip_welfare_routine(
+          df = df_pip,
+          reference_vals = reference_vals,
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = value_col
+        )
+
+        wid_matches = merge_two_ref_matches(
+          df = df_wid,
+          reference_vals = reference_vals,
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = value_col
+        )
+
+        ref_pairs = pd.concat([pip_matches, wid_matches,], keys=['pip', 'wid'])
+
+        # Tidy up indexes
+        ref_pairs = ref_pairs.reset_index()
+        
+        ref_pairs = ref_pairs.drop('level_1', axis=1)
+
+        ref_pairs = ref_pairs\
+          .rename(columns={"level_0": "source"})
+
+        return ref_pairs
+
+
+
+
+      def prep_plot_and_tables(
+        reference_vals, 
+        max_dist_from_refs,
+        min_dist_between,
+        reference_col,
+        group_by_col,
+        value_col,
+        tolerance,
+        outlier_cut_off_upper,
+        source_count_requirement):
+
+        # Other spec:
+        region_col = 'region_alt'
+
+        # ---- Prep data ---------
+
+        plot_data = prep_wid_pip_data(
+          reference_vals = reference_vals, 
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = value_col,
+        )
+
+        # Store the names of the columns to be used onthe X and Y axis
+        x_axis = f'{value_col}{reference_vals[0]}'
+        y_axis = f'{value_col}{reference_vals[1]}'
+
+        x_ref_val = f'{reference_col}{reference_vals[0]}'
+        y_ref_val = f'{reference_col}{reference_vals[1]}'
+
+
+        # Apply outlier cut off, if specified
+        if not pd.isna(outlier_cut_off_upper):
+          plot_data = plot_data.loc[plot_data[x_axis] &lt;= outlier_cut_off_upper]
+          plot_data = plot_data.loc[plot_data[y_axis] &lt;= outlier_cut_off_upper]
+
+
+        # Add a count by country – showing whether data is available from both sources or not
+        plot_data['source_count'] = plot_data.groupby(group_by_col)['source'].transform('count')
+
+        # Apply source requirement (whether to include only observations with data from both sources)
+        plot_data = plot_data.loc[plot_data['source_count'] &gt;= source_count_requirement]
+
+        # Drop source_count column
+        plot_data = plot_data.drop('source_count', axis=1)
+
+        # Add in region classification
+        plot_data = pd.merge(plot_data, df_regions, how = 'left')
+
+        # Add in population data
+          # For first ref
+        df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[0], ['Entity', 'population'] ]
+
+        plot_data = pd.merge(plot_data, df_pop_ref, how = 'left')
+
+        plot_data = plot_data.rename(columns={'population':'population_ref1'})
+
+          # For second ref
+        df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[1], ['Entity', 'population'] ]
+
+        plot_data = pd.merge(plot_data, df_pop_ref, how = 'left')
+
+        plot_data = plot_data.rename(columns={'population':'population_ref2'})
+
+          # Calculate average population two reference periods
+        plot_data['avg_pop'] = (plot_data['population_ref1'] + plot_data['population_ref2'])/2
+
+
+
+        # ----- Prep plot ------
+
+        # I grab what I am guessing to be the max and min tick marks on the x axist, in order to define the coordinates of a 'tolerance' ribbon.
+        x_min = plot_data[x_axis].min()
+        x_min_floor = np.floor(x_min * 10) / 10
+
+        x_max = plot_data[x_axis].max()
+        x_max_ceiling = np.ceil(x_max * 10) / 10
+
+        # Set the coordinates of the shaded ribbon
+        shaded_coord = pd.DataFrame({'x': [x_min_floor, x_max_ceiling, x_max_ceiling, x_min_floor], 
+          'y': [x_min_floor-tolerance, x_max_ceiling-tolerance, x_max_ceiling+tolerance , x_min_floor+tolerance]})
+
+
+        plot = (ggplot(plot_data
+        , aes(x_axis, y_axis, alpha=0.5))
+        + geom_point(aes(color=region_col, size='avg_pop', alpha = 0.6))
+        + facet_wrap('~ source')
+        + geom_polygon(aes(x='x', y='y', alpha = 0.2), data=shaded_coord)
+        + theme_light()
+        + theme(legend_position='none')
+        )
+
+
+        # ---- Prep summary table ----
+
+
+        # Calculate the change between the two ref periods
+        plot_data['change'] = (plot_data[y_axis] - plot_data[x_axis])
+
+
+        group_yes_vars = ['source', region_col]
+        group_no_vars = ['source']
+
+        group_scenarios = [group_no_vars, group_yes_vars] 
+
+        aggs = []
+        
+        for group_vars in group_scenarios:
+        
+        # Prepare pop-weighted average change
+          agg_level = plot_data.copy()
+
+          # Calulate pop weights by source and region
+          agg_level['regional_pop_weights'] = agg_level.groupby(group_vars)['avg_pop'].transform(lambda x: x/x.sum()) 
+
+          agg_level['global_pop_weights'] = agg_level.groupby('source')['avg_pop'].transform(lambda x: x/x.sum()) 
+
+          # Multiply the change by the pop weights 
+          agg_level['region_weighted_change'] = agg_level['change'] * agg_level['regional_pop_weights']
+
+
+        # Prepare fall/stable/rise categories
+          agg_level['fall'] = agg_level['change'] &lt; -tolerance
+
+          agg_level['stable'] = (agg_level['change'] &lt;= tolerance) &amp; (agg_level['change'] &gt;= -tolerance)
+
+          agg_level['rise'] = agg_level['change'] &gt; tolerance
+
+          agg_level[['fall', 'stable', 'rise']] = agg_level[['fall', 'stable', 'rise']].astype(int)
+
+          agg_level = agg_level.groupby(group_vars)[['change', 'region_weighted_change', 'global_pop_weights', 'fall', 'stable', 'rise']]\
+            .agg(['sum', 'mean', 'count'])
+
+        # Aggregate by source and region
+          if group_vars == group_yes_vars:
+
+            agg_level = agg_level\
+              .unstack().T.reset_index()
+
+          elif group_vars == group_no_vars: 
+
+            agg_level = agg_level\
+              .T.reset_index()
+
+            agg_level[region_col] = "World"
+
+          aggs.append(agg_level) 
+
+        
+        df_summary = pd.concat(aggs)
+
+          # filter for the aggregations we need and label in the 'summary' column
+        df_summary.loc[(df_summary['level_0'] == 'change') &amp; (df_summary['level_1'] == 'mean'), 'summary'] = 'avg change'
+
+        df_summary.loc[(df_summary['level_0'] == 'region_weighted_change') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'Regional pop-weighted avg change'
+
+        df_summary.loc[(df_summary['level_0'] == 'global_pop_weights') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'Global pop weights'
+
+        df_summary.loc[(df_summary['level_0'] == 'change') &amp; (df_summary['level_1'] == 'count'), 'summary'] = 'n'
+
+        df_summary.loc[(df_summary['level_0'] == 'fall') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'fall'
+
+        df_summary.loc[(df_summary['level_0'] == 'stable') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'stable'
+
+        df_summary.loc[(df_summary['level_0'] == 'rise') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'rise'
+
+        df_summary = df_summary[df_summary['summary'].notnull()]
+
+
+        df_summary = df_summary.drop(['level_0', 'level_1'], axis = 1)
+
+
+        df_summary['summary'] = pd.Categorical(df_summary['summary'], categories=['fall', 'stable', 'rise','n', 'avg change', 'Regional pop-weighted avg change', 'Global pop weights'], ordered=True)
+
+
+        df_summary = df_summary.sort_values([region_col,'summary']).set_index([region_col,'summary'])
+        
+        
+        # format to show appropriate d.p. I run a loop over each row for want of figuring out a better way!
+        repeat_length = 7
+        for i in range(0, len(df_summary.index.levels[0].unique())):
+          df_summary.iloc[i*repeat_length,:] = df_summary.iloc[i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[1 + i*repeat_length,:] = df_summary.iloc[1 + i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[2 + i*repeat_length,:] = df_summary.iloc[2 + i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[3 + i*repeat_length,:] = df_summary.iloc[3 + i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[4 + i*repeat_length,:] = df_summary.iloc[4 + i*repeat_length,:].map('{:.2f}'.format)
+          df_summary.iloc[5 + i*repeat_length,:] = df_summary.iloc[5 + i*repeat_length,:].map('{:.2f}'.format)
+          df_summary.iloc[6 + i*repeat_length,:] = df_summary.iloc[6 + i*repeat_length,:].map('{:.2f}'.format)
+
+
+
+        # ----- Return outputs ------
+        plot_and_tables = {
+          "table_data": plot_data,
+          "plot": plot,
+          "summary": df_summary
+        }
+        
+        return plot_and_tables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+      plot_and_tables = prep_plot_and_tables(
+          reference_vals = list(input.reference_vals()), 
+          max_dist_from_refs = input.max_dist_from_refs(),
+          min_dist_between = input.min_dist_between(),
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = input.metric(),
+          tolerance = tolerance,
+          outlier_cut_off_upper = outlier_cut_off_upper,
+          source_count_requirement = source_count_requirement
+          )
+
+      plot = plot_and_tables['plot']
+
+      return plot
+
+
+app = App(app_ui, server)
+</code></pre>
+<pre class="shinylive-python"><code>#| standalone: true
+#| viewerHeight: 420
+
+from shiny import *
+from plotnine import *
+from pyodide.http import open_url
+import pandas as pd
 
 
 
@@ -12084,6 +12632,143 @@ def server(input, output, session):
 
 app = App(app_ui, server)
 </code></pre>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>      <span class="co"># #  -----------------------------------</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>      <span class="co"># #  ------- Data prep functions -------</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>      <span class="co"># #  -----------------------------------</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>      <span class="co"># #  Function get matching for ref years</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>      <span class="co"># def closest_to_reference(df, reference_val, max_dist_from_ref, reference_col, group_by_col, value_col, tie_break):</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df = df.loc[:, [reference_col, group_by_col, value_col]]</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Drop NAs</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df = df.dropna()</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Calculate absolute distance from reference value</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df['ref_diff'] = abs(df[reference_col] - reference_val)</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Drop any rows with a distance beyond threshold</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     if not pd.isna(max_dist_from_ref):</span></span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       df = df.loc[df['ref_diff'] &lt;= max_dist_from_ref]</span></span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Keep closest observation to reference value – including tie-breaks (where there is a match above and below the ref value)</span></span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df = df[df.groupby(group_by_col)['ref_diff'].transform('min') == df['ref_diff']].reset_index(drop=True)</span></span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Settle tie-breaks</span></span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     if tie_break == 'below':</span></span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       df = df[df.groupby(group_by_col)[reference_col].transform('min') == df[reference_col]].reset_index(drop=True)</span></span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     elif tie_break == 'above':</span></span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       df = df[df.groupby(group_by_col)[reference_col].transform('max') == df[reference_col]].reset_index(drop=True)</span></span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df = df.drop('ref_diff', axis=1)</span></span>
+<span id="cb31-31"><a href="#cb31-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-32"><a href="#cb31-32" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     return df</span></span>
+<span id="cb31-33"><a href="#cb31-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-34"><a href="#cb31-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-35"><a href="#cb31-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-36"><a href="#cb31-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-37"><a href="#cb31-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-38"><a href="#cb31-38" aria-hidden="true" tabindex="-1"></a>      <span class="co">#   def merge_two_ref_matches(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span></span>
+<span id="cb31-39"><a href="#cb31-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-40"><a href="#cb31-40" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Make sure the pair of reference values are in ascending order</span></span>
+<span id="cb31-41"><a href="#cb31-41" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     reference_vals.sort()</span></span>
+<span id="cb31-42"><a href="#cb31-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-43"><a href="#cb31-43" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Maximise distance between two refs by settling tie-breaks below the lowest ref and above the highest ref </span></span>
+<span id="cb31-44"><a href="#cb31-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-45"><a href="#cb31-45" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Find matches for lower reference value</span></span>
+<span id="cb31-46"><a href="#cb31-46" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     lower_ref_matches = closest_to_reference(df, reference_vals[0], max_dist_from_refs[0], reference_col, group_by_col, value_col, 'below')</span></span>
+<span id="cb31-47"><a href="#cb31-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-48"><a href="#cb31-48" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Find matches for higher reference value</span></span>
+<span id="cb31-49"><a href="#cb31-49" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     higher_ref_matches = closest_to_reference(df, reference_vals[1], max_dist_from_refs[1], reference_col, group_by_col, value_col, 'above')</span></span>
+<span id="cb31-50"><a href="#cb31-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-51"><a href="#cb31-51" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Merge the two sets of matches</span></span>
+<span id="cb31-52"><a href="#cb31-52" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     merged_df = pd.merge(lower_ref_matches, higher_ref_matches, on=group_by_col, suffixes=(reference_vals[0], reference_vals[1]))</span></span>
+<span id="cb31-53"><a href="#cb31-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-54"><a href="#cb31-54" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Drop obs that do not have data for both ref values</span></span>
+<span id="cb31-55"><a href="#cb31-55" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     merged_df = merged_df.dropna()</span></span>
+<span id="cb31-56"><a href="#cb31-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-57"><a href="#cb31-57" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Drop obs where the matched data does not meet the min distance requirement</span></span>
+<span id="cb31-58"><a href="#cb31-58" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     if not pd.isna(min_dist_between):</span></span>
+<span id="cb31-59"><a href="#cb31-59" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb31-60"><a href="#cb31-60" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       # Store the names of the reference column returned from the two matches</span></span>
+<span id="cb31-61"><a href="#cb31-61" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       ref_var_high = f'{reference_col}{reference_vals[1]}'</span></span>
+<span id="cb31-62"><a href="#cb31-62" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       ref_var_low = f'{reference_col}{reference_vals[0]}'</span></span>
+<span id="cb31-63"><a href="#cb31-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-64"><a href="#cb31-64" aria-hidden="true" tabindex="-1"></a>      <span class="co">#      # Keep only rows &gt;= to the min distance</span></span>
+<span id="cb31-65"><a href="#cb31-65" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       merged_df = merged_df.loc[(merged_df[ref_var_high] - merged_df[ref_var_low]) &gt;= min_dist_between, :]</span></span>
+<span id="cb31-66"><a href="#cb31-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-67"><a href="#cb31-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-68"><a href="#cb31-68" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     return merged_df</span></span>
+<span id="cb31-69"><a href="#cb31-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-70"><a href="#cb31-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-71"><a href="#cb31-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-72"><a href="#cb31-72" aria-hidden="true" tabindex="-1"></a>      <span class="co">#   def pip_welfare_routine(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span></span>
+<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-74"><a href="#cb31-74" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Specify the name of the column in which the income/consumption welfare definition is stored</span></span>
+<span id="cb31-75"><a href="#cb31-75" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     welfare_colname = 'welfare_type'</span></span>
+<span id="cb31-76"><a href="#cb31-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-77"><a href="#cb31-77" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Creat dataframes for thee scenarios:</span></span>
+<span id="cb31-78"><a href="#cb31-78" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Scenario 1: only allow income data</span></span>
+<span id="cb31-79"><a href="#cb31-79" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_inc_filter = df.loc[df[welfare_colname] == "income", :]</span></span>
+<span id="cb31-80"><a href="#cb31-80" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_inc_filter.name = "Income"</span></span>
+<span id="cb31-81"><a href="#cb31-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-82"><a href="#cb31-82" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Scenario 2: only allow consumption data</span></span>
+<span id="cb31-83"><a href="#cb31-83" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_cons_filter = df.loc[df[welfare_colname] == "consumption", :]</span></span>
+<span id="cb31-84"><a href="#cb31-84" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_cons_filter.name = "Consumption"</span></span>
+<span id="cb31-85"><a href="#cb31-85" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Scenario 3: allow a mix – dropping consumption data where income data is available in the same year</span></span>
+<span id="cb31-86"><a href="#cb31-86" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_mixed = df.copy()</span></span>
+<span id="cb31-87"><a href="#cb31-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-88"><a href="#cb31-88" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_mixed['welfare_count'] = df_mixed.groupby([reference_col, group_by_col])[welfare_colname].transform('count')</span></span>
+<span id="cb31-89"><a href="#cb31-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-90"><a href="#cb31-90" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_mixed = df_mixed.loc[(df_mixed['welfare_count'] == 1) | (df_mixed[welfare_colname] == "income")]</span></span>
+<span id="cb31-91"><a href="#cb31-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-92"><a href="#cb31-92" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_mixed.name = "Mixed"</span></span>
+<span id="cb31-93"><a href="#cb31-93" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     #  Store the scneario dataframes in a list</span></span>
+<span id="cb31-94"><a href="#cb31-94" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_scenarios = [df_inc_filter, df_cons_filter, df_mixed]</span></span>
+<span id="cb31-95"><a href="#cb31-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-96"><a href="#cb31-96" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Run the matching function on each scenario</span></span>
+<span id="cb31-97"><a href="#cb31-97" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     scenario_matches = [merge_two_ref_matches(</span></span>
+<span id="cb31-98"><a href="#cb31-98" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       df_scenario, </span></span>
+<span id="cb31-99"><a href="#cb31-99" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       reference_vals, </span></span>
+<span id="cb31-100"><a href="#cb31-100" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       max_dist_from_refs, </span></span>
+<span id="cb31-101"><a href="#cb31-101" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       min_dist_between, </span></span>
+<span id="cb31-102"><a href="#cb31-102" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       reference_col, </span></span>
+<span id="cb31-103"><a href="#cb31-103" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       group_by_col, </span></span>
+<span id="cb31-104"><a href="#cb31-104" aria-hidden="true" tabindex="-1"></a>      <span class="co">#       value_col) for df_scenario in df_scenarios]</span></span>
+<span id="cb31-105"><a href="#cb31-105" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-106"><a href="#cb31-106" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Combine the first two scenarios.</span></span>
+<span id="cb31-107"><a href="#cb31-107" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = pd.concat([scenario_matches[0], scenario_matches[1]], keys=[df_scenarios[0].name, df_scenarios[1].name])</span></span>
+<span id="cb31-108"><a href="#cb31-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-109"><a href="#cb31-109" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Tidy up indexes</span></span>
+<span id="cb31-110"><a href="#cb31-110" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = df_combined_matches.reset_index()</span></span>
+<span id="cb31-111"><a href="#cb31-111" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-112"><a href="#cb31-112" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = df_combined_matches.drop('level_1', axis=1)</span></span>
+<span id="cb31-113"><a href="#cb31-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-114"><a href="#cb31-114" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = df_combined_matches\</span></span>
+<span id="cb31-115"><a href="#cb31-115" aria-hidden="true" tabindex="-1"></a>      <span class="co">#         .rename(columns={"level_0": "pip_welfare"})</span></span>
+<span id="cb31-116"><a href="#cb31-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-117"><a href="#cb31-117" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Add in third scenario.</span></span>
+<span id="cb31-118"><a href="#cb31-118" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = pd.concat([df_combined_matches, scenario_matches[2]])</span></span>
+<span id="cb31-119"><a href="#cb31-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-120"><a href="#cb31-120" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # add scenario name to te pip_welfare column</span></span>
+<span id="cb31-121"><a href="#cb31-121" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches['pip_welfare'] = df_combined_matches['pip_welfare'].fillna(df_scenarios[2].name)</span></span>
+<span id="cb31-122"><a href="#cb31-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-123"><a href="#cb31-123" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Keep only one match per group (e.g. per Country) - in the priority laid out in the df_scenarios list above (income only -&gt; consumption only -&gt; mixed)</span></span>
+<span id="cb31-124"><a href="#cb31-124" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # First count the matches</span></span>
+<span id="cb31-125"><a href="#cb31-125" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches['match_count'] =        df_combined_matches.groupby(group_by_col)['pip_welfare'].transform('count')</span></span>
+<span id="cb31-126"><a href="#cb31-126" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Then drop any matches from the lowest priority where there are multiple matches</span></span>
+<span id="cb31-127"><a href="#cb31-127" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = df_combined_matches.loc[(df_combined_matches['match_count']==1) | ~(df_combined_matches['pip_welfare']==df_scenarios[2].name)]</span></span>
+<span id="cb31-128"><a href="#cb31-128" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     #  Repeat at the next level of priority</span></span>
+<span id="cb31-129"><a href="#cb31-129" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches['match_count'] = df_combined_matches.groupby(group_by_col)['pip_welfare'].transform('count')</span></span>
+<span id="cb31-130"><a href="#cb31-130" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = df_combined_matches.loc[(df_combined_matches['match_count']==1) | ~(df_combined_matches['pip_welfare']==df_scenarios[1].name)]</span></span>
+<span id="cb31-131"><a href="#cb31-131" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb31-132"><a href="#cb31-132" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     # Drop the match count column</span></span>
+<span id="cb31-133"><a href="#cb31-133" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     df_combined_matches = df_combined_matches.drop('match_count', axis=1)</span></span>
+<span id="cb31-134"><a href="#cb31-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-135"><a href="#cb31-135" aria-hidden="true" tabindex="-1"></a>      <span class="co">#     return df_combined_matches</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
 </section>

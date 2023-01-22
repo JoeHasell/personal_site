@@ -225,12 +225,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Presentations</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.html" class="sidebar-item-text sidebar-link">From $1.90 to $2.15: the updated International Poverty Line</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
@@ -267,10 +282,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#pip" id="toc-pip" class="nav-link" data-scroll-target="#pip">PIP</a></li>
   <li><a href="#wid" id="toc-wid" class="nav-link" data-scroll-target="#wid">WID</a></li>
   <li><a href="#lis" id="toc-lis" class="nav-link" data-scroll-target="#lis">LIS</a></li>
-  <li><a href="#other-sources" id="toc-other-sources" class="nav-link" data-scroll-target="#other-sources">Other sources</a></li>
   <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage">Coverage</a></li>
   </ul></li>
   <li><a href="#comparing-databases" id="toc-comparing-databases" class="nav-link" data-scroll-target="#comparing-databases">Comparing databases</a>
+  <ul class="collapse">
+  <li><a href="#comparing-metrics" id="toc-comparing-metrics" class="nav-link" data-scroll-target="#comparing-metrics">Comparing metrics</a></li>
+  <li><a href="#since-1990" id="toc-since-1990" class="nav-link" data-scroll-target="#since-1990">Since 1990</a></li>
+  </ul></li>
+  <li><a href="#that-difference-is-driven-by-particular-regions" id="toc-that-difference-is-driven-by-particular-regions" class="nav-link" data-scroll-target="#that-difference-is-driven-by-particular-regions">That difference is driven by particular regions:</a>
   <ul class="collapse">
   <li><a href="#results-for-a-range-of-inequality-metrics" id="toc-results-for-a-range-of-inequality-metrics" class="nav-link" data-scroll-target="#results-for-a-range-of-inequality-metrics">Results for a range of inequality metrics</a></li>
   </ul></li>
@@ -381,11 +400,6 @@ The following object is masked from 'package:purrr':
 <section id="lis" class="level3">
 <h3 class="anchored" data-anchor-id="lis">LIS</h3>
 </section>
-<section id="other-sources" class="level3">
-<h3 class="anchored" data-anchor-id="other-sources">Other sources</h3>
-<p>Should we use Solt? As another check on results?</p>
-<p>What about GCIP? For trying to flip between income and consumption…</p>
-</section>
 <section id="coverage" class="level3">
 <h3 class="anchored" data-anchor-id="coverage">Coverage</h3>
 <p>Give an overview of coverage in each dataset.</p>
@@ -393,406 +407,46 @@ The following object is masked from 'package:purrr':
 </section>
 <section id="comparing-databases" class="level2">
 <h2 class="anchored" data-anchor-id="comparing-databases">Comparing databases</h2>
-<section id="method-1-reference-years-with-a-certain-tolerance" class="level4">
-<h4 class="anchored" data-anchor-id="method-1-reference-years-with-a-certain-tolerance">Method 1: Reference years, with a certain tolerance</h4>
-<div class="callout-note callout callout-style-simple no-icon callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-A function for selecting data around a set of reference years, within a certain tolerance
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## This has been superseded by the function below</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># select_ref_years&lt;- function(df, target_varname, group_by_varname, ref_varname, ref_values,tolerance,tie_break_round_up){</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   ## Example arguments for testing</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   # df_in&lt;- df_wid</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   # target_varname&lt;- "Gini.coefficient"</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   # group_by_varname&lt;- "Entity"</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   # ref_varname&lt;- "Year"</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   # ref_values&lt;- c(1990, 2020)</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   # tolerance&lt;- 5</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   # tie_break_round_up&lt;- TRUE</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     # rename vars toß make nonstandard evaluation easier</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#    df_in&lt;- df %&gt;%</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     rename(target_var = !!target_varname,</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#            group_by_var = !!group_by_varname,</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#            ref_var = !!ref_varname)</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#    out_list&lt;- list()</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#    for(ref in ref_values){</span></span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#      </span></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#      df_ref&lt;- df_in %&gt;%</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#        select(target_var, group_by_var, ref_var) %&gt;%</span></span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="co">#        drop_na() %&gt;%</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co">#        mutate(distance = ref_var - ref) %&gt;%</span></span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="co">#        mutate(abs_distance = abs(distance)) %&gt;%</span></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="co">#        group_by(group_by_var) %&gt;%</span></span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="co">#        mutate(min_distance = min(abs_distance)) %&gt;%</span></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="co">#        filter(abs_distance == min_distance) %&gt;%</span></span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a><span class="co">#        group_by(group_by_var, min_distance) %&gt;%</span></span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co">#        mutate(n = n()) %&gt;%</span></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="co">#        ungroup()</span></span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co">#      </span></span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co">#     # address tie-breaks. If 'round_up' is true, the higher value wins out - i.e. the distance to the reference value must positive. And visa versa.</span></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a><span class="co">#      if(tie_break_round_up){</span></span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="co">#        df_ref&lt;- df_ref %&gt;%</span></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(n==1 | distance&gt;0)</span></span>
-<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a><span class="co">#      } else {</span></span>
-<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a><span class="co">#        df_ref&lt;- df_ref %&gt;%</span></span>
-<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(n==1 | distance&lt;0)</span></span>
-<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a><span class="co">#      }</span></span>
-<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a><span class="co">#      </span></span>
-<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a><span class="co">#      out_list[[as.character(ref)]]&lt;- df_ref</span></span>
-<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a><span class="co">#      </span></span>
-<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a><span class="co">#      </span></span>
-<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a><span class="co">#    }</span></span>
-<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a><span class="co">#  </span></span>
-<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_out&lt;- bind_rows(out_list, .id = paste0("reference_", ref_varname))</span></span>
-<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co">#   # If a tolerance has been set, filter out matches beyond tolerance</span></span>
-<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a><span class="co">#   if(!is.na(tolerance)){</span></span>
-<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a><span class="co">#       df_out&lt;- df_out %&gt;%</span></span>
-<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(abs_distance &lt;= tolerance)</span></span>
-<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a><span class="co">#      }</span></span>
-<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
-<span id="cb10-58"><a href="#cb10-58" aria-hidden="true" tabindex="-1"></a><span class="co">#   # names back to original and drop not needed vars</span></span>
-<span id="cb10-59"><a href="#cb10-59" aria-hidden="true" tabindex="-1"></a><span class="co">#    df_out&lt;- df_out %&gt;%</span></span>
-<span id="cb10-60"><a href="#cb10-60" aria-hidden="true" tabindex="-1"></a><span class="co">#     rename(!!target_varname := target_var,</span></span>
-<span id="cb10-61"><a href="#cb10-61" aria-hidden="true" tabindex="-1"></a><span class="co">#            !!group_by_varname := group_by_var,</span></span>
-<span id="cb10-62"><a href="#cb10-62" aria-hidden="true" tabindex="-1"></a><span class="co">#            !!ref_varname := ref_var) %&gt;%</span></span>
-<span id="cb10-63"><a href="#cb10-63" aria-hidden="true" tabindex="-1"></a><span class="co">#      select(-c(distance, min_distance, n))</span></span>
-<span id="cb10-64"><a href="#cb10-64" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
-<span id="cb10-65"><a href="#cb10-65" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Next, we define a function that takes a dataframe, a pair of years (year1 &lt; year2), a distance, a list of variable names, and a list of ID columns as arguments</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># # calculate_change &lt;- function(data, year1, year2, distance, vars, id_cols) {</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #   calc_distances&lt;- list()</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># #   for(ref in c(year1, year2)){</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># #   # We add a column stating the reference year and group the data by the ID columns</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># #   data_subset &lt;- data %&gt;%</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># #     mutate(ref_year = ref) %&gt;%</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># #     group_by(across(all_of(id_cols)))</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># #     # We calculate the difference and absolute difference from the reference year</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># #   data_subset$diff &lt;- data_subset$Year - ref</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># #   data_subset$abs_diff &lt;- abs(data_subset$diff)</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># #   # Store in list</span></span>
-<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># #   calc_distances[[ref]]&lt;- data_subset %&gt;% ungroup()</span></span>
-<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># #   }</span></span>
-<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># #   data_long&lt;- bind_rows(calc_distances)</span></span>
-<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co"># #   # A list where we will store the matched observations and changes for each variable</span></span>
-<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="co"># #   return_matches&lt;- list()</span></span>
-<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="co"># #   # na_treatment&lt;- "obs_for_all_vars"</span></span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co"># #   vars_plus&lt;- c(vars, "obs_for_all_vars_case")</span></span>
-<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="co"># #     #For each var...</span></span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="co"># #     for(var in vars_plus){</span></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="co"># #       # Filter out observations with missing values in var of interest and calculate the min absolute distance from the two reference years</span></span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># #     if(var == "obs_for_all_vars_case"){</span></span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co"># #       matches &lt;- data_long %&gt;%</span></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="co"># #         filter_at(vars,all_vars(!is.na(.)))</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="co"># #     } else {</span></span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co"># #       matches &lt;- data_long %&gt;%</span></span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="co"># #       filter(!is.na(!!sym(var)))</span></span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="co"># #     }</span></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="co"># #     matches &lt;- matches %&gt;%</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="co"># #       group_by(across(all_of(c(id_cols, "ref_year")))) %&gt;% </span></span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a><span class="co"># #       mutate(min_diff = min(abs_diff)) %&gt;%</span></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="co"># #       filter(abs_diff == min_diff)</span></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="co"># #      # If there is a tie-break (with two matches, one above and one below the reference year), settle the tie-break so as to maximise the gap between the two observations. That means for the early year, below matches win; for the later year, above matches win.</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a><span class="co"># #     matches &lt;- matches %&gt;%</span></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="co"># #       group_by(across(all_of(c(id_cols, "ref_year", "min_diff")))) %&gt;%</span></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="co"># #       mutate(n = n()) %&gt;% # count number of matches (n&gt;1 if there is a tie-break) %&gt;%</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="co"># #     ungroup()</span></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="co"># #     matches &lt;- matches %&gt;% </span></span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a><span class="co"># #       group_by(across(all_of(c(id_cols, "ref_year")))) %&gt;% </span></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="co"># #       filter(n==1 | (ref_year == year1 &amp; diff&lt;0) | (ref_year == year2 &amp; diff&gt;0))</span></span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="co"># #     # If the same year is matched for the two reference years, drop the observations</span></span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="co"># #      matches &lt;- matches %&gt;% </span></span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="co"># #       group_by(across(all_of(c(id_cols, "Year")))) %&gt;% </span></span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="co"># #       mutate(n = n()) %&gt;% # count number of times a year is matched</span></span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="co"># #       filter(!n&gt;1) # Drop if same year is matched</span></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="co"># #     if(var == "obs_for_all_vars_case"){</span></span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a><span class="co"># #       keep_vars&lt;- c(id_cols, "Year", vars, "ref_year" )</span></span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="co"># #     } else {</span></span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a><span class="co"># #       keep_vars&lt;- c(id_cols, "Year", var, "ref_year" )</span></span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a><span class="co"># #     }</span></span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a><span class="co"># #      matches &lt;- matches %&gt;%</span></span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a><span class="co"># #        select_at(keep_vars)</span></span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a><span class="co"># #      # Make a list to store the matched observations, and also the calculated distances</span></span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a><span class="co"># #     return_matches[[var]]&lt;- matches</span></span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a><span class="co"># #     }</span></span>
-<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a><span class="co"># #   # Finally, we return the ...</span></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a><span class="co"># #   return(return_matches)</span></span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="co"># # }</span></span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a><span class="co"># # # To test the function, we can create a sample dataframe</span></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a><span class="co"># # data &lt;- data.frame(Year = c(1999, 2000, 2001, 2002, 2003, 2004, 2003),</span></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a><span class="co"># #                    Entity = c("A","A", "A", "A", "B", "B", "C"),</span></span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a><span class="co"># #                    Var1 = c(40, NA, 20, 30, 40, 50, 60),</span></span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a><span class="co"># #                    Var2 = c(30, 100, 200, 300, 400, 500, 400))</span></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a><span class="co"># # year1&lt;- 2000</span></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a><span class="co"># # year2&lt;- 2005</span></span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a><span class="co"># # distance&lt;- 2</span></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a><span class="co"># # vars&lt;- c("Var1","Var2")</span></span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a><span class="co"># # id_cols&lt;- c("Entity")</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a><span class="co"># # # Then, we can call the function with a pair of years, a distance, a list of variable names, and a list of ID columns</span></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a><span class="co"># # calculate_change(data, 2000, 2004, 2, c("Var1", "Var2"), c("Entity"))</span></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a><span class="co"># ```</span></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a><span class="co"># ```{r}</span></span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a><span class="co"># compare_ref_years&lt;- function(df_list, target_varname, group_by_varname, ref_varname, ref_values,tolerance,tie_break_round_up, rise_fall_threshold) {</span></span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Example arguments for testing</span></span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_list&lt;- list("pip" = df_pip, "wid" = df_wid)</span></span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a><span class="co">#   target_varname&lt;- "Gini"</span></span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a><span class="co">#   group_by_varname&lt;- "Entity"</span></span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a><span class="co">#   ref_varname&lt;- "Year"</span></span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a><span class="co">#   ref_values&lt;- c(1990, 2020)</span></span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a><span class="co">#   tolerance&lt;- 5</span></span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a><span class="co">#   tie_break_round_up&lt;- TRUE</span></span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a><span class="co">#   rise_fall_threshold&lt;- 0.01</span></span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Store the names of the two dataframes as a vector</span></span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_names&lt;- names(df_list)</span></span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Initiate a list to store the processed data for each dataframe</span></span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_out_list&lt;- list()</span></span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a><span class="co">#   # loop through both data frame names</span></span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a><span class="co">#   for(i in 1:2){</span></span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_name&lt;- df_names[i]</span></span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a><span class="co">#     # rename vars to avoid nonstandard evaluation later on</span></span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_in&lt;- df_list[[df_name]] %&gt;%</span></span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a><span class="co">#       rename(target_var = !!target_varname,</span></span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a><span class="co">#            group_by_var = !!group_by_varname,</span></span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a><span class="co">#            ref_var = !!ref_varname)</span></span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a><span class="co">#     # initiate a list to store the filtered data for each reference (e.g. reference year)</span></span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a><span class="co">#     ref_list_list&lt;- list()</span></span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>   </span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Loop through the references</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a><span class="co">#     for(ref in ref_values){</span></span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a><span class="co">#       # filter for the closest observation, by group (e.g. by country)</span></span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a><span class="co">#       df_ref&lt;- df_in %&gt;%</span></span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a><span class="co">#         select(target_var, group_by_var, ref_var) %&gt;%</span></span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a><span class="co">#         drop_na() %&gt;%</span></span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a><span class="co">#         mutate(distance = ref_var - ref) %&gt;%</span></span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a><span class="co">#         mutate(abs_distance = abs(distance)) %&gt;%</span></span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a><span class="co">#         group_by(group_by_var) %&gt;%</span></span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a><span class="co">#         mutate(min_distance = min(abs_distance)) %&gt;%</span></span>
-<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a><span class="co">#         filter(abs_distance == min_distance) %&gt;%</span></span>
-<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a><span class="co">#         group_by(group_by_var, min_distance) %&gt;%</span></span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a><span class="co">#         mutate(n = n()) %&gt;% # count number of matches (n&gt;1 if there is a tie-break)</span></span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a><span class="co">#         ungroup()</span></span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a><span class="co">#       # Settle tie-breaks. If 'round_up' is true, the higher value wins out - i.e. the distance to the reference value must positive. And visa versa.</span></span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a><span class="co">#       if(tie_break_round_up){</span></span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a><span class="co">#         df_ref&lt;- df_ref %&gt;%</span></span>
-<span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(n==1 | distance&gt;0)</span></span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a><span class="co">#       } else {</span></span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a><span class="co">#         df_ref&lt;- df_ref %&gt;%</span></span>
-<span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(n==1 | distance&lt;0)</span></span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a><span class="co">#       }</span></span>
-<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a><span class="co">#       ref_list_list[[as.character(ref)]]&lt;- df_ref</span></span>
-<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a><span class="co">#     }</span></span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Collate the matches for each reference observation</span></span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_out&lt;- bind_rows(ref_list_list, .id = "reference")</span></span>
-<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a><span class="co">#     # If a tolerance has been set, filter out matches beyond tolerance</span></span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a><span class="co">#     if(!is.na(tolerance)){</span></span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a><span class="co">#         df_out&lt;- df_out %&gt;%</span></span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a><span class="co">#          filter(abs_distance &lt;= tolerance)</span></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a><span class="co">#      }</span></span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a><span class="co">#     # drop not needed vars</span></span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_out&lt;- df_out %&gt;%</span></span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a><span class="co">#       select(-c(distance, min_distance, n))</span></span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a><span class="co">#     # code rise, fall, stable</span></span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_out&lt;- df_out %&gt;%</span></span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a><span class="co">#       drop_na() %&gt;%</span></span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a><span class="co">#       pivot_longer(cols = c(target_var, ref_var, abs_distance), names_to="metric", values_to = "value" ) %&gt;%</span></span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="co">#       pivot_wider(id_cols = group_by_var, names_from = c(metric,reference), values_from = value) %&gt;%</span></span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a><span class="co">#   drop_na() %&gt;%</span></span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(change = !!sym(paste0("target_var_", max(ref_values))) - !!sym(paste0("target_var_", min(ref_values)))) %&gt;%</span></span>
-<span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(rise_fall = "stable") %&gt;%</span></span>
-<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(rise_fall = if_else(change&lt; -(rise_fall_threshold),</span></span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a><span class="co">#                              "fall",</span></span>
-<span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a><span class="co">#                              rise_fall)) %&gt;%</span></span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate(rise_fall = if_else(change &gt; rise_fall_threshold,</span></span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="co">#                              "rise",</span></span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="co">#                              rise_fall))</span></span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Store the results in a list</span></span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_out_list[[df_name]]&lt;- df_out</span></span>
-<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Join the results gathered from each input dataframe</span></span>
-<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a><span class="co">#   df_out_list[["joint"]]&lt;- full_join(</span></span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_out_list[[df_names[1]]], df_out_list[[df_names[2]]],</span></span>
-<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a><span class="co">#     by = c("group_by_var"),</span></span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a><span class="co">#     suffix = c(paste0("_",df_names[1]), paste0("_",df_names[2])),</span></span>
-<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a><span class="co">#     keep = TRUE</span></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a><span class="co">#     ) </span></span>
-<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Make a list of fall/rise summaries </span></span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Initiate the list</span></span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a><span class="co">#     rise_fall_list&lt;- list()</span></span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Loop through the two sources</span></span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a><span class="co">#     for(df_name in df_names){</span></span>
-<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a><span class="co">#        # For the individual source observations</span></span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="co">#         rise_fall_list[[paste0(df_name, "_allObs")]]&lt;- df_out_list[[df_name]] %&gt;%</span></span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a><span class="co">#           count(rise_fall)</span></span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="co">#         # for the observations that are in both sources</span></span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a><span class="co">#         rise_fall_list[[paste0(df_name, "_sharedObs")]]&lt;- df_out_list[["joint"]] %&gt;% </span></span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a><span class="co">#       drop_na() %&gt;%</span></span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a><span class="co">#       count(across(paste0("rise_fall_", df_name)))</span></span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a><span class="co">#     }</span></span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Make a list of the averages in the two reference periods</span></span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a><span class="co">#     # Initiate the list</span></span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a><span class="co">#     average_list&lt;- list()</span></span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Loop through the two sources</span></span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="co">#     for(df_name in df_names){</span></span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a>      </span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a><span class="co">#        # For the individual source observations</span></span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="co">#         average_list[[paste0(df_name, "_allObs")]]&lt;- df_out_list[[df_name]] %&gt;%</span></span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a><span class="co">#           summarise(!!sym(paste0("avg_", ref_values[1])) := mean(!!sym(paste0("target_var_", ref_values[1]))),</span></span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="co">#                     !!sym(paste0("avg_", ref_values[2])) := mean(!!sym(paste0("target_var_", ref_values[2]))))</span></span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="co">#         # for the observations that are in both sources</span></span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a><span class="co">#         average_list[[paste0(df_name, "_sharedObs")]]&lt;- df_out_list[["joint"]] %&gt;% </span></span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a><span class="co">#       drop_na() %&gt;%</span></span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a><span class="co">#       summarise(!!sym(paste0("avg_", ref_values[1])) := mean(!!sym(paste("target_var", ref_values[1], df_name, sep= "_"))),</span></span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a><span class="co">#                     !!sym(paste0("avg_", ref_values[2])) := mean(!!sym(paste("target_var", ref_values[1], df_name, sep= "_"))))</span></span>
-<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a><span class="co">#     }</span></span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Undo the renaming (used early to avoid nonstandard evaluation problems)</span></span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="co">#   for(df_name in names(df_out_list)){</span></span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a><span class="co">#   names(df_out_list[[df_name]]) &lt;- gsub(x = names(df_out_list[[df_name]]), pattern = "target_var", replacement = target_varname)</span></span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a><span class="co">#   names(df_out_list[[df_name]]) &lt;- gsub(x = names(df_out_list[[df_name]]), pattern = "group_by_var", replacement = group_by_varname)</span></span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a><span class="co">#   names(df_out_list[[df_name]]) &lt;- gsub(x = names(df_out_list[[df_name]]), pattern = "ref_var", replacement = ref_varname)</span></span>
-<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
-<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a><span class="co">#  outputs&lt;- list("dataframes" = df_out_list,</span></span>
-<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a><span class="co">#                 "summaries" = summary_list)</span></span>
-<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="co"># return(outputs)</span></span>
-<span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare_pip_wid&lt;- list()</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># for(var in c("Gini", "Top_10_share")){</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   if(var == "Gini"){rise_fall_threshold&lt;- 0.1}</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   if(var == "Top_10_share"){rise_fall_threshold&lt;- 1}</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># compare_for_var&lt;- compare_ref_years(</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#     df_list = list("pip" = df_pip, "wid" = df_wid),</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     target_varname = var,</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#     group_by_varname = "Entity",</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#     ref_varname = "Year",</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#     ref_values = c(1990, 2020),</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     tolerance = 5,</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     tie_break_round_up = FALSE,</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     rise_fall_threshold = rise_fall_threshold</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     )</span></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># compare_pip_wid[[var]]&lt;- compare_for_var </span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>A scatter chart to compare</p>
-<div class="cell">
-
-</div>
-<p>A table to compare rises and falls</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tab_compare_rise_and_falls&lt;- function(summaries_list){</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   summaries_list&lt;- compare_pip_wid[["Gini"]][["summaries"]]</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   tab&lt;- data.frame(rise_fall = c("rise", "stable", "fall"))</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   source_names&lt;- names(summaries_list)</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   for(source_name in source_names) {</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   tab&lt;- left_join(tab, summaries_list[[source_name]]) %&gt;%</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#     rename(!!(paste0(source_name, "_all")) := n)</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   }</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Adding data for shared observations</span></span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co"># } </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Averages</p>
-<div class="cell">
-
-</div>
-</div>
-</div>
-</div>
+<section id="comparing-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-metrics">Comparing metrics</h3>
+<p>Does it make a difference whether we look at Gini or top 10%?</p>
+<p>People worry about whether Gini masks what’s happening at the top.</p>
+<p>Empirically: - Make a linear model of top 10% on Gini, for each source separately - Make predicted top 10% - Take a look at the R2 - Investigate individual countries with very poor predictions</p>
+<p>Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.</p>
 </section>
+<section id="since-1990" class="level3">
+<h3 class="anchored" data-anchor-id="since-1990">Since 1990</h3>
+<p>Similarities:</p>
+<p>Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)</p>
+<p>Indeed for some regions very similar picture:</p>
+<pre><code>- MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)
+
+- South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise
+
+-  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)
+
+- Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).</code></pre>
+<p>Differences:</p>
+<p>Verry different bottom line at the global level:</p>
+<ul>
+<li><p>PIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That’s without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)</p></li>
+<li><p>WID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e.&nbsp;% increase rather than % point increase? A point rise means ‘less’ in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia</p></li>
+</ul>
+</section>
+</section>
+<section id="that-difference-is-driven-by-particular-regions" class="level2">
+<h2 class="anchored" data-anchor-id="that-difference-is-driven-by-particular-regions">That difference is driven by particular regions:</h2>
+<p>More countries with rises. LArger rises. Especially larger populations. Average view very different:</p>
+<p>Countries where the sources paint a radically different picture that affect the aggregate results:</p>
+<ul>
+<li>India: Insane rise in WID 34-&gt;56</li>
+<li>China:</li>
+<li>Russia: Massive drop in PIP. Insane rise in WID.</li>
+<li>USA: Much larger rise in WID.</li>
+</ul>
+<p>What explains the different trends in these countries? (We can maybe look in more detail, at different welfare concepts etc.)</p>
+<p>It sometimes goes the other way: Indonesia – Rise in PIP, fall in WID.</p>
+<p>:::</p>
 <section id="method-2-use-a-regression-to-obtain-the-time-trend" class="level4">
 <h4 class="anchored" data-anchor-id="method-2-use-a-regression-to-obtain-the-time-trend">Method 2: Use a regression to obtain the time trend</h4>
 </section>
