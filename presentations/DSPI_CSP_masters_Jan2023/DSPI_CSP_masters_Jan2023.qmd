@@ -1,0 +1,419 @@
+---
+title: "From $1.90 to $2.15: the updated International Poverty Line"
+author: "Joe Hasell"
+format:
+  revealjs:
+    scrollable: true
+---
+
+## The International Poverty Line {.smaller}
+:::: {.columns}
+
+::: {.column width="30%"}
+
+::: {.incremental}
+- Set by the World Bank
+- Reflects definitions of poverty adopted in the **world's poorest countries**.
+- Adopted by the UN as the first SDG – *Indicator 1.1.1*
+
+- **Recently updated from $1.90 to $2.15**
+:::
+
+:::
+
+::: {.column width="70%"}
+```{=html}
+<iframe src="https://ourworldindata.org/grapher/share-of-population-in-extreme-poverty?country=BGD~BOL~MDG~IND~CHN~ETH" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+:::
+
+::::
+
+
+## Outline
+
+1. Why has the IPL been updated?
+2. How does this affect our understanding of global poverty?
+
+::: {.incremental}
+- **Basic picture:** 
+    Just a change of units, Limited impact on global estimates
+- **Major caveat I:** Updated PPPs, Substantial changes for individual countries
+- **Major caveat II:** 
+    Interaction with how WB sets the IPL. The real value of higher WB poverty lines *did* change.
+
+:::
+
+# Basic story
+A change of units
+
+
+## A change of units {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+::: {.incremental}
+
+- International-$ at **2011** -> **2017** prices
+- Change reflects inflation: $1 in 2017 prices < $1 in 2011 prices
+- The *value* of the IPL (quantity of goods and services it buys) has, broadly speaking, been maintined
+
+:::
+
+
+
+:::
+
+::: {.column width="70%"}
+
+:::
+
+::::
+
+## A change of units {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+
+- International-$ at **2011** -> **2017** prices
+- Change reflects inflation: $1 in 2017 prices < $1 in 2011 prices
+- The *value* of the IPL (quantity of goods and services it buys) has, broadly speaking, been maintined
+
+- Global extreme poverty very similar measured in either terms.
+
+
+
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/explorers/poverty-explorer-2011-vs-2017-ppp?time=2013..latest&hideControls=true&Metric=Share+in+poverty&International-%24=Compare+2017+and+2011+prices&Poverty+line=International+Poverty+Line&Household+survey+data+type=Show+data+from+both+income+and+expenditure+surveys&country=~OWID_WRL" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+:::
+
+::::
+
+
+
+<!-- xxxxxxxxxxxxxx -->
+# Major caveat I
+Country-level data
+
+
+
+
+
+## Why *not* update prices? {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+
+Flip the question: Why did the World Bank *not* update it's prices sooner? 
+
+:::
+
+::: {.column width="70%"}
+
+
+:::
+
+::::
+
+
+## Why *not* update prices? {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+
+Flip the question: Why did the World Bank *not* update it's prices sooner? 
+
+Short answer: They were asked not to by the *Atkinson Commission (2017)*.
+
+:::
+
+::: {.column width="70%"}
+
+:::
+
+::::
+
+
+## Why *not* update prices? {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+
+Flip the question: Why did the World Bank *not* update it's prices sooner? 
+
+Short answer: They were asked not to by the *Atkinson Commission (2017)*.
+
+This time round the update in prices had a very small effect on global poverty estimates.
+
+But in previous updates the changes were much more substantial.
+
+:::
+
+::: {.column width="70%"}
+
+![Global poverty fell by half on a Tuesday in 2014...](CGDEV_screenshot.png)
+
+:::
+
+::::
+
+
+
+
+
+
+
+
+## Understanding international-${.smaller}
+
+- Converting local currencies to international-$ means making **two** price adjustments:
+  - inflation within individual countries
+  - differences in the cost of living between countries
+
+
+## Understanding international-$ {.smaller}
+
+- Converting local currencies to international-$ means making **two** price adjustments:
+  - inflation within individual countries
+  - differences in the cost of living between countries
+
+
+- To make the second adjustment the WB uses Purchasing Power Parity rates
+  - A snapshot of price difference across coutries in a particular year
+  - Data gathered by the ICP in 'rounds': 2017, 2011, 2005...
+  - US is the 'numeraire': 
+    - 1 int-$ in 2017 prices is the *quantity of goods and services that 1 USD could buy in the US in 2017.*
+    - The real value of 2017 vs 2011 int-$ fell by the same amount that prices increased in the US
+
+
+
+## Understanding international-$ {.smaller}
+
+- Converting local currencies to international-$ means making **two** price adjustments:
+  - inflation within individual countries
+  - differences in the cost of living between countries
+
+
+- To make the second adjustment the WB uses Purchasing Power Parity rates
+  - A snapshot of price difference across coutries in a particular year
+  - Data gathered by the ICP in 'rounds': 2017, 2011, 2005...
+  - US is the 'numeraire': 
+    - 1 int-$ in 2017 prices is the *quantity of goods and services that 1 USD could buy in the US in 2017.*
+    - The real value of 2017 vs 2011 int-$ fell by the same amount that prices increased in the US
+
+- Note that *'in 2017 prices'* thus has a **dual** meaning:
+  - the base year to which the within-country inflation adjustment is made
+  - the ICP round – i.e. the year cross-country price differences were observed.
+
+
+
+
+
+
+
+## PPP 'shocks' {.smaller}
+
+
+When PPPs from a new ICP round are released, our view of relative prices between coutries can change *a lot*.
+
+I think of this as like a 'shock' to our understanding about the world. 
+
+With the new PPPs we update our view of how prices compare between countries.
+
+
+
+## PPP 'shocks' {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+Crucially – as our view of relative **prices** change, so does our view of relative **incomes**.
+
+
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/explorers/poverty-explorer-2011-vs-2017-ppp?yScale=log&hideControls=true&Metric=Mean+income+or+consumption&International-%24=Compare+2017+and+2011+prices&Poverty+line=International+Poverty+Line&Household+survey+data+type=Show+data+from+both+income+and+consumption+surveys&country=AGO~NGA~VNM~USA~BRA~GHA" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+:::
+
+::::
+
+
+
+
+
+
+
+## Why do these PPP 'shocks' arise? {.smaller}
+
+::: {.incremental}
+
+- Changes in ICP methodology, quality/availability of price data
+- Genuine differences in how prices have changed in different countries (i.e. different inflation rates)
+  - BUT! These should roughly be accouted for by the inflation adjustment bit of converting local currencies to international-$!
+  - BUT^2^!! It's part of the arithmetic construction of PPPs that a change in the relative PPP rate between two countries needn't exactly map on to their relative rates of inflation (this is needed to provide 'multilateral' PPP rates – i.e. transitivity)
+:::
+
+
+
+
+
+
+
+## PPP 'shocks': impact on poverty estimates {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+As our view of relative **prices** and **incomes** is updated with a new set of PPPs – so is our view of the extent of **poverty** in each country
+
+In some extreme cases, poverty rates look very different when measured in 2017 and 2011 international-$.
+
+
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/explorers/poverty-explorer-2011-vs-2017-ppp?hideControls=true&Metric=Share+in+poverty&International-%24=Compare+2017+and+2011+prices&Poverty+line=International+Poverty+Line&Household+survey+data+type=Show+data+from+both+income+and+consumption+surveys&country=AGO~NGA~VNM~USA~BRA~GHA" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+:::
+
+::::
+
+## PPP 'shocks': impact on poverty estimates {.smaller}
+
+The shift from 2011 to 2017 PPPs makes such a little difference to global poverty estimates because:
+  - the country-level shocks cancel out to some extent 
+  - the shocks were less major than in previous rounds
+
+
+
+<!-- xxxxxxxxxxxxxx -->
+
+
+# Major caveat II
+Setting the World Bank poverty lines
+
+
+
+
+## Setting the IPL {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+The World Bank sets the IPL to reflect the poverty lines adopted in the world's poorest countries.
+
+More specifically, it is set at the **median** poverty line among 'low-income' countries (as per World Bank's classification).
+
+In 2017 prices, that gives the new IPL value of $2.15 per day.
+
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/grapher/national-poverty-line-vs-gdp-per-capita" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+:::
+
+::::
+
+
+## Setting the IPL {.smaller}
+
+With all the chopping and changing of relative price levels, the real value of the IPL *could have* changed with the new PPPs – if the median value of low-income countries' poverty lines had changed.
+
+It's sort of by coincidence that didn't happen!
+
+The median poverty line increased by roughly the same amount (13%) that the value of the international $ fell (9% – the amount of inflation in the US between 2011 and 2017).
+
+It's only this conincidence that meant the real value of the IPL was maintained.
+
+
+
+
+## Higher World Bank poverty lines {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+The World Bank also sets two higher poverty lines of **$3.65** and **$6.85** – the median poverty line among *lower-* and *upper-middle income* countries respectively.
+
+In shifting to 2017 PPPs, these were updated from $3.20 and $5.50 when calculated with 2011 PPPs (back in 2016).
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/grapher/national-poverty-line-vs-gdp-per-capita" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+:::
+
+::::
+
+
+## Higher World Bank poverty lines {.smaller}
+
+:::: {.columns}
+
+::: {.column width="30%"}
+
+For the upper-middle income poverty line – which rose from $5.50 to $6.85 (by 25%) – the 'happy coincidence' didn't happen.
+
+Global poverty estimates for this poverty line changed considerably across the change in units because – unlike the IPL – the *real value* of this poverty line changed too.
+
+:::
+
+::: {.column width="70%"}
+
+```{=html}
+<iframe src="https://ourworldindata.org/explorers/poverty-explorer-2011-vs-2017-ppp?hideControls=true&Metric=Share+in+poverty&International-%24=Compare+2017+and+2011+prices&Poverty+line=Upper-middle+income+poverty+line&Household+survey+data+type=Show+data+from+both+income+and+expenditure+surveys&country=~OWID_WRL" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+```
+
+
+:::
+
+::::
+
+
+## Summary {.smaller}
+
+- The real value of the IPL didnt change (though that's not true for higher line)
+- Unsurprisingly, global poverty rates look very similar.
+- But this is partly due to some 'cancelling out' across countries
+- The new PPPs give us a revised understanding of how incomes – and hence poverty levels – compare in different countries.
+- The shift from 2011 to 2017 PPPs is, however, was much less of a 'shock' than earlier ICP rounds.

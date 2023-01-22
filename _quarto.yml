@@ -22,6 +22,9 @@ website:
               - PhD_pages/data_appendices/1_B_within_country_trends.qmd
               - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
               - PhD_pages/data_appendices/3_B_prepare_OECD.qmd
+      - section: "Presentations"
+        contents:
+              - presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.qmd
       - section: "About this site"
         contents:
           - how_to.qmd
