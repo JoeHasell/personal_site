@@ -207,7 +207,8 @@ kable(
 
 df_pip<- df_pip %>%
   mutate(Bottom_50_share = decile1_share + decile2_share + decile3_share + decile4_share + decile5_share,
-          P90_P10_ratio = decile9_thr/decile1_thr)
+          P90_P10_ratio = decile9_thr/decile1_thr,
+          gini = gini * 100)
 
 
 ```
@@ -389,7 +390,8 @@ df_wid<- df_wid %>%
 
 #  Calculate P90_P10_ratio
 df_wid<- df_wid %>%
-    mutate(P90_P10_ratio = `P90...income.threshold.of.the.top.10.`/P10...income.threshold)
+    mutate(P90_P10_ratio = `P90...income.threshold.of.the.top.10.`/P10...income.threshold,
+    Gini = Gini.coefficient * 100)
 
 ```
 :::
@@ -401,8 +403,7 @@ df_wid<- df_wid %>%
 
 ```{r}
 df_wid<- df_wid %>%
-    rename("Gini" = "Gini.coefficient",
-         "Top_10_share" = "P90.P100...share.of.the.top.10.",
+    rename("Top_10_share" = "P90.P100...share.of.the.top.10.",
          "Bottom_50_share"= "P0.P50...share.of.the.bottom.50.",
          "P90" = "P90...income.threshold.of.the.top.10.",
          "P10" = "P10...income.threshold") %>%
@@ -445,6 +446,36 @@ write.csv(df_wid,
 ```
 :::
 :::
+
+
+## LIS data
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load WID data
+We load the data from a file prepared from the WID Stata package by Our World in Data.
+
+```{r}
+
+from owid import catalog
+
+
+
+# results = catalog.find('population')
+# owid_pop = results[results['path'] == 'garden/owid/latest/key_indicators/population']
+
+# df_pop = owid_pop.iloc[0].load().reset_index().rename(columns={'year':'Year', 'country': 'Entity'})
+
+# df_pop.head()
+
+# df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
+
+# A local version, in case internet isn't available 
+# df_wid<- read.csv("data/original/wid.csv")
+
+```
+
+
+
 
 ## Additional variables
 ::: {.callout-note collapse="true" appearance="minimal"}
@@ -538,8 +569,9 @@ df_regions.to_csv('data/clean/WID_region_mapping.csv')
 ```
 :::
 
+
 ::: {.callout-note collapse="true" appearance="minimal"}
-### Region classfications
+### Population
 
 ```{python}
 # For some reason I can't get the owid package working when rendering... only when running in the interactive window in vs code
