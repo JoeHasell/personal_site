@@ -1,0 +1,196 @@
+---
+title: "Appendix 1.A: Preparing PIP inequality data"
+format: html
+warning: false
+
+---
+
+# Processing steps
+
+The titles in each of the boxes below summarise the steps taken to prepare the PIP data. In each case you can expand the box to see the code used.
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Packages and settings
+
+```{python}
+
+import pandas as pd
+
+pd.set_option('display.max_rows', None)
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load PIP data
+We load the data from a file prepared from the PIP API by Our World in Data.
+
+```{python}
+# df_pip<- read.csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
+
+#  A local version, in case internet isn't available 
+df_pip = pd.read_csv("data/original/pip_dataset.csv")
+
+```
+
+The dataframe looks like this:
+```{python}
+df_pip.head()
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Select PPP version
+We will use the 2017 PPPs.
+```{python}
+df_pip = df_pip.loc[df_pip["ppp_version"] == 2017]
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop sub-national data
+
+The PIP data includes observations for national, urban and rural populations (`reporting_level`):
+
+```{python}
+df_pip.groupby('reporting_level').count()
+```
+
+Here we add a count of the number of reporting levels per country-year.
+```{python}
+df_pip['n_reporting_level'] = df_pip\
+  .groupby(["country", "year"])['reporting_level']\
+  .transform('count')
+
+df_pip.head(20)  
+```
+
+We only want one reporting level for each country-year.
+
+That is already true for most country-years. But some include all three reporting levels.
+```{python}
+df_pip.groupby('n_reporting_level').count()
+
+```
+
+Here are the countries which include all three reporting levels:
+```{python}
+
+multi_reporting_level_countries = df_pip.loc[df_pip['n_reporting_level'] == 3, "country"].unique()
+
+multi_reporting_level_countries
+
+```
+
+
+For the country-years with 3 reporting levels, we keep only the national estimates. 
+```{python}
+df_pip = df_pip.loc[(df_pip['n_reporting_level'] != 3) | (df_pip['reporting_level'] == 'national') ]
+```
+
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Drop regional data
+
+The dataset includes aggregated estiates for world regions.
+
+Here we define a list of these aggregate entities and drop them from the data.
+
+```{python}
+drop_aggs = [
+  "East Asia and Pacific",
+  "South Asia",
+  "Europe and Central Asia",
+  "High income countries",
+  "Latin America and the Caribbean",
+  "Middle East and North Africa",
+  "Sub-Saharan Africa",
+  "World"
+]
+
+df_pip = df_pip.loc[~df_pip.country.isin(drop_aggs)]
+
+```
+:::
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Calculate additional variables
+
+```{python}
+
+# Bottom 50% share – sum shares of lower 5 deciles
+sum_cols = [
+  "decile1_share",
+  "decile2_share",
+  "decile3_share",
+  "decile4_share",
+  "decile5_share"]
+
+df_pip["Bottom_50_share"] = df_pip[sum_cols].sum(axis=1)
+
+df_pip["P90_P50_ratio"] = df_pip["decile9_thr"]/df_pip["median"]
+
+df_pip["Gini"] = df_pip['gini'] * 100
+
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Rename and select needed columns
+
+```{python}
+
+df_pip = df_pip.rename(columns={
+    'decile10_share':'Top_10_share',
+    'mld': 'MLD',
+    "country": "Entity",
+    "year": "Year"
+  })
+
+keep_cols = [
+  "Year",
+  "Entity",
+  "Gini",
+  "Top_10_share",
+  "Bottom_50_share",
+  "MLD",
+  "welfare_type"
+]
+
+df_pip = df_pip[keep_cols]
+
+```
+
+:::
+
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### See the prepared PIP data
+
+The first 100 rows of the dataframe looks like this:
+```{python}
+df_pip.head(100)
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Save the data
+I save the prepared data locally:
+```{python}
+df_pip.to_csv("data/clean/pip.csv", index=False)
+```
+:::
+
+
+
+## Important notes
+
+### Income and consumption data in PIP
+The PIP data includes a mix of income and consumption observations – including both for some country-years.
+

@@ -1,0 +1,41 @@
+---
+title: "Appendix 1.C: Preparing LIS inequality data"
+format: html
+warning: false
+
+---
+
+```{python}
+# For some reason I can't get the owid package working when rendering... only when running in the interactive window in vs code
+# from owid import catalog
+import pandas as pd
+
+
+pd.set_option('display.max_rows', None)
+```
+
+
+
+We load the data from a file prepared from the WID Stata package by Our World in Data.
+
+```{r}
+
+from owid import catalog
+
+
+
+# results = catalog.find('population')
+# owid_pop = results[results['path'] == 'garden/owid/latest/key_indicators/population']
+
+# df_pop = owid_pop.iloc[0].load().reset_index().rename(columns={'year':'Year', 'country': 'Entity'})
+
+# df_pop.head()
+
+# df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
+
+# A local version, in case internet isn't available 
+# df_wid<- read.csv("data/original/wid.csv")
+
+```
+
+

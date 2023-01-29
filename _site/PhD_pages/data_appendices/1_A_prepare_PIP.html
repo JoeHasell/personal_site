@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Joe Hasell - Appendix 1.A: Preparing PIP and WID inequality data</title>
+<title>Joe Hasell - Appendix 1.A: Preparing PIP inequality data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -135,7 +135,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Appendix 1.A: Preparing PIP and WID inequality data</h1>
+      <h1 class="quarto-secondary-nav-title">Appendix 1.A: Preparing PIP inequality data</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -196,22 +196,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </li>
           <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data appendices</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Data appendices</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../PhD_pages/data_appendices/1_A_prepare_PIP_and_WID.html" class="sidebar-item-text sidebar-link active">Appendix 1.A: Preparing PIP and WID inequality data</a>
-  </div>
-</li>
+  PhD_pages/data_appendices/1_A_prepare_PIP_and_WID.qmd
+  </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../PhD_pages/data_appendices/1_B_within_country_trends.html" class="sidebar-item-text sidebar-link">Appendix 1.B: Analysing global trends in within-country inequality</a>
-  </div>
-</li>
+  PhD_pages/data_appendices/1_B_within_country_trends.qmd
+  </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link">Appendix 3.A: Preparing EU KLEMS industry data</a>
@@ -280,7 +276,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#processing-steps" id="toc-processing-steps" class="nav-link active" data-scroll-target="#processing-steps">Processing steps</a>
   <ul class="collapse">
-  <li><a href="#pip-data" id="toc-pip-data" class="nav-link" data-scroll-target="#pip-data">PIP data</a></li>
+  <li><a href="#important-notes" id="toc-important-notes" class="nav-link" data-scroll-target="#important-notes">Important notes</a>
+  <ul class="collapse">
+  <li><a href="#income-and-consumption-data-in-pip" id="toc-income-and-consumption-data-in-pip" class="nav-link" data-scroll-target="#income-and-consumption-data-in-pip">Income and consumption data in PIP</a></li>
+  </ul></li>
   </ul></li>
   </ul>
 </nav>
@@ -290,7 +289,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Appendix 1.A: Preparing PIP and WID inequality data</h1>
+<h1 class="title d-none d-lg-block">Appendix 1.A: Preparing PIP inequality data</h1>
 </div>
 
 
@@ -307,32 +306,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="processing-steps" class="level1">
 <h1>Processing steps</h1>
-<p>The titles in each of the boxes below summarise the steps taken to prepare the PIP and WID data. In each case you can expand the box to see the code used.</p>
+<p>The titles in each of the boxes below summarise the steps taken to prepare the PIP data. In each case you can expand the box to see the code used.</p>
 <div class="callout-note callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Load packages
+Packages and settings
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For some reason I can't get the owid package working when rendering... only when running in the interactive window in vs code</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># from owid import catalog</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 </div>
-<section id="pip-data" class="level2">
-<h2 class="anchored" data-anchor-id="pip-data">PIP data</h2>
 <div class="callout-note callout callout-style-simple no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -2543,8 +2537,14 @@ Save the data
 </div>
 </div>
 </div>
+<section id="important-notes" class="level2">
+<h2 class="anchored" data-anchor-id="important-notes">Important notes</h2>
+<section id="income-and-consumption-data-in-pip" class="level3">
+<h3 class="anchored" data-anchor-id="income-and-consumption-data-in-pip">Income and consumption data in PIP</h3>
+<p>The PIP data includes a mix of income and consumption observations – including both for some country-years.</p>
 
 
+</section>
 </section>
 </section>
 
