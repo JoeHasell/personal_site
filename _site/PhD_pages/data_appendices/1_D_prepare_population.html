@@ -263,6 +263,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../../test_pages/test_with_iframe_shiny.html" class="sidebar-item-text sidebar-link">A test notebook with Shiny app mbedded as an iframe</a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_ipywidgets.html" class="sidebar-item-text sidebar-link">Ipywidgets in Quarto example</a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -436,16 +441,22 @@ Check there is population data for each country in WID, PIP, and LIS.
       <th></th>
       <th>Year</th>
       <th>Entity</th>
-      <th>Gini</th>
-      <th>Top_10_share</th>
-      <th>Bottom_50_share</th>
+      <th>Gini_posttax_dis</th>
+      <th>Gini_posttax_nat</th>
+      <th>Gini_pretax</th>
+      <th>Top_10_share_posttax_dis</th>
+      <th>Top_10_share_posttax_nat</th>
+      <th>Top_10_share_pretax</th>
+      <th>Bottom_50_share_posttax_dis</th>
+      <th>Bottom_50_share_posttax_nat</th>
+      <th>Bottom_50_share_pretax</th>
       <th>population</th>
       <th>world_pop_share</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>3892</th>
+      <th>3815</th>
       <td>1957</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -453,9 +464,15 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3893</th>
+      <th>3816</th>
       <td>1958</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -463,9 +480,15 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3894</th>
+      <th>3817</th>
       <td>1959</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -473,9 +496,15 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3895</th>
+      <th>3818</th>
       <td>1960</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -483,9 +512,15 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3896</th>
+      <th>3819</th>
       <td>1961</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -493,9 +528,15 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3897</th>
+      <th>3820</th>
       <td>1962</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -503,9 +544,15 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3898</th>
+      <th>3821</th>
       <td>1963</td>
       <td>Zanzibar</td>
       <td>NaN</td>
@@ -513,424 +560,10 @@ Check there is population data for each country in WID, PIP, and LIS.
       <td>NaN</td>
       <td>NaN</td>
       <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3899</th>
-      <td>1980</td>
-      <td>Zanzibar</td>
-      <td>54.570521</td>
-      <td>43.13</td>
-      <td>15.77</td>
       <td>NaN</td>
       <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3900</th>
-      <td>1981</td>
-      <td>Zanzibar</td>
-      <td>54.570532</td>
-      <td>43.13</td>
-      <td>15.77</td>
       <td>NaN</td>
       <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3901</th>
-      <td>1982</td>
-      <td>Zanzibar</td>
-      <td>54.570525</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3902</th>
-      <td>1983</td>
-      <td>Zanzibar</td>
-      <td>54.570524</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3903</th>
-      <td>1984</td>
-      <td>Zanzibar</td>
-      <td>54.570529</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3904</th>
-      <td>1985</td>
-      <td>Zanzibar</td>
-      <td>54.570529</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3905</th>
-      <td>1986</td>
-      <td>Zanzibar</td>
-      <td>54.570527</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3906</th>
-      <td>1987</td>
-      <td>Zanzibar</td>
-      <td>54.570525</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3907</th>
-      <td>1988</td>
-      <td>Zanzibar</td>
-      <td>54.570527</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3908</th>
-      <td>1989</td>
-      <td>Zanzibar</td>
-      <td>54.570520</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3909</th>
-      <td>1990</td>
-      <td>Zanzibar</td>
-      <td>54.570520</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3910</th>
-      <td>1991</td>
-      <td>Zanzibar</td>
-      <td>54.570526</td>
-      <td>43.13</td>
-      <td>15.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3911</th>
-      <td>1992</td>
-      <td>Zanzibar</td>
-      <td>54.800517</td>
-      <td>43.39</td>
-      <td>15.65</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3912</th>
-      <td>1993</td>
-      <td>Zanzibar</td>
-      <td>55.030506</td>
-      <td>43.64</td>
-      <td>15.52</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3913</th>
-      <td>1994</td>
-      <td>Zanzibar</td>
-      <td>55.260468</td>
-      <td>43.90</td>
-      <td>15.40</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3914</th>
-      <td>1995</td>
-      <td>Zanzibar</td>
-      <td>55.490414</td>
-      <td>44.15</td>
-      <td>15.27</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3915</th>
-      <td>1996</td>
-      <td>Zanzibar</td>
-      <td>55.720348</td>
-      <td>44.41</td>
-      <td>15.15</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3916</th>
-      <td>1997</td>
-      <td>Zanzibar</td>
-      <td>55.950271</td>
-      <td>44.66</td>
-      <td>15.02</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3917</th>
-      <td>1998</td>
-      <td>Zanzibar</td>
-      <td>56.180174</td>
-      <td>44.91</td>
-      <td>14.90</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3918</th>
-      <td>1999</td>
-      <td>Zanzibar</td>
-      <td>56.410066</td>
-      <td>45.17</td>
-      <td>14.77</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3919</th>
-      <td>2000</td>
-      <td>Zanzibar</td>
-      <td>56.639941</td>
-      <td>45.42</td>
-      <td>14.65</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3920</th>
-      <td>2001</td>
-      <td>Zanzibar</td>
-      <td>57.114326</td>
-      <td>46.00</td>
-      <td>14.46</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3921</th>
-      <td>2002</td>
-      <td>Zanzibar</td>
-      <td>57.588575</td>
-      <td>46.58</td>
-      <td>14.27</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3922</th>
-      <td>2003</td>
-      <td>Zanzibar</td>
-      <td>58.062679</td>
-      <td>47.17</td>
-      <td>14.08</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3923</th>
-      <td>2004</td>
-      <td>Zanzibar</td>
-      <td>58.536653</td>
-      <td>47.75</td>
-      <td>13.90</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3924</th>
-      <td>2005</td>
-      <td>Zanzibar</td>
-      <td>59.010490</td>
-      <td>48.33</td>
-      <td>13.71</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3925</th>
-      <td>2006</td>
-      <td>Zanzibar</td>
-      <td>59.484185</td>
-      <td>48.91</td>
-      <td>13.52</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3926</th>
-      <td>2007</td>
-      <td>Zanzibar</td>
-      <td>59.957736</td>
-      <td>49.49</td>
-      <td>13.33</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3927</th>
-      <td>2008</td>
-      <td>Zanzibar</td>
-      <td>59.681121</td>
-      <td>49.32</td>
-      <td>13.53</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3928</th>
-      <td>2009</td>
-      <td>Zanzibar</td>
-      <td>59.404056</td>
-      <td>49.15</td>
-      <td>13.73</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3929</th>
-      <td>2010</td>
-      <td>Zanzibar</td>
-      <td>59.126532</td>
-      <td>48.99</td>
-      <td>13.93</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3930</th>
-      <td>2011</td>
-      <td>Zanzibar</td>
-      <td>58.848563</td>
-      <td>48.82</td>
-      <td>14.13</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3931</th>
-      <td>2012</td>
-      <td>Zanzibar</td>
-      <td>58.327864</td>
-      <td>47.58</td>
-      <td>14.05</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3932</th>
-      <td>2013</td>
-      <td>Zanzibar</td>
-      <td>57.808166</td>
-      <td>46.35</td>
-      <td>13.96</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3933</th>
-      <td>2014</td>
-      <td>Zanzibar</td>
-      <td>57.289538</td>
-      <td>45.12</td>
-      <td>13.87</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3934</th>
-      <td>2015</td>
-      <td>Zanzibar</td>
-      <td>58.609609</td>
-      <td>47.20</td>
-      <td>13.56</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3935</th>
-      <td>2016</td>
-      <td>Zanzibar</td>
-      <td>59.930685</td>
-      <td>49.29</td>
-      <td>13.26</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3936</th>
-      <td>2017</td>
-      <td>Zanzibar</td>
-      <td>61.252671</td>
-      <td>51.37</td>
-      <td>12.95</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3937</th>
-      <td>2018</td>
-      <td>Zanzibar</td>
-      <td>61.252673</td>
-      <td>51.37</td>
-      <td>12.95</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3938</th>
-      <td>2019</td>
-      <td>Zanzibar</td>
-      <td>61.252684</td>
-      <td>51.37</td>
-      <td>12.95</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3939</th>
-      <td>2020</td>
-      <td>Zanzibar</td>
-      <td>61.252686</td>
-      <td>51.37</td>
-      <td>12.95</td>
-      <td>NaN</td>
-      <td>NaN</td>
-    </tr>
-    <tr>
-      <th>3940</th>
-      <td>2021</td>
-      <td>Zanzibar</td>
-      <td>61.252686</td>
-      <td>51.37</td>
-      <td>12.95</td>
       <td>NaN</td>
       <td>NaN</td>
     </tr>

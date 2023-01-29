@@ -31,6 +31,7 @@ website:
           - test_pages/test_passing_r_to_python.qmd
           - test_pages/test_with_shinylive.qmd
           - test_pages/test_with_iframe_shiny.qmd
+          - test_pages/test_with_ipywidgets.qmd
       
 
 format:

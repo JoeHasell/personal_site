@@ -1,0 +1,27 @@
+---
+title: Ipywidgets in Quarto example
+format: html
+
+---
+
+```{python}
+import pandas as pd
+import ipywidgets as widgets
+from ipywidgets import interact, interact_manual
+```
+Read in some data
+
+```{python}
+
+df = pd.read_csv("pip_dataset (2).csv")
+```
+
+
+
+```{python}
+
+@interact
+def show_ppp_version(version=2011):
+    return df.loc[df["ppp_version"] == version]
+
+```
