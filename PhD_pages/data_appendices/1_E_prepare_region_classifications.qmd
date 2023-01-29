@@ -11,10 +11,7 @@ warning: false
 ::: {.callout-note collapse="true" appearance="minimal"}
 ### Packages and settings
 ```{python}
-from owid import catalog
 import pandas as pd
-
-
 pd.set_option('display.max_rows', None)
 ```
 :::

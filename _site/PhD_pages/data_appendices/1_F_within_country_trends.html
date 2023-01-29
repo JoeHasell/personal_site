@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Joe Hasell - Appendix 1.F: Analysing global trends in within-country inequality</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<meta name="shinylive:serviceworker_dir" content="../..">
+<script src="../../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/load-shinylive-sw.js" type="module"></script>
+<script src="../../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/run-python-blocks.js" type="module"></script>
+<link href="../../site_libs/quarto-contrib/shinylive-0.0.11/shinylive/shinylive.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/shinylive-quarto-css/shinylive-quarto.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Appendix 1.F: Analysing global trends in within-country inequality</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Joe Hasell</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Papers</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/paper_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/paper_pages/paper1.html" class="sidebar-item-text sidebar-link">Paper 1: Triangulating trends in inequality around the world from secondary databases</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/paper_pages/paper3.html" class="sidebar-item-text sidebar-link">Paper 3: Housing and the capital share of income</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  PhD_pages/paper_pages/test_page.qmd
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Data appendices</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  PhD_pages/data_appendices/1_A_prepare_PIP_and_WID.qmd
+  </li>
+          <li class="sidebar-item">
+  PhD_pages/data_appendices/1_B_within_country_trends.qmd
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link">Appendix 3.A: Preparing EU KLEMS industry data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/data_appendices/3_B_prepare_OECD.html" class="sidebar-item-text sidebar-link">Appendix 3.B: Preparing OECD industry data</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Presentations</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.html" class="sidebar-item-text sidebar-link">From $1.90 to $2.15: the updated International Poverty Line</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  test_pages/test_passing_r_to_python.qmd
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_shinylive.html" class="sidebar-item-text sidebar-link">Shinylive in Quarto example</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_iframe_shiny.html" class="sidebar-item-text sidebar-link">A test notebook with Shiny app mbedded as an iframe</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#explore-the-data" id="toc-explore-the-data" class="nav-link active" data-scroll-target="#explore-the-data">Explore the data</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Appendix 1.F: Analysing global trends in within-country inequality</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This first block of code…..</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------------------------------</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------- SECTION 1: Data prep functions -------------</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ----------------------------------</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  Function get matching for ref years</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> closest_to_reference(df, reference_val, max_dist_from_ref, reference_col, group_by_col, value_col, tie_break):</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df.loc[:, [reference_col, group_by_col, value_col]]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop NAs</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df.dropna()</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate absolute distance from reference value</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  df[<span class="st">'ref_diff'</span>] <span class="op">=</span> <span class="bu">abs</span>(df[reference_col] <span class="op">-</span> reference_val)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop any rows with a distance beyond threshold</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> pd.isna(max_dist_from_ref):</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df.loc[df[<span class="st">'ref_diff'</span>] <span class="op">&lt;=</span> max_dist_from_ref]</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Keep closest observation to reference value – including tie-breaks (where there is a match above and below the ref value)</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df[df.groupby(group_by_col)[<span class="st">'ref_diff'</span>].transform(<span class="st">'min'</span>) <span class="op">==</span> df[<span class="st">'ref_diff'</span>]].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Settle tie-breaks</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> tie_break <span class="op">==</span> <span class="st">'below'</span>:</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(group_by_col)[reference_col].transform(<span class="st">'min'</span>) <span class="op">==</span> df[reference_col]].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="cf">elif</span> tie_break <span class="op">==</span> <span class="st">'above'</span>:</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> df[df.groupby(group_by_col)[reference_col].transform(<span class="st">'max'</span>) <span class="op">==</span> df[reference_col]].reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df.drop(<span class="st">'ref_diff'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  df <span class="op">=</span> df<span class="op">\</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{value_col: <span class="st">"value"</span>})</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> df</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge matches for different reference points</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge_two_ref_matches(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure the pair of reference values are in ascending order</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  reference_vals.sort()</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Maximise distance between two refs by settling tie-breaks below the lowest ref and above the highest ref </span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Find matches for lower reference value</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  lower_ref_matches <span class="op">=</span> closest_to_reference(df, reference_vals[<span class="dv">0</span>], max_dist_from_refs, reference_col, group_by_col, value_col, <span class="st">'below'</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Find matches for higher reference value</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>  higher_ref_matches <span class="op">=</span> closest_to_reference(df, reference_vals[<span class="dv">1</span>], max_dist_from_refs, reference_col, group_by_col, value_col, <span class="st">'above'</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the two sets of matches</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>  merged_df <span class="op">=</span> pd.merge(lower_ref_matches, higher_ref_matches, on<span class="op">=</span>group_by_col, suffixes<span class="op">=</span>(reference_vals[<span class="dv">0</span>], reference_vals[<span class="dv">1</span>]))</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop obs that do not have data for both ref values</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>  merged_df <span class="op">=</span> merged_df.dropna()</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop obs where the matched data does not meet the min distance requirement</span></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> pd.isna(min_dist_between):</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the names of the reference column returned from the two matches</span></span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    ref_var_high <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    ref_var_low <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Keep only rows &gt;= to the min distance</span></span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    merged_df <span class="op">=</span> merged_df.loc[(merged_df[ref_var_high] <span class="op">-</span> merged_df[ref_var_low]) <span class="op">&gt;=</span> min_dist_between, :]</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> merged_df</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>  <span class="co"># For PIP run this three times – first filtering data for just consumpion only, then with income only, then with a dataset that prefers income over consumption</span></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pip_welfare_routine(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Specify the name of the column in which the income/consumption welfare definition is stored</span></span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    welfare_colname <span class="op">=</span> <span class="st">'welfare_type'</span></span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Creat dataframes for thee scenarios:</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scenario 1: only allow income data</span></span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    df_inc_filter <span class="op">=</span> df.loc[df[welfare_colname] <span class="op">==</span> <span class="st">"income"</span>, :]</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>    df_inc_filter.name <span class="op">=</span> <span class="st">"Income"</span></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scenario 2: only allow consumption data</span></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    df_cons_filter <span class="op">=</span> df.loc[df[welfare_colname] <span class="op">==</span> <span class="st">"consumption"</span>, :]</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    df_cons_filter.name <span class="op">=</span> <span class="st">"Consumption"</span></span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Scenario 3: allow a mix – dropping consumption data where income data is available in the same year</span></span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>    df_mixed <span class="op">=</span> df.copy()</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    df_mixed[<span class="st">'welfare_count'</span>] <span class="op">=</span> df_mixed.groupby([reference_col, group_by_col])[welfare_colname].transform(<span class="st">'count'</span>)</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>    df_mixed <span class="op">=</span> df_mixed.loc[(df_mixed[<span class="st">'welfare_count'</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">|</span> (df_mixed[welfare_colname] <span class="op">==</span> <span class="st">"income"</span>)]</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    df_mixed.name <span class="op">=</span> <span class="st">"Mixed"</span></span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Store the scneario dataframes in a list</span></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>    df_scenarios <span class="op">=</span> [df_inc_filter, df_cons_filter, df_mixed]</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Run the matching function on each scenario</span></span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>    scenario_matches <span class="op">=</span> [merge_two_ref_matches(</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a>      df_scenario, </span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>      reference_vals, </span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>      max_dist_from_refs, </span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a>      min_dist_between, </span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>      reference_col, </span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>      group_by_col, </span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a>      value_col) <span class="cf">for</span> df_scenario <span class="kw">in</span> df_scenarios]</span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Combine the first two scenarios.</span></span>
+<span id="cb2-113"><a href="#cb2-113" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> pd.concat([scenario_matches[<span class="dv">0</span>], scenario_matches[<span class="dv">1</span>]], keys<span class="op">=</span>[df_scenarios[<span class="dv">0</span>].name, df_scenarios[<span class="dv">1</span>].name])</span>
+<span id="cb2-114"><a href="#cb2-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-115"><a href="#cb2-115" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tidy up indexes</span></span>
+<span id="cb2-116"><a href="#cb2-116" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> df_combined_matches.reset_index()</span>
+<span id="cb2-117"><a href="#cb2-117" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-118"><a href="#cb2-118" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> df_combined_matches.drop(<span class="st">'level_1'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-119"><a href="#cb2-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-120"><a href="#cb2-120" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> df_combined_matches<span class="op">\</span></span>
+<span id="cb2-121"><a href="#cb2-121" aria-hidden="true" tabindex="-1"></a>      .rename(columns<span class="op">=</span>{<span class="st">"level_0"</span>: <span class="st">"pip_welfare"</span>})</span>
+<span id="cb2-122"><a href="#cb2-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-123"><a href="#cb2-123" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add in third scenario.</span></span>
+<span id="cb2-124"><a href="#cb2-124" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> pd.concat([df_combined_matches, scenario_matches[<span class="dv">2</span>]])</span>
+<span id="cb2-125"><a href="#cb2-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-126"><a href="#cb2-126" aria-hidden="true" tabindex="-1"></a>    <span class="co"># add scenario name to te pip_welfare column</span></span>
+<span id="cb2-127"><a href="#cb2-127" aria-hidden="true" tabindex="-1"></a>    df_combined_matches[<span class="st">'pip_welfare'</span>] <span class="op">=</span> df_combined_matches[<span class="st">'pip_welfare'</span>].fillna(df_scenarios[<span class="dv">2</span>].name)</span>
+<span id="cb2-128"><a href="#cb2-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-129"><a href="#cb2-129" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Keep only one match per group (e.g. per Country) - in the priority laid out in the df_scenarios list above (income only -&gt; consumption only -&gt; mixed)</span></span>
+<span id="cb2-130"><a href="#cb2-130" aria-hidden="true" tabindex="-1"></a>      <span class="co"># First count the matches</span></span>
+<span id="cb2-131"><a href="#cb2-131" aria-hidden="true" tabindex="-1"></a>    df_combined_matches[<span class="st">'match_count'</span>] <span class="op">=</span> df_combined_matches.groupby(group_by_col)[<span class="st">'pip_welfare'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb2-132"><a href="#cb2-132" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Then drop any matches from the lowest priority where there are multiple matches</span></span>
+<span id="cb2-133"><a href="#cb2-133" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> df_combined_matches.loc[(df_combined_matches[<span class="st">'match_count'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">|</span> <span class="op">~</span>(df_combined_matches[<span class="st">'pip_welfare'</span>]<span class="op">==</span>df_scenarios[<span class="dv">2</span>].name)]</span>
+<span id="cb2-134"><a href="#cb2-134" aria-hidden="true" tabindex="-1"></a>      <span class="co">#  Repeat at the next level of priority</span></span>
+<span id="cb2-135"><a href="#cb2-135" aria-hidden="true" tabindex="-1"></a>    df_combined_matches[<span class="st">'match_count'</span>] <span class="op">=</span> df_combined_matches.groupby(group_by_col)[<span class="st">'pip_welfare'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb2-136"><a href="#cb2-136" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> df_combined_matches.loc[(df_combined_matches[<span class="st">'match_count'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">|</span> <span class="op">~</span>(df_combined_matches[<span class="st">'pip_welfare'</span>]<span class="op">==</span>df_scenarios[<span class="dv">1</span>].name)]</span>
+<span id="cb2-137"><a href="#cb2-137" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-138"><a href="#cb2-138" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop the match count column</span></span>
+<span id="cb2-139"><a href="#cb2-139" aria-hidden="true" tabindex="-1"></a>    df_combined_matches <span class="op">=</span> df_combined_matches.drop(<span class="st">'match_count'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb2-140"><a href="#cb2-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-141"><a href="#cb2-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-142"><a href="#cb2-142" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_combined_matches</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This second block of code we read in the data (this needs to be done in a different way in the shiny app…)</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------------------------------</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------- SECTION 2: Read in data -------------</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ----------------------------------</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/pip.csv'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df_pip <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/wid.csv'</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>df_wid <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/region_mapping.csv'</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>df_regions <span class="op">=</span> pd.read_csv(url)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/population.csv'</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>df_pop <span class="op">=</span> pd.read_csv(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In a third block, we set specifications for the data matching. This is different in the app because some parameters are controlled by the app.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------------------------------</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------- SECTION 3: Specifications -------------</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ----------------------------------</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># These parameters are not controlled in the app.</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>reference_col <span class="op">=</span> <span class="st">'Year'</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>group_by_col <span class="op">=</span> <span class="st">'Entity'</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>tolerance <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>outlier_cut_off_upper <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>source_count_requirement <span class="op">=</span> <span class="st">"all"</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># source_count_requirement = "any"</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>reference_vals <span class="op">=</span> [<span class="dv">1990</span>,<span class="dv">2018</span>]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>max_dist_from_refs <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>min_dist_between <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {<span class="st">"PIP"</span>: df_pip,</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        <span class="st">"WID"</span>: df_wid}</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>data_to_match <span class="op">=</span> {</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"sources"</span>: [<span class="st">"PIP"</span>, <span class="st">"WID"</span>, <span class="st">"PIP"</span>],</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"var_names"</span>: [<span class="st">"Gini"</span>, <span class="st">"Top_10_share"</span>, <span class="st">"Top_10_share"</span>]</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>  }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In this code block we run the code and prepare final plots and tables.</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------------------------------</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#  ---------- SECTION 4: Run data functions and produce plot -------------</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  ----------------------------------</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine the source and varname strings element-wise to produce keys that will be used for the concat later</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>source_var_keys <span class="op">=</span> [i <span class="op">+</span> j <span class="cf">for</span> i, j <span class="kw">in</span> <span class="bu">zip</span>(data_to_match[<span class="st">"sources"</span>], data_to_match[<span class="st">"var_names"</span>])]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prep_and_merge_multiple_vars(data_to_match, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  matches <span class="op">=</span> []</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(data_to_match[<span class="st">'sources'</span>])):</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    source <span class="op">=</span> data_to_match[<span class="st">"sources"</span>][i]</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    var <span class="op">=</span> data_to_match[<span class="st">"var_names"</span>][i]</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(i)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(source)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(var)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> data[source]</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> source <span class="op">==</span> <span class="st">"PIP"</span>:</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      matched <span class="op">=</span> pip_welfare_routine(</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>          df <span class="op">=</span> df,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>          reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>          max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>          min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>          reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>          group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>          value_col <span class="op">=</span> var</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>      matched <span class="op">=</span> merge_two_ref_matches(</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>          df <span class="op">=</span> df,</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>          reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>          max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>          min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>          reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>          group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>          value_col <span class="op">=</span> var</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    matches.append(matched)</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  ref_matches <span class="op">=</span> pd.concat(matches, keys<span class="op">=</span>source_var_keys)</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tidy up indexes</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>  ref_matches <span class="op">=</span> ref_matches.reset_index()</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>  ref_matches <span class="op">=</span> ref_matches.drop(<span class="st">'level_1'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>  ref_matches <span class="op">=</span> ref_matches<span class="op">\</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">"level_0"</span>: <span class="st">"source_var"</span>})</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> ref_matches</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prep_plot_and_tables(</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>  data_to_match,</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>  reference_vals, </span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>  max_dist_from_refs,</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>  min_dist_between,</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a>  reference_col,</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>  group_by_col,</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>  tolerance,</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>  outlier_cut_off_upper,</span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>  source_count_requirement):</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Other spec:</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>  region_col <span class="op">=</span> <span class="st">'region_alt'</span></span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ---- Prep data ---------</span></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> prep_and_merge_multiple_vars(</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    data_to_match <span class="op">=</span> data_to_match,</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    reference_vals <span class="op">=</span> reference_vals, </span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>    min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>    reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    group_by_col <span class="op">=</span> group_by_col</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the names of the columns to be used onthe X and Y axis</span></span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>  x_axis <span class="op">=</span> <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>  y_axis <span class="op">=</span> <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>  x_ref_val <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>  y_ref_val <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Apply outlier cut off, if specified</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> pd.isna(outlier_cut_off_upper):</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="op">=</span> plot_data.loc[plot_data[x_axis] <span class="op">&lt;=</span> outlier_cut_off_upper]</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="op">=</span> plot_data.loc[plot_data[y_axis] <span class="op">&lt;=</span> outlier_cut_off_upper]</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add a count by country – counting whether data is available from each source or not</span></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>  plot_data[<span class="st">'source_count'</span>] <span class="op">=</span> plot_data.groupby(group_by_col)[<span class="st">'source_var'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Apply source requirement (whether to include only observations with data from all sources)</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> source_count_requirement <span class="op">==</span> <span class="st">"all"</span>:</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>    plot_data <span class="op">=</span> plot_data.loc[plot_data[<span class="st">'source_count'</span>] <span class="op">==</span> plot_data[<span class="st">'source_count'</span>].<span class="bu">max</span>()]</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop source_count column</span></span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> plot_data.drop(<span class="st">'source_count'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add in region classification</span></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> pd.merge(plot_data, df_regions, how <span class="op">=</span> <span class="st">'left'</span>)</span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add in population data</span></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For first ref</span></span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a>  df_pop_ref <span class="op">=</span> df_pop.loc[df_pop[<span class="st">'Year'</span>] <span class="op">==</span> reference_vals[<span class="dv">0</span>], [<span class="st">'Entity'</span>, <span class="st">'population'</span>] ]</span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> pd.merge(plot_data, df_pop_ref, how <span class="op">=</span> <span class="st">'left'</span>)</span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> plot_data.rename(columns<span class="op">=</span>{<span class="st">'population'</span>:<span class="st">'population_ref1'</span>})</span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For second ref</span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>  df_pop_ref <span class="op">=</span> df_pop.loc[df_pop[<span class="st">'Year'</span>] <span class="op">==</span> reference_vals[<span class="dv">1</span>], [<span class="st">'Entity'</span>, <span class="st">'population'</span>] ]</span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> pd.merge(plot_data, df_pop_ref, how <span class="op">=</span> <span class="st">'left'</span>)</span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>  plot_data <span class="op">=</span> plot_data.rename(columns<span class="op">=</span>{<span class="st">'population'</span>:<span class="st">'population_ref2'</span>})</span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate average population two reference periods</span></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a>  plot_data[<span class="st">'avg_pop'</span>] <span class="op">=</span> (plot_data[<span class="st">'population_ref1'</span>] <span class="op">+</span> plot_data[<span class="st">'population_ref2'</span>])<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-138"><a href="#cb5-138" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ----- Prep plot ------</span></span>
+<span id="cb5-139"><a href="#cb5-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-140"><a href="#cb5-140" aria-hidden="true" tabindex="-1"></a>  <span class="co"># I grab what I am guessing to be the max and min tick marks on the x axist, in order to define the coordinates of a 'tolerance' ribbon.</span></span>
+<span id="cb5-141"><a href="#cb5-141" aria-hidden="true" tabindex="-1"></a>  x_min <span class="op">=</span> plot_data[x_axis].<span class="bu">min</span>()</span>
+<span id="cb5-142"><a href="#cb5-142" aria-hidden="true" tabindex="-1"></a>  x_min_floor <span class="op">=</span> np.floor(x_min <span class="op">*</span> <span class="dv">10</span>) <span class="op">/</span> <span class="dv">10</span></span>
+<span id="cb5-143"><a href="#cb5-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-144"><a href="#cb5-144" aria-hidden="true" tabindex="-1"></a>  x_max <span class="op">=</span> plot_data[x_axis].<span class="bu">max</span>()</span>
+<span id="cb5-145"><a href="#cb5-145" aria-hidden="true" tabindex="-1"></a>  x_max_ceiling <span class="op">=</span> np.ceil(x_max <span class="op">*</span> <span class="dv">10</span>) <span class="op">/</span> <span class="dv">10</span></span>
+<span id="cb5-146"><a href="#cb5-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-147"><a href="#cb5-147" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Set the coordinates of the shaded ribbon</span></span>
+<span id="cb5-148"><a href="#cb5-148" aria-hidden="true" tabindex="-1"></a>  shaded_coord <span class="op">=</span> pd.DataFrame({<span class="st">'x'</span>: [x_min_floor, x_max_ceiling, x_max_ceiling, x_min_floor], </span>
+<span id="cb5-149"><a href="#cb5-149" aria-hidden="true" tabindex="-1"></a>    <span class="st">'y'</span>: [x_min_floor<span class="op">-</span>tolerance, x_max_ceiling<span class="op">-</span>tolerance, x_max_ceiling<span class="op">+</span>tolerance , x_min_floor<span class="op">+</span>tolerance]})</span>
+<span id="cb5-150"><a href="#cb5-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-151"><a href="#cb5-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-152"><a href="#cb5-152" aria-hidden="true" tabindex="-1"></a>  plot <span class="op">=</span> (ggplot(plot_data</span>
+<span id="cb5-153"><a href="#cb5-153" aria-hidden="true" tabindex="-1"></a>  , aes(x_axis, y_axis, alpha<span class="op">=</span><span class="fl">0.5</span>))</span>
+<span id="cb5-154"><a href="#cb5-154" aria-hidden="true" tabindex="-1"></a>  <span class="op">+</span> geom_point(aes(color<span class="op">=</span>region_col, size<span class="op">=</span><span class="st">'avg_pop'</span>, alpha <span class="op">=</span> <span class="fl">0.6</span>))</span>
+<span id="cb5-155"><a href="#cb5-155" aria-hidden="true" tabindex="-1"></a>  <span class="op">+</span> facet_wrap(<span class="st">'~ source_var'</span>)</span>
+<span id="cb5-156"><a href="#cb5-156" aria-hidden="true" tabindex="-1"></a>  <span class="op">+</span> geom_polygon(aes(x<span class="op">=</span><span class="st">'x'</span>, y<span class="op">=</span><span class="st">'y'</span>, alpha <span class="op">=</span> <span class="fl">0.2</span>), data<span class="op">=</span>shaded_coord)</span>
+<span id="cb5-157"><a href="#cb5-157" aria-hidden="true" tabindex="-1"></a>  <span class="op">+</span> theme_light()</span>
+<span id="cb5-158"><a href="#cb5-158" aria-hidden="true" tabindex="-1"></a>  <span class="op">+</span> theme(legend_position<span class="op">=</span><span class="st">'none'</span>)</span>
+<span id="cb5-159"><a href="#cb5-159" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-160"><a href="#cb5-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-161"><a href="#cb5-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-162"><a href="#cb5-162" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ---- Prep summary table ----</span></span>
+<span id="cb5-163"><a href="#cb5-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-164"><a href="#cb5-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-165"><a href="#cb5-165" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Calculate the change between the two ref periods</span></span>
+<span id="cb5-166"><a href="#cb5-166" aria-hidden="true" tabindex="-1"></a>  plot_data[<span class="st">'change'</span>] <span class="op">=</span> (plot_data[y_axis] <span class="op">-</span> plot_data[x_axis])</span>
+<span id="cb5-167"><a href="#cb5-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-168"><a href="#cb5-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-169"><a href="#cb5-169" aria-hidden="true" tabindex="-1"></a>  group_yes_vars <span class="op">=</span> [<span class="st">'source_var'</span>, region_col]</span>
+<span id="cb5-170"><a href="#cb5-170" aria-hidden="true" tabindex="-1"></a>  group_no_vars <span class="op">=</span> [<span class="st">'source_var'</span>]</span>
+<span id="cb5-171"><a href="#cb5-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-172"><a href="#cb5-172" aria-hidden="true" tabindex="-1"></a>  group_scenarios <span class="op">=</span> [group_no_vars, group_yes_vars] </span>
+<span id="cb5-173"><a href="#cb5-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-174"><a href="#cb5-174" aria-hidden="true" tabindex="-1"></a>  aggs <span class="op">=</span> []</span>
+<span id="cb5-175"><a href="#cb5-175" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-176"><a href="#cb5-176" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> group_vars <span class="kw">in</span> group_scenarios:</span>
+<span id="cb5-177"><a href="#cb5-177" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-178"><a href="#cb5-178" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prepare pop-weighted average change</span></span>
+<span id="cb5-179"><a href="#cb5-179" aria-hidden="true" tabindex="-1"></a>    agg_level <span class="op">=</span> plot_data.copy()</span>
+<span id="cb5-180"><a href="#cb5-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-181"><a href="#cb5-181" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calulate pop weights by source and region</span></span>
+<span id="cb5-182"><a href="#cb5-182" aria-hidden="true" tabindex="-1"></a>    agg_level[<span class="st">'regional_pop_weights'</span>] <span class="op">=</span> agg_level.groupby(group_vars)[<span class="st">'avg_pop'</span>].transform(<span class="kw">lambda</span> x: x<span class="op">/</span>x.<span class="bu">sum</span>()) </span>
+<span id="cb5-183"><a href="#cb5-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-184"><a href="#cb5-184" aria-hidden="true" tabindex="-1"></a>    agg_level[<span class="st">'global_pop_weights'</span>] <span class="op">=</span> agg_level.groupby(<span class="st">'source_var'</span>)[<span class="st">'avg_pop'</span>].transform(<span class="kw">lambda</span> x: x<span class="op">/</span>x.<span class="bu">sum</span>()) </span>
+<span id="cb5-185"><a href="#cb5-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-186"><a href="#cb5-186" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Multiply the change by the pop weights </span></span>
+<span id="cb5-187"><a href="#cb5-187" aria-hidden="true" tabindex="-1"></a>    agg_level[<span class="st">'region_weighted_change'</span>] <span class="op">=</span> agg_level[<span class="st">'change'</span>] <span class="op">*</span> agg_level[<span class="st">'regional_pop_weights'</span>]</span>
+<span id="cb5-188"><a href="#cb5-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-189"><a href="#cb5-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-190"><a href="#cb5-190" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Prepare fall/stable/rise categories</span></span>
+<span id="cb5-191"><a href="#cb5-191" aria-hidden="true" tabindex="-1"></a>    agg_level[<span class="st">'fall'</span>] <span class="op">=</span> agg_level[<span class="st">'change'</span>] <span class="op">&lt;</span> <span class="op">-</span>tolerance</span>
+<span id="cb5-192"><a href="#cb5-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-193"><a href="#cb5-193" aria-hidden="true" tabindex="-1"></a>    agg_level[<span class="st">'stable'</span>] <span class="op">=</span> (agg_level[<span class="st">'change'</span>] <span class="op">&lt;=</span> tolerance) <span class="op">&amp;</span> (agg_level[<span class="st">'change'</span>] <span class="op">&gt;=</span> <span class="op">-</span>tolerance)</span>
+<span id="cb5-194"><a href="#cb5-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-195"><a href="#cb5-195" aria-hidden="true" tabindex="-1"></a>    agg_level[<span class="st">'rise'</span>] <span class="op">=</span> agg_level[<span class="st">'change'</span>] <span class="op">&gt;</span> tolerance</span>
+<span id="cb5-196"><a href="#cb5-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-197"><a href="#cb5-197" aria-hidden="true" tabindex="-1"></a>    agg_level[[<span class="st">'fall'</span>, <span class="st">'stable'</span>, <span class="st">'rise'</span>]] <span class="op">=</span> agg_level[[<span class="st">'fall'</span>, <span class="st">'stable'</span>, <span class="st">'rise'</span>]].astype(<span class="bu">int</span>)</span>
+<span id="cb5-198"><a href="#cb5-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-199"><a href="#cb5-199" aria-hidden="true" tabindex="-1"></a>    agg_level <span class="op">=</span> agg_level.groupby(group_vars)[[<span class="st">'change'</span>, <span class="st">'region_weighted_change'</span>, <span class="st">'global_pop_weights'</span>, <span class="st">'fall'</span>, <span class="st">'stable'</span>, <span class="st">'rise'</span>]]<span class="op">\</span></span>
+<span id="cb5-200"><a href="#cb5-200" aria-hidden="true" tabindex="-1"></a>      .agg([<span class="st">'sum'</span>, <span class="st">'mean'</span>, <span class="st">'count'</span>])</span>
+<span id="cb5-201"><a href="#cb5-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-202"><a href="#cb5-202" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Aggregate by source and region</span></span>
+<span id="cb5-203"><a href="#cb5-203" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> group_vars <span class="op">==</span> group_yes_vars:</span>
+<span id="cb5-204"><a href="#cb5-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-205"><a href="#cb5-205" aria-hidden="true" tabindex="-1"></a>      agg_level <span class="op">=</span> agg_level<span class="op">\</span></span>
+<span id="cb5-206"><a href="#cb5-206" aria-hidden="true" tabindex="-1"></a>        .unstack().T.reset_index()</span>
+<span id="cb5-207"><a href="#cb5-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-208"><a href="#cb5-208" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> group_vars <span class="op">==</span> group_no_vars: </span>
+<span id="cb5-209"><a href="#cb5-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-210"><a href="#cb5-210" aria-hidden="true" tabindex="-1"></a>      agg_level <span class="op">=</span> agg_level<span class="op">\</span></span>
+<span id="cb5-211"><a href="#cb5-211" aria-hidden="true" tabindex="-1"></a>        .T.reset_index()</span>
+<span id="cb5-212"><a href="#cb5-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-213"><a href="#cb5-213" aria-hidden="true" tabindex="-1"></a>      agg_level[region_col] <span class="op">=</span> <span class="st">"World"</span></span>
+<span id="cb5-214"><a href="#cb5-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-215"><a href="#cb5-215" aria-hidden="true" tabindex="-1"></a>    aggs.append(agg_level) </span>
+<span id="cb5-216"><a href="#cb5-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-217"><a href="#cb5-217" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-218"><a href="#cb5-218" aria-hidden="true" tabindex="-1"></a>  df_summary <span class="op">=</span> pd.concat(aggs)</span>
+<span id="cb5-219"><a href="#cb5-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-220"><a href="#cb5-220" aria-hidden="true" tabindex="-1"></a>    <span class="co"># filter for the aggregations we need and label in the 'summary' column</span></span>
+<span id="cb5-221"><a href="#cb5-221" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'change'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'mean'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'avg change'</span></span>
+<span id="cb5-222"><a href="#cb5-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-223"><a href="#cb5-223" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'region_weighted_change'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'sum'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'Regional pop-weighted avg change'</span></span>
+<span id="cb5-224"><a href="#cb5-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-225"><a href="#cb5-225" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'global_pop_weights'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'sum'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'Global pop weights'</span></span>
+<span id="cb5-226"><a href="#cb5-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-227"><a href="#cb5-227" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'change'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'count'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'n'</span></span>
+<span id="cb5-228"><a href="#cb5-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-229"><a href="#cb5-229" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'fall'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'sum'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'fall'</span></span>
+<span id="cb5-230"><a href="#cb5-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-231"><a href="#cb5-231" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'stable'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'sum'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'stable'</span></span>
+<span id="cb5-232"><a href="#cb5-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-233"><a href="#cb5-233" aria-hidden="true" tabindex="-1"></a>  df_summary.loc[(df_summary[<span class="st">'level_0'</span>] <span class="op">==</span> <span class="st">'rise'</span>) <span class="op">&amp;</span> (df_summary[<span class="st">'level_1'</span>] <span class="op">==</span> <span class="st">'sum'</span>), <span class="st">'summary'</span>] <span class="op">=</span> <span class="st">'rise'</span></span>
+<span id="cb5-234"><a href="#cb5-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-235"><a href="#cb5-235" aria-hidden="true" tabindex="-1"></a>  df_summary <span class="op">=</span> df_summary[df_summary[<span class="st">'summary'</span>].notnull()]</span>
+<span id="cb5-236"><a href="#cb5-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-237"><a href="#cb5-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-238"><a href="#cb5-238" aria-hidden="true" tabindex="-1"></a>  df_summary <span class="op">=</span> df_summary.drop([<span class="st">'level_0'</span>, <span class="st">'level_1'</span>], axis <span class="op">=</span> <span class="dv">1</span>)</span>
+<span id="cb5-239"><a href="#cb5-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-240"><a href="#cb5-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-241"><a href="#cb5-241" aria-hidden="true" tabindex="-1"></a>  df_summary[<span class="st">'summary'</span>] <span class="op">=</span> pd.Categorical(df_summary[<span class="st">'summary'</span>], categories<span class="op">=</span>[<span class="st">'fall'</span>, <span class="st">'stable'</span>, <span class="st">'rise'</span>,<span class="st">'n'</span>, <span class="st">'avg change'</span>, <span class="st">'Regional pop-weighted avg change'</span>, <span class="st">'Global pop weights'</span>], ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-242"><a href="#cb5-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-243"><a href="#cb5-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-244"><a href="#cb5-244" aria-hidden="true" tabindex="-1"></a>  df_summary <span class="op">=</span> df_summary.sort_values([region_col,<span class="st">'summary'</span>]).set_index([region_col,<span class="st">'summary'</span>])</span>
+<span id="cb5-245"><a href="#cb5-245" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-246"><a href="#cb5-246" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-247"><a href="#cb5-247" aria-hidden="true" tabindex="-1"></a>  <span class="co"># format to show appropriate d.p. I run a loop over each row for want of figuring out a better way!</span></span>
+<span id="cb5-248"><a href="#cb5-248" aria-hidden="true" tabindex="-1"></a>  repeat_length <span class="op">=</span> <span class="dv">7</span></span>
+<span id="cb5-249"><a href="#cb5-249" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, <span class="bu">len</span>(df_summary.index.levels[<span class="dv">0</span>].unique())):</span>
+<span id="cb5-250"><a href="#cb5-250" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.0f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-251"><a href="#cb5-251" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[<span class="dv">1</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[<span class="dv">1</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.0f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-252"><a href="#cb5-252" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[<span class="dv">2</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[<span class="dv">2</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.0f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-253"><a href="#cb5-253" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[<span class="dv">3</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[<span class="dv">3</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.0f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-254"><a href="#cb5-254" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[<span class="dv">4</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[<span class="dv">4</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-255"><a href="#cb5-255" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[<span class="dv">5</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[<span class="dv">5</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-256"><a href="#cb5-256" aria-hidden="true" tabindex="-1"></a>    df_summary.iloc[<span class="dv">6</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:] <span class="op">=</span> df_summary.iloc[<span class="dv">6</span> <span class="op">+</span> i<span class="op">*</span>repeat_length,:].<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb5-257"><a href="#cb5-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-258"><a href="#cb5-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-259"><a href="#cb5-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-260"><a href="#cb5-260" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ----- Return outputs ------</span></span>
+<span id="cb5-261"><a href="#cb5-261" aria-hidden="true" tabindex="-1"></a>  plot_and_tables <span class="op">=</span> {</span>
+<span id="cb5-262"><a href="#cb5-262" aria-hidden="true" tabindex="-1"></a>    <span class="st">"table_data"</span>: plot_data,</span>
+<span id="cb5-263"><a href="#cb5-263" aria-hidden="true" tabindex="-1"></a>    <span class="st">"plot"</span>: plot,</span>
+<span id="cb5-264"><a href="#cb5-264" aria-hidden="true" tabindex="-1"></a>    <span class="st">"summary"</span>: df_summary</span>
+<span id="cb5-265"><a href="#cb5-265" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-266"><a href="#cb5-266" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-267"><a href="#cb5-267" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> plot_and_tables</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plot_and_tables <span class="op">=</span> prep_plot_and_tables(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    data_to_match <span class="op">=</span> data_to_match,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    reference_vals <span class="op">=</span> reference_vals, </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    tolerance <span class="op">=</span> tolerance,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    outlier_cut_off_upper <span class="op">=</span> outlier_cut_off_upper,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    source_count_requirement <span class="op">=</span> source_count_requirement</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plot <span class="op">=</span> plot_and_tables[<span class="st">'plot'</span>]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> plot_and_tables[<span class="st">'summary'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0
+PIP
+Gini
+1
+WID
+Top_10_share
+2
+PIP
+Top_10_share</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="1_F_within_country_trends_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>&lt;ggplot: (379618301)&gt;</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>summary</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>source_var</th>
+      <th>PIPGini</th>
+      <th>PIPTop_10_share</th>
+      <th>WIDTop_10_share</th>
+    </tr>
+    <tr>
+      <th>region_alt</th>
+      <th>summary</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="7" valign="top">East Asia</th>
+      <th>fall</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>3.89</td>
+      <td>2.29</td>
+      <td>11.02</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>6.19</td>
+      <td>3.59</td>
+      <td>10.95</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.35</td>
+      <td>0.35</td>
+      <td>0.35</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">Eastern Europe &amp; Central Asia</th>
+      <th>fall</th>
+      <td>4</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>0</td>
+      <td>4</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>10</td>
+      <td>7</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>14</td>
+      <td>14</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>1.87</td>
+      <td>0.53</td>
+      <td>10.02</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>-3.75</td>
+      <td>-2.97</td>
+      <td>13.15</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.09</td>
+      <td>0.09</td>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">MENA</th>
+      <th>fall</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>5</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>-1.60</td>
+      <td>-1.55</td>
+      <td>-2.63</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>-1.34</td>
+      <td>-1.18</td>
+      <td>-2.21</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.06</td>
+      <td>0.06</td>
+      <td>0.06</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">North America &amp; Oceania</th>
+      <th>fall</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>3</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>2.28</td>
+      <td>2.31</td>
+      <td>6.17</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>3.13</td>
+      <td>3.03</td>
+      <td>6.86</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.09</td>
+      <td>0.09</td>
+      <td>0.09</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">South &amp; South-East Asia</th>
+      <th>fall</th>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>4</td>
+      <td>4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>9</td>
+      <td>9</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>-0.14</td>
+      <td>-0.69</td>
+      <td>-1.55</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>0.48</td>
+      <td>-0.20</td>
+      <td>-1.74</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.22</td>
+      <td>0.22</td>
+      <td>0.22</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">Sub-Saharan Africa</th>
+      <th>fall</th>
+      <td>8</td>
+      <td>7</td>
+      <td>9</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>2</td>
+      <td>2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>4</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>14</td>
+      <td>14</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>-3.76</td>
+      <td>-2.90</td>
+      <td>-3.45</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>-4.28</td>
+      <td>-2.02</td>
+      <td>-0.61</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.11</td>
+      <td>0.11</td>
+      <td>0.11</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">Western Europe</th>
+      <th>fall</th>
+      <td>2</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>8</td>
+      <td>8</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>13</td>
+      <td>13</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>1.63</td>
+      <td>1.17</td>
+      <td>3.26</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>1.00</td>
+      <td>1.03</td>
+      <td>2.23</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>0.08</td>
+      <td>0.08</td>
+      <td>0.08</td>
+    </tr>
+    <tr>
+      <th rowspan="7" valign="top">World</th>
+      <th>fall</th>
+      <td>21</td>
+      <td>20</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>stable</th>
+      <td>7</td>
+      <td>12</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>rise</th>
+      <td>32</td>
+      <td>28</td>
+      <td>37</td>
+    </tr>
+    <tr>
+      <th>n</th>
+      <td>60</td>
+      <td>60</td>
+      <td>60</td>
+    </tr>
+    <tr>
+      <th>avg change</th>
+      <td>0.00</td>
+      <td>-0.34</td>
+      <td>2.46</td>
+    </tr>
+    <tr>
+      <th>Regional pop-weighted avg change</th>
+      <td>1.78</td>
+      <td>1.03</td>
+      <td>5.23</td>
+    </tr>
+    <tr>
+      <th>Global pop weights</th>
+      <td>1.00</td>
+      <td>1.00</td>
+      <td>1.00</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<section id="explore-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="explore-the-data">Explore the data</h2>
+<p>I plan to build a Shiny app to help compare trends across datasets (using Shinylive – built on Shiny for Python - ).</p>
+<p>Here is a test app just so I can test the wiring of how such an app works.</p>
+<pre class="shinylive-python"><code>#| standalone: true
+#| viewerHeight: 420
+
+from shiny import *
+from plotnine import *
+from pyodide.http import open_url
+import pandas as pd
+import numpy as np
+
+
+
+
+
+#  ---------------------------------
+#  ---------- Data prep functions -------------
+#  ----------------------------------
+
+#  Function get matching for ref years
+def closest_to_reference(df, reference_val, max_dist_from_ref, reference_col, group_by_col, value_col, tie_break):
+  
+  df = df.loc[:, [reference_col, group_by_col, value_col]]
+
+  # Drop NAs
+  df = df.dropna()
+
+  # Calculate absolute distance from reference value
+  df['ref_diff'] = abs(df[reference_col] - reference_val)
+
+  # Drop any rows with a distance beyond threshold
+  if not pd.isna(max_dist_from_ref):
+    df = df.loc[df['ref_diff'] &lt;= max_dist_from_ref]
+
+  # Keep closest observation to reference value – including tie-breaks (where there is a match above and below the ref value)
+  df = df[df.groupby(group_by_col)['ref_diff'].transform('min') == df['ref_diff']].reset_index(drop=True)
+
+  # Settle tie-breaks
+  if tie_break == 'below':
+    df = df[df.groupby(group_by_col)[reference_col].transform('min') == df[reference_col]].reset_index(drop=True)
+    
+  elif tie_break == 'above':
+    df = df[df.groupby(group_by_col)[reference_col].transform('max') == df[reference_col]].reset_index(drop=True)
+
+  df = df.drop('ref_diff', axis=1)
+
+  return df
+
+
+
+
+# Merge matches for different reference points
+def merge_two_ref_matches(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):
+
+# Make sure the pair of reference values are in ascending order
+  reference_vals.sort()
+
+# Maximise distance between two refs by settling tie-breaks below the lowest ref and above the highest ref 
+
+# Find matches for lower reference value
+  lower_ref_matches = closest_to_reference(df, reference_vals[0], max_dist_from_refs, reference_col, group_by_col, value_col, 'below')
+
+# Find matches for higher reference value
+  higher_ref_matches = closest_to_reference(df, reference_vals[1], max_dist_from_refs, reference_col, group_by_col, value_col, 'above')
+
+# Merge the two sets of matches
+  merged_df = pd.merge(lower_ref_matches, higher_ref_matches, on=group_by_col, suffixes=(reference_vals[0], reference_vals[1]))
+
+# Drop obs that do not have data for both ref values
+  merged_df = merged_df.dropna()
+
+# Drop obs where the matched data does not meet the min distance requirement
+  if not pd.isna(min_dist_between):
+  
+  # Store the names of the reference column returned from the two matches
+    ref_var_high = f'{reference_col}{reference_vals[1]}'
+    ref_var_low = f'{reference_col}{reference_vals[0]}'
+
+  # Keep only rows &gt;= to the min distance
+    merged_df = merged_df.loc[(merged_df[ref_var_high] - merged_df[ref_var_low]) &gt;= min_dist_between, :]
+
+
+  return merged_df
+
+
+
+  # For PIP run this three times – first filtering data for just consumpion only, then with income only, then with a dataset that prefers income over consumption
+def pip_welfare_routine(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):
+
+    # Specify the name of the column in which the income/consumption welfare definition is stored
+    welfare_colname = 'welfare_type'
+
+    # Creat dataframes for thee scenarios:
+    # Scenario 1: only allow income data
+    df_inc_filter = df.loc[df[welfare_colname] == "income", :]
+    df_inc_filter.name = "Income"
+
+    # Scenario 2: only allow consumption data
+    df_cons_filter = df.loc[df[welfare_colname] == "consumption", :]
+    df_cons_filter.name = "Consumption"
+    # Scenario 3: allow a mix – dropping consumption data where income data is available in the same year
+    df_mixed = df.copy()
+
+    df_mixed['welfare_count'] = df_mixed.groupby([reference_col, group_by_col])[welfare_colname].transform('count')
+
+    df_mixed = df_mixed.loc[(df_mixed['welfare_count'] == 1) | (df_mixed[welfare_colname] == "income")]
+
+    df_mixed.name = "Mixed"
+    #  Store the scneario dataframes in a list
+    df_scenarios = [df_inc_filter, df_cons_filter, df_mixed]
+
+    # Run the matching function on each scenario
+    scenario_matches = [merge_two_ref_matches(
+      df_scenario, 
+      reference_vals, 
+      max_dist_from_refs, 
+      min_dist_between, 
+      reference_col, 
+      group_by_col, 
+      value_col) for df_scenario in df_scenarios]
+    
+    # Combine the first two scenarios.
+    df_combined_matches = pd.concat([scenario_matches[0], scenario_matches[1]], keys=[df_scenarios[0].name, df_scenarios[1].name])
+
+    # Tidy up indexes
+    df_combined_matches = df_combined_matches.reset_index()
+    
+    df_combined_matches = df_combined_matches.drop('level_1', axis=1)
+
+    df_combined_matches = df_combined_matches\
+      .rename(columns={"level_0": "pip_welfare"})
+
+    # Add in third scenario.
+    df_combined_matches = pd.concat([df_combined_matches, scenario_matches[2]])
+
+    # add scenario name to te pip_welfare column
+    df_combined_matches['pip_welfare'] = df_combined_matches['pip_welfare'].fillna(df_scenarios[2].name)
+
+    # Keep only one match per group (e.g. per Country) - in the priority laid out in the df_scenarios list above (income only -&gt; consumption only -&gt; mixed)
+      # First count the matches
+    df_combined_matches['match_count'] = df_combined_matches.groupby(group_by_col)['pip_welfare'].transform('count')
+      # Then drop any matches from the lowest priority where there are multiple matches
+    df_combined_matches = df_combined_matches.loc[(df_combined_matches['match_count']==1) | ~(df_combined_matches['pip_welfare']==df_scenarios[2].name)]
+      #  Repeat at the next level of priority
+    df_combined_matches['match_count'] = df_combined_matches.groupby(group_by_col)['pip_welfare'].transform('count')
+    df_combined_matches = df_combined_matches.loc[(df_combined_matches['match_count']==1) | ~(df_combined_matches['pip_welfare']==df_scenarios[1].name)]
+    
+    # Drop the match count column
+    df_combined_matches = df_combined_matches.drop('match_count', axis=1)
+
+    return df_combined_matches
+
+
+#  ---------------------------------
+#  ---------- Specifications -------------
+#  ----------------------------------
+
+# These parameters are not controlled in the app.
+reference_col = 'Year'
+group_by_col = 'Entity'
+
+tolerance = 1
+outlier_cut_off_upper = None
+
+source_count_requirement = 2
+
+
+
+
+
+#  ---------------------------------
+#  ---------- App code -------------
+#  ----------------------------------
+
+def panel_box(*args, **kwargs):
+    return ui.div(
+        ui.div(*args, class_="card-body"),
+        **kwargs,
+        class_="card mb-3",
+    )
+
+app_ui = ui.page_fluid(
+    {"class": "p-4"},
+    ui.row(
+        ui.column(
+            4,
+            panel_box(
+                ui.input_slider("reference_vals", "Reference years", 1975, 2020, value=[1990,2018]),
+                ui.input_numeric(
+                            "max_dist_from_refs",
+                            "=/- (years)",
+                            4,
+                        ),
+                ui.input_numeric(
+                            "min_dist_between",
+                            "Min distance between observations (years)",
+                            23,
+                        ),
+                ui.input_action_button(
+                    "download", "Download data and image", class_="btn-primary w-100"
+                ),
+            ),
+            ui.navset_tab_card(
+                ui.nav(
+                    "Compare sources",
+                    ui.input_select(
+                "metric",
+                "Metric",
+                {
+                    "Gini": "Gini",
+                    "Top_10_share": "Top 10p.c. share",
+                },
+            ),
+            ),
+                ui.nav(
+                  "Compare metrics"),
+            ),
+        ),
+        ui.column(
+            8,
+            ui.output_plot("example_plot")
+            ),
+    ),
+)
+
+
+def server(input, output, session):
+    @output
+    @render.plot
+    def example_plot():
+    
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/pip.csv'
+        
+      df_pip = pd.read_csv(open_url(url))
+
+
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/wid.csv'
+
+      df_wid = pd.read_csv(open_url(url))
+
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/region_mapping.csv'
+
+      df_regions = pd.read_csv(open_url(url))
+
+
+      url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/population.csv'
+
+      df_pop = pd.read_csv(open_url(url))
+
+
+
+
+
+
+
+
+
+
+
+
+
+      def prep_wid_pip_data(reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):
+        
+        pip_matches = pip_welfare_routine(
+          df = df_pip,
+          reference_vals = reference_vals,
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = value_col
+        )
+
+        wid_matches = merge_two_ref_matches(
+          df = df_wid,
+          reference_vals = reference_vals,
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = value_col
+        )
+
+        ref_pairs = pd.concat([pip_matches, wid_matches,], keys=['pip', 'wid'])
+
+        # Tidy up indexes
+        ref_pairs = ref_pairs.reset_index()
+        
+        ref_pairs = ref_pairs.drop('level_1', axis=1)
+
+        ref_pairs = ref_pairs\
+          .rename(columns={"level_0": "source"})
+
+        return ref_pairs
+
+
+
+
+      def prep_plot_and_tables(
+        reference_vals, 
+        max_dist_from_refs,
+        min_dist_between,
+        reference_col,
+        group_by_col,
+        value_col,
+        tolerance,
+        outlier_cut_off_upper,
+        source_count_requirement):
+
+        # Other spec:
+        region_col = 'region_alt'
+
+        # ---- Prep data ---------
+
+        plot_data = prep_wid_pip_data(
+          reference_vals = reference_vals, 
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = value_col,
+        )
+
+        # Store the names of the columns to be used onthe X and Y axis
+        x_axis = f'{value_col}{reference_vals[0]}'
+        y_axis = f'{value_col}{reference_vals[1]}'
+
+        x_ref_val = f'{reference_col}{reference_vals[0]}'
+        y_ref_val = f'{reference_col}{reference_vals[1]}'
+
+
+        # Apply outlier cut off, if specified
+        if not pd.isna(outlier_cut_off_upper):
+          plot_data = plot_data.loc[plot_data[x_axis] &lt;= outlier_cut_off_upper]
+          plot_data = plot_data.loc[plot_data[y_axis] &lt;= outlier_cut_off_upper]
+
+
+        # Add a count by country – showing whether data is available from both sources or not
+        plot_data['source_count'] = plot_data.groupby(group_by_col)['source'].transform('count')
+
+        # Apply source requirement (whether to include only observations with data from both sources)
+        plot_data = plot_data.loc[plot_data['source_count'] &gt;= source_count_requirement]
+
+        # Drop source_count column
+        plot_data = plot_data.drop('source_count', axis=1)
+
+        # Add in region classification
+        plot_data = pd.merge(plot_data, df_regions, how = 'left')
+
+        # Add in population data
+          # For first ref
+        df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[0], ['Entity', 'population'] ]
+
+        plot_data = pd.merge(plot_data, df_pop_ref, how = 'left')
+
+        plot_data = plot_data.rename(columns={'population':'population_ref1'})
+
+          # For second ref
+        df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[1], ['Entity', 'population'] ]
+
+        plot_data = pd.merge(plot_data, df_pop_ref, how = 'left')
+
+        plot_data = plot_data.rename(columns={'population':'population_ref2'})
+
+          # Calculate average population two reference periods
+        plot_data['avg_pop'] = (plot_data['population_ref1'] + plot_data['population_ref2'])/2
+
+
+
+        # ----- Prep plot ------
+
+        # I grab what I am guessing to be the max and min tick marks on the x axist, in order to define the coordinates of a 'tolerance' ribbon.
+        x_min = plot_data[x_axis].min()
+        x_min_floor = np.floor(x_min * 10) / 10
+
+        x_max = plot_data[x_axis].max()
+        x_max_ceiling = np.ceil(x_max * 10) / 10
+
+        # Set the coordinates of the shaded ribbon
+        shaded_coord = pd.DataFrame({'x': [x_min_floor, x_max_ceiling, x_max_ceiling, x_min_floor], 
+          'y': [x_min_floor-tolerance, x_max_ceiling-tolerance, x_max_ceiling+tolerance , x_min_floor+tolerance]})
+
+
+        plot = (ggplot(plot_data
+        , aes(x_axis, y_axis, alpha=0.5))
+        + geom_point(aes(color=region_col, size='avg_pop', alpha = 0.6))
+        + facet_wrap('~ source')
+        + geom_polygon(aes(x='x', y='y', alpha = 0.2), data=shaded_coord)
+        + theme_light()
+        + theme(legend_position='none')
+        )
+
+
+        # ---- Prep summary table ----
+
+
+        # Calculate the change between the two ref periods
+        plot_data['change'] = (plot_data[y_axis] - plot_data[x_axis])
+
+
+        group_yes_vars = ['source', region_col]
+        group_no_vars = ['source']
+
+        group_scenarios = [group_no_vars, group_yes_vars] 
+
+        aggs = []
+        
+        for group_vars in group_scenarios:
+        
+        # Prepare pop-weighted average change
+          agg_level = plot_data.copy()
+
+          # Calulate pop weights by source and region
+          agg_level['regional_pop_weights'] = agg_level.groupby(group_vars)['avg_pop'].transform(lambda x: x/x.sum()) 
+
+          agg_level['global_pop_weights'] = agg_level.groupby('source')['avg_pop'].transform(lambda x: x/x.sum()) 
+
+          # Multiply the change by the pop weights 
+          agg_level['region_weighted_change'] = agg_level['change'] * agg_level['regional_pop_weights']
+
+
+        # Prepare fall/stable/rise categories
+          agg_level['fall'] = agg_level['change'] &lt; -tolerance
+
+          agg_level['stable'] = (agg_level['change'] &lt;= tolerance) &amp; (agg_level['change'] &gt;= -tolerance)
+
+          agg_level['rise'] = agg_level['change'] &gt; tolerance
+
+          agg_level[['fall', 'stable', 'rise']] = agg_level[['fall', 'stable', 'rise']].astype(int)
+
+          agg_level = agg_level.groupby(group_vars)[['change', 'region_weighted_change', 'global_pop_weights', 'fall', 'stable', 'rise']]\
+            .agg(['sum', 'mean', 'count'])
+
+        # Aggregate by source and region
+          if group_vars == group_yes_vars:
+
+            agg_level = agg_level\
+              .unstack().T.reset_index()
+
+          elif group_vars == group_no_vars: 
+
+            agg_level = agg_level\
+              .T.reset_index()
+
+            agg_level[region_col] = "World"
+
+          aggs.append(agg_level) 
+
+        
+        df_summary = pd.concat(aggs)
+
+          # filter for the aggregations we need and label in the 'summary' column
+        df_summary.loc[(df_summary['level_0'] == 'change') &amp; (df_summary['level_1'] == 'mean'), 'summary'] = 'avg change'
+
+        df_summary.loc[(df_summary['level_0'] == 'region_weighted_change') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'Regional pop-weighted avg change'
+
+        df_summary.loc[(df_summary['level_0'] == 'global_pop_weights') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'Global pop weights'
+
+        df_summary.loc[(df_summary['level_0'] == 'change') &amp; (df_summary['level_1'] == 'count'), 'summary'] = 'n'
+
+        df_summary.loc[(df_summary['level_0'] == 'fall') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'fall'
+
+        df_summary.loc[(df_summary['level_0'] == 'stable') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'stable'
+
+        df_summary.loc[(df_summary['level_0'] == 'rise') &amp; (df_summary['level_1'] == 'sum'), 'summary'] = 'rise'
+
+        df_summary = df_summary[df_summary['summary'].notnull()]
+
+
+        df_summary = df_summary.drop(['level_0', 'level_1'], axis = 1)
+
+
+        df_summary['summary'] = pd.Categorical(df_summary['summary'], categories=['fall', 'stable', 'rise','n', 'avg change', 'Regional pop-weighted avg change', 'Global pop weights'], ordered=True)
+
+
+        df_summary = df_summary.sort_values([region_col,'summary']).set_index([region_col,'summary'])
+        
+        
+        # format to show appropriate d.p. I run a loop over each row for want of figuring out a better way!
+        repeat_length = 7
+        for i in range(0, len(df_summary.index.levels[0].unique())):
+          df_summary.iloc[i*repeat_length,:] = df_summary.iloc[i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[1 + i*repeat_length,:] = df_summary.iloc[1 + i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[2 + i*repeat_length,:] = df_summary.iloc[2 + i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[3 + i*repeat_length,:] = df_summary.iloc[3 + i*repeat_length,:].map('{:.0f}'.format)
+          df_summary.iloc[4 + i*repeat_length,:] = df_summary.iloc[4 + i*repeat_length,:].map('{:.2f}'.format)
+          df_summary.iloc[5 + i*repeat_length,:] = df_summary.iloc[5 + i*repeat_length,:].map('{:.2f}'.format)
+          df_summary.iloc[6 + i*repeat_length,:] = df_summary.iloc[6 + i*repeat_length,:].map('{:.2f}'.format)
+
+
+
+        # ----- Return outputs ------
+        plot_and_tables = {
+          "table_data": plot_data,
+          "plot": plot,
+          "summary": df_summary
+        }
+        
+        return plot_and_tables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+
+      plot_and_tables = prep_plot_and_tables(
+          reference_vals = list(input.reference_vals()), 
+          max_dist_from_refs = input.max_dist_from_refs(),
+          min_dist_between = input.min_dist_between(),
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          value_col = input.metric(),
+          tolerance = tolerance,
+          outlier_cut_off_upper = outlier_cut_off_upper,
+          source_count_requirement = source_count_requirement
+          )
+
+      plot = plot_and_tables['plot']
+
+      return plot
+
+
+app = App(app_ui, server)
+</code></pre>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

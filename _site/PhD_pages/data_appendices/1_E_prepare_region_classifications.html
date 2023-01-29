@@ -1,0 +1,1949 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Joe Hasell – e_prepare_region_classifications</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Joe Hasell</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Joe Hasell</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">Papers</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/paper_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/paper_pages/paper1.html" class="sidebar-item-text sidebar-link">Paper 1: Triangulating trends in inequality around the world from secondary databases</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/paper_pages/paper3.html" class="sidebar-item-text sidebar-link">Paper 3: Housing and the capital share of income</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  PhD_pages/paper_pages/test_page.qmd
+  </li>
+      </ul>
+  </li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">Data appendices</a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="false">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  PhD_pages/data_appendices/1_A_prepare_PIP_and_WID.qmd
+  </li>
+          <li class="sidebar-item">
+  PhD_pages/data_appendices/1_B_within_country_trends.qmd
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/data_appendices/3_A_prepare_KLEMS.html" class="sidebar-item-text sidebar-link">Appendix 3.A: Preparing EU KLEMS industry data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/data_appendices/3_B_prepare_OECD.html" class="sidebar-item-text sidebar-link">Appendix 3.B: Preparing OECD industry data</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">Presentations</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.html" class="sidebar-item-text sidebar-link">From $1.90 to $2.15: the updated International Poverty Line</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  test_pages/test_passing_r_to_python.qmd
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_shinylive.html" class="sidebar-item-text sidebar-link">Shinylive in Quarto example</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../test_pages/test_with_iframe_shiny.html" class="sidebar-item-text sidebar-link">A test notebook with Shiny app mbedded as an iframe</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Packages and settings
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pd.set_option(<span class="st">'display.max_rows'</span>, <span class="va">None</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Load WID region classifications
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For regional classifications I take WID definitions, as specified on their website <a href="https://wid.world/codes-dictionary/#country-code">here</a>.</p>
+<p>I read in a csv prepared from the table in that webpage, which has been mapped to the Our World in Data standarized country names used throughout this project.</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_regions <span class="op">=</span> pd.read_csv(<span class="st">"data/original/WID_regions_country_standardized.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Define two region classifications
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>I create a clean region mapping table using two regional definitions.</p>
+<p>One is the ‘standard’ definitions used by WID.</p>
+<p>In an alternative set I split Western and Eastern Europe, ccombining the latter with Russia &amp; Central Asia to make a joint Eastern Europe and Central Asia region.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_regions <span class="op">=</span> df_regions[[<span class="st">'Our World In Data Name'</span>, <span class="st">'region (standard)'</span>, <span class="st">'sub-region'</span>]].rename(columns<span class="op">=</span>{<span class="st">'Our World In Data Name'</span>: <span class="st">'Entity'</span>, <span class="st">'region (standard)'</span>: <span class="st">'WID_region'</span>})</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define an alt region classification</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>df_regions[<span class="st">'region_alt'</span>] <span class="op">=</span> df_regions[<span class="st">'WID_region'</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>df_regions.loc[df_regions[<span class="st">'sub-region'</span>] <span class="op">==</span> <span class="st">'Western Europe'</span>,<span class="st">'region_alt'</span>] <span class="op">=</span> <span class="st">'Western Europe'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>df_regions.loc[(df_regions[<span class="st">'sub-region'</span>] <span class="op">==</span> <span class="st">'Eastern Europe'</span>) <span class="op">|</span> (df_regions[<span class="st">'WID_region'</span>] <span class="op">==</span> <span class="st">'Russia &amp; Central Asia'</span>),<span class="st">'region_alt'</span>] <span class="op">=</span> <span class="st">'Eastern Europe &amp; Central Asia'</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>df_regions <span class="op">=</span> df_regions[[<span class="st">"Entity"</span>, <span class="st">"WID_region"</span>, <span class="st">"region_alt"</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+See the prepared data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_regions</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Entity</th>
+      <th>WID_region</th>
+      <th>region_alt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Andorra</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>United Arab Emirates</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Antigua and Barbuda</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Anguilla</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Albania</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Armenia</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Netherlands Antilles</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Angola</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Argentina</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>American Samoa</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Austria</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Australia</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>Aruba</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>Azerbaijan</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>Bosnia and Herzegovina</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>Barbados</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>Bangladesh</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>Belgium</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>Burkina Faso</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>Bulgaria</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>Bahrain</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>Burundi</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>Benin</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>Bermuda</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>Brunei</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>Bolivia</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>Brazil</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>Bahamas</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>Bhutan</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>Botswana</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>Belarus</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>Belize</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>Canada</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>Democratic Republic of Congo</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>Central African Republic</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>Congo</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>Switzerland</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>Cote d'Ivoire</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>Cook Islands</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>Chile</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>Cameroon</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>China</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>Colombia</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>Costa Rica</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>Czechoslovakia</td>
+      <td>NaN</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>Cuba</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>Cape Verde</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>Curacao</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>Cyprus</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>Czechia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>East Germany</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>Germany</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>Djibouti</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>Denmark</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>Dominica</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>Dominican Republic</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>Algeria</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>Ecuador</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>Estonia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>Egypt</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>Western Sahara</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>Eritrea</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>Spain</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>Ethiopia</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>Finland</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>Fiji</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>Falkland Islands</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>Micronesia (country)</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>Faeroe Islands</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>France</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>Gabon</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>United Kingdom</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>Grenada</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>Georgia</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>Ghana</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>Gibraltar</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>Greenland</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>Gambia</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>Guinea</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>Equatorial Guinea</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>Greece</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>Guatemala</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>Guam</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>Guinea-Bissau</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>Guyana</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>Hong Kong</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>Honduras</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>Croatia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>Haiti</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>Hungary</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>Indonesia</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>Ireland</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>Israel</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>Isle of Man</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>India</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>Iraq</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>Iran</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>Iceland</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>Italy</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>Jamaica</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>101</th>
+      <td>Jordan</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>102</th>
+      <td>Japan</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>103</th>
+      <td>Kenya</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>104</th>
+      <td>Kyrgyzstan</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>105</th>
+      <td>Cambodia</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>106</th>
+      <td>Kiribati</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>107</th>
+      <td>Comoros</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>108</th>
+      <td>Saint Kitts and Nevis</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>109</th>
+      <td>North Korea</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>110</th>
+      <td>South Korea</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>111</th>
+      <td>Kosovo</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>112</th>
+      <td>Kuwait</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>113</th>
+      <td>Cayman Islands</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>114</th>
+      <td>Kazakhstan</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>Laos</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>116</th>
+      <td>Lebanon</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>Saint Lucia</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>118</th>
+      <td>Liechtenstein</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>119</th>
+      <td>Sri Lanka</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>120</th>
+      <td>Liberia</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>121</th>
+      <td>Lesotho</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>122</th>
+      <td>Lithuania</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>123</th>
+      <td>Luxembourg</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>124</th>
+      <td>Latvia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>125</th>
+      <td>Libya</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>126</th>
+      <td>Morocco</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>Monaco</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>128</th>
+      <td>Moldova</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>129</th>
+      <td>Montenegro</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>130</th>
+      <td>Madagascar</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>131</th>
+      <td>Marshall Islands</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>132</th>
+      <td>North Macedonia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>133</th>
+      <td>Mali</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>134</th>
+      <td>Myanmar</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>Mongolia</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>136</th>
+      <td>Macao</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>137</th>
+      <td>Northern Mariana Islands</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>Mauritania</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>139</th>
+      <td>Montserrat</td>
+      <td>Europe</td>
+      <td>Europe</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>Malta</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>Mauritius</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>Maldives</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>Malawi</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>Mexico</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>Malaysia</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>Mozambique</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>Namibia</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>New Caledonia</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>Niger</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>150</th>
+      <td>Nigeria</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>151</th>
+      <td>Nicaragua</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>152</th>
+      <td>Netherlands</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>153</th>
+      <td>Norway</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>154</th>
+      <td>Nepal</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>155</th>
+      <td>Nauru</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>156</th>
+      <td>Niue</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>157</th>
+      <td>New Zealand</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>158</th>
+      <td>Oman</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>159</th>
+      <td>Panama</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>160</th>
+      <td>Peru</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>161</th>
+      <td>French Polynesia</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>162</th>
+      <td>Papua New Guinea</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>163</th>
+      <td>Philippines</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>Pakistan</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>165</th>
+      <td>Poland</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>Saint Pierre and Miquelon</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>Puerto Rico</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>168</th>
+      <td>Palestine</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>169</th>
+      <td>Portugal</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>170</th>
+      <td>Palau</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>Paraguay</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>172</th>
+      <td>Qatar</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>173</th>
+      <td>Romania</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>174</th>
+      <td>Serbia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>175</th>
+      <td>Russia</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>176</th>
+      <td>Rwanda</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>177</th>
+      <td>Saudi Arabia</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>178</th>
+      <td>Solomon Islands</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>179</th>
+      <td>Seychelles</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>180</th>
+      <td>Sudan</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>181</th>
+      <td>Sweden</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td>Singapore</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>Saint Helena</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>Slovenia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>Slovakia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>186</th>
+      <td>Sierra Leone</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>187</th>
+      <td>San Marino</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>188</th>
+      <td>Senegal</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>189</th>
+      <td>Somalia</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>190</th>
+      <td>Suriname</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>191</th>
+      <td>South Sudan</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>192</th>
+      <td>Sao Tome and Principe</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>193</th>
+      <td>USSR</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>194</th>
+      <td>El Salvador</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>Sint Maarten (Dutch part)</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>Syria</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>Eswatini</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>Turks and Caicos Islands</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>Chad</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>Togo</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>201</th>
+      <td>Thailand</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>202</th>
+      <td>Tajikistan</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>203</th>
+      <td>Tokelau</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>204</th>
+      <td>Timor</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td>Turkmenistan</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>206</th>
+      <td>Tunisia</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>207</th>
+      <td>Tonga</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>208</th>
+      <td>Turkey</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>209</th>
+      <td>Trinidad and Tobago</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>210</th>
+      <td>Tuvalu</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>211</th>
+      <td>Taiwan</td>
+      <td>East Asia</td>
+      <td>East Asia</td>
+    </tr>
+    <tr>
+      <th>212</th>
+      <td>Tanzania</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>213</th>
+      <td>Ukraine</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>214</th>
+      <td>Uganda</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>215</th>
+      <td>United States</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>216</th>
+      <td>Uruguay</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>Uzbekistan</td>
+      <td>Russia &amp; Central Asia</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>218</th>
+      <td>Vatican</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>219</th>
+      <td>Saint Vincent and the Grenadines</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>220</th>
+      <td>Venezuela</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td>British Virgin Islands</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>222</th>
+      <td>United States Virgin Islands</td>
+      <td>Latin America</td>
+      <td>Latin America</td>
+    </tr>
+    <tr>
+      <th>223</th>
+      <td>Vietnam</td>
+      <td>South &amp; South-East Asia</td>
+      <td>South &amp; South-East Asia</td>
+    </tr>
+    <tr>
+      <th>224</th>
+      <td>Vanuatu</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>225</th>
+      <td>Wallis and Futuna</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>226</th>
+      <td>Samoa</td>
+      <td>North America &amp; Oceania</td>
+      <td>North America &amp; Oceania</td>
+    </tr>
+    <tr>
+      <th>227</th>
+      <td>Channel Islands</td>
+      <td>Europe</td>
+      <td>Western Europe</td>
+    </tr>
+    <tr>
+      <th>228</th>
+      <td>Yemen</td>
+      <td>MENA</td>
+      <td>MENA</td>
+    </tr>
+    <tr>
+      <th>229</th>
+      <td>Yugoslavia</td>
+      <td>Europe</td>
+      <td>Eastern Europe &amp; Central Asia</td>
+    </tr>
+    <tr>
+      <th>230</th>
+      <td>South Africa</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>231</th>
+      <td>Zambia</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>232</th>
+      <td>Zimbabwe</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+    <tr>
+      <th>233</th>
+      <td>Zanzibar</td>
+      <td>Sub-Saharan Africa</td>
+      <td>Sub-Saharan Africa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Save
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_regions.to_csv(<span class="st">'data/clean/region_mapping.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
