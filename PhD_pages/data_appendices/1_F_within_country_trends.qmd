@@ -193,6 +193,11 @@ url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/
 
 df_wid = pd.read_csv(url)
 
+url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/lis.csv'
+
+df_lis = pd.read_csv(url)
+
+
 url = 'https://raw.githubusercontent.com/JoeHasell/personal_site/main/PhD_pages/data_appendices/data/clean/region_mapping.csv'
 
 df_regions = pd.read_csv(url)
@@ -237,12 +242,13 @@ min_dist_between = 5
 
 
 data = {"PIP": df_pip,
-        "WID": df_wid}
+        "WID": df_wid,
+        "LIS": df_lis}
 
 
 data_to_match = {
-  "sources": ["PIP", "WID", "PIP"],
-  "var_names": ["Gini", "Top_10_share", "Top_10_share"]
+  "sources": ["PIP", "WID", "LIS"],
+  "var_names": ["Top_10_share", "Top_10_share_pretax", "Top_10_share_equiv_disposable"]
   }
 
 
