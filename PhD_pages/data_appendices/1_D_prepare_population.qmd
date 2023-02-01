@@ -3,8 +3,8 @@ title: "Appendix 1.D: Preparing population data"
 format: html
 warning: false
 
-
 ---
+
 
 
 ::: {.callout-note collapse="true" appearance="minimal"}

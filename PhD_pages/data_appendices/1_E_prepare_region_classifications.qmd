@@ -1,9 +1,7 @@
 ---
-title: "Appendix 1.E: Preparing country region classifications"
+title: "Appendix 1.E: Preparing region classifications"
 format: html
 warning: false
-
-
 ---
 
 

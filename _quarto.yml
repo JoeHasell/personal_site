@@ -18,10 +18,18 @@ website:
               - PhD_pages/paper_pages/test_page.qmd
           - section: "Data appendices"
             contents:
-              - PhD_pages/data_appendices/1_A_prepare_PIP_and_WID.qmd
-              - PhD_pages/data_appendices/1_B_within_country_trends.qmd
-              - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
-              - PhD_pages/data_appendices/3_B_prepare_OECD.qmd
+              - section: "Paper 1"
+                contents:
+                  - PhD_pages/data_appendices/1_A_prepare_PIP.qmd
+                  - PhD_pages/data_appendices/1_B_prepare_WID.qmd
+                  - PhD_pages/data_appendices/1_C_prepare_LIS.qmd
+                  - PhD_pages/data_appendices/1_D_prepare_population.qmd
+                  - PhD_pages/data_appendices/1_E_prepare_region_classifications.qmd
+                  - PhD_pages/data_appendices/1_F_within_country_trends.qmd
+              - section: "Paper 3"
+                contents:
+                  - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
+                  - PhD_pages/data_appendices/3_B_prepare_OECD.qmd
       - section: "Presentations"
         contents:
               - presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.qmd
