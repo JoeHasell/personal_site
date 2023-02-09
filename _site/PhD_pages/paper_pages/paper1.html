@@ -320,7 +320,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#methods-and-data" id="toc-methods-and-data" class="nav-link active" data-scroll-target="#methods-and-data">Methods and data</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#literature-review-global-studies-of-inequality" id="toc-literature-review-global-studies-of-inequality" class="nav-link" data-scroll-target="#literature-review-global-studies-of-inequality">Literature review – Global studies of inequality</a></li>
+  <li><a href="#data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" id="toc-data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" class="nav-link" data-scroll-target="#data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited">Data review Why is our understanding of inequality around the world currently limited</a></li>
+  <li><a href="#methods-and-data" id="toc-methods-and-data" class="nav-link" data-scroll-target="#methods-and-data">Methods and data</a>
   <ul class="collapse">
   <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data sources</a>
   <ul class="collapse">
@@ -423,7 +426,80 @@ The following object is masked from 'package:purrr':
 </div>
 </div>
 </div>
-<p>What has happened to within-country inequality globally?</p>
+<p>What has happened to inequality within countries over the past generation?</p>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<ul>
+<li><p>A range of motives for taking a global view: SDGs; globalization – trade; ….</p></li>
+<li><p>We don’t have a clear global view.<br>
+<a href="https://www.un.org/en/un75/inequality-bridging-divide">UN summary of inequality trends</a></p></li>
+<li><p>Why is it that we don’t have a clear view?</p>
+<ol type="1">
+<li><p>Most academic research and commentary has focussed on high income countries (refs), especially the US. There are many reasons why we should not expect trends in inequality in these countries to reflect broader global trends.</p></li>
+<li><p>Hampered by the available data</p>
+<ul>
+<li><strong>Coverage</strong> – for instance no surveys.</li>
+<li><strong>Comparability of data</strong> – Some secondary databases with global coverage mixes very heterogenous datapoints (WIID) (Find Atkinson and Brandolini ref from Handbook…). Those with a greater degree of harmonization tend to lack global coverage (LIS, EU-SILC, SEDLAC, until recently PIP)</li>
+<li><strong>Some trade off between the two is inevitable</strong> – There is no global survey of incomes. Countries run surveys based on their own needs and capacities. As such they differ. Saying something global means accepting a degree of heterogenity in the data. Similarly, definitions of income for tax purposes vary, impacting the comparability of tax data.</li>
+</ul></li>
+<li><p>Contradictory global views are presented by different global databases.</p>
+<ul>
+<li><p>The data situation has improved drastically: thanks to harmonized databases with global coverage. In particular:</p>
+<ul>
+<li>PIP – recently expanded to include high income countries</li>
+<li>WID – Transition from WTID, and the DINA methodology, global coverage.</li>
+<li>LIS: some data from middle and low income countries.</li>
+</ul></li>
+<li><p>But the ‘take home’ messages from the institutions producing these databases offer very contradictory views.</p>
+<ul>
+<li>“In recent decades, income inequality has increased in nearly all countries, but at different speeds, suggesting that institutions and policies matter in shaping inequality.” (WIR 2018)</li>
+<li>“[Across a range of approaches] aver- age inequality within countries increased in the 1990s, but has been falling in recent years according to most specifications.” (World Bank, 2016)</li>
+</ul></li>
+<li><p>Here we plot the latest data, using the metric typically favoured by each: Top 1% from WID vs Gini from PIP over time.</p></li>
+<li><p>These different messages are based on a mix of many different methodological differences:</p>
+<ul>
+<li>different metrics, sensitive to different parts of the distribution;</li>
+<li>Different welfare concepts;</li>
+<li>Different underlying data sources and adjusmtents to the top (or lack thereof);</li>
+<li>Different coverage or time periods being analysed.</li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="literature-review-global-studies-of-inequality" class="level1">
+<h1>Literature review – Global studies of inequality</h1>
+<ul>
+<li>Atkinson and Brandolini (2010) argue that global inequality analyses in particular need to consider both absol ute and relative differences.</li>
+</ul>
+</section>
+<section id="data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" class="level1">
+<h1>Data review Why is our understanding of inequality around the world currently limited</h1>
+<ul>
+<li><p><strong>A global view is hampered by the available data</strong>.</p></li>
+<li><p><strong>But databases have improved substantially recently</strong> Thanks to improvements and expansion of key global harmonized databases, we are now in a much stronger position to take a global view on inequality within countries.</p></li>
+</ul>
+<p>There are range of databases and a full review is out of the scope of this paper. Focus on the three databases of harmonized distributional data providing global or near-global coverage.</p>
+<ul>
+<li><strong>PIP</strong>
+<ul>
+<li>Survey data</li>
+<li>Mix of disposable income and consumption data (definitions vary)</li>
+<li>Per capita – Coverage: now includes high income countries (Add a box/visualization with coverage). Global coverage from 1990 onwards.</li>
+<li>A range of inequality indices provided ‘as standard’, but the whole distribution may be queried via API. Either microdata or, in a minority of cases, a parametric distribution fitted to ‘grouped data’ (e.g.&nbsp;income deciles)</li>
+</ul></li>
+<li><strong>WID</strong> – Survey data, tax data, National accounts
+<ul>
+<li>Coverage much greater for pre-tax national income. But post-tax concepts also available for a subset of observations.</li>
+<li>Greatest coverage for individuals – equal split where underlying data was available for couples.</li>
+<li>Coverage</li>
+<li>Estimates of the whole distribution Generalized Pareto Interpolation. Though longer-run coverage is higher for pretax top 1% share (reliance on tax data)</li>
+</ul></li>
+<li><strong>LIS</strong>
+<ul>
+<li>Offers less coverage, but is notable for providing access to microdata.</li>
+</ul></li>
+</ul>
 <p>Different headlines - WID suggests general rise (find a quote). PIP much more mixed… even a fall.</p>
 <p>Which world we live in matters for how we think we should tackle inequality.</p>
 <p>A secular, general rise - suggesting global forces, perhaps something intrinsic to capitalism (Piketty, 2014).</p>
@@ -432,6 +508,7 @@ The following object is masked from 'package:purrr':
 <p>I want to:</p>
 <p>a) Triangulate the key stylized facts. Which observations are robust to across available datasets with their different methods, and which are contingent?</p>
 <p>b) Untangle which methods, definitions affect the different conclusions arrived at.</p>
+</section>
 <section id="methods-and-data" class="level1">
 <h1>Methods and data</h1>
 <section id="data-sources" class="level2">

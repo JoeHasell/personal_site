@@ -14,7 +14,91 @@ library(data.table)
 ```
 :::
 
-What has happened to within-country inequality globally?
+What has happened to inequality within countries over the past generation?
+
+# Introduction
+
+
+- A range of motives for taking a global view: SDGs; globalization – trade; ....
+
+- We don't have a clear global view.    
+  [UN summary of inequality trends](https://www.un.org/en/un75/inequality-bridging-divide)
+
+- Why is it that we don't have a clear view?
+
+    1) Most academic research and commentary has focussed on high income countries (refs), especially the US. There are many reasons why we should not expect trends in inequality in these countries to reflect broader global trends.
+
+    2) Hampered by the available data
+        - **Coverage** – for instance no surveys.
+        - **Comparability of data** – Some secondary databases with global coverage mixes very heterogenous datapoints (WIID) (Find Atkinson and Brandolini ref from Handbook...). Those with a greater degree of harmonization tend to lack global coverage (LIS, EU-SILC, SEDLAC, until recently PIP)
+        - **Some trade off between the two is inevitable** – There is no global survey of incomes. Countries run surveys based on their own needs and capacities. As such they differ. Saying something global means accepting a degree of heterogenity in the data. Similarly, definitions of income for tax purposes vary, impacting the comparability of tax data. 
+
+    3) Contradictory global views are presented by different global databases.
+        - The data situation has improved drastically: thanks to harmonized databases with global coverage. In particular:
+            - PIP – recently expanded to include high income countries
+            - WID – Transition from WTID, and the DINA methodology, global coverage.
+            - LIS: some data from middle and low income countries.
+        - But the 'take home' messages from the institutions producing these databases offer very contradictory views.
+            - "In recent decades, income inequality 
+has increased in nearly all countries, 
+but at different speeds, suggesting 
+that institutions and policies matter in shaping inequality." (WIR 2018)
+            - "[Across a range of approaches] aver-
+age  inequality  within  countries  increased   in  the  1990s,  but  has  been  falling  in  recent years according to most specifications." (World Bank, 2016)
+        
+
+        - You can see this in the latest data from these two sources, using the metric typically favoured by each: Top 1% from WID vs Gini from PIP.
+
+
+        - These different messages are based on a mix of many different methodological differences:
+            - different metrics, sensitive to different parts of the distribution; 
+            - Different welfare concepts; 
+            - Different underlying data sources and adjusmtents to the top (or lack thereof);
+            - Different coverage or time periods being analysed.
+
+
+
+# Literature review – Global studies of inequality
+
+- Atkinson and Brandolini (2010) argue that global inequality analyses in particular need to consider both absol ute  and relative differences.
+
+# Data review Why is our understanding of inequality around the world currently limited
+
+- **A global view is hampered by the available data**.
+  
+
+- **But databases have improved substantially recently**
+Thanks to improvements and expansion of key global harmonized databases, we are now in a much stronger position to take a global view on inequality within countries.
+
+There are range of databases and a full review is out of the scope of this paper. Focus on the three databases of harmonized distributional data providing global or near-global coverage.
+
+- **PIP** 
+    - Survey data
+    - Mix of disposable income and consumption data (definitions vary)
+    - Per capita
+    – Coverage: now includes high income countries (Add a box/visualization with coverage). Global coverage from 1990 onwards.
+    - A range of inequality indices provided 'as standard', but the whole distribution may be queried via API. Either microdata or, in a minority of cases, a parametric distribution fitted to 'grouped data' (e.g. income deciles)
+
+- **WID** 
+    – Survey data, tax data, National accounts
+    - Coverage much greater for pre-tax national income. But post-tax concepts also available for a subset of observations.
+    - Greatest coverage for individuals – equal split where underlying data was available for couples.
+    - Coverage 
+    - Estimates of the whole distribution Generalized Pareto Interpolation. Though longer-run coverage is higher for pretax top 1% share (reliance on tax data)
+
+
+- **LIS**
+    - Offers less coverage, but is notable for providing access to microdata.
+
+
+
+
+
+
+
+
+
+
 
 Different headlines - WID suggests general rise (find a quote). PIP much more mixed... even a fall.
 
@@ -49,6 +133,9 @@ Give an overview of coverage in each dataset.
 
 
 ## Comparing databases
+
+
+
 
 ### Comparing metrics
 
