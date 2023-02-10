@@ -1,0 +1,131 @@
+---
+title: "Triangulating a global view on inequality"
+author: "Joe Hasell"
+format: 
+    revealjs:
+        theme: [default, revealjs_joe_theme.scss] 
+bibliography: references.bib
+---
+
+## Concepts
+
+- Three concepts of global inequality (Milanovic):
+
+    1. Average within-country inequality
+
+    2. Average within-country inequality, weighting by population
+
+    3. Inequality across the world population taken as a whole (future work)
+
+- Income(ish) inequality, not wealth
+
+- Relative inequality, not absolute
+
+
+
+## Why do we need a global view?
+
+- Cosmopolitan values (e.g. UN's SDGs)
+- Opportunities and limitations for national policy to address inequality
+- Priorities for international policy (taxation, migration, aid...)
+- Priorities for philanthropy 
+- Winners and losers of globalization ('Degrowth')
+
+
+## A clear global view is lacking {.smaller}
+
+- **Limitations in the available data**
+    - Coverage
+    - Quality and comarabilty
+    - Much improved recently!
+
+- **Different conceptual focus in richer and poorer countries**
+    - Inequality/relative poverty in high income countries
+    - Absolute poverty in poorer countries
+    - Much improved recently! (Atkinson commission... Atkinson & Brandolini 2010... Ravallion 2019... 'Societal poverty' – World Bank 2018, 2020, 2022)
+
+- **Different 'worlds' of measurement occupied by global harmonized databases**
+    - Different metrics (Gini, top income shares etc.); Different welfare concepts; underlying data sources; methods (e.g. treatment of 'missing top'; coverage or time periods analysed
+    - Differences somewhat bundled together
+    - Yield very different 'take home' messages
+
+
+## Different 'worlds' of inequality measurement {.smaller}
+**World Inequality Database**
+
+> In recent decades, **income inequality has increased in nearly all countries**, but at different speeds...
+[@Alvaredo2018-qq]
+    
+> Also find a quote about the within-coutry component of global inequality
+
+
+## Different 'worlds' of inequality measurement {.smaller}
+**World Bank, Poverty and Inequality Platform (formerly 'Povcal')**
+
+> [Since c.1993] the number of countries with rising inequality was **slightly higher** than the number of countries with falling inequality. Yet, the average Gini among these 91 countries actually **declined**.
+[@WBpoverty2016]
+
+> Also find a quote about the within-coutry component of global inequality
+
+## The view from the World Inequality Database {.smaller}
+Top 1% share; pre-tax 'national' income; combining survey, tax and national accounts data; generalized pareto interpolation; individuals (equal split couples)
+
+(CHART of top 1% WID)
+
+## The view from the World Inequality Database {.smaller}
+Top 1% share; pre-tax 'national' income; combining survey, tax and national accounts data; generalized pareto interpolation; individuals (equal split couples)
+
+(TABLE of top 1% WID)
+
+
+## The view from the World Bank Poverty and Inequality Platform {.smaller}
+Gini; mix of consumption and disposable income; survey data (mostly micro, some 'grouped' data); lognormal or XXX interpolation (grouped data only); per capita household
+
+(CHART of Gini PIP)
+
+## The view from the World Bank Poverty and Inequality Platform {.smaller}
+Gini; mix of consumption and disposable income; survey data (mostly micro, some 'grouped' data); lognormal or XXX interpolation (grouped data only); per capita household
+
+(Table of Gini PIP)
+
+
+## Connecting up these 'worlds' is a low hanging fruit {preview-links=true}
+
+- The respective institutions – WIL and World Bank – have built hugely valuable and powerful platforms.
+- We are in a better position than ever to get a global view on inequality
+- But the two 'worlds' of measurement makes the current data terrain is *very* confusing for policimakers, researchers in adjacent fields, and the public.
+
+Example: a summary of inequality trends [from the UN](https://www.un.org/en/un75/inequality-bridging-divide).
+
+
+## Connecting up these 'worlds' is a low hanging fruit 
+
+- Existing studies tend to be based on only one data source, or only partially bridge between the two.
+
+    - Flagship reports of the two institutions
+    - Lakner Milanovic
+    - Groeningen...
+    - Ravi Kanbur...
+
+
+## Connecting up these 'worlds'
+
+1. Line up what we can:
+    - Coverage and time period
+    - Metrics
+
+    - (With lower coverage) Income concept
+        - WID pre-tax
+        - LIS?
+        - Income vs consumption: GCIP
+
+    - Methods: Hacky top income adjustment to PIP data?
+
+2. Triangulate
+    - Flag what we *don't* know – Isolate what is causing the differences between 'take home' messages
+        - Particular methodological choices?
+        - Particular countries?
+    - Gather together what we *do* know, irrespecive of may remaining differences
+
+
+## Bibliography

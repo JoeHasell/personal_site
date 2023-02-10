@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Joe Hasell - Paper 1: Triangulating trends in inequality around the world from secondary databases</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Paper 1: Triangulating trends in inequality around the world from secondary databases</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Joe Hasell</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Paper 1: A global view on inequality within countries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../PhD_pages/Paper_1/paper1.html" class="sidebar-item-text sidebar-link active">Paper 1: Triangulating trends in inequality around the world from secondary databases</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../presentations.html" class="sidebar-item-text sidebar-link">Presentations</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#literature-review-global-studies-of-inequality" id="toc-literature-review-global-studies-of-inequality" class="nav-link" data-scroll-target="#literature-review-global-studies-of-inequality">Literature review – Global studies of inequality</a></li>
+  <li><a href="#data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" id="toc-data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" class="nav-link" data-scroll-target="#data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited">Data review Why is our understanding of inequality around the world currently limited</a></li>
+  <li><a href="#methods-and-data" id="toc-methods-and-data" class="nav-link" data-scroll-target="#methods-and-data">Methods and data</a>
+  <ul class="collapse">
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data sources</a>
+  <ul class="collapse">
+  <li><a href="#pip" id="toc-pip" class="nav-link" data-scroll-target="#pip">PIP</a></li>
+  <li><a href="#wid" id="toc-wid" class="nav-link" data-scroll-target="#wid">WID</a></li>
+  <li><a href="#lis" id="toc-lis" class="nav-link" data-scroll-target="#lis">LIS</a></li>
+  <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage">Coverage</a></li>
+  </ul></li>
+  <li><a href="#comparing-databases" id="toc-comparing-databases" class="nav-link" data-scroll-target="#comparing-databases">Comparing databases</a>
+  <ul class="collapse">
+  <li><a href="#comparing-metrics" id="toc-comparing-metrics" class="nav-link" data-scroll-target="#comparing-metrics">Comparing metrics</a></li>
+  <li><a href="#since-1990" id="toc-since-1990" class="nav-link" data-scroll-target="#since-1990">Since 1990</a></li>
+  </ul></li>
+  <li><a href="#that-difference-is-driven-by-particular-regions" id="toc-that-difference-is-driven-by-particular-regions" class="nav-link" data-scroll-target="#that-difference-is-driven-by-particular-regions">That difference is driven by particular regions:</a>
+  <ul class="collapse">
+  <li><a href="#results-for-a-range-of-inequality-metrics" id="toc-results-for-a-range-of-inequality-metrics" class="nav-link" data-scroll-target="#results-for-a-range-of-inequality-metrics">Results for a range of inequality metrics</a></li>
+  </ul></li>
+  <li><a href="#explaining-differences-between-pip-and-wid-data" id="toc-explaining-differences-between-pip-and-wid-data" class="nav-link" data-scroll-target="#explaining-differences-between-pip-and-wid-data">Explaining differences between PIP and WID data</a>
+  <ul class="collapse">
+  <li><a href="#for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data" id="toc-for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data" class="nav-link" data-scroll-target="#for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data">For a subset of countries we can bridge between the PIP and WID data</a></li>
+  <li><a href="#more-in-depth-discussion-of-particular-outliers" id="toc-more-in-depth-discussion-of-particular-outliers" class="nav-link" data-scroll-target="#more-in-depth-discussion-of-particular-outliers">More in-depth discussion of particular outliers</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Paper 1: Triangulating trends in inequality around the world from secondary databases</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="callout-note callout callout-style-simple no-icon callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Load packages
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyverse' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──✔ ggplot2 3.3.5      ✔ purrr   0.3.4 
+✔ tibble  3.1.6      ✔ dplyr   1.0.10
+✔ tidyr   1.2.0      ✔ stringr 1.4.0 
+✔ readr   2.1.2      ✔ forcats 0.5.1 </code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.1.2</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(data.table)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'data.table'
+
+The following objects are masked from 'package:dplyr':
+
+    between, first, last
+
+The following object is masked from 'package:purrr':
+
+    transpose</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>What has happened to inequality within countries over the past generation?</p>
+<section id="outline" class="level1">
+<h1>Outline</h1>
+<ul>
+<li><p>We need a global view on inequality</p></li>
+<li><p>Though there is much data, we don’t have a clear global view.<br>
+<a href="https://www.un.org/en/un75/inequality-bridging-divide">UN summary of inequality trends</a></p></li>
+<li><p>A global view is hampered by many factors:</p>
+<ul>
+<li><p>In research and commentary, there is a disportionate focus high-income countries, in particular the US</p></li>
+<li><p>The extent and quality of available data</p>
+<ul>
+<li>Coverage</li>
+<li>Quality and comarabilty of data</li>
+<li>Some trade off between the two is inevitable</li>
+</ul></li>
+<li><p><strong>The major global inequality databases occupy different ‘worlds’ of measurement</strong></p></li>
+</ul>
+<p>It is the latter that I will be addressing. We are in a relatively rich world in terms of inequality data – thanks in particlar to efforts of harmonized databases.</p>
+<p>But we lose much of the value – different how disconnected</p>
+<p>– that the rich doesn’t translate to as understanding</p></li>
+<li><p>Two worlds of inequality measurement</p></li>
+</ul>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<ul>
+<li><p>A range of motives for taking a global view: SDGs; globalization – trade; ….</p></li>
+<li><p>We don’t have a clear global view.<br>
+<a href="https://www.un.org/en/un75/inequality-bridging-divide">UN summary of inequality trends</a></p></li>
+<li><p>Why is it that we don’t have a clear view?</p>
+<ol type="1">
+<li><p>Most academic research and commentary has focussed on high income countries (refs), especially the US. There are many reasons why we should not expect trends in inequality in these countries to reflect broader global trends.</p></li>
+<li><p>Hampered by the available data</p>
+<ul>
+<li><strong>Coverage</strong> – for instance no surveys.</li>
+<li><strong>Quality and comarabilty of data</strong> – Some secondary databases with global coverage mixes very heterogenous datapoints (WIID) (Find Atkinson and Brandolini ref from Handbook…). Those with a greater degree of harmonization tend to lack global coverage (LIS, EU-SILC, SEDLAC, until recently PIP)</li>
+<li><strong>Some trade off between the two is inevitable</strong> – There is no global survey of incomes. Countries run surveys based on their own needs and capacities. As such they differ. Saying something global means accepting a degree of heterogenity in the data. Similarly, definitions of income for tax purposes vary, impacting the comparability of tax data.</li>
+</ul></li>
+<li><p>Contradictory global views are presented by different global databases.</p>
+<ul>
+<li><p>The data situation has improved drastically: thanks to harmonized databases with global coverage. In particular:</p>
+<ul>
+<li>PIP – recently expanded to include high income countries</li>
+<li>WID – Transition from WTID, and the DINA methodology, global coverage.</li>
+<li>LIS: some data from middle and low income countries.</li>
+</ul></li>
+<li><p>But the ‘take home’ messages from the institutions producing these databases offer very contradictory views.</p>
+<ul>
+<li>“In recent decades, income inequality has increased in nearly all countries, but at different speeds, suggesting that institutions and policies matter in shaping inequality.” (WIR 2018)</li>
+<li>“[Across a range of approaches] average inequality within countries increased in the 1990s, but has been falling in recent years according to most specifications.” (World Bank, 2016)</li>
+</ul></li>
+<li><p>You can see this in the latest data from these two sources, using the metric typically favoured by each: Top 1% from WID vs Gini from PIP.</p></li>
+<li><p>These different messages are based on a mix of many different methodological differences:</p>
+<ul>
+<li>different metrics, sensitive to different parts of the distribution;</li>
+<li>Different welfare concepts;</li>
+<li>Different underlying data sources and adjusmtents to the top (or lack thereof);</li>
+<li>Different coverage or time periods being analysed.</li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul>
+</section>
+<section id="literature-review-global-studies-of-inequality" class="level1">
+<h1>Literature review – Global studies of inequality</h1>
+<ul>
+<li>Atkinson and Brandolini (2010) argue that global inequality analyses in particular need to consider both absol ute and relative differences.</li>
+</ul>
+</section>
+<section id="data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" class="level1">
+<h1>Data review Why is our understanding of inequality around the world currently limited</h1>
+<ul>
+<li><p><strong>A global view is hampered by the available data</strong>.</p></li>
+<li><p><strong>But databases have improved substantially recently</strong> Thanks to improvements and expansion of key global harmonized databases, we are now in a much stronger position to take a global view on inequality within countries.</p></li>
+</ul>
+<p>There are range of databases and a full review is out of the scope of this paper. Focus on the three databases of harmonized distributional data providing global or near-global coverage.</p>
+<ul>
+<li><strong>PIP</strong>
+<ul>
+<li>Survey data</li>
+<li>Mix of disposable income and consumption data (definitions vary)</li>
+<li>Per capita – Coverage: now includes high income countries (Add a box/visualization with coverage). Global coverage from 1990 onwards.</li>
+<li>A range of inequality indices provided ‘as standard’, but the whole distribution may be queried via API. Either microdata or, in a minority of cases, a parametric distribution fitted to ‘grouped data’ (e.g.&nbsp;income deciles)</li>
+</ul></li>
+<li><strong>WID</strong> – Survey data, tax data, National accounts
+<ul>
+<li>Coverage much greater for pre-tax national income. But post-tax concepts also available for a subset of observations.</li>
+<li>Greatest coverage for individuals – equal split where underlying data was available for couples.</li>
+<li>Coverage</li>
+<li>Estimates of the whole distribution Generalized Pareto Interpolation. Though longer-run coverage is higher for pretax top 1% share (reliance on tax data)</li>
+</ul></li>
+<li><strong>LIS</strong>
+<ul>
+<li>Offers less coverage, but is notable for providing access to microdata.</li>
+</ul></li>
+</ul>
+<p>Different headlines - WID suggests general rise (find a quote). PIP much more mixed… even a fall.</p>
+<p>Which world we live in matters for how we think we should tackle inequality.</p>
+<p>A secular, general rise - suggesting global forces, perhaps something intrinsic to capitalism (Piketty, 2014).</p>
+<p>A mixed picture of inequality around the world suggests reflect specific circumstances, with accordingly much more scope for national policy to influence.</p>
+<p>Both are reasonable methods and have strengths and weaknesses.</p>
+<p>I want to:</p>
+<p>a) Triangulate the key stylized facts. Which observations are robust to across available datasets with their different methods, and which are contingent?</p>
+<p>b) Untangle which methods, definitions affect the different conclusions arrived at.</p>
+</section>
+<section id="methods-and-data" class="level1">
+<h1>Methods and data</h1>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
+<section id="pip" class="level3">
+<h3 class="anchored" data-anchor-id="pip">PIP</h3>
+</section>
+<section id="wid" class="level3">
+<h3 class="anchored" data-anchor-id="wid">WID</h3>
+</section>
+<section id="lis" class="level3">
+<h3 class="anchored" data-anchor-id="lis">LIS</h3>
+</section>
+<section id="coverage" class="level3">
+<h3 class="anchored" data-anchor-id="coverage">Coverage</h3>
+<p>Give an overview of coverage in each dataset.</p>
+</section>
+</section>
+<section id="comparing-databases" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-databases">Comparing databases</h2>
+<section id="comparing-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-metrics">Comparing metrics</h3>
+<p>Does it make a difference whether we look at Gini or top 10%?</p>
+<p>People worry about whether Gini masks what’s happening at the top.</p>
+<p>Empirically: - Make a linear model of top 10% on Gini, for each source separately - Make predicted top 10% - Take a look at the R2 - Investigate individual countries with very poor predictions</p>
+<p>Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.</p>
+</section>
+<section id="since-1990" class="level3">
+<h3 class="anchored" data-anchor-id="since-1990">Since 1990</h3>
+<p>Similarities:</p>
+<p>Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)</p>
+<p>Indeed for some regions very similar picture:</p>
+<pre><code>- MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)
+
+- South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise
+
+-  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)
+
+- Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).</code></pre>
+<p>Differences:</p>
+<p>Verry different bottom line at the global level:</p>
+<ul>
+<li><p>PIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That’s without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)</p></li>
+<li><p>WID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e.&nbsp;% increase rather than % point increase? A point rise means ‘less’ in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia</p></li>
+</ul>
+</section>
+</section>
+<section id="that-difference-is-driven-by-particular-regions" class="level2">
+<h2 class="anchored" data-anchor-id="that-difference-is-driven-by-particular-regions">That difference is driven by particular regions:</h2>
+<p>More countries with rises. LArger rises. Especially larger populations. Average view very different:</p>
+<p>Countries where the sources paint a radically different picture that affect the aggregate results:</p>
+<ul>
+<li>India: Insane rise in WID 34-&gt;56</li>
+<li>China:</li>
+<li>Russia: Massive drop in PIP. Insane rise in WID.</li>
+<li>USA: Much larger rise in WID.</li>
+</ul>
+<p>What explains the different trends in these countries? (We can maybe look in more detail, at different welfare concepts etc.)</p>
+<p>It sometimes goes the other way: Indonesia – Rise in PIP, fall in WID.</p>
+<p>:::</p>
+<section id="method-2-use-a-regression-to-obtain-the-time-trend" class="level4">
+<h4 class="anchored" data-anchor-id="method-2-use-a-regression-to-obtain-the-time-trend">Method 2: Use a regression to obtain the time trend</h4>
+</section>
+<section id="results-for-a-range-of-inequality-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="results-for-a-range-of-inequality-metrics">Results for a range of inequality metrics</h3>
+<p>::: {.callout-note collapse=“true” appearance=“minimal”} ## Calculations for comparisons</p>
+</section>
+</section>
+<section id="explaining-differences-between-pip-and-wid-data" class="level2">
+<h2 class="anchored" data-anchor-id="explaining-differences-between-pip-and-wid-data">Explaining differences between PIP and WID data</h2>
+<section id="for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data" class="level3">
+<h3 class="anchored" data-anchor-id="for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data">For a subset of countries we can bridge between the PIP and WID data</h3>
+<p>Besides the underlying data sources, there are many differences between what is being measured in the PIP and WID data - notably the welfare concept and unit of analysis/equivalization.</p>
+<p>In order to get a better understanding of where differences between the datasets arise, for a subset of countries we can bridge between the two somewhat. For example:</p>
+<ul>
+<li>WID has post-tax income series for some countries</li>
+<li>We can use LIS to look at how changing the welfare concept, unit of analysis, equivalisation affects things. (For equivalisation, we could also possibly use the newly available PIP harmonized microdata).</li>
+</ul>
+</section>
+<section id="more-in-depth-discussion-of-particular-outliers" class="level3">
+<h3 class="anchored" data-anchor-id="more-in-depth-discussion-of-particular-outliers">More in-depth discussion of particular outliers</h3>
+<ul>
+<li>Russia is a very notable case where the two datasets tell very different stories.</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

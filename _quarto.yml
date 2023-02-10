@@ -10,15 +10,11 @@ website:
     contents:
       - section: "DPhil: Triangulating the key facts about global income distribution"
         contents:
-          - section: "Papers"
+          - PhD_pages/overview.qmd
+          - section: "Paper 1: A global view on inequality within countries"
             contents:
-              - PhD_pages/paper_pages/overview.qmd
-              - PhD_pages/paper_pages/paper1.qmd
-              - PhD_pages/paper_pages/paper3.qmd
-              - PhD_pages/paper_pages/test_page.qmd
-          - section: "Data appendices"
-            contents:
-              - section: "Paper 1"
+              - PhD_pages/Paper_1/paper1.qmd
+              - section:
                 contents:
                   - PhD_pages/data_appendices/1_A_prepare_PIP.qmd
                   - PhD_pages/data_appendices/1_B_prepare_WID.qmd
@@ -26,20 +22,16 @@ website:
                   - PhD_pages/data_appendices/1_D_prepare_population.qmd
                   - PhD_pages/data_appendices/1_E_prepare_region_classifications.qmd
                   - PhD_pages/data_appendices/1_F_within_country_trends.qmd
-              - section: "Paper 3"
-                contents:
-                  - PhD_pages/data_appendices/3_A_prepare_KLEMS.qmd
-                  - PhD_pages/data_appendices/3_B_prepare_OECD.qmd
-      - section: "Presentations"
-        contents:
-              - presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.qmd
+      - presentations.qmd
       - section: "About this site"
         contents:
           - how_to.qmd
-          - test_pages/test_passing_r_to_python.qmd
-          - test_pages/test_with_shinylive.qmd
-          - test_pages/test_with_iframe_shiny.qmd
-          - test_pages/test_with_ipywidgets.qmd
+          - section:
+            contents:
+              - test_pages/test_passing_r_to_python.qmd
+              - test_pages/test_with_shinylive.qmd
+              - test_pages/test_with_iframe_shiny.qmd
+              - test_pages/test_with_ipywidgets.qmd
       
 
 format:

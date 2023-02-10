@@ -1,0 +1,260 @@
+---
+title: "Paper 1: Triangulating trends in inequality around the world from secondary databases"
+format: html
+bibliography: references.bib
+---
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load packages
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(data.table)
+
+```
+:::
+
+What has happened to inequality within countries over the past generation?
+
+# Outline
+
+- We need a global view on inequality
+
+- Though there is much data, we don't have a clear global view.    
+  [UN summary of inequality trends](https://www.un.org/en/un75/inequality-bridging-divide)
+
+
+- A global view is hampered by many factors:
+    - In research and commentary, there is a disportionate focus high-income countries, in particular the US
+    
+    - The extent and quality of available data
+        - Coverage
+        - Quality and comarabilty of data
+        - Some trade off between the two is inevitable
+    
+    - **The major global inequality databases occupy different 'worlds' of measurement** 
+    
+    It is the latter that I will be addressing. We are in a relatively rich world in terms of inequality data – thanks in particlar to efforts of harmonized databases.
+    
+    But we lose much of the value – different how disconnected 
+    
+     – that the rich doesn't translate to as  understanding  
+
+
+- Two worlds of inequality measurement
+
+
+# Introduction
+
+
+- A range of motives for taking a global view: SDGs; globalization – trade; ....
+
+- We don't have a clear global view.    
+  [UN summary of inequality trends](https://www.un.org/en/un75/inequality-bridging-divide)
+
+- Why is it that we don't have a clear view?
+
+    1) Most academic research and commentary has focussed on high income countries (refs), especially the US. There are many reasons why we should not expect trends in inequality in these countries to reflect broader global trends.
+
+    2) Hampered by the available data
+        - **Coverage** – for instance no surveys.
+        - **Quality and comarabilty of data** – Some secondary databases with global coverage mixes very heterogenous datapoints (WIID) (Find Atkinson and Brandolini ref from Handbook...). Those with a greater degree of harmonization tend to lack global coverage (LIS, EU-SILC, SEDLAC, until recently PIP)
+        - **Some trade off between the two is inevitable** – There is no global survey of incomes. Countries run surveys based on their own needs and capacities. As such they differ. Saying something global means accepting a degree of heterogenity in the data. Similarly, definitions of income for tax purposes vary, impacting the comparability of tax data. 
+
+    3) Contradictory global views are presented by different global databases.
+        - The data situation has improved drastically: thanks to harmonized databases with global coverage. In particular:
+            - PIP – recently expanded to include high income countries
+            - WID – Transition from WTID, and the DINA methodology, global coverage.
+            - LIS: some data from middle and low income countries.
+        - But the 'take home' messages from the institutions producing these databases offer very contradictory views.
+            - "In recent decades, income inequality 
+has increased in nearly all countries, 
+but at different speeds, suggesting 
+that institutions and policies matter in shaping inequality." (WIR 2018)
+            - "[Across a range of approaches] average  inequality  within  countries  increased   in  the  1990s,  but  has  been  falling  in  recent years according to most specifications." (World Bank, 2016)
+        
+
+        - You can see this in the latest data from these two sources, using the metric typically favoured by each: Top 1% from WID vs Gini from PIP.
+
+
+        - These different messages are based on a mix of many different methodological differences:
+            - different metrics, sensitive to different parts of the distribution; 
+            - Different welfare concepts; 
+            - Different underlying data sources and adjusmtents to the top (or lack thereof);
+            - Different coverage or time periods being analysed.
+
+
+
+
+
+# Literature review – Global studies of inequality
+
+- Atkinson and Brandolini (2010) argue that global inequality analyses in particular need to consider both absol ute  and relative differences.
+
+# Data review Why is our understanding of inequality around the world currently limited
+
+- **A global view is hampered by the available data**.
+  
+
+- **But databases have improved substantially recently**
+Thanks to improvements and expansion of key global harmonized databases, we are now in a much stronger position to take a global view on inequality within countries.
+
+There are range of databases and a full review is out of the scope of this paper. Focus on the three databases of harmonized distributional data providing global or near-global coverage.
+
+- **PIP** 
+    - Survey data
+    - Mix of disposable income and consumption data (definitions vary)
+    - Per capita
+    – Coverage: now includes high income countries (Add a box/visualization with coverage). Global coverage from 1990 onwards.
+    - A range of inequality indices provided 'as standard', but the whole distribution may be queried via API. Either microdata or, in a minority of cases, a parametric distribution fitted to 'grouped data' (e.g. income deciles)
+
+- **WID** 
+    – Survey data, tax data, National accounts
+    - Coverage much greater for pre-tax national income. But post-tax concepts also available for a subset of observations.
+    - Greatest coverage for individuals – equal split where underlying data was available for couples.
+    - Coverage 
+    - Estimates of the whole distribution Generalized Pareto Interpolation. Though longer-run coverage is higher for pretax top 1% share (reliance on tax data)
+
+
+- **LIS**
+    - Offers less coverage, but is notable for providing access to microdata.
+
+
+
+
+
+
+
+
+
+
+
+Different headlines - WID suggests general rise (find a quote). PIP much more mixed... even a fall.
+
+Which world we live in matters for how we think we should tackle inequality.
+
+A secular, general rise - suggesting global forces, perhaps something intrinsic to capitalism (Piketty, 2014).
+
+A mixed picture of inequality around the world suggests reflect specific circumstances, with accordingly much more scope for national policy to influence.
+
+Both are reasonable methods and have strengths and weaknesses.
+
+I want to:
+
+a\) Triangulate the key stylized facts. Which observations are robust to across available datasets with their different methods, and which are contingent?
+
+b\) Untangle which methods, definitions affect the different conclusions arrived at.
+
+# Methods and data
+
+## Data sources
+
+### PIP
+
+### WID
+
+### LIS
+
+
+### Coverage
+
+Give an overview of coverage in each dataset.
+
+
+## Comparing databases
+
+
+
+
+### Comparing metrics
+
+Does it make a difference whether we look at Gini or top 10%?
+
+People worry about whether Gini masks what's happening at the top.
+
+Empirically: 
+    - Make a linear model of top 10% on Gini, for each source separately
+    - Make predicted top 10%
+    - Take a look at the R2
+    - Investigate individual countries with very poor predictions
+
+Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.
+
+### Since 1990
+
+
+Similarities:
+
+Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)
+
+Indeed for some regions very similar picture:
+
+    - MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)
+
+    - South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise
+
+    -  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)
+
+    - Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).
+
+
+Differences:
+
+Verry different bottom line at the global level:
+
+- PIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That's without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)
+
+- WID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e. % increase rather than % point increase? A point rise means 'less' in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia 
+
+That difference is driven by particular regions:
+- 
+
+
+More countries with rises. LArger rises. Especially larger populations. Average view very different:
+
+
+
+
+
+Countries where the sources paint a radically different picture that affect the aggregate results:
+
+- India: Insane rise in WID 34->56
+- China:
+- Russia: Massive drop in PIP. Insane rise in WID.
+- USA: Much larger rise in WID.
+
+What explains the different trends in these countries? (We can maybe look in more detail, at different welfare concepts etc.)
+
+It sometimes goes the other way: Indonesia – Rise in PIP, fall in WID.
+
+:::
+
+#### Method 2: Use a regression to obtain the time trend
+
+
+
+### Results for a range of inequality metrics
+
+
+::: {.callout-note collapse="true" appearance="minimal"} 
+## Calculations for comparisons
+
+
+
+## Explaining differences between PIP and WID data
+
+### For a subset of countries we can bridge between the PIP and WID data
+
+Besides the underlying data sources, there are many differences between what is being measured in the PIP and WID data - notably the welfare concept and unit of analysis/equivalization.
+
+In order to get a better understanding of where differences between the datasets arise, for a subset of countries we can bridge between the two somewhat. For example:
+
+-   WID has post-tax income series for some countries
+-   We can use LIS to look at how changing the welfare concept, unit of analysis, equivalisation affects things. (For equivalisation, we could also possibly use the newly available PIP harmonized microdata).
+
+### More in-depth discussion of particular outliers
+
+-   Russia is a very notable case where the two datasets tell very different stories.
+
+# Conclusion

@@ -1,0 +1,11 @@
+---
+title: "Presentations"
+format: html
+---
+
+### From $1.90 to $2.15: the updated International Poverty Line
+20/01/2023
+
+A presentation given to Masters students in Comparative Social Policy at the Department for Social Policy, University of Oxford.
+
+[Slides](other_presentations/DSPI_CSP_masters_Jan2023/DSPI_CSP_masters_Jan2023.qmd)
