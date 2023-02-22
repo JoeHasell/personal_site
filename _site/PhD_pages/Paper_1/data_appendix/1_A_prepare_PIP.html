@@ -1376,9 +1376,9 @@ Calculate additional variables
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">"decile4_share"</span>,</span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"decile5_share"</span>]</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>df_pip[<span class="st">"Bottom_50_share"</span>] <span class="op">=</span> df_pip[sum_cols].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>df_pip[<span class="st">"Bottom 50pc share"</span>] <span class="op">=</span> df_pip[sum_cols].<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>df_pip[<span class="st">"P90_P50_ratio"</span>] <span class="op">=</span> df_pip[<span class="st">"decile9_thr"</span>]<span class="op">/</span>df_pip[<span class="st">"median"</span>]</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>df_pip[<span class="st">"P90:P50 ratio"</span>] <span class="op">=</span> df_pip[<span class="st">"decile9_thr"</span>]<span class="op">/</span>df_pip[<span class="st">"median"</span>]</span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>df_pip[<span class="st">"Gini"</span>] <span class="op">=</span> df_pip[<span class="st">'gini'</span>] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1399,7 +1399,7 @@ Rename and select needed columns
 <div class="callout-body-container callout-body">
 <div class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_pip <span class="op">=</span> df_pip.rename(columns<span class="op">=</span>{</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'decile10_share'</span>:<span class="st">'Top_10_share'</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'decile10_share'</span>:<span class="st">'Top 10pc share'</span>,</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'mld'</span>: <span class="st">'MLD'</span>,</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"country"</span>: <span class="st">"Entity"</span>,</span>
 <span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"year"</span>: <span class="st">"Year"</span></span>
@@ -1409,8 +1409,8 @@ Rename and select needed columns
 <span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Year"</span>,</span>
 <span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Entity"</span>,</span>
 <span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Gini"</span>,</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Top_10_share"</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Bottom_50_share"</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Top 10pc share"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Bottom 50pc share"</span>,</span>
 <span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"MLD"</span>,</span>
 <span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"welfare_type"</span></span>
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>]</span>
@@ -1446,8 +1446,8 @@ See the prepared PIP data
       <th>Year</th>
       <th>Entity</th>
       <th>Gini</th>
-      <th>Top_10_share</th>
-      <th>Bottom_50_share</th>
+      <th>Top 10pc share</th>
+      <th>Bottom 50pc share</th>
       <th>MLD</th>
       <th>welfare_type</th>
     </tr>

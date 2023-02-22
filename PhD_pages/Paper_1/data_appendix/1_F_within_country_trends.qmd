@@ -5,7 +5,8 @@ warning: false
 filters:
   - shinylive
 sidebar: false
-
+execute:
+  eval: false
 ---
 
 :::{.column-page}

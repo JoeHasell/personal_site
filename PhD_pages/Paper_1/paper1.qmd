@@ -2,20 +2,125 @@
 title: "Paper 1: Triangulating trends in inequality around the world from secondary databases"
 format: html
 bibliography: references.bib
+execute:
+  echo: false
+  warning: false
 ---
 
 ::: {.callout-note collapse="true" appearance="minimal"}
-### Load packages
+### Load packages and data
 
-```{r}
-library(tidyverse)
-library(knitr)
-library(data.table)
+```{python}
+
+from plotnine import *
+import plotly.express as px
+import pandas as pd
+import numpy as np
+from IPython.display import display, HTML, IFrame, Markdown
+import dataframe_image as dfi
+import imgkit
+
+from wrangling_and_plotting_functions import *
+
+pd.set_option('display.max_rows', None)
 
 ```
+
+
+```{python}
+
+fp = 'data_appendix/data/clean/pip.csv'
+        
+df_pip = pd.read_csv(fp)
+
+
+fp = 'data_appendix/data/clean/wid.csv'
+
+df_wid = pd.read_csv(fp)
+
+fp = 'data_appendix/data/clean/lis.csv'
+
+df_lis = pd.read_csv(fp)
+
+
+fp = 'data_appendix/data/clean/region_mapping.csv'
+
+df_regions = pd.read_csv(fp)
+
+
+fp = 'data_appendix/data/clean/population.csv'
+
+df_pop = pd.read_csv(fp)
+
+fp = 'data_appendix/data/clean/region_population.csv'
+
+df_pop_regions = pd.read_csv(fp)
+
+
+# Gather data into dictionary
+source_dfs = {
+    "PIP": df_pip,
+    "WID": df_wid,
+    "LIS": df_lis
+    }
+
+
+# This specifies the +/- for the 'stable' category in the tables below
+tolerance_lookup =  {
+                'var_search_term': [
+                    'Gini',
+                    'Top 1pc share', 
+                    'Top 10pc share',
+                    'Bottom 50pc share'],
+                'var_tolerance': [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            }
+
+```
+
+
+```{python}
+def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement,selected_vars):
+    msg = f'{reference_vals[0]} vs {reference_vals[1]} (+/- {max_dist_from_refs} years)'
+
+    if len(selected_vars)>1:
+        if all_metrics_requirement:
+            msg = f'{msg} – Matched countries only'
+        else:
+            msg = f'{msg} – All available countries' 
+
+    return(msg)
+
+```
+
 :::
 
 What has happened to inequality within countries over the past generation?
+
+Many answers for individual countries, or for particular regions. Can Our understanding of inequality trends *globally*, however, remains fragmented unclear.
+
+For many it is a given . Many papers in the social sciences, or policy notes begin 'decades of rising inequality' – without to specify where. Implying ubiquitous.
+
+Does not reflect the conflicting data.
+
+This stands in contrast with the data in PIP – an important data source. Relied on for SDGs.
+
+
+
+Confusiong terrain: e.g. where for SDGs they use PIP; but HDR they use WID.
+
+
+Our view remains highly fragmented. Different global datasets offer starkly differing or even contradictory views 
+
+Despite the wealth of data available, our view of inequality around the world remains fragmented and unclear.
+
+These are questions that we need answers to. Winners and loosers of globalization. Policy to tackle inequality. SDGs. Philanthropy.
+
+That's what this paper is going to do. (Outline structure).
 
 # Outline
 
@@ -45,8 +150,8 @@ What has happened to inequality within countries over the past generation?
 - Two worlds of inequality measurement
 
 
-# Introduction
 
+# Introduction
 
 - A range of motives for taking a global view: SDGs; globalization – trade; ....
 

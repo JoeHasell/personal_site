@@ -129,9 +129,9 @@ sum_cols = [
   "decile4_share",
   "decile5_share"]
 
-df_pip["Bottom_50_share"] = df_pip[sum_cols].sum(axis=1)
+df_pip["Bottom 50pc share"] = df_pip[sum_cols].sum(axis=1)
 
-df_pip["P90_P50_ratio"] = df_pip["decile9_thr"]/df_pip["median"]
+df_pip["P90:P50 ratio"] = df_pip["decile9_thr"]/df_pip["median"]
 
 df_pip["Gini"] = df_pip['gini'] * 100
 
@@ -145,7 +145,7 @@ df_pip["Gini"] = df_pip['gini'] * 100
 ```{python}
 
 df_pip = df_pip.rename(columns={
-    'decile10_share':'Top_10_share',
+    'decile10_share':'Top 10pc share',
     'mld': 'MLD',
     "country": "Entity",
     "year": "Year"
@@ -155,8 +155,8 @@ keep_cols = [
   "Year",
   "Entity",
   "Gini",
-  "Top_10_share",
-  "Bottom_50_share",
+  "Top 10pc share",
+  "Bottom 50pc share",
   "MLD",
   "welfare_type"
 ]

@@ -25,6 +25,14 @@ The data was prepared in three separate files according to three income concepts
 These we append into a single file.
 
 ```{python}
+# I should shift over to this file at some point
+# fp = 'https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/raw/wid_indices_992j.csv'
+
+```
+
+
+
+```{python}
 # df_wid<- read.csv("https://raw.githubusercontent.com/owid/notebooks/main/BetterDataDocs/PabloArriagada/WID/data/final/wid_pretax.csv")
 
 inc_concepts = [
@@ -133,17 +141,18 @@ df_wid["Gini"] = df_wid['Gini coefficient'] * 100
 ```{python}
 
 df_wid = df_wid.rename(columns={
-    'P90-P100 - share of the top 10%':'Top_10_share',
-    'P0-P50 - share of the bottom 50%':'Bottom_50_share',
-    'P99-P100 - share of the top 1%':'Top_1_share'
+    'P90-P100 - share of the top 10%':'Top 10pc share',
+    'P0-P50 - share of the bottom 50%':'Bottom 50pc share',
+    'P99-P100 - share of the top 1%':'Top 1pc share'
   })
 
 keep_cols = [
   "Year",
   "Entity",
   "Gini",
-  "Top_10_share",
-  "Bottom_50_share",
+  'Top 1pc share',
+  "Top 10pc share",
+  "Bottom 50pc share",
   "inc_concept"
 ]
 
@@ -159,7 +168,7 @@ df_wid = df_wid[keep_cols]
 
 df_wid = df_wid.set_index(['Year','Entity','inc_concept']).unstack()
 
-df_wid.columns = df_wid.columns.map(lambda x: '{}_{}'.format(x[0], x[1]))
+df_wid.columns = df_wid.columns.map(lambda x: '{} – {}'.format(x[0], x[1]))
 
 df_wid = df_wid.reset_index()
 

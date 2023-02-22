@@ -1,131 +1,1891 @@
 ---
 title: "Triangulating a global view on inequality"
-author: "Joe Hasell"
+author: "<br> <br> Joe Hasell – DPhil candidate at DSPI University of Oxford; Our World in Data<br> <br> Pablo Arriagada – Our World in Data"
 format: 
     revealjs:
         theme: [default, revealjs_joe_theme.scss] 
 bibliography: references.bib
 ---
 
+```{python}
+
+from plotnine import *
+import plotly.express as px
+import pandas as pd
+import numpy as np
+from IPython.display import display, HTML, IFrame, Markdown
+import dataframe_image as dfi
+import imgkit
+
+from wrangling_and_plotting_functions import *
+
+pd.set_option('display.max_rows', None)
+
+```
+
+
+```{python}
+
+fp = 'data_appendix/data/clean/pip.csv'
+        
+df_pip = pd.read_csv(fp)
+
+
+fp = 'data_appendix/data/clean/wid.csv'
+
+df_wid = pd.read_csv(fp)
+
+fp = 'data_appendix/data/clean/lis.csv'
+
+df_lis = pd.read_csv(fp)
+
+
+fp = 'data_appendix/data/clean/region_mapping.csv'
+
+df_regions = pd.read_csv(fp)
+
+
+fp = 'data_appendix/data/clean/population.csv'
+
+df_pop = pd.read_csv(fp)
+
+fp = 'data_appendix/data/clean/region_population.csv'
+
+df_pop_regions = pd.read_csv(fp)
+
+
+# Gather data into dictionary
+source_dfs = {
+    "PIP": df_pip,
+    "WID": df_wid,
+    "LIS": df_lis
+    }
+
+
+tolerance_lookup =  {
+                'var_search_term': [
+                    'Gini',
+                    'Top 1pc share', 
+                    'Top 10pc share',
+                    'Bottom 50pc share'],
+                'var_tolerance': [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            }
+
+```
+
+
+```{python}
+def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement,selected_vars):
+    msg = f'{reference_vals[0]} vs {reference_vals[1]} (+/- {max_dist_from_refs} years)'
+
+    if len(selected_vars)>1:
+        if all_metrics_requirement:
+            msg = f'{msg} – Matched countries only'
+        else:
+            msg = f'{msg} – All available countries' 
+
+    return(msg)
+
+```
+
 ## Concepts
+::: {.r-fit-text}
+- Three concepts of global inequality [not quite @Milanovic2007; or @AnandSegal2015-nh]
 
-- Three concepts of global inequality (Milanovic):
+    1*. Average within-country inequality
 
-    1. Average within-country inequality
+    2*. Average within-country inequality, weighting by population
 
-    2. Average within-country inequality, weighting by population
+    3. Inequality across the world population taken as a whole
+        - Future work
 
-    3. Inequality across the world population taken as a whole (future work)
-
-- Income(ish) inequality, not wealth
-
-- Relative inequality, not absolute
-
-
-
-## Why do we need a global view?
-
-- Cosmopolitan values (e.g. UN's SDGs)
-- Opportunities and limitations for national policy to address inequality
-- Priorities for international policy (taxation, migration, aid...)
-- Priorities for philanthropy 
-- Winners and losers of globalization ('Degrowth')
+- We will be looking at:
+    - Income(ish) inequality, not wealth
+    - Relative inequality, not absolute
+:::
 
 
-## A clear global view is lacking {.smaller}
+## {.smaller}
+### Why do we need a global view?
+::: {.r-fit-text}
+::: {.incremental}
+- Understanding the winners and losers of globalization and economic growth
+    - *"We’re fighting for Main Street, not Wall Street. We have rejected globalism and embraced patriotism."* - Donald Trump, [Aug 2020](https://www.youtube.com/watch?v=l83sbXD0nuY&t=11m15s)
+- To inform national policy to address inequality – both opportunities and limits
+- To inform international policy to address inequality (financial reporting transparency, tax havens, global taxation, migration, aid...)
+- A reflection of cosmopolitan values and outlook (e.g. UN's SDGs)
+- As a guide to 'Effective Altruism', including charitable giving
+:::
+:::
 
-- **Limitations in the available data**
+## {.smaller}
+### A clear global view is lacking
+::: {.r-fit-text}
+::: {.incremental}
+
+1. **Limitations in the available data**
     - Coverage
-    - Quality and comarabilty
+    - Quality and comarabilty within secondary databases [@AtkinsonBrandolini2001-qt]
     - Much improved recently!
+        - Expanded coverage of harmonized secondary databases: World Bank's *Poverty and Inequality Platform* (PIP), *World Inequality Database* (WID), *Luxembourg Income Study* (LIS)
 
-- **Different conceptual focus in richer and poorer countries**
-    - Inequality/relative poverty in high income countries
+2. **Different conceptual focus in richer and poorer countries**
+    - Income inequality/relative poverty in high income countries
     - Absolute poverty in poorer countries
-    - Much improved recently! (Atkinson commission... Atkinson & Brandolini 2010... Ravallion 2019... 'Societal poverty' – World Bank 2018, 2020, 2022)
+    - Much improved recently!
+        - Atkinson commission [-@Atkinson2016-xp]; 'Societal poverty' – [@World_Bank2018-eo]; UN SDGs; expansion of WID coverage
 
-- **Different 'worlds' of measurement occupied by global harmonized databases**
-    - Different metrics (Gini, top income shares etc.); Different welfare concepts; underlying data sources; methods (e.g. treatment of 'missing top'; coverage or time periods analysed
-    - Differences somewhat bundled together
-    - Yield very different 'take home' messages
+3. **Different 'worlds' of measurement**
+    - Many methodological differences between different global databases, *often bundled together*
+        - Yield very different take-home messages about inequality and how it has evolved
+
+:::
+:::
 
 
-## Different 'worlds' of inequality measurement {.smaller}
-**World Inequality Database**
+## {.smaller}
+### Different 'worlds': *World Inequality Database*
+::: {.incremental}
 
 > In recent decades, **income inequality has increased in nearly all countries**, but at different speeds...
 [@Alvaredo2018-qq]
-    
-> Also find a quote about the within-coutry component of global inequality
+:::
+
+## {.smaller}
+### Different 'worlds': *World Inequality Database*
+
+The vast majority of global inequality (concept 3) is now due to differences **within** countries. 
+
+![](images/WID_global_ineq_decomp.png)
 
 
-## Different 'worlds' of inequality measurement {.smaller}
-**World Bank, Poverty and Inequality Platform (formerly 'Povcal')**
+## {.smaller}
+### Different 'worlds': *World Bank, Poverty and Inequality Platform*
+::: {.incremental}
+
 
 > [Since c.1993] the number of countries with rising inequality was **slightly higher** than the number of countries with falling inequality. Yet, the average Gini among these 91 countries actually **declined**.
 [@WBpoverty2016]
+:::
 
-> Also find a quote about the within-coutry component of global inequality
+## {.smaller}
+### Different 'worlds': *World Bank, Poverty and Inequality Platform*
 
-## The view from the World Inequality Database {.smaller}
-Top 1% share; pre-tax 'national' income; combining survey, tax and national accounts data; generalized pareto interpolation; individuals (equal split couples)
+The vast majority of global inequality (concept 3) remains due to differences **between** countries.
 
-(CHART of top 1% WID)
-
-## The view from the World Inequality Database {.smaller}
-Top 1% share; pre-tax 'national' income; combining survey, tax and national accounts data; generalized pareto interpolation; individuals (equal split couples)
-
-(TABLE of top 1% WID)
+![](images/pip_global_ineq_decomp.png){fig-align="center"}
 
 
-## The view from the World Bank Poverty and Inequality Platform {.smaller}
-Gini; mix of consumption and disposable income; survey data (mostly micro, some 'grouped' data); lognormal or XXX interpolation (grouped data only); per capita household
+##
+### Different 'worlds'
+::: {.r-fit-text}
+::: {.incremental}
+In terms of data availability, quality and comparability, we are in a better position than ever.
 
-(CHART of Gini PIP)
+Yet some of the *most basic* questions are still open:
 
-## The view from the World Bank Poverty and Inequality Platform {.smaller}
-Gini; mix of consumption and disposable income; survey data (mostly micro, some 'grouped' data); lognormal or XXX interpolation (grouped data only); per capita household
+- Is rising inequality within countries a near-ubiquitous, global phenomenon?
+    - **WID:** Yes
+    - **PIP:** No 
 
-(Table of Gini PIP)
-
-
-## Connecting up these 'worlds' is a low hanging fruit {preview-links=true}
-
-- The respective institutions – WIL and World Bank – have built hugely valuable and powerful platforms.
-- We are in a better position than ever to get a global view on inequality
-- But the two 'worlds' of measurement makes the current data terrain is *very* confusing for policimakers, researchers in adjacent fields, and the public.
-
-Example: a summary of inequality trends [from the UN](https://www.un.org/en/un75/inequality-bridging-divide).
-
-
-## Connecting up these 'worlds' is a low hanging fruit 
-
-- Existing studies tend to be based on only one data source, or only partially bridge between the two.
-
-    - Flagship reports of the two institutions
-    - Lakner Milanovic
-    - Groeningen...
-    - Ravi Kanbur...
+- Where do global inequalities lie: in differences **between** richer and poorer countries, or in differences between richer and poorer people **within** countries?
+    - **WID:** Within countries
+    - **PIP:** Between countries
+:::
+:::
 
 
-## Connecting up these 'worlds'
+## 
+### Different methodologies 
 
+::: {.r-fit-text}
+
+::: {.incremental}
+
+The different 'worlds' are separated by many methodological differences, often bundled together:
+
+- Inequality indices (and focal points in the distribution)
+    - **WID:** Focus on the top
+    - **PIP:** Focus on overall inequality (e.g. Gini)
+
+- Welfare concepts
+    - **WID:** Focus on (and greatest coverage for) pre-tax national income
+    - **PIP:** mix of disposable income and consumption
+
+:::
+
+:::
+
+## 
+### Different methodologies 
+
+::: {.r-fit-text}
+
+::: {.incremental}
+
+- Underlying data sources
+    - **WID:** Tax + NA + survey 
+    - **PIP:** survey only
+
+- Methodologies
+    - **WID:** Adjustments for misisng top in survey data, Scaling to national accounts aggregates
+    - **PIP:** Some ex-post harmonization of welfare concepts
+    
+- Coverage
+    - Differences across the two datasets, impacting the time period that can be analysed
+
+:::
+
+:::
+
+## {.smaller}
+
+**Connecting up these 'worlds' is a low-hanging fruit...**
+
+::: {.r-fit-text}
+::: {.incremental}
+
+**For policy and public debate**
+
+- The data is better than ever
+- But the two 'worlds' of measurement makes the current data terrain *very* confusing
+    - Example: a summary of inequality trends [from the UN](https://www.un.org/en/un75/inequality-bridging-divide).
+
+:::
+:::
+
+## {.smaller .scrollable}
+
+
+**Connecting up these 'worlds' is a low-hanging fruit...**
+
+::: {.r-fit-text}
+::: {.incremental}
+
+**For academic research**
+
+- Existing studies tend to be based on only one 'world'
+    - Flagship reports of the two institutions [@chancel2021; @World_Bank2022-vr]
+    - Kanbur et al. [-@Kanbur2022-lk]
+    - Niño-Zarazúa et al. [-@Nino-Zarazua2017-tv]
+    - van Zanden et al. [-@Van_Zanden2014-zo]
+    - Ravallion[-@Ravallion2014-mk]
+
+- Two notable counter-examples:
+    - Anand and Segal [-@AnandSegal2015-nh]
+        - Adjusts survey data to match WTID top income shares (with fairly small effect)
+        - Estimtates up to 2005
+    - Lakner and Milanovic [-@laknerMilanovic2016]
+        - Adjusts survey data to match WTID top income shares (with fairly small effect)
+        - Only considers impact on overall global inequality
+        - Estimates up to 2008
+    - Neither focus on average within-country trends (Concepts 1* and 2* above)
+    - Coverage in the WID data has expanded subsequently
+:::
+:::
+
+# Connecting up the 'worlds'
+
+## {.smaller}
+### Connecting up the 'worlds'
 1. Line up what we can:
     - Coverage and time period
-    - Metrics
+        - 1995 vs 2015 (+/-3) – good coverage 
+        - 1980 vs 2018 (+/-5) – much worse coverage, more relevant period
 
-    - (With lower coverage) Income concept
-        - WID pre-tax
-        - LIS?
-        - Income vs consumption: GCIP
+    - Inequality indices
 
-    - Methods: Hacky top income adjustment to PIP data?
+    - Income concept 
+        - Very cursory glance [unlike @MorelliYonzan2022-zn; @CarranzaNolan2022-ko]
+
+
+
+## {.smaller}
+### Connecting up the 'worlds'
 
 2. Triangulate
-    - Flag what we *don't* know – Isolate what is causing the differences between 'take home' messages
-        - Particular methodological choices?
+    - Pinpoint what we *don't* know; what is behind the differences:
         - Particular countries?
-    - Gather together what we *do* know, irrespecive of may remaining differences
+        - Particular methodological differences?
+    - Gather together what we *do* know, irrespecive of the many remaining differences
+
+
+# Coverage
+
+
+## {.smaller}
+Coverage gets very good in both datasets from ~1990.
+
+```{python}
+
+df_coverage = pd.DataFrame()
+
+data_to_check = {
+    'Source': ['PIP', 'WID'],
+    'Metric': ['Gini', 'Top 1pc share – pretax'],
+    'df': [df_pip, df_wid]
+    }
+
+max_dist_from_ref = 3
+
+
+for yr in range(1960, 2023):
+
+    for i in [0,1]:
+
+        matched_data = closest_to_reference(
+            df=data_to_check['df'][i], 
+            reference_val = yr, 
+            max_dist_from_ref = max_dist_from_ref, 
+            reference_col = 'Year', 
+            group_by_col = 'Entity', 
+            value_col = data_to_check['Metric'][i], 
+            tie_break = 'above')
+
+        df_pop_ref_year = df_pop[df_pop['Year']==yr].drop(columns=['Year', 'population'])
+
+        matched_data = matched_data.merge(df_pop_ref_year, how='left')
+
+        coverage_yr = pd.DataFrame({
+            'Year': [yr],
+            'No. of countries': [matched_data['world_pop_share'].count()],
+            'Share of World population': [matched_data['world_pop_share'].sum()]
+        })
+        
+        source = data_to_check['Source'][i]
+        metric = data_to_check['Metric'][i]
+        coverage_yr['Data'] = f'{source} – {metric}'
+
+        df_coverage = pd.concat([df_coverage, coverage_yr])
+        
+```
+
+```{python}
+
+fig = px.line(df_coverage, x="Year", y="Share of World population", color='Data')
+
+fig.update_layout(
+    title = f'Population coverage – within {max_dist_from_ref} years',
+    legend_title="",
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+))
+
+fig.show()
+        
+
+
+```
+
+
+## {.smaller}
+Coverage gets very good in both datasets from ~1990.
+
+```{python}
+
+fig = px.line(df_coverage, x="Year", y="No. of countries", color='Data')
+
+fig.update_layout(
+    title = f'No. of countries – within {max_dist_from_ref} years',
+    legend_title="",
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+))
+
+fig.show()
+        
+
+
+```
+
+
+
+## {.smaller}
+We can increase 'coverage' in 1980 by widening the net.
+
+```{python}
+
+df_coverage = pd.DataFrame()
+
+data_to_check = {
+    'Source': ['PIP', 'WID'],
+    'Metric': ['Gini', 'Top 1pc share – pretax'],
+    'df': [df_pip, df_wid]
+    }
+
+max_dist_from_ref = 5
+
+
+for yr in range(1960, 2023):
+
+    for i in [0,1]:
+
+        matched_data = closest_to_reference(
+            df=data_to_check['df'][i], 
+            reference_val = yr, 
+            max_dist_from_ref = max_dist_from_ref, 
+            reference_col = 'Year', 
+            group_by_col = 'Entity', 
+            value_col = data_to_check['Metric'][i], 
+            tie_break = 'above')
+
+        df_pop_ref_year = df_pop[df_pop['Year']==yr].drop(columns=['Year', 'population'])
+
+        matched_data = matched_data.merge(df_pop_ref_year, how='left')
+
+        coverage_yr = pd.DataFrame({
+            'Year': [yr],
+            'No. of countries': [matched_data['world_pop_share'].count()],
+            'Share of World population': [matched_data['world_pop_share'].sum()]
+        })
+        
+        source = data_to_check['Source'][i]
+        metric = data_to_check['Metric'][i]
+        coverage_yr['Data'] = f'{source} – {metric}'
+
+        df_coverage = pd.concat([df_coverage, coverage_yr])
+        
+```
+
+```{python}
+
+fig = px.line(df_coverage, x="Year", y="Share of World population", color='Data')
+
+fig.update_layout(
+    title = f'Population coverage – within {max_dist_from_ref} years',
+    legend_title="",
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+))
+
+fig.show()
+        
+
+
+```
+
+
+## {.smaller}
+We can increase 'coverage' in 1980 by widening the net.
+
+```{python}
+
+fig = px.line(df_coverage, x="Year", y="No. of countries", color='Data')
+
+fig.update_layout(
+    title = f'No. of countries – within {max_dist_from_ref} years',
+    legend_title="",
+    legend=dict(
+    orientation="h",
+    yanchor="bottom",
+    y=1.02,
+    xanchor="right",
+    x=1
+))
+
+fig.show()
+        
+
+
+```
+
+
+# 1995 vs 2015
+
+
+## {.smaller}
+```{python}
+# Set-up to compare WID and PIP top 10% share, all countries
+reference_vals = [1995, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+# Table WID vs PIP top 10% share, all countries
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table4.png")
+
+
+```
+![](images/tables/pres_table4.png)
+
+
+
+## {.smaller}
+```{python}
+# Switch to alow only countries with matched data from both PIP and WID for top 10% share
+
+all_metrics_requirement = True
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+# Table WID vs PIP top 10% share, only matched countries
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table5.png")
+
+
+```
+![](images/tables/pres_table5.png)
+
+::: {.incremental}
+
+- Country coverage drops (less so population-weighted)
+- Drop in coverage not uniform across regions and source (LAC and SS Africa in PIP)
+
+:::
+
+
+## {.smaller}
+
+```{python}
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+```
+![](images/tables/pres_table5.png)
+
+::: {.incremental}
+
+Key differences:
+
+- Inequality is far higher in WID than PIP
+- A very substantial rise in the pop-weighted average in WID.
+
+:::
+
+
+## {.smaller}
+
+```{python}
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+```
+![](images/tables/pres_table5.png)
+
+::: {.incremental}
+
+Key similarities:
+
+- Rising vs falling: approx. equal in both sources
+- Unweighted avg approx. stable in both (a fall in PIP)
+- Weighted average less benign trend than unweighted average
+
+:::
+
+
+##
+```{python}
+
+# Scatter WID (WID vs PIP top 10% share, only matched countries)
+
+plot_change_scatter(
+      plot_var = selected_vars[0],
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+
+
+##
+```{python}
+
+# Scatter WID (WID vs PIP top 10% share, only matched countries)
+
+plot_change_scatter(
+      plot_var = selected_vars[1],
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+
+
+## {.smaller .scrollable}
+```{python}
+
+# Scatter difference (WID vs PIP top 10% share, only matched countries)
+
+plot_change_scatter(
+      plot_var = 'diff',
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+```{python}
+df_change = plot_change_scatter(
+      plot_var = 'diff',
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[1]
+
+df_change['change_diff'] = df_change[f'change {selected_vars[0]}'] - df_change[f'change {selected_vars[1]}'] 
+
+df_change.to_csv('df_change.csv')
+
+```
+::: {.incremental}
+
+
+- More countries below than above the line
+- For the *majority* of countries the gap is not huge (28/79 > 2 pt. difference; 20/79 > 4 pt. difference)
+- *Very* large differences in a small number of coutries – which happen to be very populous
+
+:::
+
+
+## Top 1 vs Top 10?
+
+## {.smaller}
+
+```{python}
+# Set-up to compare WID top 1% and top 10% share, all countries
+reference_vals = [1995, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 1pc share – pretax',
+        'WID: Top 10pc share – pretax'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+# Table WID top 1% and top 10% share, all countries
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table_top_1_top10.png")
+
+
+```
+![](images/tables/pres_table_top_1_top10.png)
+
+::: {.incremental}
+
+- Differences for some individual countries – LAC
+- But for other regions, and globally, the story over time is very similar.
+
+:::
+
+# 1980 vs 2018
+
+## {.smaller}
+```{python}
+
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table8.png")
+
+
+```
+![](images/tables/pres_table8.png)
+
+::: {.incremental}
+
+- Even before aligning coverage, the country coverage drops substantially for both datasets - so too does population coverage
+- In WID a substantial rise in the unweighted average; none in PIP
+- A huge rise in weighted average in WID; small rise in PIP
+- PIP is the binding constraint on coverage: almost no EE & CA coverage; half the number of W. European countries.
+
+
+
+
+:::
+
+## {.smaller}
+```{python}
+
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = True
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table9.png")
+
+
+```
+![](images/tables/pres_table9.png)
+
+::: {.incremental}
+
+-  Very few countries available in both datasets for this period (though population coverage falls less)
+- Aligning coverage does bring the datasets somewhat closer: 
+    - smaller rise in global unweighted average in WID
+    - more balanced split between rise and fall
+- But the stark difference remains: a huge rise in weighted average in WID
+
+
+:::
+
+
+
+## {.smaller .scrollable}
+
+```{python}
+
+
+plot_change_scatter(
+      plot_var = 'diff',
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+- For those countries with data from both PIP and WID, the majority tell a surprisingly similar story about change over time.
+- Only for a small number are there *very* large differences – this includes a number of populous countries: India, China, US, Mexico 
+
+
+
+
+## Top 1 vs Top 10?
+
+## {.smaller}
+
+```{python}
+# Set-up to compare WID top 1% and top 10% share, all countries
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 1pc share – pretax',
+        'WID: Top 10pc share – pretax'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+# Table WID top 1% and top 10% share, all countries
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table_top_1_top10_1980.png")
+
+
+```
+![](images/tables/pres_table_top_1_top10_1980.png)
+
+::: {.incremental}
+
+- Much more divergence visible than for 1995-2015 period – especially population-weighted
+- Average top 1% doubled, or nearly, in S & SE Asia, East Asia and W. Offshoots. EE & CA quadrupled.
+
+:::
+
+
+## {.smaller}
+
+```{python}
+# Set-up to compare WID top 1% and top 10% share, all countries
+all_metrics_requirement = True
+selected_vars = [
+        'WID: Top 1pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+# Table WID top 1% and PIP top 10% share, all countries
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table_WID_top_1_PIP_top10_1980.png")
+
+
+```
+![](images/tables/pres_table_WID_top_1_PIP_top10_1980.png)
+
+::: {.incremental}
+
+- This remains true even after aligning coverage with PIP.
+
+:::
+
+
+
+
+
+# Welfare concept & methods
+
+## LIS pre- and post-tax data
+
+## {.smaller}
+
+```{python}
+
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = True
+selected_vars = [
+        'LIS: Top 10pc share – percap_disposable',
+        'LIS: Top 10pc share – percap_market',
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+
+```{python}
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/LIS_on_LIS.png")
+
+
+```
+![](images/tables/LIS_on_LIS.png)
+
+::: {.incremental}
+
+- Very low coverage
+- For W. Europe and W. Offshoots we do see some divergence between pre- and post- tax inequality.
+
+:::
+
+## WID pre- vs post-tax data
+
+## {.smaller}
+
+```{python}
+
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = True
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'WID: Top 10pc share – posttax_nat',
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+
+```{python}
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/WID_on_WID.png")
+
+
+```
+![](images/tables/WID_on_WID.png)
+
+::: {.incremental}
+
+- Again very low coverage
+- For both EE & CA and W. Europe, quite a similar story in pre- and post-tax trends – albeit huge rises within EE & CA.
+
+:::
+
+
+
+
+## Individual countries
+
+##
+```{python}
+
+def plot_one_country_comparison(selected_entity, selected_vars):
+    
+    selected_source_var_dict = prep_selected_vars(selected_vars)
+
+    df_long = pd.DataFrame()
+
+
+    for i in range(len(selected_source_var_dict['sources'])):
+
+        source = selected_source_var_dict["sources"][i]
+        var = selected_source_var_dict["var_names"][i]
+
+        df = source_dfs[source]
+
+        if source == "PIP":
+
+            df1 = df.loc[df['welfare_type'] == "income", ['Year', 'Entity', var]]\
+                .rename(columns = {var: 'value'})
+
+            df1['data'] = f'{source}: {var} (income)'
+
+            df_long = pd.concat([df_long, df1])
+
+            df2 = df.loc[df['welfare_type'] == "consumption", ['Year', 'Entity', var, 'welfare_type']]\
+                .rename(columns = {var: 'value'})
+
+            df2['data'] = f'{source}: {var} (consumption)'
+
+            df_long = pd.concat([df_long, df2])
+            
+            
+
+        else:
+
+            df = df[['Year', 'Entity', var]]\
+                .rename(columns = {var: 'value'})
+
+            df['data'] = f'{source}: {var}'
+
+            df_long = pd.concat([df_long, df])
+
+
+    df_plot = df_long[df_long['Entity']==selected_entity]
+
+
+    fig = px.line(df_plot, x="Year", y="value", color='data',
+    title = f'A range of series for {selected_entity}'
+    )
+
+    fig.update_layout(showlegend=True, legend=dict(
+    title_font_family='Lato',
+    font=dict(
+        size=8
+    )
+    ))
+    fig.show()
+
+```
+
+## {.smaller}
+
+```{python}
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'WID: Top 10pc share – posttax_nat',
+        'PIP: Top 10pc share',
+        'LIS: Top 10pc share – percap_disposable',
+        'LIS: Top 10pc share – percap_market'
+        ]
+
+plot_one_country_comparison(selected_entity = "United States", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- In the US, similar trends across survey and WID 1975-1995
+- Some divergence thereafter between pre- and post-tax series - also in LIS survey data
+- Very strong divergence of WID series (both pre- and post-tax) 1995 onwards.
+
+:::
+
+## {.smaller .scrollable}
+
+```{python}
+
+plot_one_country_comparison(selected_entity = "Russia", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- In Russia, huge uncertainty concerning the extent and duration of rising inequality over transition.
+- Quality of the data subject to a lot of discussion [@Milanovic1998-sy; @Novokmet2018-px; @Atkinson-Micklewright1992-qr]
+- More agreement from mid-2000s
+
+:::
+
+## {.smaller}
+
+```{python}
+plot_one_country_comparison(selected_entity = "Mexico", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- In Mexico (and other LAC countries) WID is using a linear interpolation between decadal estimates prior to ~2000.
+
+- This relates to methods (tax data, top adjustments) rather than income concept.
+
+:::
+
+## {.smaller}
+
+```{python}
+plot_one_country_comparison(selected_entity = "Brazil", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- Similar in Brazil, except WID goes with the survey data after 2000.
+
+:::
+
+## {.smaller .scrollable}
+
+```{python}
+plot_one_country_comparison(selected_entity = "India", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- In India, only two survey available in LIS.
+- Some divergence between pre- and post- tax inequality in the LIS data, but tiny compared to the divergence of WID pre-tax. 
+- Note PIP data relates to *consumption*
+- A period of particular divergence between national accounts and survey data [@Deaton2005-oy; @Sandefur2022-lx]
+
+:::
+
+## {.smaller}
+
+```{python}
+plot_one_country_comparison(selected_entity = "China", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- In China, some divergence of pre- and post-tax nequality apparent in LIS survey data
+- Very condensed period of divergence in WID between 2000-2005
+- Again substantial divergence between national accounts and survey means over this time [@Deaton2005-oy]
+
+:::
+
+## {.smaller}
+
+```{python}
+plot_one_country_comparison(selected_entity = "Nigeria", selected_vars = selected_vars)
+```
+
+::: {.incremental}
+
+- Nigeria – WID seems not to account for 1996 survey in which inequality apparently peaked.
+- Breaks in comparability noted by the World Bank – see this [Our World in Data chart](https://ourworldindata.org/explorers/poverty-explorer?hideControls=false&Metric=Share+in+poverty&Poverty+line=%242.15+per+day%3A+International+Poverty+Line&Household+survey+data+type=Show+data+from+both+income+and+consumption+surveys&Show+breaks+between+less+comparable+surveys=true&country=~NGA).
+
+:::
+
+
+# Triangulating the key facts of global inequality
+Concept 1* and 2*
+
+## {.smaller}
+### Since 1995:
+
+
+::: {.r-fit-text}
+::: {.incremental}
+
+**Key differences:**
+
+
+
+- Strong rise in the population-weighted average level of inequality (Concept 2*) in WID that is absent in PIP.
+
+
+
+**Key similarities:**
+
+
+
+- For a majority of countries, trends look quite similar across PIP and WID.
+- Inequality in the average country was roughly flat, with roughly as many coutries with rising inequality as with falling inequality
+- Inequality was rising particularly strongly in some very populous countries, bringing up the trend in the weighted average
+- Different indices – even a focus on the *very* top – paint very similar pictures overall.
+
+
+:::
+
+
+:::
+
+## {.smaller}
+### Since 1980
+::: {.incremental}
+::: {.r-fit-text}
+
+**Key differences:**
+
+- Significant rise in unweighted average inequality (Concept 1*) in WID that is absent in PIP.
+- Huge rise in the population-weighted average level of inequality (Concept 2*) in WID that is much more muted in PIP.
+- Stronger differences looking at the *very* top
+
+
+**Key similarities**
+
+- Amongst those (few) countries with data in both PIP and WID, trends look quite similar for a majority of countries.
+- Inequality was rising particularly strongly in some very populous countries, bringing up the trend in the weighted average
+
+
+:::
+
+:::
+
+
+## {.smaller .scrollable}
+### Lessons (Concept 3)
+
+::: {.r-fit-text}
+
+::: {.incremental}
+
+- The global picture – when weighting by population – is greatly affected by a small number of populous countries. Trends diverge substantialy between PIP and WID for a number of these.
+
+- These larger discrepancies in trends relate to methodological choices, adjustment procedures etc. – the income concept plays a minor role at most.
+
+- The fact that these large differences are a (substantial) minority of cases suggests they may reflect idiosynctratic data quality or methodological issues specific to these countries – and not just a general issue of the 'the missing top'.
+    - Some examples of possibly idiosyncratic issues demonstrated above
+
+- Room for the two worlds be more proactively connecting up and explaining divergences – particularly in these cases where there are large discrepencies and large populations.
+
+- Analysis of global inequality trends – when weighting by population – should factor in this potential sensitivity to localised data issues
+    - Something not currently done in the literature on global inequality
+    - Future work!
+
+
+:::
+
+:::
+
+##
+
+
+
+# Appendix
+
+## Countries only found in one source - 1995 vs 2015
+
+```{python}
+
+reference_vals = [1995, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+
+
+```
+
+```{python}
+prepped_data = prep_data(
+        source_dfs = source_dfs,
+        df_pop = df_pop,
+        df_regions = df_regions,
+        selected_vars = selected_vars,
+        reference_vals = reference_vals,
+        max_dist_from_refs = max_dist_from_refs,
+        min_dist_between = 1,
+        all_metrics_requirement = all_metrics_requirement,
+        reference_col = "Year",
+        group_by_col = "Entity",
+        outlier_cut_off_upper = None,
+        tolerance_lookup =  tolerance_lookup
+        )
+
+prepped_data['source_count'] = prepped_data.groupby('Entity')['source_var'].transform('count')
+
+prepped_data = prepped_data[prepped_data['source_count']==1]
+```
+## 
+PIP only
+```{python}
+prepped_data.loc[prepped_data['source_var'] == selected_vars[1], ['Entity', 'region', f'value{reference_vals[0]}', f'value{reference_vals[1]}', f'Year{reference_vals[0]}', f'Year{reference_vals[1]}', 'pip_welfare', f'pop{reference_vals[1]}']].sort_values(['region', 'Entity'])
+
+
+
+```
+
+## 
+WID only
+```{python}
+prepped_data.loc[prepped_data['source_var'] == selected_vars[0], ['Entity', 'region', f'value{reference_vals[0]}', f'value{reference_vals[1]}', f'Year{reference_vals[0]}', f'Year{reference_vals[1]}', f'pop{reference_vals[1]}']].sort_values(['region', 'Entity'])
+
+
+
+```
+
+
+
+
+## Countries only found in one source - 1980 vs 2018
+
+```{python}
+
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+
+
+
+```
+
+```{python}
+prepped_data = prep_data(
+        source_dfs = source_dfs,
+        df_pop = df_pop,
+        df_regions = df_regions,
+        selected_vars = selected_vars,
+        reference_vals = reference_vals,
+        max_dist_from_refs = max_dist_from_refs,
+        min_dist_between = 1,
+        all_metrics_requirement = all_metrics_requirement,
+        reference_col = "Year",
+        group_by_col = "Entity",
+        outlier_cut_off_upper = None,
+        tolerance_lookup =  tolerance_lookup
+        )
+
+prepped_data['source_count'] = prepped_data.groupby('Entity')['source_var'].transform('count')
+
+prepped_data = prepped_data[prepped_data['source_count']==1]
+```
+
+## {.scrollable} 
+PIP only
+```{python}
+prepped_data.loc[prepped_data['source_var'] == selected_vars[1], ['Entity', 'region', f'value{reference_vals[0]}', f'value{reference_vals[1]}', f'Year{reference_vals[0]}', f'Year{reference_vals[1]}', 'pip_welfare', f'pop{reference_vals[1]}']].sort_values(['region', 'Entity'])
+
+
+
+```
+
+## {.scrollable} 
+WID only
+```{python}
+prepped_data.loc[prepped_data['source_var'] == selected_vars[0], ['Entity', 'region', f'value{reference_vals[0]}', f'value{reference_vals[1]}', f'Year{reference_vals[0]}', f'Year{reference_vals[1]}', f'pop{reference_vals[1]}']].sort_values(['region', 'Entity'])
+
+
+
+```
+
+# Ex-slide graveyard
+
+
+
+
+## {.smaller}
+### Different 'worlds': *WID*
+```{python}
+
+reference_vals = [1990, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 1pc share – pretax',
+        'PIP: Gini'
+        ]
+
+```
+
+```{python}
+
+plot_change_scatter(
+      plot_var = 'WID: Top 1pc share – pretax',
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+
+
+## {.smaller}
+### Different 'worlds': *World Bank PIP*
+
+```{python}
+
+plot_change_scatter(
+      plot_var = 'PIP: Gini',
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+
+## {.smaller}
+### Different worlds: a comparison
+
+```{python}
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+df_summary
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table1.png")
+
+```
+
+![](images/tables/pres_table1.png)
+
+
+
+
+# Aligning inequality indices
+
+
+, not so sensitive to top [Osberg...]
+
+##
+```{python}
+
+reference_vals = [1990, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'PIP: Gini',
+        'PIP: Top 10pc share'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table2.png")
+
+
+```
+![](images/tables/pres_table2.png)
+
+##
+Observations
+- All very similar
+- MENA is interesting.
+
+##
+Find countries where the measures moved in different directions... Plot them (the whole time series.)
+
+
+
+##
+```{python}
+
+reference_vals = [1990, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Gini – pretax',
+        'WID: Top 1pc share – pretax'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table3.png")
+
+
+```
+![](images/tables/pres_table3.png)
+
+
+##
+Observations
+- All very similar
+- LAC – reverses trend among small number of countries
+
+
+##
+Find countries where the measures moved in different directions... Plot them (the whole time series.)
+
+## 
+General relationship – regression
+
+
+## {.smaller}
+###
+Take home message isn't all that dependent on the measure
+- Concern that Gini misses what's happening at the extremes.
+- In individual cases there can be important differences
+- But looking globally it's less of an issue.
+
+
+
+
+## Alternative spec - +/-5 years
+
+##
+```{python}
+
+reference_vals = [1995, 2018]
+max_dist_from_refs = 5
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 10pc share – pretax',
+        'PIP: Top 10pc share'
+        ]
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary.drop(["Other N. America", "Other Oceania"], axis=0, inplace=True)
+
+dfi.export(df_summary,"images/tables/pres_table6.png")
+
+
+```
+![](images/tables/pres_table6.png)
+
+
+
+##
+```{python}
+
+all_metrics_requirement = True
+
+print(make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement, selected_vars))
+
+
+```
+
+```{python}
+
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+
+
+df_summary = df_summary.drop(["Other N. America", "Other Oceania"], axis=0)
+
+dfi.export(df_summary,"images/tables/pres_table7.png")
+
+
+```
+![](images/tables/pres_table7.png)
+
+
+
+
 
 
 ## Bibliography
