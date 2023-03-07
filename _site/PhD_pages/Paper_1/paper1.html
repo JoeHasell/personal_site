@@ -151,23 +151,19 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#outline" id="toc-outline" class="nav-link active" data-scroll-target="#outline">Outline</a></li>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
-  <li><a href="#literature-review-global-studies-of-inequality" id="toc-literature-review-global-studies-of-inequality" class="nav-link" data-scroll-target="#literature-review-global-studies-of-inequality">Literature review – Global studies of inequality</a></li>
-  <li><a href="#data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" id="toc-data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" class="nav-link" data-scroll-target="#data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited">Data review Why is our understanding of inequality around the world currently limited</a></li>
-  <li><a href="#methods-and-data" id="toc-methods-and-data" class="nav-link" data-scroll-target="#methods-and-data">Methods and data</a>
+  <li><a href="#why-do-we-need-a-global-view-on-inequality" id="toc-why-do-we-need-a-global-view-on-inequality" class="nav-link active" data-scroll-target="#why-do-we-need-a-global-view-on-inequality">Why do we need a global view on inequality?</a></li>
+  <li><a href="#what-do-i-mean-by-global-view-on-inequality" id="toc-what-do-i-mean-by-global-view-on-inequality" class="nav-link" data-scroll-target="#what-do-i-mean-by-global-view-on-inequality">What do I mean by global view on inequality?</a></li>
+  <li><a href="#global-data-on-inequality" id="toc-global-data-on-inequality" class="nav-link" data-scroll-target="#global-data-on-inequality">Global data on inequality</a>
   <ul class="collapse">
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data sources</a>
-  <ul class="collapse">
-  <li><a href="#pip" id="toc-pip" class="nav-link" data-scroll-target="#pip">PIP</a></li>
-  <li><a href="#wid" id="toc-wid" class="nav-link" data-scroll-target="#wid">WID</a></li>
-  <li><a href="#lis" id="toc-lis" class="nav-link" data-scroll-target="#lis">LIS</a></li>
-  <li><a href="#coverage" id="toc-coverage" class="nav-link" data-scroll-target="#coverage">Coverage</a></li>
+  <li><a href="#global-databases" id="toc-global-databases" class="nav-link" data-scroll-target="#global-databases">Global databases</a></li>
+  <li><a href="#two-worlds-of-inequality-measurement" id="toc-two-worlds-of-inequality-measurement" class="nav-link" data-scroll-target="#two-worlds-of-inequality-measurement">Two worlds of inequality measurement</a></li>
   </ul></li>
-  <li><a href="#comparing-databases" id="toc-comparing-databases" class="nav-link" data-scroll-target="#comparing-databases">Comparing databases</a>
+  <li><a href="#triangulating-a-global-view" id="toc-triangulating-a-global-view" class="nav-link" data-scroll-target="#triangulating-a-global-view">Triangulating a global view</a>
   <ul class="collapse">
-  <li><a href="#comparing-metrics" id="toc-comparing-metrics" class="nav-link" data-scroll-target="#comparing-metrics">Comparing metrics</a></li>
   <li><a href="#since-1990" id="toc-since-1990" class="nav-link" data-scroll-target="#since-1990">Since 1990</a></li>
+  <li><a href="#since-1980" id="toc-since-1980" class="nav-link" data-scroll-target="#since-1980">Since 1980</a></li>
+  <li><a href="#comparing-metrics" id="toc-comparing-metrics" class="nav-link" data-scroll-target="#comparing-metrics">Comparing metrics</a></li>
+  <li><a href="#since-1990-1" id="toc-since-1990-1" class="nav-link" data-scroll-target="#since-1990-1">Since 1990</a></li>
   </ul></li>
   <li><a href="#that-difference-is-driven-by-particular-regions" id="toc-that-difference-is-driven-by-particular-regions" class="nav-link" data-scroll-target="#that-difference-is-driven-by-particular-regions">That difference is driven by particular regions:</a>
   <ul class="collapse">
@@ -177,7 +173,6 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data" id="toc-for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data" class="nav-link" data-scroll-target="#for-a-subset-of-countries-we-can-bridge-between-the-pip-and-wid-data">For a subset of countries we can bridge between the PIP and WID data</a></li>
   <li><a href="#more-in-depth-discussion-of-particular-outliers" id="toc-more-in-depth-discussion-of-particular-outliers" class="nav-link" data-scroll-target="#more-in-depth-discussion-of-particular-outliers">More in-depth discussion of particular outliers</a></li>
-  </ul></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
@@ -209,7 +204,7 @@ ul.task-list li input[type="checkbox"] {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Load packages
+Load packages and data
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -220,131 +215,56 @@ Load packages
 </div>
 </div>
 <p>What has happened to inequality within countries over the past generation?</p>
-<section id="outline" class="level1">
-<h1>Outline</h1>
+<p>Many answers for individual countries, or for particular regions. Can Our understanding of inequality trends <em>globally</em>, however, remains fragmented unclear.</p>
+<p>For many it is a given . Many papers in the social sciences, or policy notes begin ‘decades of rising inequality’ – without to specify where. Implying ubiquitous.</p>
+<p>Does not reflect the conflicting data.</p>
+<p>This stands in contrast with the data in PIP – an important data source. Relied on for SDGs.</p>
+<p>Confusiong terrain: e.g.&nbsp;where for SDGs they use PIP; but HDR they use WID.</p>
+<p>Our view remains highly fragmented. Different global datasets offer starkly differing or even contradictory views</p>
+<p>Despite the wealth of data available, our view of inequality around the world remains fragmented and unclear.</p>
+<p>These are questions that we need answers to. Winners and loosers of globalization. Policy to tackle inequality. SDGs. Philanthropy.</p>
+<p>That’s what this paper is going to do. (Outline structure).</p>
+<section id="why-do-we-need-a-global-view-on-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-need-a-global-view-on-inequality">Why do we need a global view on inequality?</h2>
+</section>
+<section id="what-do-i-mean-by-global-view-on-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="what-do-i-mean-by-global-view-on-inequality">What do I mean by global view on inequality?</h2>
 <ul>
-<li><p>We need a global view on inequality</p></li>
-<li><p>Though there is much data, we don’t have a clear global view.<br>
-<a href="https://www.un.org/en/un75/inequality-bridging-divide">UN summary of inequality trends</a></p></li>
-<li><p>A global view is hampered by many factors:</p>
-<ul>
-<li><p>In research and commentary, there is a disportionate focus high-income countries, in particular the US</p></li>
-<li><p>The extent and quality of available data</p>
-<ul>
-<li>Coverage</li>
-<li>Quality and comarabilty of data</li>
-<li>Some trade off between the two is inevitable</li>
-</ul></li>
-<li><p><strong>The major global inequality databases occupy different ‘worlds’ of measurement</strong></p></li>
-</ul>
-<p>It is the latter that I will be addressing. We are in a relatively rich world in terms of inequality data – thanks in particlar to efforts of harmonized databases.</p>
-<p>But we lose much of the value – different how disconnected</p>
-<p>– that the rich doesn’t translate to as understanding</p></li>
-<li><p>Two worlds of inequality measurement</p></li>
+<li>Concept 1 and 2, but not 3. Companion paper.</li>
+<li>Relative not absolute.</li>
 </ul>
 </section>
-<section id="introduction" class="level1">
-<h1>Introduction</h1>
+<section id="global-data-on-inequality" class="level2">
+<h2 class="anchored" data-anchor-id="global-data-on-inequality">Global data on inequality</h2>
+<section id="global-databases" class="level3">
+<h3 class="anchored" data-anchor-id="global-databases">Global databases</h3>
+<p>A global view faces the hard limitation of the underlying data. This has two sides: firstly is there any data? Secondly the comparability of the data, across countries and over time.</p>
+<p>Much improved – <em>harmonized</em> secondary databases. Three of note.</p>
 <ul>
-<li><p>A range of motives for taking a global view: SDGs; globalization – trade; ….</p></li>
-<li><p>We don’t have a clear global view.<br>
-<a href="https://www.un.org/en/un75/inequality-bridging-divide">UN summary of inequality trends</a></p></li>
-<li><p>Why is it that we don’t have a clear view?</p>
-<ol type="1">
-<li><p>Most academic research and commentary has focussed on high income countries (refs), especially the US. There are many reasons why we should not expect trends in inequality in these countries to reflect broader global trends.</p></li>
-<li><p>Hampered by the available data</p>
-<ul>
-<li><strong>Coverage</strong> – for instance no surveys.</li>
-<li><strong>Quality and comarabilty of data</strong> – Some secondary databases with global coverage mixes very heterogenous datapoints (WIID) (Find Atkinson and Brandolini ref from Handbook…). Those with a greater degree of harmonization tend to lack global coverage (LIS, EU-SILC, SEDLAC, until recently PIP)</li>
-<li><strong>Some trade off between the two is inevitable</strong> – There is no global survey of incomes. Countries run surveys based on their own needs and capacities. As such they differ. Saying something global means accepting a degree of heterogenity in the data. Similarly, definitions of income for tax purposes vary, impacting the comparability of tax data.</li>
-</ul></li>
-<li><p>Contradictory global views are presented by different global databases.</p>
-<ul>
-<li><p>The data situation has improved drastically: thanks to harmonized databases with global coverage. In particular:</p>
-<ul>
-<li>PIP – recently expanded to include high income countries</li>
-<li>WID – Transition from WTID, and the DINA methodology, global coverage.</li>
-<li>LIS: some data from middle and low income countries.</li>
-</ul></li>
-<li><p>But the ‘take home’ messages from the institutions producing these databases offer very contradictory views.</p>
-<ul>
-<li>“In recent decades, income inequality has increased in nearly all countries, but at different speeds, suggesting that institutions and policies matter in shaping inequality.” (WIR 2018)</li>
-<li>“[Across a range of approaches] average inequality within countries increased in the 1990s, but has been falling in recent years according to most specifications.” (World Bank, 2016)</li>
-</ul></li>
-<li><p>You can see this in the latest data from these two sources, using the metric typically favoured by each: Top 1% from WID vs Gini from PIP.</p></li>
-<li><p>These different messages are based on a mix of many different methodological differences:</p>
-<ul>
-<li>different metrics, sensitive to different parts of the distribution;</li>
-<li>Different welfare concepts;</li>
-<li>Different underlying data sources and adjusmtents to the top (or lack thereof);</li>
-<li>Different coverage or time periods being analysed.</li>
-</ul></li>
-</ul></li>
-</ol></li>
+<li><p>PIP</p></li>
+<li><p>WID</p></li>
+<li><p>LIS</p></li>
 </ul>
 </section>
-<section id="literature-review-global-studies-of-inequality" class="level1">
-<h1>Literature review – Global studies of inequality</h1>
+<section id="two-worlds-of-inequality-measurement" class="level3">
+<h3 class="anchored" data-anchor-id="two-worlds-of-inequality-measurement">Two worlds of inequality measurement</h3>
+<section id="connecting-up-the-worlds-is-valuable" class="level4">
+<h4 class="anchored" data-anchor-id="connecting-up-the-worlds-is-valuable">Connecting up the worlds is valuable</h4>
 <ul>
-<li>Atkinson and Brandolini (2010) argue that global inequality analyses in particular need to consider both absol ute and relative differences.</li>
+<li>for Policy</li>
+<li>for academic research</li>
 </ul>
 </section>
-<section id="data-review-why-is-our-understanding-of-inequality-around-the-world-currently-limited" class="level1">
-<h1>Data review Why is our understanding of inequality around the world currently limited</h1>
-<ul>
-<li><p><strong>A global view is hampered by the available data</strong>.</p></li>
-<li><p><strong>But databases have improved substantially recently</strong> Thanks to improvements and expansion of key global harmonized databases, we are now in a much stronger position to take a global view on inequality within countries.</p></li>
-</ul>
-<p>There are range of databases and a full review is out of the scope of this paper. Focus on the three databases of harmonized distributional data providing global or near-global coverage.</p>
-<ul>
-<li><strong>PIP</strong>
-<ul>
-<li>Survey data</li>
-<li>Mix of disposable income and consumption data (definitions vary)</li>
-<li>Per capita – Coverage: now includes high income countries (Add a box/visualization with coverage). Global coverage from 1990 onwards.</li>
-<li>A range of inequality indices provided ‘as standard’, but the whole distribution may be queried via API. Either microdata or, in a minority of cases, a parametric distribution fitted to ‘grouped data’ (e.g.&nbsp;income deciles)</li>
-</ul></li>
-<li><strong>WID</strong> – Survey data, tax data, National accounts
-<ul>
-<li>Coverage much greater for pre-tax national income. But post-tax concepts also available for a subset of observations.</li>
-<li>Greatest coverage for individuals – equal split where underlying data was available for couples.</li>
-<li>Coverage</li>
-<li>Estimates of the whole distribution Generalized Pareto Interpolation. Though longer-run coverage is higher for pretax top 1% share (reliance on tax data)</li>
-</ul></li>
-<li><strong>LIS</strong>
-<ul>
-<li>Offers less coverage, but is notable for providing access to microdata.</li>
-</ul></li>
-</ul>
-<p>Different headlines - WID suggests general rise (find a quote). PIP much more mixed… even a fall.</p>
-<p>Which world we live in matters for how we think we should tackle inequality.</p>
-<p>A secular, general rise - suggesting global forces, perhaps something intrinsic to capitalism (Piketty, 2014).</p>
-<p>A mixed picture of inequality around the world suggests reflect specific circumstances, with accordingly much more scope for national policy to influence.</p>
-<p>Both are reasonable methods and have strengths and weaknesses.</p>
-<p>I want to:</p>
-<p>a) Triangulate the key stylized facts. Which observations are robust to across available datasets with their different methods, and which are contingent?</p>
-<p>b) Untangle which methods, definitions affect the different conclusions arrived at.</p>
-</section>
-<section id="methods-and-data" class="level1">
-<h1>Methods and data</h1>
-<section id="data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
-<section id="pip" class="level3">
-<h3 class="anchored" data-anchor-id="pip">PIP</h3>
-</section>
-<section id="wid" class="level3">
-<h3 class="anchored" data-anchor-id="wid">WID</h3>
-</section>
-<section id="lis" class="level3">
-<h3 class="anchored" data-anchor-id="lis">LIS</h3>
-</section>
-<section id="coverage" class="level3">
-<h3 class="anchored" data-anchor-id="coverage">Coverage</h3>
-<p>Give an overview of coverage in each dataset.</p>
 </section>
 </section>
-<section id="comparing-databases" class="level2">
-<h2 class="anchored" data-anchor-id="comparing-databases">Comparing databases</h2>
+<section id="triangulating-a-global-view" class="level2">
+<h2 class="anchored" data-anchor-id="triangulating-a-global-view">Triangulating a global view</h2>
+<section id="since-1990" class="level3">
+<h3 class="anchored" data-anchor-id="since-1990">Since 1990</h3>
+</section>
+<section id="since-1980" class="level3">
+<h3 class="anchored" data-anchor-id="since-1980">Since 1980</h3>
+</section>
 <section id="comparing-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="comparing-metrics">Comparing metrics</h3>
 <p>Does it make a difference whether we look at Gini or top 10%?</p>
@@ -352,8 +272,8 @@ Load packages
 <p>Empirically: - Make a linear model of top 10% on Gini, for each source separately - Make predicted top 10% - Take a look at the R2 - Investigate individual countries with very poor predictions</p>
 <p>Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.</p>
 </section>
-<section id="since-1990" class="level3">
-<h3 class="anchored" data-anchor-id="since-1990">Since 1990</h3>
+<section id="since-1990-1" class="level3">
+<h3 class="anchored" data-anchor-id="since-1990-1">Since 1990</h3>
 <p>Similarities:</p>
 <p>Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)</p>
 <p>Indeed for some regions very similar picture:</p>
@@ -409,7 +329,6 @@ Load packages
 <ul>
 <li>Russia is a very notable case where the two datasets tell very different stories.</li>
 </ul>
-</section>
 </section>
 </section>
 <section id="conclusion" class="level1">

@@ -1936,7 +1936,7 @@
     "href": "PhD_pages/Paper_1/paper1.html",
     "title": "Paper 1: Triangulating trends in inequality around the world from secondary databases",
     "section": "",
-    "text": "Load packages\nWhat has happened to inequality within countries over the past generation?"
+    "text": "Load packages and data\nWhat has happened to inequality within countries over the past generation?\nMany answers for individual countries, or for particular regions. Can Our understanding of inequality trends globally, however, remains fragmented unclear.\nFor many it is a given . Many papers in the social sciences, or policy notes begin ‘decades of rising inequality’ – without to specify where. Implying ubiquitous.\nDoes not reflect the conflicting data.\nThis stands in contrast with the data in PIP – an important data source. Relied on for SDGs.\nConfusiong terrain: e.g. where for SDGs they use PIP; but HDR they use WID.\nOur view remains highly fragmented. Different global datasets offer starkly differing or even contradictory views\nDespite the wealth of data available, our view of inequality around the world remains fragmented and unclear.\nThese are questions that we need answers to. Winners and loosers of globalization. Policy to tackle inequality. SDGs. Philanthropy.\nThat’s what this paper is going to do. (Outline structure)."
   },
   {
     "objectID": "PhD_pages/Paper_1/paper1.html#data-sources",
@@ -2693,5 +2693,33 @@
     "title": "How I built this site",
     "section": "",
     "text": "This site is built on three main ingredients:\n\nQuarto notebooks, gathered together into a Quarto website\nThese are published to the web via Netlify"
+  },
+  {
+    "objectID": "PhD_pages/Paper_1/paper1.html#why-do-we-need-a-global-view-on-inequality",
+    "href": "PhD_pages/Paper_1/paper1.html#why-do-we-need-a-global-view-on-inequality",
+    "title": "Paper 1: Triangulating trends in inequality around the world from secondary databases",
+    "section": "Why do we need a global view on inequality?",
+    "text": "Why do we need a global view on inequality?"
+  },
+  {
+    "objectID": "PhD_pages/Paper_1/paper1.html#what-do-i-mean-by-global-view-on-inequality",
+    "href": "PhD_pages/Paper_1/paper1.html#what-do-i-mean-by-global-view-on-inequality",
+    "title": "Paper 1: Triangulating trends in inequality around the world from secondary databases",
+    "section": "What do I mean by global view on inequality?",
+    "text": "What do I mean by global view on inequality?\n\nConcept 1 and 2, but not 3. Companion paper.\nRelative not absolute."
+  },
+  {
+    "objectID": "PhD_pages/Paper_1/paper1.html#global-data-on-inequality",
+    "href": "PhD_pages/Paper_1/paper1.html#global-data-on-inequality",
+    "title": "Paper 1: Triangulating trends in inequality around the world from secondary databases",
+    "section": "Global data on inequality",
+    "text": "Global data on inequality\n\nGlobal databases\nA global view faces the hard limitation of the underlying data. This has two sides: firstly is there any data? Secondly the comparability of the data, across countries and over time.\nMuch improved – harmonized secondary databases. Three of note.\n\nPIP\nWID\nLIS\n\n\n\nTwo worlds of inequality measurement\n\nConnecting up the worlds is valuable\n\nfor Policy\nfor academic research"
+  },
+  {
+    "objectID": "PhD_pages/Paper_1/paper1.html#triangulating-a-global-view",
+    "href": "PhD_pages/Paper_1/paper1.html#triangulating-a-global-view",
+    "title": "Paper 1: Triangulating trends in inequality around the world from secondary databases",
+    "section": "Triangulating a global view",
+    "text": "Triangulating a global view\n\nSince 1990\n\n\nSince 1980\n\n\nComparing metrics\nDoes it make a difference whether we look at Gini or top 10%?\nPeople worry about whether Gini masks what’s happening at the top.\nEmpirically: - Make a linear model of top 10% on Gini, for each source separately - Make predicted top 10% - Take a look at the R2 - Investigate individual countries with very poor predictions\nSub-Saharan Africa: example where the Gini fell in more cases than the top 10%.\n\n\nSince 1990\nSimilarities:\nConvergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)\nIndeed for some regions very similar picture:\n- MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)\n\n- South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise\n\n-  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)\n\n- Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).\nDifferences:\nVerry different bottom line at the global level:\n\nPIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That’s without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)\nWID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e. % increase rather than % point increase? A point rise means ‘less’ in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia"
   }
 ]
