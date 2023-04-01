@@ -4,7 +4,7 @@ author: "<br> <br> Joe Hasell – DPhil candidate at DSPI University of Oxford; 
 format: 
     revealjs:
         theme: [default, revealjs_joe_theme.scss] 
-bibliography: references_presentation.bib
+bibliography: references_old.bib
 ---
 
 ```{python}

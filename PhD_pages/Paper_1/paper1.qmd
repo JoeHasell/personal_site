@@ -1,7 +1,7 @@
 ---
 title: "Paper 1: Triangulating trends in inequality around the world from secondary databases"
 format: html
-bibliography: references.bib
+bibliography: references_07_03_2023.bib
 execute:
   echo: false
   warning: false
@@ -99,36 +99,120 @@ def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement
 
 :::
 
-What has happened to inequality within countries over the past generation?
+READING LIST:
+Bourguignon (2015)
+The share of wages in total GDP declined in a majority of countries
+(91 out of 133 with data) from 1995 to 2014 (ILO, 2016).
 
-Many answers for individual countries, or for particular regions. Can Our understanding of inequality trends *globally*, however, remains fragmented unclear.
+ Other authors
+question the pre-eminence of globalization as the main driver of global inequality, noting
+that inequality trends differ across countries at similar levels of development and that
+are equally exposed to trade (Ravallion, 2018; Corlett, 2016). Ravallion (2018) stresses
+the vital role that natio
 
-For many it is a given . Many papers in the social sciences, or policy notes begin 'decades of rising inequality' – without to specify where. Implying ubiquitous.
-
-Does not reflect the conflicting data.
-
-This stands in contrast with the data in PIP – an important data source. Relied on for SDGs.
-
-
-
-Confusiong terrain: e.g. where for SDGs they use PIP; but HDR they use WID.
-
-
-Our view remains highly fragmented. Different global datasets offer starkly differing or even contradictory views 
-
-Despite the wealth of data available, our view of inequality around the world remains fragmented and unclear.
-
-These are questions that we need answers to. Winners and loosers of globalization. Policy to tackle inequality. SDGs. Philanthropy.
-
-That's what this paper is going to do. (Outline structure).
+Key point:  the share of income going to both the top 1 per cent and the bottom 50 per
+cent has increased in many countries in recent decades. 
 
 
-## Why do we need a global view on inequality?
+# Introduction
 
-## What do I mean by global view on inequality?
 
-- Concept 1 and 2, but not 3. Companion paper.
-- Relative not absolute.
+"Inequality defines our time" – the UN Secretary-General. (https://www.nelsonmandela.org/news/entry/annual-lecture-2020-secretary-general-guterress-full-speech)Increasing concern for inequality an increase i, researchers and institutions have responded by . In particular harmonized databases of comparable , addressing concerns (Atkinson). Both the demand to monitor inequality globally, and our ability to do so, is greater than ever.
+
+the UN (SDGs), the World Bank and the IMF – and WID.
+
+Yet the outcome is a mess. Contradictory messages emerge concerning the most basic descriptions from the two databases in global coverage – the *World Inequality Database*, and the World Bank's *Poverty and Inequality Platform*.
+
+For example, different publications and studies yield starkly differing conclusions as to how widespread a phenomenon is rising inequality within countries across the world. The flagship publications from  view from *World Inequality Lab* to be taken do we live in a world in which inequality is rising in 'nearly everywhere' [@alvaredo_world_2018; @chancel_world_2021].[^WID_quotes] PIP, much more mixed. This is reflected in estimates of global inequality .
+
+Decomposition – wthin country inequality now outweighs between country differences.
+
+[^WID_quotes]:
+    > Income and wealth inequalities have been on the rise nearly everywhere since the 1980s, following a series of deregulation and liberalization programs which took different forms in different countries. [@chancel_world_2021, pp. xx]
+
+    > In recent decades, income inequality has increased in nearly all countries, but at different speeds... [@alvaredo_world_2018, pp. xx]
+
+
+
+Thus despite the great data, there remains fundamental ambiguity surrounding which of two possible worlds we live in. In one world, rising inequality within countries has been an almost universal phenomenon, and has now come to dominate income differences between countries. In another, within-country inequality trends in recent decades have been mixed, and the differences in average incomes between countries remain the lion's share of the globally.
+
+Which of these worlds we live in matters hugely – both in our conception, and of where to place efforts to combat inequality in the future.
+
+The first world suggests the winners from globalization and economic growth overwhelmingly and almost universally, have been a global elite. It suggestest global factors – such as capital accumulation (Piketty), over and above national policy  How to tackle inequality glboal level.
+
+The second world and the importance of access to both produced and human capital , national policy (Ravallion, 2018; Corlett, 2016).
+
+Many methodolodical choices concerning underlying data sources, the constraints on temporal coverage this gives rise to,  adjust, conception of inequality. These to some extent come bundled together when making the choice between PIP and WID. That is to say, the empirical question of 'world' of inequality we live in depends on which 'world' of inequality *measurement* we adopt.
+
+Whilst recommending particular aspects, for particular countries, the choice put before us requires wholesale adoption of a bundle whose relative strengths and weaknesses when applied globally is not well understood.
+
+What we can do is triangulate
+
+In this paper, I focus on trends in within-country inequality in recent decades.(In a companion paper, I look at the global distribution.) I line up what I can. I triangulate what we know – . And Identify what we don't know – the remaining differences – and try to pinpoint where the differences lie.
+
+
+I do so with respect to two separate time periods, chosen to tradeoffs with respect to global coverage. The first period – from the fall of the Berlin wall. Driven primarily to the steep drop off in availability before this in household survey data collected in PIP.
+
+
+This maximises global coverage – 100 countries covering roughly 90% of the world poplation. The downside is that this period misses out – transition, liberalisation and structural adjustment. Question begging, by avoiding specifically the period where inequality thought to rise.
+
+To address this, I analyse a second, longer period extending back to roughly 1980.
+
+(SUMMAR OF FINDINGS)
+
+
+
+
+## Data
+
+### PIP
+
+
+
+### WID
+
+
+(Coverage chart - overlayed 3/5 year)
+
+
+### LIS
+
+Will be used for income concept. i.e. it represents the PIP world – indeed LIS is the source for PIP for a number of high income countries. But the access to microdata allows us to ask more questions for a subset of countries.
+
+## Methods
+
+### Concepts of global inequality
+
+Adapted three concepts.
+
+
+### Aligning coverage 
+
+
+
+## Comparing inequality trends
+
+The focus of this paper is on trends. But worth pointing out levels. Inequality is much higher in WID than in PIP. 
+
+Again this relates to many things – pretax vs disposable income/consumption. Later we will try lining up income concepts more closely. But for global coverage we have to pull together these 'worlds' that combine many differences.
+
+
+What we're trying to do with triangulation is see whether they show a qualitively similar picture of whether, and how rapidly, inequality was rising or falling.
+
+But what would 'similar' be for Gini and top 1. Not a 1 point move.
+
+The main way of operationalising 'similar' is to look at Relative change: a percentage, rather than percentage point. We can put some threshold and see if there were rises or falls. 
+
+No reason to expect this given the properties of the two measures. If we take lognormality we see... (MAke a chart in appendix - where we plot Gini against top 10 and top 1% assuming lognormality, and then add actual data for a particular country.) How unlognormal the top is would be another way to judge similarity. Rather than doing this, we bridge by aligning the indices.
+
+- We also do absolute change: a percentage point. This is more intuitive. But somewhat arbitrary – differences in levels affect assessment of differences in trends.
+
+
+- A third way is residuals from a regression of the two measures
+    - This we will use to see countries that are particular outliers.
+
+
+
 
 
 ## Global data on inequality
