@@ -114,18 +114,47 @@ Key point:  the share of income going to both the top 1 per cent and the bottom 
 cent has increased in many countries in recent decades. 
 
 
+In 2021, while the very richest individuals buy trips to space, roughly three billion people are unable to afford a healthy diet. Even  rich countries secured COVID vaccines for their entire population, low-income had barely begun. COVID vaccination rates  at all, the richest countries had already administered more than one dose for every citizen.
+
+Such 
+
+
+
+"Inequality defines our time," states the UN Secretary-General.^[United Nations Secretary-General António Guterres made the comment in the 18th Nelson Mandela Annual Lecture in July 2020. See https://www.nelsonmandela.org/news/entry/annual-lecture-2020-secretary-general-guterress-full-speech.]
+
+
+Just as the demand for data to monitor inequality globally is greater than ever, so is its supply.
+
+In part, this increased concern is a reflection of events - of the severe and uneven impacts of the 2007-8 Global Financial Crisis, the COVID-19 pandemic and recent sharp rises in the cost of living.
+
+
 # Introduction
 
+Economic inequalities around the world are enormous. As the very richest individuals buy trips to space, roughly three billion people are unable to afford a healthy diet. 
 
-"Inequality defines our time" – the UN Secretary-General. (https://www.nelsonmandela.org/news/entry/annual-lecture-2020-secretary-general-guterress-full-speech)Increasing concern for inequality an increase i, researchers and institutions have responded by . In particular harmonized databases of comparable , addressing concerns (Atkinson). Both the demand to monitor inequality globally, and our ability to do so, is greater than ever.
+Such stark disparities have gained more attention in recent decades, among policimakers, academics and the public alike. "Inequality defines our time," according to the UN Secretary-General.^[United Nations Secretary-General António Guterres made the comment in the 18th Nelson Mandela Annual Lecture in July 2020. See https://www.nelsonmandela.org/news/entry/annual-lecture-2020-secretary-general-guterress-full-speech.]
 
-the UN (SDGs), the World Bank and the IMF – and WID.
+In part at least, this increased concern reflects an increased availability of distributional data. New and expanded sources of data have shed new light on extent of inequality around the world and how it is changing. This has enabled concerns about high or rising inequality to be expressed in new ways, formulated more precisely and subsequently monitored. The supply and demand for global data on inequality have been mutually reinforcing.
 
-Yet the outcome is a mess. Contradictory messages emerge concerning the most basic descriptions from the two databases in global coverage – the *World Inequality Database*, and the World Bank's *Poverty and Inequality Platform*.
+Two sources of data have been particularly impactful.
 
-For example, different publications and studies yield starkly differing conclusions as to how widespread a phenomenon is rising inequality within countries across the world. The flagship publications from  view from *World Inequality Lab* to be taken do we live in a world in which inequality is rising in 'nearly everywhere' [@alvaredo_world_2018; @chancel_world_2021].[^WID_quotes] PIP, much more mixed. This is reflected in estimates of global inequality .
+One is the collection of national household survey data brought together by the World Bank, published online through its *Poverty and Inequality Platform*. This is produced as part of the World Bank's remit to monitor global poverty and shared prosperity. Most extensive harmonized . Its impact lies in its extensive use also by the UN in setting and monitoring many of the Sustainable Development Goals.
 
-Decomposition – wthin country inequality now outweighs between country differences.
+Another especially important source is the World Inequality Database.
+
+ Capital in the 21st C -> WID. "The 1 %".
+
+
+
+Both datasets have continued to improve adn expand. In the case of PIP, including high income countries, following recommendations of the Atkinson commission. In the case of WID – transition from earlier, using with more minimal requirements in terms of source data.
+
+In terms of data availability we are thus in a better position than ever to take a global viw on inequlity. Yet amidst apparent wealth of data, limited understanding of very basics.
+
+Contradictory messages emerge concerning the most basic descriptions from the two databases.
+
+The view from *World Inequality Database* and its associated global report is that inequality is rising in 'nearly everywhere' [@alvaredo_world_2018; @chancel_world_2021].[^WID_quotes] The World Bank data and its biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.
+
+
 
 [^WID_quotes]:
     > Income and wealth inequalities have been on the rise nearly everywhere since the 1980s, following a series of deregulation and liberalization programs which took different forms in different countries. [@chancel_world_2021, pp. xx]
@@ -134,13 +163,17 @@ Decomposition – wthin country inequality now outweighs between country differe
 
 
 
+This stark difference is reflected in decompositions of global inequality into between- and within-country components. (Explain)
+
 Thus despite the great data, there remains fundamental ambiguity surrounding which of two possible worlds we live in. In one world, rising inequality within countries has been an almost universal phenomenon, and has now come to dominate income differences between countries. In another, within-country inequality trends in recent decades have been mixed, and the differences in average incomes between countries remain the lion's share of the globally.
 
 Which of these worlds we live in matters hugely – both in our conception, and of where to place efforts to combat inequality in the future.
 
-The first world suggests the winners from globalization and economic growth overwhelmingly and almost universally, have been a global elite. It suggestest global factors – such as capital accumulation (Piketty), over and above national policy  How to tackle inequality glboal level.
+The first world suggests the winners from globalization and economic growth overwhelmingly and almost universally, have been a global elite. It situates inquality within countries, but emphasises global factors – including fundamental laws of capitalism with regard to capital accumulation (Piketty) – and the need for international coordination over and above national policy.
 
 The second world and the importance of access to both produced and human capital , national policy (Ravallion, 2018; Corlett, 2016).
+
+### Unpicking the two worlds
 
 Many methodolodical choices concerning underlying data sources, the constraints on temporal coverage this gives rise to,  adjust, conception of inequality. These to some extent come bundled together when making the choice between PIP and WID. That is to say, the empirical question of 'world' of inequality we live in depends on which 'world' of inequality *measurement* we adopt.
 
