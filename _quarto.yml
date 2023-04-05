@@ -14,14 +14,14 @@ website:
           - section: "Paper 1: A global view on inequality within countries"
             contents:
               - PhD_pages/Paper_1/paper1.qmd
-              - section:
+              - section: "Data appendices"
                 contents:
-                  - PhD_pages/data_appendices/1_A_prepare_PIP.qmd
-                  - PhD_pages/data_appendices/1_B_prepare_WID.qmd
-                  - PhD_pages/data_appendices/1_C_prepare_LIS.qmd
-                  - PhD_pages/data_appendices/1_D_prepare_population.qmd
-                  - PhD_pages/data_appendices/1_E_prepare_region_classifications.qmd
-                  - PhD_pages/data_appendices/1_F_within_country_trends.qmd
+                  - PhD_pages/Paper_1/data_appendix/1_A_prepare_PIP.qmd
+                  - PhD_pages/Paper_1/data_appendix/1_B_prepare_WID.qmd
+                  - PhD_pages/Paper_1/data_appendix/1_C_prepare_LIS.qmd
+                  - PhD_pages/Paper_1/data_appendix/1_D_prepare_population.qmd
+                  - PhD_pages/Paper_1/data_appendix/1_E_prepare_region_classifications.qmd
+                  - PhD_pages/Paper_1/data_appendix/1_F_within_country_trends.qmd
       - presentations.qmd
       - section: "About this site"
         contents:

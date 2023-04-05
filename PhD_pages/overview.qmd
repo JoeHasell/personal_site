@@ -1,6 +1,6 @@
 ---
 title: "Overview of papers"
-bibliography: references.bib
+bibliography: Paper_1/references_export_2023-04-04.bib
 ---
 
 ```{r, echo=FALSE, message = FALSE, warning=FALSE}

@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Joe Hasell - Functions for preparing figures and tables</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Functions for preparing figures and tables</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../../">Joe Hasell</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">DPhil: Triangulating the key facts about global income distribution</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/overview.html" class="sidebar-item-text sidebar-link">Overview of papers</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Paper 1: A global view on inequality within countries</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/paper1.html" class="sidebar-item-text sidebar-link">Paper 1: Triangulating trends in inequality around the world from secondary databases</a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">Data appendices</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth3 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/1_A_prepare_PIP.html" class="sidebar-item-text sidebar-link">Appendix 1.A: Preparing PIP inequality data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/1_B_prepare_WID.html" class="sidebar-item-text sidebar-link">Appendix 1.B: Preparing WID inequality data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/1_C_prepare_LIS.html" class="sidebar-item-text sidebar-link">Appendix 1.C: Preparing LIS inequality data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/1_D_prepare_population.html" class="sidebar-item-text sidebar-link">Appendix 1.D: Preparing population data</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/1_E_prepare_region_classifications.html" class="sidebar-item-text sidebar-link">Appendix 1.E: Preparing region classifications</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/1_F_within_country_trends.html" class="sidebar-item-text sidebar-link">Appendix 1.F: Analysing global trends in within-country inequality</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../PhD_pages/Paper_1/data_appendix/G_functions_for_figures_and_tables.html" class="sidebar-item-text sidebar-link active">Functions for preparing figures and tables</a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../presentations.html" class="sidebar-item-text sidebar-link">Presentations</a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">About this site</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../how_to.html" class="sidebar-item-text sidebar-link">How I built this site</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Functions for preparing figures and tables</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>The code here is duplicated in as a .py file – from which the functions are imported in data appendix H.</p>
+<div class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function grabs the observation nearest to a reference value of a particular column (e.g.&nbsp;a reference year). A parameter specifies how to break ties where a value greater and lower than the reference values are the equidistant closest values. % Function to get matching observation closest to ref year Drop NAs Calculate absolute distance from reference value Drop any rows with a distance beyond threshold Keep closest observation to reference value – including tie-breaks (where there is a match above and below the ref value) Settle tie-breaks</p>
+<p>This function uses the <code>closest_to_reference</code> function to find the closest observations for a <em>pair</em> of reference values (e.g.&nbsp;1990 and 2018).</p>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate matches for two reference years and merge</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> merge_two_ref_matches(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    df, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    reference_vals, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    min_dist_between, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    reference_col, </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    group_by_col, </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    value_col):</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure the pair of reference values are in ascending order</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  reference_vals.sort()</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Maximise distance between two refs by settling tie-breaks below the lowest ref and above the highest ref </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Find matches for lower reference value</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  lower_ref_matches <span class="op">=</span> closest_to_reference(df, reference_vals[<span class="dv">0</span>], max_dist_from_refs, reference_col, group_by_col, value_col, <span class="st">'below'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Find matches for higher reference value</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  higher_ref_matches <span class="op">=</span> closest_to_reference(df, reference_vals[<span class="dv">1</span>], max_dist_from_refs, reference_col, group_by_col, value_col, <span class="st">'above'</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Merge the two sets of matches</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  merged_df <span class="op">=</span> pd.merge(lower_ref_matches, higher_ref_matches, on<span class="op">=</span>group_by_col, suffixes<span class="op">=</span>(reference_vals[<span class="dv">0</span>], reference_vals[<span class="dv">1</span>]))</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop obs that do not have data for both ref values</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  merged_df <span class="op">=</span> merged_df.dropna()</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop obs where the matched data does not meet the min distance requirement</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="kw">not</span> pd.isna(min_dist_between):</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Store the names of the reference column returned from the two matches</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    ref_var_high <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    ref_var_low <span class="op">=</span> <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Keep only rows &gt;= to the min distance</span></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    merged_df <span class="op">=</span> merged_df.loc[(merged_df[ref_var_high] <span class="op">-</span> merged_df[ref_var_low]) <span class="op">&gt;=</span> min_dist_between, :]</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> merged_df</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The following function runs the <code>merge_two_ref_matches</code> function, but adjusts thing somewhat for the PIP data – to handle the mix of income and consumption data there. It gives priority to matched pairs of <em>income</em> observations, and then matched pairs of <em>consumption</em> observations. If there are no such matches, it allows for matches where the welfare concept differs.</p>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> pip_welfare_routine(df, reference_vals, max_dist_from_refs, min_dist_between, reference_col, group_by_col, value_col):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Specify the name of the column in which the income/consumption welfare definition is stored</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  welfare_colname <span class="op">=</span> <span class="st">'welfare_type'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creat dataframes for thee scenarios:</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scenario 1: only allow income data</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  df_inc_filter <span class="op">=</span> df.loc[df[welfare_colname] <span class="op">==</span> <span class="st">"income"</span>, :]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  df_inc_filter.name <span class="op">=</span> <span class="st">"Income"</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scenario 2: only allow consumption data</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  df_cons_filter <span class="op">=</span> df.loc[df[welfare_colname] <span class="op">==</span> <span class="st">"consumption"</span>, :]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  df_cons_filter.name <span class="op">=</span> <span class="st">"Consumption"</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Scenario 3: allow a mix – dropping consumption data where income data is available in the same year</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  df_mixed <span class="op">=</span> df.copy()</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  df_mixed[<span class="st">'welfare_count'</span>] <span class="op">=</span> df_mixed.groupby([reference_col, group_by_col])[welfare_colname].transform(<span class="st">'count'</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  df_mixed <span class="op">=</span> df_mixed.loc[(df_mixed[<span class="st">'welfare_count'</span>] <span class="op">==</span> <span class="dv">1</span>) <span class="op">|</span> (df_mixed[welfare_colname] <span class="op">==</span> <span class="st">"income"</span>)]</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  df_mixed.name <span class="op">=</span> <span class="st">"Mixed"</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  Store the scneario dataframes in a list</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  df_scenarios <span class="op">=</span> [df_inc_filter, df_cons_filter, df_mixed]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Run the matching function on each scenario</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  scenario_matches <span class="op">=</span> [merge_two_ref_matches(</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    df_scenario, </span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    reference_vals, </span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    max_dist_from_refs, </span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    min_dist_between, </span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>    reference_col, </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    group_by_col, </span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>    value_col) <span class="cf">for</span> df_scenario <span class="kw">in</span> df_scenarios]</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Combine the first two scenarios.</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> pd.concat([scenario_matches[<span class="dv">0</span>], scenario_matches[<span class="dv">1</span>]], keys<span class="op">=</span>[df_scenarios[<span class="dv">0</span>].name, df_scenarios[<span class="dv">1</span>].name])</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Tidy up indexes</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.reset_index()</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.drop(<span class="st">'level_1'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches<span class="op">\</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    .rename(columns<span class="op">=</span>{<span class="st">"level_0"</span>: <span class="st">"pip_welfare"</span>})</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add in third scenario.</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> pd.concat([df_combined_matches, scenario_matches[<span class="dv">2</span>]])</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add scenario name to te pip_welfare column</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>  df_combined_matches[<span class="st">'pip_welfare'</span>] <span class="op">=</span> df_combined_matches[<span class="st">'pip_welfare'</span>].fillna(df_scenarios[<span class="dv">2</span>].name)</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Keep only one match per group (e.g. per Country) - in the priority laid out in the df_scenarios list above (income only -&gt; consumption only -&gt; mixed)</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First count the matches</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  df_combined_matches[<span class="st">'match_count'</span>] <span class="op">=</span> df_combined_matches.groupby(group_by_col)[<span class="st">'pip_welfare'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Then drop any matches from the lowest priority where there are multiple matches</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.loc[(df_combined_matches[<span class="st">'match_count'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">|</span> <span class="op">~</span>(df_combined_matches[<span class="st">'pip_welfare'</span>]<span class="op">==</span>df_scenarios[<span class="dv">2</span>].name)]</span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Repeat at the next level of priority</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>  df_combined_matches[<span class="st">'match_count'</span>] <span class="op">=</span> df_combined_matches.groupby(group_by_col)[<span class="st">'pip_welfare'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.loc[(df_combined_matches[<span class="st">'match_count'</span>]<span class="op">==</span><span class="dv">1</span>) <span class="op">|</span> <span class="op">~</span>(df_combined_matches[<span class="st">'pip_welfare'</span>]<span class="op">==</span>df_scenarios[<span class="dv">1</span>].name)]</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Drop the match count column</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>  df_combined_matches <span class="op">=</span> df_combined_matches.drop(<span class="st">'match_count'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> df_combined_matches</span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function is used to transform the names of data columns in different scenarios. It splits a list of strings in the format ‘source: ineq_metric’ into a dictionary where the sources and ineq metrics are listed separately.</p>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prep_selected_vars(selected_vars):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># selected_vars = [</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   'LIS: Top 10pc share_equiv_market',</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   'WID: Bottom 50pc share_posttax_dis',</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   'PIP: Top 10pc share']</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    sep <span class="op">=</span> <span class="st">": "</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    selected_sources <span class="op">=</span> [var.split(sep, <span class="dv">1</span>)[<span class="dv">0</span>] <span class="cf">for</span> var <span class="kw">in</span> selected_vars]</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    selected_var_names <span class="op">=</span> [var.split(sep, <span class="dv">1</span>)[<span class="dv">1</span>] <span class="cf">for</span> var <span class="kw">in</span> selected_vars]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    match_data <span class="op">=</span> {</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        <span class="st">"sources"</span>: selected_sources,</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"var_names"</span>: selected_var_names</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> match_data</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This is the main function that prepares the ref-year matched data – builiding on the functions above. The first argument is a dictionary of data frames where the keys are the source name. The 2nd and 3rd arguments are population data and region classifications. The <code>tolerance_lookup</code> is a dictionary of lists that specify search terms in the name of the inequality indicator, and the ‘tolerance’ that should be applied when categorising whether a change in the indicator between the reference years was significant or not (i.e.&nbsp;+/- 1 point change).</p>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> prep_data(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>      source_dfs,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      df_pop,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>      df_regions,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>      selected_vars,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>      reference_vals,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>      max_dist_from_refs,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>      min_dist_between,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>      all_metrics_requirement,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>      reference_col <span class="op">=</span> <span class="st">"Year"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      group_by_col <span class="op">=</span> <span class="st">"Entity"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>      tolerance_lookup <span class="op">=</span>  {</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">'var_search_term'</span>: [</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Gini'</span>,</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Top 1pc share'</span>, </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Top 10pc share'</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Bottom 50pc share'</span>],</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                <span class="st">'var_tolerance'</span>: [</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">1</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">1</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">1</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                    <span class="dv">1</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                ]</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>      outlier_cut_off_upper <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    selected_source_var_dict <span class="op">=</span> prep_selected_vars(selected_vars)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    matches <span class="op">=</span> []</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(selected_source_var_dict[<span class="st">'sources'</span>])):</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        source <span class="op">=</span> selected_source_var_dict[<span class="st">"sources"</span>][i]</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        var <span class="op">=</span> selected_source_var_dict[<span class="st">"var_names"</span>][i]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        df <span class="op">=</span> source_dfs[source]</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> source <span class="op">==</span> <span class="st">"PIP"</span>:</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>            matched <span class="op">=</span> pip_welfare_routine(</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>                df <span class="op">=</span> df,</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>                reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>                max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>                min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>                reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>                group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>                value_col <span class="op">=</span> var</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>            matched <span class="op">=</span> merge_two_ref_matches(</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>                df <span class="op">=</span> df,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>                reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>                max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>                min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>                reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>                group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>                value_col <span class="op">=</span> var</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>                )</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>        matches.append(matched)</span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> pd.concat(matches, keys<span class="op">=</span>selected_vars)</span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tidy up indexes</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prepped_data.reset_index()</span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prepped_data.drop(<span class="st">'level_1'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prepped_data<span class="op">\</span></span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>        .rename(columns<span class="op">=</span>{<span class="st">"level_0"</span>: <span class="st">"source_var"</span>})</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Store the names of the columns to be used onthe X and Y axis</span></span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    x_axis <span class="op">=</span> <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    y_axis <span class="op">=</span> <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply outlier cut off, if specified</span></span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> pd.isna(outlier_cut_off_upper):</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>        prepped_data <span class="op">=</span> prepped_data.loc[prepped_data[x_axis] <span class="op">&lt;=</span> outlier_cut_off_upper]</span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>        prepped_data <span class="op">=</span> prepped_data.loc[prepped_data[y_axis] <span class="op">&lt;=</span> outlier_cut_off_upper]</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a count by country – counting whether data is available from each source or not</span></span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>    prepped_data[<span class="st">'source_count'</span>] <span class="op">=</span> prepped_data.groupby(group_by_col)[<span class="st">'source_var'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Apply metrics requirement (whether to include only observations with data from all metrics)</span></span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> all_metrics_requirement:</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>        prepped_data <span class="op">=</span> prepped_data.loc[prepped_data[<span class="st">'source_count'</span>] <span class="op">==</span> prepped_data[<span class="st">'source_count'</span>].<span class="bu">max</span>()]</span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop source_count column</span></span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prepped_data.drop(<span class="st">'source_count'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add in region classification</span></span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> pd.merge(prepped_data, df_regions, how <span class="op">=</span> <span class="st">'left'</span>)</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add in population data</span></span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>        <span class="co"># For first ref</span></span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>    df_pop_ref <span class="op">=</span> df_pop.loc[df_pop[<span class="st">'Year'</span>] <span class="op">==</span> reference_vals[<span class="dv">0</span>], [<span class="st">'Entity'</span>, <span class="st">'population'</span>] ]</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> pd.merge(prepped_data, df_pop_ref, how <span class="op">=</span> <span class="st">'left'</span>)</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prepped_data.rename(columns<span class="op">=</span>{<span class="st">'population'</span>:<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>})</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>        <span class="co"># For second ref</span></span>
+<span id="cb5-117"><a href="#cb5-117" aria-hidden="true" tabindex="-1"></a>    df_pop_ref <span class="op">=</span> df_pop.loc[df_pop[<span class="st">'Year'</span>] <span class="op">==</span> reference_vals[<span class="dv">1</span>], [<span class="st">'Entity'</span>, <span class="st">'population'</span>] ]</span>
+<span id="cb5-118"><a href="#cb5-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-119"><a href="#cb5-119" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> pd.merge(prepped_data, df_pop_ref, how <span class="op">=</span> <span class="st">'left'</span>)</span>
+<span id="cb5-120"><a href="#cb5-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-121"><a href="#cb5-121" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prepped_data.rename(columns<span class="op">=</span>{<span class="st">'population'</span>:<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>})</span>
+<span id="cb5-122"><a href="#cb5-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-123"><a href="#cb5-123" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add a tolerance column - demarking substantial rise or fall</span></span>
+<span id="cb5-124"><a href="#cb5-124" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Uses a dictionary passed as an argument to this function to</span></span>
+<span id="cb5-125"><a href="#cb5-125" aria-hidden="true" tabindex="-1"></a>    <span class="co"># search for vars with particualr strings ('Gini') and the sub in</span></span>
+<span id="cb5-126"><a href="#cb5-126" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the tolerance specified in the dictionary</span></span>
+<span id="cb5-127"><a href="#cb5-127" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(tolerance_lookup[<span class="st">'var_search_term'</span>])):</span>
+<span id="cb5-128"><a href="#cb5-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-129"><a href="#cb5-129" aria-hidden="true" tabindex="-1"></a>        prepped_data.loc[prepped_data[<span class="st">'source_var'</span>]<span class="op">\</span></span>
+<span id="cb5-130"><a href="#cb5-130" aria-hidden="true" tabindex="-1"></a>            .<span class="bu">str</span>.contains(</span>
+<span id="cb5-131"><a href="#cb5-131" aria-hidden="true" tabindex="-1"></a>                tolerance_lookup[<span class="st">'var_search_term'</span>][i]</span>
+<span id="cb5-132"><a href="#cb5-132" aria-hidden="true" tabindex="-1"></a>                ), <span class="st">'tolerance'</span>] <span class="op">=</span> tolerance_lookup[<span class="st">'var_tolerance'</span>][i]</span>
+<span id="cb5-133"><a href="#cb5-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-134"><a href="#cb5-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-135"><a href="#cb5-135" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> prepped_data</span>
+<span id="cb5-136"><a href="#cb5-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-137"><a href="#cb5-137" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p># Preparing tables and charts This function prepares the table that is used a number of times in the data.</p>
+<div class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> change_summary_table(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>      source_dfs,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>      df_pop,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      df_pop_regions,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>      df_regions,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      selected_vars,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>      reference_vals,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      max_dist_from_refs,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>      min_dist_between,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      all_metrics_requirement,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      reference_col,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>      group_by_col,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      outlier_cut_off_upper,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>      tolerance_lookup,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>      region_col</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>      ):</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prep_data(</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        source_dfs <span class="op">=</span> source_dfs,</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        df_pop <span class="op">=</span> df_pop,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        df_regions <span class="op">=</span> df_regions,</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        selected_vars <span class="op">=</span> selected_vars,</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        all_metrics_requirement <span class="op">=</span> all_metrics_requirement,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>        group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>        tolerance_lookup <span class="op">=</span> tolerance_lookup,</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        outlier_cut_off_upper <span class="op">=</span> outlier_cut_off_upper</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the change between the two ref periods</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    prepped_data[<span class="st">'change'</span>] <span class="op">=</span> (prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>] <span class="op">-</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>])</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prepare pop-weighted averages for each ref year</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    df_aggs <span class="op">=</span> prepped_data.copy()</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ref <span class="kw">in</span> reference_vals:</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calulate regional pop weights, grouped by source-var </span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>        df_aggs[<span class="ss">f'regional_pop_weights</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> df_aggs.groupby([<span class="st">'source_var'</span>, region_col])[<span class="ss">f'pop</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>].transform(<span class="kw">lambda</span> x: x<span class="op">/</span>x.<span class="bu">sum</span>()) </span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calulate global pop weights, grouped by source-var</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>        df_aggs[<span class="ss">f'global_pop_weights</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> df_aggs.groupby(<span class="st">'source_var'</span>)[<span class="ss">f'pop</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>].transform(<span class="kw">lambda</span> x: x<span class="op">/</span>x.<span class="bu">sum</span>()) </span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Multiply the values by the pop weights </span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>        df_aggs[<span class="ss">f'region_weighted_value</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> df_aggs[<span class="ss">f'value</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">*</span> df_aggs[<span class="ss">f'regional_pop_weights</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>]</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>        df_aggs[<span class="ss">f'global_weighted_value</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> df_aggs[<span class="ss">f'value</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">*</span> df_aggs[<span class="ss">f'global_pop_weights</span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>]</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Prepare fall/stable/rise categories</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    df_aggs[<span class="st">'fall'</span>] <span class="op">=</span> df_aggs[<span class="st">'change'</span>] <span class="op">&lt;</span> <span class="op">-</span>df_aggs[<span class="st">'tolerance'</span>]</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    df_aggs[<span class="st">'stable'</span>] <span class="op">=</span> (df_aggs[<span class="st">'change'</span>] <span class="op">&lt;=</span> df_aggs[<span class="st">'tolerance'</span>]) <span class="op">&amp;</span> (df_aggs[<span class="st">'change'</span>] <span class="op">&gt;=</span> <span class="op">-</span>df_aggs[<span class="st">'tolerance'</span>])</span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    df_aggs[<span class="st">'rise'</span>] <span class="op">=</span> df_aggs[<span class="st">'change'</span>] <span class="op">&gt;</span> df_aggs[<span class="st">'tolerance'</span>]</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    df_aggs[[<span class="st">'fall'</span>, <span class="st">'stable'</span>, <span class="st">'rise'</span>]] <span class="op">=</span> df_aggs[[<span class="st">'fall'</span>, <span class="st">'stable'</span>, <span class="st">'rise'</span>]].astype(<span class="bu">int</span>)</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Summarise by region</span></span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    df_region_summary <span class="op">=</span> df_aggs<span class="op">\</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>        .groupby([<span class="st">'source_var'</span>, region_col])[[</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'region_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'region_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, </span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, </span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>            <span class="st">'fall'</span>, </span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>            <span class="st">'stable'</span>, </span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>            <span class="st">'rise'</span>]]<span class="op">\</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>        .agg([<span class="st">'sum'</span>, <span class="st">'mean'</span>, <span class="st">'count'</span>])</span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    df_region_summary <span class="op">=</span> df_region_summary.loc[:, [</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'region_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'region_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'fall'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'stable'</span>, <span class="st">'sum'</span>), </span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'rise'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'rise'</span>, <span class="st">'count'</span>),</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>), </span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>)]]</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  Define more helpful col names</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>    final_column_names <span class="op">=</span>  [</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Avg </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Avg </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Wt. avg </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Wt. avg </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>        <span class="st">'fall'</span>,</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>        <span class="st">'stable'</span>,</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>        <span class="st">'rise'</span>,</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>        <span class="st">'total'</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Pop. weights </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Pop. weights </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Pop. sum </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f'Pop. sum </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,        </span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Sub in more helpful col names</span></span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>    df_region_summary.columns <span class="op">=</span> final_column_names</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Summarise globally</span></span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>    df_global_summary <span class="op">=</span> df_aggs<span class="op">\</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>        .groupby([<span class="st">'source_var'</span>])[[</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'global_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'global_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, </span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,  </span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>            <span class="st">'fall'</span>, </span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>            <span class="st">'stable'</span>, </span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>            <span class="st">'rise'</span>]]<span class="op">\</span></span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a>        .agg([<span class="st">'sum'</span>, <span class="st">'mean'</span>, <span class="st">'count'</span>])</span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a>    df_global_summary <span class="op">=</span> df_global_summary.loc[:, [</span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'mean'</span>),</span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'global_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'global_weighted_value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'fall'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'stable'</span>, <span class="st">'sum'</span>), </span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'rise'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'rise'</span>, <span class="st">'count'</span>),</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>), </span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'global_pop_weights</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>),</span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>        (<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="st">'sum'</span>)]]</span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add 'World' region as key</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>    df_global_summary[region_col] <span class="op">=</span> <span class="st">"World"</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a>    df_global_summary.set_index(region_col, append <span class="op">=</span><span class="va">True</span>, inplace<span class="op">=</span><span class="va">True</span> )</span>
+<span id="cb6-151"><a href="#cb6-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-152"><a href="#cb6-152" aria-hidden="true" tabindex="-1"></a>    <span class="co">#  Sub in more helpful col names</span></span>
+<span id="cb6-153"><a href="#cb6-153" aria-hidden="true" tabindex="-1"></a>    df_global_summary.columns <span class="op">=</span> final_column_names</span>
+<span id="cb6-154"><a href="#cb6-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-155"><a href="#cb6-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-156"><a href="#cb6-156" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Append regional and global summaries</span></span>
+<span id="cb6-157"><a href="#cb6-157" aria-hidden="true" tabindex="-1"></a>    df_summary <span class="op">=</span> pd.concat([df_region_summary, df_global_summary])</span>
+<span id="cb6-158"><a href="#cb6-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-159"><a href="#cb6-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-160"><a href="#cb6-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-161"><a href="#cb6-161" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Merge in region data</span></span>
+<span id="cb6-162"><a href="#cb6-162" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ref <span class="kw">in</span> reference_vals:</span>
+<span id="cb6-163"><a href="#cb6-163" aria-hidden="true" tabindex="-1"></a>      this_ref_pop_regions <span class="op">=</span> df_pop_regions[df_pop_regions[reference_col] <span class="op">==</span> ref].copy()</span>
+<span id="cb6-164"><a href="#cb6-164" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb6-165"><a href="#cb6-165" aria-hidden="true" tabindex="-1"></a>      this_ref_pop_regions <span class="op">=</span> this_ref_pop_regions[[region_col, <span class="st">'population'</span>]]<span class="op">\</span></span>
+<span id="cb6-166"><a href="#cb6-166" aria-hidden="true" tabindex="-1"></a>        .rename(columns <span class="op">=</span> {<span class="st">"population"</span>: <span class="ss">f'regional_population </span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>})<span class="op">\</span></span>
+<span id="cb6-167"><a href="#cb6-167" aria-hidden="true" tabindex="-1"></a>        .set_index(region_col)</span>
+<span id="cb6-168"><a href="#cb6-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-169"><a href="#cb6-169" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Repeat for each source_var in selected_vars (I couldn't find a more sensible way to do the merge at the next step)      </span></span>
+<span id="cb6-170"><a href="#cb6-170" aria-hidden="true" tabindex="-1"></a>      df_list <span class="op">=</span> [this_ref_pop_regions] <span class="op">*</span> <span class="bu">len</span>(selected_vars)</span>
+<span id="cb6-171"><a href="#cb6-171" aria-hidden="true" tabindex="-1"></a>      this_ref_pop_regions <span class="op">=</span> pd.concat(df_list, keys <span class="op">=</span> selected_vars)</span>
+<span id="cb6-172"><a href="#cb6-172" aria-hidden="true" tabindex="-1"></a>      <span class="co"># rename the row indexes</span></span>
+<span id="cb6-173"><a href="#cb6-173" aria-hidden="true" tabindex="-1"></a>      this_ref_pop_regions.index.names <span class="op">=</span> [<span class="st">'source_var'</span>, region_col]</span>
+<span id="cb6-174"><a href="#cb6-174" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-175"><a href="#cb6-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-176"><a href="#cb6-176" aria-hidden="true" tabindex="-1"></a>      df_summary <span class="op">=</span> df_summary<span class="op">\</span></span>
+<span id="cb6-177"><a href="#cb6-177" aria-hidden="true" tabindex="-1"></a>        .merge(this_ref_pop_regions, on<span class="op">=</span>[<span class="st">'source_var'</span>, region_col], how <span class="op">=</span> <span class="st">'outer'</span>)</span>
+<span id="cb6-178"><a href="#cb6-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-179"><a href="#cb6-179" aria-hidden="true" tabindex="-1"></a>      df_summary[<span class="ss">f'Pop. coverage </span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>] <span class="op">=</span> df_summary[<span class="ss">f'Pop. sum </span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>]<span class="op">/</span>df_summary[<span class="ss">f'regional_population </span><span class="sc">{</span>ref<span class="sc">}</span><span class="ss">'</span>]</span>
+<span id="cb6-180"><a href="#cb6-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-181"><a href="#cb6-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-182"><a href="#cb6-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-183"><a href="#cb6-183" aria-hidden="true" tabindex="-1"></a>    <span class="co"># To help with formatting the multi-level index, I make a dictionary</span></span>
+<span id="cb6-184"><a href="#cb6-184" aria-hidden="true" tabindex="-1"></a>    <span class="bu">dict</span> <span class="op">=</span> {</span>
+<span id="cb6-185"><a href="#cb6-185" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Avg'</span>,reference_vals[<span class="dv">0</span>]): df_summary[<span class="ss">f'Avg </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>], </span>
+<span id="cb6-186"><a href="#cb6-186" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Avg'</span>,reference_vals[<span class="dv">1</span>]): df_summary[<span class="ss">f'Avg </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>],</span>
+<span id="cb6-187"><a href="#cb6-187" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Wt. avg'</span>,reference_vals[<span class="dv">0</span>]): df_summary[<span class="ss">f'Wt. avg </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>], </span>
+<span id="cb6-188"><a href="#cb6-188" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Wt. avg'</span>,reference_vals[<span class="dv">1</span>]): df_summary[<span class="ss">f'Wt. avg </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>],</span>
+<span id="cb6-189"><a href="#cb6-189" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'No. of countries'</span>,<span class="st">'fall'</span>): df_summary[<span class="st">'fall'</span>],</span>
+<span id="cb6-190"><a href="#cb6-190" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'No. of countries'</span>,<span class="st">'stable'</span>): df_summary[<span class="st">'stable'</span>],</span>
+<span id="cb6-191"><a href="#cb6-191" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'No. of countries'</span>,<span class="st">'rise'</span>): df_summary[<span class="st">'rise'</span>],</span>
+<span id="cb6-192"><a href="#cb6-192" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'No. of countries'</span>,<span class="st">'total'</span>): df_summary[<span class="st">'total'</span>],</span>
+<span id="cb6-193"><a href="#cb6-193" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Pop. weights'</span>,reference_vals[<span class="dv">0</span>]): df_summary[<span class="ss">f'Pop. weights </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>],</span>
+<span id="cb6-194"><a href="#cb6-194" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Pop. weights'</span>,reference_vals[<span class="dv">1</span>]): df_summary[<span class="ss">f'Pop. weights </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>],</span>
+<span id="cb6-195"><a href="#cb6-195" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Pop. coverage'</span>,reference_vals[<span class="dv">0</span>]): df_summary[<span class="ss">f'Pop. coverage </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>],</span>
+<span id="cb6-196"><a href="#cb6-196" aria-hidden="true" tabindex="-1"></a>        (<span class="st">'Pop. coverage'</span>,reference_vals[<span class="dv">1</span>]): df_summary[<span class="ss">f'Pop. coverage </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>]</span>
+<span id="cb6-197"><a href="#cb6-197" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb6-198"><a href="#cb6-198" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-199"><a href="#cb6-199" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ... And then put it back to a dataframe</span></span>
+<span id="cb6-200"><a href="#cb6-200" aria-hidden="true" tabindex="-1"></a>    df_summary <span class="op">=</span> pd.DataFrame(<span class="bu">dict</span>)</span>
+<span id="cb6-201"><a href="#cb6-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-202"><a href="#cb6-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-203"><a href="#cb6-203" aria-hidden="true" tabindex="-1"></a>    df_summary <span class="op">=</span> df_summary.sort_index()</span>
+<span id="cb6-204"><a href="#cb6-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-205"><a href="#cb6-205" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Split the original dataframe into a dictionary of dataframes by first row index value</span></span>
+<span id="cb6-206"><a href="#cb6-206" aria-hidden="true" tabindex="-1"></a>    grouped <span class="op">=</span> df_summary.groupby(level<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-207"><a href="#cb6-207" aria-hidden="true" tabindex="-1"></a>    dfs_dict <span class="op">=</span> {name: group <span class="cf">for</span> name, group <span class="kw">in</span> grouped}</span>
+<span id="cb6-208"><a href="#cb6-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-209"><a href="#cb6-209" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Drop the first row index level from each dataframe</span></span>
+<span id="cb6-210"><a href="#cb6-210" aria-hidden="true" tabindex="-1"></a>    dfs_dict_dropped <span class="op">=</span> {name: df.droplevel(<span class="dv">0</span>, axis<span class="op">=</span><span class="dv">0</span>) <span class="cf">for</span> name, df <span class="kw">in</span> dfs_dict.items()}</span>
+<span id="cb6-211"><a href="#cb6-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-212"><a href="#cb6-212" aria-hidden="true" tabindex="-1"></a>    df_summary <span class="op">=</span> pd.concat(dfs_dict_dropped, axis<span class="op">=</span><span class="dv">1</span>, keys<span class="op">=</span>dfs_dict_dropped.keys())</span>
+<span id="cb6-213"><a href="#cb6-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-214"><a href="#cb6-214" aria-hidden="true" tabindex="-1"></a>    <span class="co"># df_summary = df_summary.unstack(level=0).swaplevel(i=0, j=2, axis=1)</span></span>
+<span id="cb6-215"><a href="#cb6-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-216"><a href="#cb6-216" aria-hidden="true" tabindex="-1"></a>    <span class="co"># df_summary = df_summary.swaplevel(i=1, j=2, axis=1)</span></span>
+<span id="cb6-217"><a href="#cb6-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-218"><a href="#cb6-218" aria-hidden="true" tabindex="-1"></a>    <span class="co"># df_summary = df_summary.sort_index(level= 'source_var')</span></span>
+<span id="cb6-219"><a href="#cb6-219" aria-hidden="true" tabindex="-1"></a>   </span>
+<span id="cb6-220"><a href="#cb6-220" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> source_var <span class="kw">in</span> selected_vars:</span>
+<span id="cb6-221"><a href="#cb6-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-222"><a href="#cb6-222" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> ref <span class="kw">in</span> reference_vals:</span>
+<span id="cb6-223"><a href="#cb6-223" aria-hidden="true" tabindex="-1"></a>        df_summary[(source_var,<span class="st">'Avg'</span>,ref)] <span class="op">=</span> df_summary[(source_var,<span class="st">'Avg'</span>,ref)] .<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.1f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb6-224"><a href="#cb6-224" aria-hidden="true" tabindex="-1"></a>        df_summary[(source_var,<span class="st">'Wt. avg'</span>,ref)] <span class="op">=</span> df_summary[(source_var,<span class="st">'Wt. avg'</span>,ref)] .<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.1f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb6-225"><a href="#cb6-225" aria-hidden="true" tabindex="-1"></a>        df_summary[(source_var,<span class="st">'Pop. weights'</span>,ref)] <span class="op">=</span> df_summary[(source_var,<span class="st">'Pop. weights'</span>,ref)] .<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb6-226"><a href="#cb6-226" aria-hidden="true" tabindex="-1"></a>        df_summary[(source_var,<span class="st">'Pop. coverage'</span>,ref)] <span class="op">=</span> df_summary[(source_var,<span class="st">'Pop. coverage'</span>,ref)] .<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.2f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb6-227"><a href="#cb6-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-228"><a href="#cb6-228" aria-hidden="true" tabindex="-1"></a>      <span class="cf">for</span> change_cat <span class="kw">in</span> [<span class="st">'rise'</span>, <span class="st">'stable'</span>, <span class="st">'fall'</span>, <span class="st">'total'</span>]:</span>
+<span id="cb6-229"><a href="#cb6-229" aria-hidden="true" tabindex="-1"></a>        df_summary[(source_var,<span class="st">'No. of countries'</span>, change_cat)] <span class="op">=</span> df_summary[(source_var,<span class="st">'No. of countries'</span>, change_cat)] .<span class="bu">map</span>(<span class="st">'</span><span class="sc">{:.0f}</span><span class="st">'</span>.<span class="bu">format</span>)</span>
+<span id="cb6-230"><a href="#cb6-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-231"><a href="#cb6-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-232"><a href="#cb6-232" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_summary</span>
+<span id="cb6-233"><a href="#cb6-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-234"><a href="#cb6-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-235"><a href="#cb6-235" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This function builds the scatter charts used in the paper. It also returns the data being plotted.</p>
+<div class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_change_scatter(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>      plot_var,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>      source_dfs,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      df_pop,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>      df_regions,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>      selected_vars,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>      reference_vals,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>      max_dist_from_refs,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>      min_dist_between,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>      all_metrics_requirement,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>      reference_col,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>      group_by_col,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>      outlier_cut_off_upper,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>      tolerance_lookup,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>      region_col,</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>      ):</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    prepped_data <span class="op">=</span> prep_data(</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        source_dfs <span class="op">=</span> source_dfs,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        df_pop <span class="op">=</span> df_pop,</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        df_regions <span class="op">=</span> df_regions,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        selected_vars <span class="op">=</span> selected_vars,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        reference_vals <span class="op">=</span> reference_vals,</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        max_dist_from_refs <span class="op">=</span> max_dist_from_refs,</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        min_dist_between <span class="op">=</span> min_dist_between,</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        all_metrics_requirement <span class="op">=</span> all_metrics_requirement,</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        reference_col <span class="op">=</span> reference_col,</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        group_by_col <span class="op">=</span> group_by_col,</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        tolerance_lookup <span class="op">=</span> tolerance_lookup,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>        outlier_cut_off_upper <span class="op">=</span> outlier_cut_off_upper</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> plot_var <span class="op">==</span> <span class="st">'diff'</span>:</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>      prepped_data[<span class="st">'change'</span>] <span class="op">=</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>] <span class="op">-</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>]</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>      prepped_data <span class="op">=</span> prepped_data.pivot(index<span class="op">=</span>[<span class="st">'Entity'</span>, region_col], columns<span class="op">=</span><span class="st">'source_var'</span>, values<span class="op">=</span>[<span class="st">'change'</span>, <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, <span class="ss">f'Year</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,<span class="ss">f'Year</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>,<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>, region_col, <span class="st">'pip_welfare'</span>])</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>      prepped_data.columns <span class="op">=</span> [<span class="st">' '</span>.join(col).strip() <span class="cf">for</span> col <span class="kw">in</span> prepped_data.columns.values]</span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>      prepped_data <span class="op">=</span>  prepped_data.reset_index()</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>      <span class="co"># The scatter bubble size will be equal to transformed population for the later year</span></span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        <span class="co">#  The transformation was adapted from here: https://stackoverflow.com/questions/63265123/size-of-bubbles-in-plotly-express-scatter-mapbox</span></span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>      number_of_steps <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>      selected_pop_var <span class="op">=</span> <span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>      pop_step <span class="op">=</span> (prepped_data[selected_pop_var].<span class="bu">max</span>() <span class="op">-</span> prepped_data[selected_pop_var].<span class="bu">min</span>()) <span class="op">/</span> number_of_steps</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>      prepped_data[<span class="st">'plot_pop_scale'</span>] <span class="op">=</span> (prepped_data[selected_pop_var] <span class="op">-</span> prepped_data[selected_pop_var].<span class="bu">min</span>()) <span class="op">/</span> pop_step <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>      <span class="co"># The pivot converted many columns to 'object' data type.</span></span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>      <span class="co"># The chart below doesn't accept this type for the bubble size parameter</span></span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>      cols_to_convert <span class="op">=</span> [<span class="st">'plot_pop_scale'</span>]</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>      prepped_data[cols_to_convert] <span class="op">=</span> prepped_data[cols_to_convert].<span class="bu">apply</span>(pd.to_numeric, errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>      <span class="co"># Sort to keep regions the same colours.</span></span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>      prepped_data <span class="op">=</span> prepped_data.sort_values(by<span class="op">=</span>[region_col])</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>      <span class="co"># # To plot a 45 degree line we need to specify the points manually      </span></span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>      ymin <span class="op">=</span> prepped_data[<span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">min</span>() </span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>      ymax <span class="op">=</span> prepped_data[<span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">max</span>()</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>      xmin <span class="op">=</span> prepped_data[<span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">min</span>()</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>      xmax <span class="op">=</span> prepped_data[<span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">max</span>()</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>      fig <span class="op">=</span> px.scatter(</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>            prepped_data, </span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span><span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, </span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span><span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>region_col, </span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>            <span class="co"># facet_col='source_var', </span></span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>            <span class="co"># facet_col_wrap=1, </span></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>            size<span class="op">=</span><span class="st">'plot_pop_scale'</span>,</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>            size_max<span class="op">=</span> <span class="dv">30</span>,</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>            hover_name<span class="op">=</span>group_by_col,</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>            hover_data<span class="op">=</span>{</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>              <span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.1f'</span>,</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>              <span class="ss">f'change </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.1f'</span>,</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>              <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.0f'</span>,</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>              <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.0f'</span>,</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>              <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.0f'</span>,</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>              <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.0f'</span>,</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>              region_col: <span class="va">False</span>,</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>              <span class="st">'plot_pop_scale'</span>: <span class="va">False</span></span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>            },</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>            title<span class="op">=</span><span class="ss">f'Change in </span><span class="sc">{</span>selected_vars[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span>selected_vars[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> +/- </span><span class="sc">{</span>max_dist_from_refs<span class="sc">}</span><span class="ss">)'</span>,</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>            height<span class="op">=</span><span class="dv">600</span></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>      fig.update_layout(</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>          shapes<span class="op">=</span>[</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>              <span class="bu">dict</span>(</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">type</span><span class="op">=</span> <span class="st">'line'</span>,</span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>                  line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"#808080"</span>),</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>                  opacity<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>                  yref<span class="op">=</span> <span class="st">'y'</span>, y0<span class="op">=</span><span class="bu">min</span>(ymin, xmin), y1<span class="op">=</span> <span class="bu">max</span>(ymax, xmax),</span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>                  xref<span class="op">=</span> <span class="st">'x'</span>, x0<span class="op">=</span><span class="bu">min</span>(ymin, xmin), x1<span class="op">=</span> <span class="bu">max</span>(ymax, xmax)</span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>          ])</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Select only the data for the specified plot_var</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>      prepped_data <span class="op">=</span> prepped_data[prepped_data[<span class="st">'source_var'</span>] <span class="op">==</span> plot_var]</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>      <span class="co"># The scatter bubble size will be equal to transformed population for the later year</span></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>        <span class="co">#  The transformation was adapted from here: https://stackoverflow.com/questions/63265123/size-of-bubbles-in-plotly-express-scatter-mapbox</span></span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>      number_of_steps <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>      prepped_data[<span class="st">'plot_pop'</span>] <span class="op">=</span> prepped_data[<span class="ss">f'pop</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>]</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>      pop_step <span class="op">=</span> (prepped_data[<span class="st">'plot_pop'</span>].<span class="bu">max</span>() <span class="op">-</span> prepped_data[<span class="st">'plot_pop'</span>].<span class="bu">min</span>()) <span class="op">/</span> number_of_steps</span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>      prepped_data[<span class="st">'plot_pop_scale'</span>] <span class="op">=</span> (prepped_data[<span class="st">'plot_pop'</span>] <span class="op">-</span> prepped_data[<span class="st">'plot_pop'</span>].<span class="bu">min</span>()) <span class="op">/</span> pop_step <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a>      </span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>      prepped_data <span class="op">=</span> prepped_data.sort_values(by<span class="op">=</span>[region_col])</span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>      <span class="co"># To plot a 45 degree line we need to specify the points manually</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>      ymin <span class="op">=</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">min</span>()</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>      ymax <span class="op">=</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">max</span>()</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a>      xmin <span class="op">=</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">min</span>()</span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>      xmax <span class="op">=</span> prepped_data[<span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>].<span class="bu">max</span>()</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>      fig <span class="op">=</span> px.scatter(</span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>        prepped_data, </span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a>        x<span class="op">=</span><span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>, </span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>        y<span class="op">=</span><span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>,</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>region_col, </span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>        <span class="co"># facet_col='source_var', </span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>        <span class="co"># facet_col_wrap=1, </span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>        size<span class="op">=</span><span class="st">'plot_pop_scale'</span>,</span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a>        <span class="co"># size_max= 60,</span></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>        hover_name<span class="op">=</span>group_by_col,</span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>        hover_data<span class="op">=</span>{</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.2f'</span>,</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="va">True</span>,</span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'value</span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="st">':.2f'</span>,</span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>          <span class="ss">f'</span><span class="sc">{</span>reference_col<span class="sc">}{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">'</span>:<span class="va">True</span>,</span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a>          region_col: <span class="va">False</span>,</span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>          <span class="st">'plot_pop_scale'</span>: <span class="va">False</span>,</span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a>          <span class="st">'source_var'</span>: <span class="va">False</span>},</span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a>        title<span class="op">=</span><span class="ss">f'</span><span class="sc">{</span>plot_var<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>reference_vals[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span>reference_vals[<span class="dv">1</span>]<span class="sc">}</span><span class="ss"> (+/- </span><span class="sc">{</span>max_dist_from_refs<span class="sc">}</span><span class="ss">)'</span>,</span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>        height<span class="op">=</span><span class="dv">600</span></span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>      fig.update_layout(</span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>          shapes<span class="op">=</span>[</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>              <span class="bu">dict</span>(</span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>                  <span class="bu">type</span><span class="op">=</span> <span class="st">'line'</span>,</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>                  line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"#808080"</span>),</span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>                  opacity<span class="op">=</span><span class="fl">0.5</span>,</span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>                  yref<span class="op">=</span> <span class="st">'y'</span>, y0<span class="op">=</span><span class="bu">min</span>(ymin, xmin), y1<span class="op">=</span> <span class="bu">max</span>(ymax, xmax),</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>                  xref<span class="op">=</span> <span class="st">'x'</span>, x0<span class="op">=</span><span class="bu">min</span>(ymin, xmin), x1<span class="op">=</span> <span class="bu">max</span>(ymax, xmax)</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>          ])</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig, prepped_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>%% [markdown]</p>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

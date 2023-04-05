@@ -1,0 +1,211 @@
+---
+title: "Appendix 1.H: Preparing figures and tables used in the paper"
+format: html
+execute:
+  echo: false
+  warning: false
+---
+
+## Set-up
+
+Load packages and functions.
+```{python}
+
+from plotnine import *
+import plotly.express as px
+import pandas as pd
+import numpy as np
+
+import dataframe_image as dfi
+
+from G_functions_for_figures_and_tables import * 
+
+pd.set_option('display.max_rows', None)
+
+```
+
+Read in data.
+```{python}
+
+fp = 'data/clean/pip.csv'
+        
+df_pip = pd.read_csv(fp)
+
+
+fp = 'data/clean/wid.csv'
+
+df_wid = pd.read_csv(fp)
+
+fp = 'data/clean/lis.csv'
+
+df_lis = pd.read_csv(fp)
+
+
+fp = 'data/clean/region_mapping.csv'
+
+df_regions = pd.read_csv(fp)
+
+
+fp = 'data/clean/population.csv'
+
+df_pop = pd.read_csv(fp)
+
+fp = 'data/clean/region_population.csv'
+
+df_pop_regions = pd.read_csv(fp)
+
+
+```
+
+Gather the inequality data into a dictionary – this is the format assumed by the functions that will later be applied.
+```{python}
+# Gather data into dictionary
+source_dfs = {
+    "PIP": df_pip,
+    "WID": df_wid,
+    "LIS": df_lis
+    }
+
+```
+
+
+Specify a mapping between inequality variables and the 'tolerance' that will be used to catagorise whether the metric has risen or fallen substantially (e.g. +/- 1point change). The mapping is achieved by a string match - i.e. 'Gini' within 'var_search_term' will map the correspondending tolerance to all columns whose name includes the string 'Gini'.
+
+```{python}
+tolerance_lookup =  {
+                'var_search_term': [
+                    'Gini',
+                    'Top 1pc share', 
+                    'Top 10pc share',
+                    'Bottom 50pc share'],
+                'var_tolerance': [
+                    1,
+                    1,
+                    1,
+                    1
+                ]
+            }
+
+```
+
+This builds astring that gets added to the tables identifying what paremeters were set when the table was built.
+```{python}
+def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement,selected_vars):
+    msg = f'{reference_vals[0]} vs {reference_vals[1]} (+/- {max_dist_from_refs} years)'
+
+    if len(selected_vars)>1:
+        if all_metrics_requirement:
+            msg = f'{msg} – Matched countries only'
+        else:
+            msg = f'{msg} – All available countries' 
+
+    return(msg)
+
+```
+
+
+
+## Tables
+
+#### Table 1
+
+
+This figure compares relative change in the 'typical' metrics for WID and PIP: Top 1% share (pretax) and Gini
+```{python}
+# Set-up to compare WID and PIP top 10% share, all countries
+reference_vals = [1995, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 1pc share – pretax',
+        'PIP: Gini'
+        ]
+
+all_metrics_requirement = True
+
+
+```
+
+
+```{python}
+
+df_summary = change_summary_table(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )
+
+df_summary['PIP: Gini']
+
+dfi.export(df_summary,"table_test.png")
+
+```
+![](table_test.png)
+
+
+
+#### Table 2
+
+
+#### Table 3
+
+
+
+## Figures
+
+#### Figure 1
+
+This figure compares relative change in the 'typical' metrics for WID and PIP: Top 1% share (pretax) and Gini
+```{python}
+# Set-up to compare WID and PIP top 10% share, all countries
+reference_vals = [1995, 2015]
+max_dist_from_refs = 3
+all_metrics_requirement = False
+selected_vars = [
+        'WID: Top 1pc share – pretax',
+        'PIP: Gini'
+        ]
+
+all_metrics_requirement = True
+
+
+```
+
+```{python}
+
+# Scatter WID (WID vs PIP top 10% share, only matched countries)
+
+plot_change_scatter(
+      plot_var = 'relative_diff',
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup,
+      region_col = 'region'
+      )[0]
+
+```
+
+#### Figure 2
+
+
+#### Figure 3

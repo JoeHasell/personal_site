@@ -5,6 +5,8 @@ format:
     revealjs:
         theme: [default, revealjs_joe_theme.scss] 
 bibliography: references_old.bib
+execute:
+  eval: false
 ---
 
 ```{python}
