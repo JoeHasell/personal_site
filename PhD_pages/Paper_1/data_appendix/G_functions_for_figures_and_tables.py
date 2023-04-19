@@ -1,12 +1,3 @@
-# %%
-# ---
-# title: "Functions for preparing figures and tables"
-# execute: 
-#   enabled: false
-# ---
-
-# %% [markdown]
-# The code here is duplicated in as a .py file – from which the functions are imported in data appendix H.
 
 # %%
 
@@ -228,6 +219,7 @@ def prep_data(
       source_dfs,
       df_pop,
       df_regions,
+      region_col,
       selected_vars,
       reference_vals,
       max_dist_from_refs,
@@ -329,6 +321,7 @@ def prep_data(
     prepped_data = prepped_data.drop('source_count', axis=1)
 
     # Add in region classification
+    df_regions = df_regions[[group_by_col, region_col]]
     prepped_data = pd.merge(prepped_data, df_regions, how = 'left')
 
     # Add in population data
@@ -346,8 +339,17 @@ def prep_data(
 
     prepped_data = prepped_data.rename(columns={'population':f'pop{reference_vals[1]}'})
 
-    # Add a tolerance column - demarking substantial rise or fall
-    # Uses a dictionary passed as an argument to this function to
+
+
+
+    # Calculate the change between the two ref periods
+    prepped_data['change'] = (prepped_data[f'value{reference_vals[1]}'] - prepped_data[f'value{reference_vals[0]}'])
+
+
+    # ABSOLUTE TOLERANCE: 
+    # Add a tolerance column – the change the demarks a substnatial rise or fall.
+    # Here this is measured in terms of absolute change.
+    # It uses a dictionary passed as an argument to this function to
     # search for vars with particualr strings ('Gini') and the sub in
     # the tolerance specified in the dictionary
     for i in range(len(tolerance_lookup['var_search_term'])):
@@ -355,9 +357,32 @@ def prep_data(
         prepped_data.loc[prepped_data['source_var']\
             .str.contains(
                 tolerance_lookup['var_search_term'][i]
-                ), 'tolerance'] = tolerance_lookup['var_tolerance'][i]
+                ), 'absolute_tolerance'] = tolerance_lookup['var_tolerance'][i]
 
 
+    # RELATIVE TOLERANCE: 
+    # Add a tolerance column – the change the demarks a substnatial rise or fall.
+    # Here this is measured in terms of relative change.
+    # It uses a single value [0-1] irrespective of the variable.
+    prepped_data['relative_tolerance'] = prepped_data[f'value{reference_vals[0]}'] * tolerance_lookup['relative_tolerance'][0]
+    
+
+
+    # Prepare fall/stable/rise categories 
+    change_types = ['absolute', 'relative']
+  
+    for change_type in change_types:
+      prepped_data[f'{change_type}_fall'] = prepped_data['change'] < -prepped_data[f'{change_type}_tolerance']
+
+      prepped_data[f'{change_type}_stable'] = (prepped_data['change'] <= prepped_data[f'{change_type}_tolerance']) & (prepped_data['change'] >= -prepped_data[f'{change_type}_tolerance'])
+
+      prepped_data[f'{change_type}_rise'] = prepped_data['change'] > prepped_data[f'{change_type}_tolerance']
+
+      # Make sure the dichotomous vars are integers
+      prepped_data[[f'{change_type}_fall', f'{change_type}_stable', f'{change_type}_rise']] = prepped_data[[f'{change_type}_fall', f'{change_type}_stable', f'{change_type}_rise']].astype(int)
+
+
+    
     return prepped_data
 
 
@@ -368,238 +393,313 @@ def prep_data(
 #  This function prepares the table that is used a number of times in the data.
 
 # %%
-def change_summary_table(
+def prep_data_and_change_summary(
       source_dfs,
       df_pop,
       df_pop_regions,
       df_regions,
+      region_col,
       selected_vars,
       reference_vals,
       max_dist_from_refs,
       min_dist_between,
-      all_metrics_requirement,
       reference_col,
       group_by_col,
       outlier_cut_off_upper,
-      tolerance_lookup,
-      region_col
+      tolerance_lookup
       ):
 
+    output_dict = {}
 
-    prepped_data = prep_data(
-        source_dfs = source_dfs,
-        df_pop = df_pop,
-        df_regions = df_regions,
-        selected_vars = selected_vars,
-        reference_vals = reference_vals,
-        max_dist_from_refs = max_dist_from_refs,
-        min_dist_between = min_dist_between,
-        all_metrics_requirement = all_metrics_requirement,
-        reference_col = reference_col,
-        group_by_col = group_by_col,
-        tolerance_lookup = tolerance_lookup,
-        outlier_cut_off_upper = outlier_cut_off_upper
-        )
+    for all_metrics_requirement in [False, True]:
 
+      prepped_data = prep_data(
+          source_dfs = source_dfs,
+          df_pop = df_pop,
+          df_regions = df_regions,
+          region_col = region_col,
+          selected_vars = selected_vars,
+          reference_vals = reference_vals,
+          max_dist_from_refs = max_dist_from_refs,
+          min_dist_between = min_dist_between,
+          all_metrics_requirement = all_metrics_requirement,
+          reference_col = reference_col,
+          group_by_col = group_by_col,
+          tolerance_lookup = tolerance_lookup,
+          outlier_cut_off_upper = outlier_cut_off_upper
+          )
 
-    # Calculate the change between the two ref periods
-    prepped_data['change'] = (prepped_data[f'value{reference_vals[1]}'] - prepped_data[f'value{reference_vals[0]}'])
-
-    # Prepare pop-weighted averages for each ref year
-    df_aggs = prepped_data.copy()
-
-    for ref in reference_vals:
-
-        # Calulate regional pop weights, grouped by source-var 
-        df_aggs[f'regional_pop_weights{ref}'] = df_aggs.groupby(['source_var', region_col])[f'pop{ref}'].transform(lambda x: x/x.sum()) 
-
-        # Calulate global pop weights, grouped by source-var
-        df_aggs[f'global_pop_weights{ref}'] = df_aggs.groupby('source_var')[f'pop{ref}'].transform(lambda x: x/x.sum()) 
-
-        # Multiply the values by the pop weights 
-        df_aggs[f'region_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'regional_pop_weights{ref}']
-        df_aggs[f'global_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'global_pop_weights{ref}']
-
-
-    # Prepare fall/stable/rise categories
-    df_aggs['fall'] = df_aggs['change'] < -df_aggs['tolerance']
-
-    df_aggs['stable'] = (df_aggs['change'] <= df_aggs['tolerance']) & (df_aggs['change'] >= -df_aggs['tolerance'])
-
-    df_aggs['rise'] = df_aggs['change'] > df_aggs['tolerance']
-
-    df_aggs[['fall', 'stable', 'rise']] = df_aggs[['fall', 'stable', 'rise']].astype(int)
-
-    
-    # Summarise by region
-    df_region_summary = df_aggs\
-        .groupby(['source_var', region_col])[[
-            f'value{reference_vals[0]}',
-            f'value{reference_vals[1]}',
-            f'region_weighted_value{reference_vals[0]}',
-            f'region_weighted_value{reference_vals[1]}',
-            f'global_pop_weights{reference_vals[0]}', 
-            f'global_pop_weights{reference_vals[1]}',
-            f'pop{reference_vals[0]}',
-            f'pop{reference_vals[1]}', 
-            'fall', 
-            'stable', 
-            'rise']]\
-        .agg(['sum', 'mean', 'count'])
-
-
-    df_region_summary = df_region_summary.loc[:, [
-        (f'value{reference_vals[0]}', 'mean'),
-        (f'value{reference_vals[1]}', 'mean'),
-        (f'region_weighted_value{reference_vals[0]}', 'sum'),
-        (f'region_weighted_value{reference_vals[1]}', 'sum'),
-        ('fall', 'sum'),
-        ('stable', 'sum'), 
-        ('rise', 'sum'),
-        ('rise', 'count'),
-        (f'global_pop_weights{reference_vals[0]}', 'sum'), 
-        (f'global_pop_weights{reference_vals[1]}', 'sum'),
-        (f'pop{reference_vals[0]}', 'sum'),
-        (f'pop{reference_vals[1]}', 'sum')]]
-   
-
-  #  Define more helpful col names
-    final_column_names =  [
-        f'Avg {reference_vals[0]}',
-        f'Avg {reference_vals[1]}',
-        f'Wt. avg {reference_vals[0]}',
-        f'Wt. avg {reference_vals[1]}',
-        'fall',
-        'stable',
-        'rise',
-        'total',
-        f'Pop. weights {reference_vals[0]}',
-        f'Pop. weights {reference_vals[1]}',
-        f'Pop. sum {reference_vals[0]}',
-        f'Pop. sum {reference_vals[1]}',        
-    ]
-
-    #  Sub in more helpful col names
-    df_region_summary.columns = final_column_names
-
-
-    # Summarise globally
-
-    df_global_summary = df_aggs\
-        .groupby(['source_var'])[[
-            f'value{reference_vals[0]}',
-            f'value{reference_vals[1]}',
-            f'global_weighted_value{reference_vals[0]}',
-            f'global_weighted_value{reference_vals[1]}',
-            f'global_pop_weights{reference_vals[0]}', 
-            f'global_pop_weights{reference_vals[1]}',
-            f'pop{reference_vals[0]}',
-            f'pop{reference_vals[1]}',  
-            'fall', 
-            'stable', 
-            'rise']]\
-        .agg(['sum', 'mean', 'count'])
-
-
-    df_global_summary = df_global_summary.loc[:, [
-        (f'value{reference_vals[0]}', 'mean'),
-        (f'value{reference_vals[1]}', 'mean'),
-        (f'global_weighted_value{reference_vals[0]}', 'sum'),
-        (f'global_weighted_value{reference_vals[1]}', 'sum'),
-        ('fall', 'sum'),
-        ('stable', 'sum'), 
-        ('rise', 'sum'),
-        ('rise', 'count'),
-        (f'global_pop_weights{reference_vals[0]}', 'sum'), 
-        (f'global_pop_weights{reference_vals[1]}', 'sum'),
-        (f'pop{reference_vals[0]}', 'sum'),
-        (f'pop{reference_vals[1]}', 'sum')]]
-
-    # Add 'World' region as key
-    df_global_summary[region_col] = "World"
-    df_global_summary.set_index(region_col, append =True, inplace=True )
-
-    #  Sub in more helpful col names
-    df_global_summary.columns = final_column_names
-
-
-    # Append regional and global summaries
-    df_summary = pd.concat([df_region_summary, df_global_summary])
-
-
-
-  # Merge in region data
-    for ref in reference_vals:
-      this_ref_pop_regions = df_pop_regions[df_pop_regions[reference_col] == ref].copy()
-      
-      this_ref_pop_regions = this_ref_pop_regions[[region_col, 'population']]\
-        .rename(columns = {"population": f'regional_population {ref}'})\
-        .set_index(region_col)
-
-    # Repeat for each source_var in selected_vars (I couldn't find a more sensible way to do the merge at the next step)      
-      df_list = [this_ref_pop_regions] * len(selected_vars)
-      this_ref_pop_regions = pd.concat(df_list, keys = selected_vars)
-      # rename the row indexes
-      this_ref_pop_regions.index.names = ['source_var', region_col]
-    
-
-      df_summary = df_summary\
-        .merge(this_ref_pop_regions, on=['source_var', region_col], how = 'outer')
-
-      df_summary[f'Pop. coverage {ref}'] = df_summary[f'Pop. sum {ref}']/df_summary[f'regional_population {ref}']
-
-
-
-    # To help with formatting the multi-level index, I make a dictionary
-    dict = {
-        ('Avg',reference_vals[0]): df_summary[f'Avg {reference_vals[0]}'], 
-        ('Avg',reference_vals[1]): df_summary[f'Avg {reference_vals[1]}'],
-        ('Wt. avg',reference_vals[0]): df_summary[f'Wt. avg {reference_vals[0]}'], 
-        ('Wt. avg',reference_vals[1]): df_summary[f'Wt. avg {reference_vals[1]}'],
-        ('No. of countries','fall'): df_summary['fall'],
-        ('No. of countries','stable'): df_summary['stable'],
-        ('No. of countries','rise'): df_summary['rise'],
-        ('No. of countries','total'): df_summary['total'],
-        ('Pop. weights',reference_vals[0]): df_summary[f'Pop. weights {reference_vals[0]}'],
-        ('Pop. weights',reference_vals[1]): df_summary[f'Pop. weights {reference_vals[1]}'],
-        ('Pop. coverage',reference_vals[0]): df_summary[f'Pop. coverage {reference_vals[0]}'],
-        ('Pop. coverage',reference_vals[1]): df_summary[f'Pop. coverage {reference_vals[1]}']
-        }
-    
-    # ... And then put it back to a dataframe
-    df_summary = pd.DataFrame(dict)
-
-
-    df_summary = df_summary.sort_index()
-
-    # Split the original dataframe into a dictionary of dataframes by first row index value
-    grouped = df_summary.groupby(level=0)
-    dfs_dict = {name: group for name, group in grouped}
-
-    # Drop the first row index level from each dataframe
-    dfs_dict_dropped = {name: df.droplevel(0, axis=0) for name, df in dfs_dict.items()}
-
-    df_summary = pd.concat(dfs_dict_dropped, axis=1, keys=dfs_dict_dropped.keys())
-
-    # df_summary = df_summary.unstack(level=0).swaplevel(i=0, j=2, axis=1)
-
-    # df_summary = df_summary.swaplevel(i=1, j=2, axis=1)
-
-    # df_summary = df_summary.sort_index(level= 'source_var')
-   
-    for source_var in selected_vars:
+      # Prepare pop-weighted averages for each ref year
+      df_aggs = prepped_data.copy()
 
       for ref in reference_vals:
-        df_summary[(source_var,'Avg',ref)] = df_summary[(source_var,'Avg',ref)] .map('{:.1f}'.format)
-        df_summary[(source_var,'Wt. avg',ref)] = df_summary[(source_var,'Wt. avg',ref)] .map('{:.1f}'.format)
-        df_summary[(source_var,'Pop. weights',ref)] = df_summary[(source_var,'Pop. weights',ref)] .map('{:.2f}'.format)
-        df_summary[(source_var,'Pop. coverage',ref)] = df_summary[(source_var,'Pop. coverage',ref)] .map('{:.2f}'.format)
 
-      for change_cat in ['rise', 'stable', 'fall', 'total']:
-        df_summary[(source_var,'No. of countries', change_cat)] = df_summary[(source_var,'No. of countries', change_cat)] .map('{:.0f}'.format)
+          # Calulate regional pop weights, grouped by source-var 
+          df_aggs[f'regional_pop_weights{ref}'] = df_aggs.groupby(['source_var', region_col])[f'pop{ref}'].transform(lambda x: x/x.sum()) 
+
+          # Calulate global pop weights, grouped by source-var
+          df_aggs[f'global_pop_weights{ref}'] = df_aggs.groupby('source_var')[f'pop{ref}'].transform(lambda x: x/x.sum()) 
+
+          # Multiply the values by the pop weights 
+          df_aggs[f'region_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'regional_pop_weights{ref}']
+          df_aggs[f'global_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'global_pop_weights{ref}']
+
+      # Select whether aboslute or relative rise/fall categories are to be used
+      change_types = ['absolute', 'relative']
+      cats = ['rise', 'stable', 'fall']
+
+      for change_type in change_types:
+        
+        for cat in cats:
+
+          df_aggs[f'{change_type}_{cat}'] = df_aggs[f'{change_type}_{cat}']
+
+      
+      # Summarise by region
+      df_region_summary = df_aggs\
+          .groupby(['source_var', region_col])[[
+              f'value{reference_vals[0]}',
+              f'value{reference_vals[1]}',
+              f'region_weighted_value{reference_vals[0]}',
+              f'region_weighted_value{reference_vals[1]}',
+              f'global_pop_weights{reference_vals[0]}', 
+              f'global_pop_weights{reference_vals[1]}',
+              f'pop{reference_vals[0]}',
+              f'pop{reference_vals[1]}', 
+              'absolute_fall', 
+              'absolute_stable', 
+              'absolute_rise',
+              'relative_fall', 
+              'relative_stable', 
+              'relative_rise']]\
+          .agg(['sum', 'mean', 'count'])
 
 
-    return df_summary
+      df_region_summary = df_region_summary.loc[:, [
+          (f'value{reference_vals[0]}', 'mean'),
+          (f'value{reference_vals[1]}', 'mean'),
+          (f'region_weighted_value{reference_vals[0]}', 'sum'),
+          (f'region_weighted_value{reference_vals[1]}', 'sum'),
+          ('absolute_fall', 'sum'),
+          ('absolute_stable', 'sum'), 
+          ('absolute_rise', 'sum'),
+          ('relative_fall', 'sum'),
+          ('relative_stable', 'sum'), 
+          ('relative_rise', 'sum'),
+          ('relative_rise', 'count'),
+          (f'global_pop_weights{reference_vals[0]}', 'sum'), 
+          (f'global_pop_weights{reference_vals[1]}', 'sum'),
+          (f'pop{reference_vals[0]}', 'sum'),
+          (f'pop{reference_vals[1]}', 'sum')]]
+    
+
+    #  Define more helpful col names
+      final_column_names =  [
+          f'Avg {reference_vals[0]}',
+          f'Avg {reference_vals[1]}',
+          f'Wt. avg {reference_vals[0]}',
+          f'Wt. avg {reference_vals[1]}',
+          'absolute_fall',
+          'absolute_stable',
+          'absolute_rise',
+          'relative_fall',
+          'relative_stable',
+          'relative_rise',
+          'total',
+          f'Pop. weights {reference_vals[0]}',
+          f'Pop. weights {reference_vals[1]}',
+          f'Pop. sum {reference_vals[0]}',
+          f'Pop. sum {reference_vals[1]}',        
+      ]
+
+      #  Sub in more helpful col names
+      df_region_summary.columns = final_column_names
+
+
+      # Summarise globally
+
+      df_global_summary = df_aggs\
+          .groupby(['source_var'])[[
+              f'value{reference_vals[0]}',
+              f'value{reference_vals[1]}',
+              f'global_weighted_value{reference_vals[0]}',
+              f'global_weighted_value{reference_vals[1]}',
+              f'global_pop_weights{reference_vals[0]}', 
+              f'global_pop_weights{reference_vals[1]}',
+              f'pop{reference_vals[0]}',
+              f'pop{reference_vals[1]}',  
+              'absolute_fall', 
+              'absolute_stable', 
+              'absolute_rise',
+              'relative_fall', 
+              'relative_stable', 
+              'relative_rise']]\
+          .agg(['sum', 'mean', 'count'])
+
+
+      df_global_summary = df_global_summary.loc[:, [
+          (f'value{reference_vals[0]}', 'mean'),
+          (f'value{reference_vals[1]}', 'mean'),
+          (f'global_weighted_value{reference_vals[0]}', 'sum'),
+          (f'global_weighted_value{reference_vals[1]}', 'sum'),
+          ('absolute_fall', 'sum'),
+          ('absolute_stable', 'sum'), 
+          ('absolute_rise', 'sum'),
+          ('relative_fall', 'sum'),
+          ('relative_stable', 'sum'), 
+          ('relative_rise', 'sum'),
+          ('relative_rise', 'count'),
+          (f'global_pop_weights{reference_vals[0]}', 'sum'), 
+          (f'global_pop_weights{reference_vals[1]}', 'sum'),
+          (f'pop{reference_vals[0]}', 'sum'),
+          (f'pop{reference_vals[1]}', 'sum')]]
+
+      # Add 'World' region as key
+      df_global_summary[region_col] = "World"
+      df_global_summary.set_index(region_col, append =True, inplace=True )
+
+      #  Sub in more helpful col names
+      df_global_summary.columns = final_column_names
+
+
+      # Append regional and global summaries
+      df_summary = pd.concat([df_region_summary, df_global_summary])
+
+
+
+    # Merge in region data
+      for ref in reference_vals:
+        this_ref_pop_regions = df_pop_regions[df_pop_regions[reference_col] == ref].copy()
+        
+        this_ref_pop_regions = this_ref_pop_regions[[region_col, 'population']]\
+          .rename(columns = {"population": f'regional_population {ref}'})\
+          .set_index(region_col)
+
+      # Repeat for each source_var in selected_vars (I couldn't find a more sensible way to do the merge at the next step)      
+        df_list = [this_ref_pop_regions] * len(selected_vars)
+        this_ref_pop_regions = pd.concat(df_list, keys = selected_vars)
+        # rename the row indexes
+        this_ref_pop_regions.index.names = ['source_var', region_col]
+      
+
+        df_summary = df_summary\
+          .merge(this_ref_pop_regions, on=['source_var', region_col], how = 'outer')
+
+        df_summary[f'Pop. coverage {ref}'] = df_summary[f'Pop. sum {ref}']/df_summary[f'regional_population {ref}']
+
+
+
+      # To help with formatting the multi-level index, I make a dictionary
+      dict = {
+          ('Avg',reference_vals[0]): df_summary[f'Avg {reference_vals[0]}'], 
+          ('Avg',reference_vals[1]): df_summary[f'Avg {reference_vals[1]}'],
+          ('Wt. avg',reference_vals[0]): df_summary[f'Wt. avg {reference_vals[0]}'], 
+          ('Wt. avg',reference_vals[1]): df_summary[f'Wt. avg {reference_vals[1]}'],
+          ('Absolute','fall'): df_summary['absolute_fall'],
+          ('Absolute','stable'): df_summary['absolute_stable'],
+          ('Absolute','rise'): df_summary['absolute_rise'],
+          ('Relative','fall'): df_summary['relative_fall'],
+          ('Relative','stable'): df_summary['relative_stable'],
+          ('Relative','rise'): df_summary['relative_rise'],
+          ('Total','total'): df_summary['total'],
+          ('Pop. weights',reference_vals[0]): df_summary[f'Pop. weights {reference_vals[0]}'],
+          ('Pop. weights',reference_vals[1]): df_summary[f'Pop. weights {reference_vals[1]}'],
+          ('Pop. coverage',reference_vals[0]): df_summary[f'Pop. coverage {reference_vals[0]}'],
+          ('Pop. coverage',reference_vals[1]): df_summary[f'Pop. coverage {reference_vals[1]}']
+          }
+      
+      # ... And then put it back to a dataframe
+      df_summary = pd.DataFrame(dict)
+
+
+      df_summary = df_summary.sort_index()
+
+      # Split the original dataframe into a dictionary of dataframes by first row index value
+      grouped = df_summary.groupby(level=0)
+      dfs_dict = {name: group for name, group in grouped}
+
+      # Drop the first row index level from each dataframe
+      dfs_dict_dropped = {name: df.droplevel(0, axis=0) for name, df in dfs_dict.items()}
+
+      df_summary = pd.concat(dfs_dict_dropped, axis=1, keys=dfs_dict_dropped.keys())
+
+      # df_summary = df_summary.unstack(level=0).swaplevel(i=0, j=2, axis=1)
+
+      # df_summary = df_summary.swaplevel(i=1, j=2, axis=1)
+
+      # df_summary = df_summary.sort_index(level= 'source_var')
+    
+      for source_var in selected_vars:
+
+        for ref in reference_vals:
+          df_summary[(source_var,'Avg',ref)] = df_summary[(source_var,'Avg',ref)] .map('{:.1f}'.format)
+          df_summary[(source_var,'Wt. avg',ref)] = df_summary[(source_var,'Wt. avg',ref)] .map('{:.1f}'.format)
+          df_summary[(source_var,'Pop. weights',ref)] = df_summary[(source_var,'Pop. weights',ref)] .map('{:.2f}'.format)
+          df_summary[(source_var,'Pop. coverage',ref)] = df_summary[(source_var,'Pop. coverage',ref)] .map('{:.2f}'.format)
+
+        for change_type in ['Absolute', 'Relative']:
+          for change_cat in ['rise', 'stable', 'fall']:
+            df_summary[(source_var, change_type, change_cat)] = df_summary[(source_var, change_type, change_cat)] .map('{:.0f}'.format)
+
+        df_summary[(source_var,'Total', 'total')] = df_summary[(source_var,'Total', 'total')] .map('{:.0f}'.format)
+
+
+      # Make a dictionary storing the prepped data and different parts of the summary table
+      summaries_dict = {}
+
+      # The prepped data (not summarised)
+      summaries_dict["prepped_data"] = prepped_data
+
+      # The whole summary table
+      summaries_dict['all'] = df_summary
+
+      # The fall/stable/rise counts – for Absolute and Relative thresholds
+      for change_type in ['Absolute', 'Relative']:
+        summaries_dict[f'{change_type.lower()}_counts'] = df_summary.loc[:, (selected_vars, [change_type, 'Total'], ['fall','stable','rise','total'])].droplevel(level=1, axis=1)
+
+      # The averages and population coverage
+      summaries_dict['averages'] = df_summary.loc[:, (selected_vars, ['Avg', 'Wt. avg', 'Pop. coverage'], slice(None))]
+
+
+      # Reshape the data for OWID upload
+
+      owid_format = pd.melt(prepped_data, id_vars=['source_var', group_by_col, region_col ], value_vars=[f'{reference_col}{reference_vals[0]}', f'{reference_col}{reference_vals[1]}', f'value{reference_vals[0]}', f'value{reference_vals[1]}'])
+
+      # Extract year and group information from variable column
+      owid_format[['var', 'reference']] = owid_format['variable'].str.extract(r'(\D+)(\d+)$')
+      owid_format['reference'] = owid_format['reference'].astype(int)
+
+      #Reshape from long to wide
+      owid_format=pd.pivot(owid_format, index=['source_var', group_by_col, region_col, 'reference' ], columns = 'var' ,values = 'value').reset_index() 
+
+      # Drop the original reference column
+      owid_format = owid_format.drop('reference', axis=1)
+
+      # Pivot the melted dataframe wider – one value column per source_var
+      owid_format = owid_format.pivot_table(index=[group_by_col, region_col, reference_col], columns='source_var', values='value').reset_index()
+
+      summaries_dict['owid_format'] = owid_format
+    
+      output_dict[f'all_sources_{all_metrics_requirement}'] = summaries_dict
+    
+
+    # Merge the all_sources- True and False data for OWID format
+    owid_format = pd.merge(output_dict['all_sources_False']['owid_format'], output_dict['all_sources_True']['owid_format'], on=[group_by_col, reference_col, region_col], how='outer', suffixes=(' – all observations', ' – only matching observations'))
+
+    owid_format = owid_format.rename(columns={group_by_col: "country", reference_col: "year"})
+    
+    # Reorder columns
+    cols = list(owid_format.columns) # Get the list of column names
+    cols.remove('country') # Remove col1 from the list
+    cols.remove('year') # Remove col2 from the list
+    cols = ['country', 'year'] + cols # Add col1 and col2 to the front of the list
+    owid_format = owid_format[cols] # Reorder columns in the DataFrame
+    
+    owid_format['year'] = owid_format['year'].astype(int) # Year needs to be integer for OWID
+
+    output_dict['owid_format'] = owid_format
+    
+    return output_dict
 
 
 
@@ -782,6 +882,20 @@ def plot_change_scatter(
 
 
 # %% [markdown]
+# This builds a filepath in which to save prepared data
+# %%
+def filename_for_full_data(selected_vars,reference_vals):
+    
+    vars_string = ' vs '.join(selected_vars)
+    refs_string = f'{reference_vals[0]} to {reference_vals[1]}'
+
+    filepath = f'{vars_string} – {refs_string}'
+
+    return filepath
+
+
+
+
 #  %% [markdown]
 
 

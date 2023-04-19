@@ -83,6 +83,9 @@ tolerance_lookup =  {
                     1,
                     1,
                     1
+                ], 
+                'relative_tolerance': [
+                    0.05
                 ]
             }
 
@@ -105,15 +108,18 @@ def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement
 
 
 
-## Tables
 
-#### Table 1
 
+## SECTION 2: 
+
+### WID top 1% vs PIP Gini
+
+#### Since 1993
 
 This figure compares relative change in the 'typical' metrics for WID and PIP: Top 1% share (pretax) and Gini
 ```{python}
 # Set-up to compare WID and PIP top 10% share, all countries
-reference_vals = [1995, 2015]
+reference_vals = [1993, 2015]
 max_dist_from_refs = 3
 all_metrics_requirement = False
 selected_vars = [
@@ -122,6 +128,26 @@ selected_vars = [
         ]
 
 all_metrics_requirement = True
+
+
+```
+
+```{python}
+
+df_prepped = prep_data(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      all_metrics_requirement = all_metrics_requirement,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup
+    )
 
 
 ```
@@ -143,15 +169,15 @@ df_summary = change_summary_table(
       group_by_col = "Entity",
       outlier_cut_off_upper = None,
       tolerance_lookup =  tolerance_lookup,
+      absolute_or_relative_tolerance = "absolute",
       region_col = 'region'
       )
 
-df_summary['PIP: Gini']
+# df_summary = df_summary['WID: Top 1pc share – pretax']
+df_summary = df_summary['PIP: Gini']
 
-dfi.export(df_summary,"table_test.png")
-
+df_summary
 ```
-![](table_test.png)
 
 
 

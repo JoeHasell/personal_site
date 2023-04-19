@@ -77,13 +77,15 @@ div.csl-indent {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
 <body class="nav-sidebar docked">
-
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -176,11 +178,6 @@ div.csl-indent {
   <a href="../../PhD_pages/Paper_1/data_appendix/1_F_within_country_trends.html" class="sidebar-item-text sidebar-link">Appendix 1.F: Analysing global trends in within-country inequality</a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../PhD_pages/Paper_1/data_appendix/G_functions_for_figures_and_tables.html" class="sidebar-item-text sidebar-link">G_functions_for_figures_and_tables.html</a>
-  </div>
-</li>
       </ul>
   </li>
       </ul>
@@ -218,19 +215,25 @@ div.csl-indent {
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
   <ul class="collapse">
-  <li><a href="#connecting-the-two-worlds" id="toc-connecting-the-two-worlds" class="nav-link" data-scroll-target="#connecting-the-two-worlds">Connecting the two worlds</a></li>
-  <li><a href="#methods-and-data" id="toc-methods-and-data" class="nav-link" data-scroll-target="#methods-and-data">Methods and data</a>
+  <li><a href="#two-worlds-of-inequality-measurement" id="toc-two-worlds-of-inequality-measurement" class="nav-link" data-scroll-target="#two-worlds-of-inequality-measurement">Two worlds of inequality measurement</a>
   <ul class="collapse">
-  <li><a href="#concepts-of-global-inequality" id="toc-concepts-of-global-inequality" class="nav-link" data-scroll-target="#concepts-of-global-inequality">Concepts of global inequality</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#pip" id="toc-pip" class="nav-link" data-scroll-target="#pip">PIP</a></li>
+  <li><a href="#wid" id="toc-wid" class="nav-link" data-scroll-target="#wid">WID</a></li>
+  <li><a href="#the-disconnect-between-these-datasets-devaules-them-both" id="toc-the-disconnect-between-these-datasets-devaules-them-both" class="nav-link" data-scroll-target="#the-disconnect-between-these-datasets-devaules-them-both">The disconnect between these datasets devaules them both</a></li>
+  <li><a href="#outline-connecting-the-two-worlds" id="toc-outline-connecting-the-two-worlds" class="nav-link" data-scroll-target="#outline-connecting-the-two-worlds">Outline: Connecting the two worlds</a></li>
   </ul></li>
-  <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">Results</a>
+  </ul></li>
+  <li><a href="#comparing-the-two-worlds" id="toc-comparing-the-two-worlds" class="nav-link" data-scroll-target="#comparing-the-two-worlds">2. Comparing the two worlds</a>
   <ul class="collapse">
-  <li><a href="#comparison-of-typical-indicators" id="toc-comparison-of-typical-indicators" class="nav-link" data-scroll-target="#comparison-of-typical-indicators">Comparison of typical indicators</a></li>
-  <li><a href="#aligning-indices" id="toc-aligning-indices" class="nav-link" data-scroll-target="#aligning-indices">Aligning indices</a></li>
+  <li><a href="#inequality-since-1993" id="toc-inequality-since-1993" class="nav-link" data-scroll-target="#inequality-since-1993">Inequality since 1993</a></li>
+  <li><a href="#considering-all-available-observations-in-each-dataset-we-see" id="toc-considering-all-available-observations-in-each-dataset-we-see" class="nav-link" data-scroll-target="#considering-all-available-observations-in-each-dataset-we-see">Considering all available observations in each dataset, we see:</a></li>
+  <li><a href="#it-is-worth-emphasising-the-similarities" id="toc-it-is-worth-emphasising-the-similarities" class="nav-link" data-scroll-target="#it-is-worth-emphasising-the-similarities">It is worth emphasising the similarities:</a></li>
+  <li><a href="#inequality-since-1980" id="toc-inequality-since-1980" class="nav-link" data-scroll-target="#inequality-since-1980">Inequality since 1980</a></li>
+  </ul></li>
+  <li><a href="#aligning-indices" id="toc-aligning-indices" class="nav-link" data-scroll-target="#aligning-indices">3. Aligning indices</a></li>
+  <li><a href="#bridging-the-gap-for-particular-countries" id="toc-bridging-the-gap-for-particular-countries" class="nav-link" data-scroll-target="#bridging-the-gap-for-particular-countries">Bridging the gap for particular countries</a>
+  <ul class="collapse">
   <li><a href="#aligning-coverage" id="toc-aligning-coverage" class="nav-link" data-scroll-target="#aligning-coverage">Aligning coverage</a></li>
-  </ul></li>
-  <li><a href="#comparing-inequality-trends" id="toc-comparing-inequality-trends" class="nav-link" data-scroll-target="#comparing-inequality-trends">Comparing inequality trends</a></li>
   <li><a href="#global-data-on-inequality" id="toc-global-data-on-inequality" class="nav-link" data-scroll-target="#global-data-on-inequality">Global data on inequality</a>
   <ul class="collapse">
   <li><a href="#global-databases" id="toc-global-databases" class="nav-link" data-scroll-target="#global-databases">Global databases</a></li>
@@ -254,6 +257,14 @@ div.csl-indent {
   </ul></li>
   </ul></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a>
+  <ul class="collapse">
+  <li><a href="#data-coverage" id="toc-data-coverage" class="nav-link" data-scroll-target="#data-coverage">Data coverage</a></li>
+  <li><a href="#pip-gini-vs-wid-top-1-share" id="toc-pip-gini-vs-wid-top-1-share" class="nav-link" data-scroll-target="#pip-gini-vs-wid-top-1-share">PIP Gini vs WID Top 1% share</a>
+  <ul class="collapse">
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">1993-2015</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -306,89 +317,1455 @@ Load packages and data
 <p>Economic inequalities around the world are enormous. As the very richest individuals buy trips to space, roughly three billion people are unable to afford a healthy diet.</p>
 <p>Such stark disparities have gained more attention in recent decades, among policimakers, academics and the public alike. “Inequality defines our time,” according to the UN Secretary-General.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>In part at least, this increased concern reflects an increase in the <em>availability</em> of distributional data. New and expanded sources of data have shed new light on extent of inequality around the world and how it is changing. This has enabled concerns about high or rising inequality to be expressed in new ways, formulated more precisely and subsequently monitored. The supply and demand for global data on inequality have been mutually reinforcing.</p>
-<p>Two sources of data have been particularly impactful in this regard: the World Bank’s harmonized collection of household survey data, published online through its <a href="https://pip.worldbank.org/"><em>Poverty and Inequality Platform (PIP)</em></a>; and the collection of inequality estimates – most notably top income shares – brought together at the <a href="https://wid.world/"><em>World Inequality Database (WID)</em></a>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
-<p>These two sources are the only regularly-updated databases providing global coverage on a relatively consistent basis.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Both have played substantial agenda-setting roles in academic research, policy and public debate.</p>
-<p>Given its extensive coverage of low- and middle-income countries, the World Bank data occupies a central place in international development policy and research. Most notably, the data is relied on by the UN to set and monitor progress towards many of the targets included within Sustainable Development Goals. It has also to date underpinned the majority of academic studies on inequality that take a global view.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
-<p>The <em>WID</em> database emerged as institutional focal-point to host and coordinate inequality estimates produced as part of the burgeoning literature on top incomes <span class="citation" data-cites="atkinson_top_2014 piketty_capital_2014 alvaredo_top_2013">(<a href="#ref-atkinson_top_2014" role="doc-biblioref">A. B. Atkinson and Piketty 2014</a>; <a href="#ref-piketty_capital_2014" role="doc-biblioref">Piketty 2014</a>; <a href="#ref-alvaredo_top_2013" role="doc-biblioref">Facundo Alvaredo et al. 2013</a>)</span>. This development of this data has opened new avenues for the study of inequality right across the social sciences (TODO: example refs), underpinning a significant re-evaluation of its causes and consequences <span class="citation" data-cites="alvaredo_top_2013">(<a href="#ref-alvaredo_top_2013" role="doc-biblioref">Facundo Alvaredo et al. 2013</a>)</span>. It has also surely had a substantial impact on the public’s conception of inequality, contributing to the momentum generated by the Occupy movement and its framing of inequality in terms of ‘the 1%’ vs the ‘99%’’.</p>
-<section id="two-worlds-of-inequality-measurement" class="level4">
-<h4 class="anchored" data-anchor-id="two-worlds-of-inequality-measurement">Two worlds of inequality measurement</h4>
-<p>The two . They in some sense represent <em>two different worlds</em> of inequality measurement.</p>
-<p>In terms of methods, source, conception of inequality and research questions. “The 1 %” – pretax, with many assumptions needed to get to national income. These come as a bundle. Although both institutions continue to take many steps to provide transparency and reproducibility to their estimates, they remain a black box.</p>
-<p>Also in the research questions the datasets aim at. Capital vs labour share. .– including fundamental laws of capitalism with regard to capital accumulation (Piketty) –</p>
-<p>Most crucially, the worlds also diverge in terms of headline messages as to inequality around the world. Contradictory messages emerge concerning the most basic descriptions from the two databases.</p>
-<p>They differ as to how ubiquitous a phenomenon rising inequality is around the world. The view from <em>World Inequality Database</em> and its associated global report is that inequality is rising in ‘nearly everywhere’ <span class="citation" data-cites="alvaredo_world_2018 chancel_world_2021">(<a href="#ref-alvaredo_world_2018" role="doc-biblioref">F. Alvaredo et al. 2018</a>; <a href="#ref-chancel_world_2021" role="doc-biblioref">Chancel et al. 2021</a>)</span>.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> In contrast, the World Bank data and its biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.</p>
-<p>Secondly, the two worlds differ in their conception of global inequality…. decompositions of global inequality into between- and within-country components. (Explain</p>
-<p>Incredible efforts, involving the work of hundreds of researchers. Both datasets have continued to improve adn expand. In terms of data availability we are thus in a better position than ever to take a global viw on inequlity. And yet, amidst this wealth of data, limited understanding of very basics concerning inequality around the world.</p>
+<p>Two sources of data have been particularly impactful in this regard. One is the World Bank’s harmonized collection of household survey data, published online through its <a href="https://pip.worldbank.org/"><em>Poverty and Inequality Platform (PIP)</em></a>. Another is the collection of inequality estimates, most notably top income shares, brought together at the <a href="https://wid.world/"><em>World Inequality Database (WID)</em></a>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>These two sources are the only regularly-updated databases that provide global coverage of distributional data on a relatively comparable basis.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>Both have played substantial agenda-setting roles in academic research, policy and public debate.</p>
+<p>The World Bank data is especially prominent within international development policy, notably being used to monitor many of the UN Sustainable Development Goals. Academic research on global inequality has also largely relied on this data <span class="citation" data-cites="Kanbur2022-lk lakner_global_2016 anand_global_2015 Nino-Zarazua2017-tv Ravallion2014-mk">(<a href="#ref-Kanbur2022-lk" role="doc-biblioref"><strong>Kanbur2022-lk?</strong></a>; <a href="#ref-lakner_global_2016" role="doc-biblioref">Lakner and Milanovic 2016</a>; <a href="#ref-anand_global_2015" role="doc-biblioref">Anand and Segal 2015</a>; <a href="#ref-Nino-Zarazua2017-tv" role="doc-biblioref"><strong>Nino-Zarazua2017-tv?</strong></a>; <a href="#ref-Ravallion2014-mk" role="doc-biblioref"><strong>Ravallion2014-mk?</strong></a>)</span>. <em>[TODO: Check and more refs.]</em>.</p>
+<p>The WID database emerged along with the burgeoning literature on top incomes, acting as a central repository and, increasingly, coordinating institution. The 1%</p>
+<section id="two-worlds-of-inequality-measurement" class="level2">
+<h2 class="anchored" data-anchor-id="two-worlds-of-inequality-measurement">Two worlds of inequality measurement</h2>
+<p>As well as being the the two not just two different databases. They in some sense represent <em>two different worlds</em> of inequality measurement.</p>
+<p>Different methods. These yield different pictures of the extent of inequality and how it has changed over time. Motivated by different ideas about the salient factors shaping inequality.</p>
+<section id="pip" class="level3">
+<h3 class="anchored" data-anchor-id="pip">PIP</h3>
+</section>
+<section id="wid" class="level3">
+<h3 class="anchored" data-anchor-id="wid">WID</h3>
+<p>They differ as to how ubiquitous a phenomenon rising inequality is around the world. The view from <em>World Inequality Database</em> and its associated global report is that inequality is rising in ‘nearly everywhere’ <span class="citation" data-cites="alvaredo_world_2018 chancel_world_2021">(<a href="#ref-alvaredo_world_2018" role="doc-biblioref">Alvaredo et al. 2018</a>; <a href="#ref-chancel_world_2021" role="doc-biblioref">Chancel et al. 2021</a>)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> In contrast, the World Bank data and its biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.</p>
+<p>Decompositions of global inequality into between- and within-country components.</p>
+<p>Capital vs labour share. .– including fundamental laws of capitalism with regard to capital accumulation (Piketty) –</p>
+</section>
+<section id="the-disconnect-between-these-datasets-devaules-them-both" class="level3">
+<h3 class="anchored" data-anchor-id="the-disconnect-between-these-datasets-devaules-them-both">The disconnect between these datasets devaules them both</h3>
 <p>There remains fundamental ambiguity surrounding which of two possible worlds we live in.</p>
 <p>The ‘<em>WID</em> world’ rising inequality within countries has been an almost universal phenomenon. suggests the winners from globalization and economic growth overwhelmingly have been a global elite. It sees the bulk of global inequalities as lying within nations, but emphasises global factors in terms of causes and hence the need for international coordination to combat inequality.</p>
 <p>The ‘<em>PIP</em> world’ – within-country inequality trends in recent decades have been mixed, and the differences in average incomes between countries remain the lion’s share of the globally.As such the importance of national policy (Ravallion, 2018; Corlett, 2016). access to both produced and human capital.</p>
 <p>Knowing which of these worlds we live in matters a great deal – for our understanding of inequality today, how it has changed, and also where efforts to combat inequality in the future are likely to be most successful.</p>
-<p>Many methodolodical choices concerning underlying data sources, the constraints on temporal coverage this gives rise to, adjust, conception of inequality. These to some extent come bundled together when making the choice between PIP and WID.</p>
-<p>In many particular contexts There are known strengths and weaknesses. However in using the datasets a global view on inequality, requires choosing between methodological ‘bundles’ whose relative strengths and weaknesses, applied globally, are not well understood.</p>
+<p>Trouble is that these are all bundled up. You must chose. On what basis can you make a choice?</p>
+<p>Known problems on both sides.</p>
+<p>For PIP – top incomes, and lack of comparability of the survey data – notably mix of incme and consumption data.</p>
+<p>For WID – tha many assumptions. An emphasis placed on the incorporation of tax data, but when taking a global view confonte by the fact that such tax data is often nonexistent. Top income corrections based on strong assumptions.</p>
+<p>Given the presentation, the extent to which different assumptions, indices, methodological choices affects the data and – is not something that can be read off’ the data.</p>
+<p>In using the datasets a global view on inequality, requires choosing wholesale between methodological ‘bundles’ whose relative strengths and weaknesses, applied globally, are not well understood.</p>
+<p>Also makes for a very confusing terrain for policymakers, media and the public.</p>
+<p>The two datasets are incredible efforts, involving the work of hundreds of researchers. Both datasets have continued to improve adn expand. In terms of data availability we are thus in a better position than ever to take a global viw on inequlity. And yet, amidst this wealth of data, limited understanding of very basics concerning inequality around the world.</p>
 </section>
-<section id="connecting-the-two-worlds" class="level3">
-<h3 class="anchored" data-anchor-id="connecting-the-two-worlds">Connecting the two worlds</h3>
+<section id="outline-connecting-the-two-worlds" class="level3">
+<h3 class="anchored" data-anchor-id="outline-connecting-the-two-worlds">Outline: Connecting the two worlds</h3>
 <p><em>(In this section I will explain the plan for the paper)</em></p>
-<p>What we can do is triangulate</p>
-<p>In this paper, I focus on trends in within-country inequality in recent decades.(In a companion paper, I look at the global distribution.) I line up what I can. I triangulate what we know – What is true irrespective of which ‘world’ we consider. And Identify what we don’t know – the remaining differences – and try to pinpoint where the differences lie.</p>
-<p>I do so with respect to two separate time periods, chosen to tradeoffs with respect to global coverage. The first period – from the fall of the Berlin wall. Driven primarily to the steep drop off in availability before this in household survey data collected in PIP.</p>
-<p>This maximises global coverage – 100 countries covering roughly 90% of the world poplation. The downside is that this period misses out – transition, liberalisation and structural adjustment. Question begging, by avoiding specifically the period where inequality thought to rise.</p>
-<p>To address this, I analyse a second, longer period extending back to roughly 1980.</p>
-<p>Explain approach. (Including LIS – which is close to PIP world (indeed PIP takes data from LIS for a number of high income countries.))</p>
-<p>(SUMMAR OF FINDINGS)</p>
-</section>
-<section id="methods-and-data" class="level2">
-<h2 class="anchored" data-anchor-id="methods-and-data">Methods and data</h2>
-<section id="concepts-of-global-inequality" class="level3">
-<h3 class="anchored" data-anchor-id="concepts-of-global-inequality">Concepts of global inequality</h3>
-<p>Adapted three concepts.</p>
-</section>
-<section id="data" class="level3">
-<h3 class="anchored" data-anchor-id="data">Data</h3>
-<section id="pip" class="level4">
-<h4 class="anchored" data-anchor-id="pip">PIP</h4>
-</section>
-<section id="wid" class="level4">
-<h4 class="anchored" data-anchor-id="wid">WID</h4>
-</section>
-<section id="lis" class="level4">
-<h4 class="anchored" data-anchor-id="lis">LIS</h4>
-<p>Will be used for income concept. i.e.&nbsp;it represents the PIP world – indeed LIS is the source for PIP for a number of high income countries. But the access to microdata allows us to ask more questions for a subset of countries.</p>
-</section>
-<section id="coverage-and-lining-up-observations" class="level4">
-<h4 class="anchored" data-anchor-id="coverage-and-lining-up-observations">Coverage and lining-up observations</h4>
-<p>(Coverage chart - overlayed 3/5 year)</p>
-</section>
-</section>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<section id="comparison-of-typical-indicators" class="level3">
-<h3 class="anchored" data-anchor-id="comparison-of-typical-indicators">Comparison of typical indicators</h3>
-</section>
-<section id="aligning-indices" class="level3">
-<h3 class="anchored" data-anchor-id="aligning-indices">Aligning indices</h3>
+<p>In this paper I aim to bring these two worlds of inequality measurement closer. To Triangulate what they do agree on and identify where they disagree.</p>
+<p>The first, most obvious, step is simply to compare the in a systemtatic way. This very basic step is curiously lacking in the literature. We begin by comparing trends in each world based on the inequality indices most typical in each: the Gini coefficient for the PIP data, and the top 1% share of pre-tax income for WID.</p>
+<p>Given incomplete coverage in both datasets, we ‘line up’ estimates to reference years to see change over time. We use two periods, presenting two different tradeoffs with respect to data coverage. The first is 1993-2018?? This maximises global coverage – 100 countries covering roughly 90% of the world poplation (Figure XX). The downside is that this period misses out – transition, liberalisation and structural adjustment. Question begging, by avoiding specifically the period where inequality thought to rise.</p>
+<p>The second is 1980-2018. Here we lose coverage, especially in the PIP data (Figure XX).</p>
+<p>The two measures selected – Gini coefficient of disposable income/consumption, and the top 1% share of pre-tax income – are where the PIP and WID worlds respectively are at their furthest apart. Yet in terms of broad global trends, there is much that even these very different measures can agree on: - x, - y, - z.</p>
+<p>There are big differences though: - Somewhat more pronounced rise among advanced economies. - Big divergence in trend some of the most populous countries</p>
+<p>The rest of the paper is about understanding where those differences emerge.</p>
+<ul>
+<li><p>Inequality indices chosen. We align. Compare Top 1%. And Gini.</p>
+<ul>
+<li>Explain results.</li>
+</ul></li>
+<li><p>We look at different income concepts for the small number of coutnries for which such data exists. To this end we also include data from the Luxembourg Income Study. Similar to PIP in that it relies on survey data. But provides access to microdata, allowing for the construction of different welfare aggregates. We focus on the countries with the biggest difference in trend and biggest population. I.e. those that contribute most to the difference in the weighted an unweigted global averages.</p>
+<p>What I won’t do is a detailed lining up. Although both institutions continue to take many steps to provide transparency and reproducibility to their estimates, they remain a black box. Makes it impossible to do this lining up. In many particular contexts – where detailed lining up is possible – there relative strengths and weaknesses may be clear. (This is what Morllei does. And Nolan). But at the global level the makes this impractical.</p>
+<ul>
+<li>Summarise: really depends on the country.</li>
+</ul></li>
+</ul>
 <hr>
 </section>
-<section id="aligning-coverage" class="level3">
-<h3 class="anchored" data-anchor-id="aligning-coverage">Aligning coverage</h3>
 </section>
 </section>
-<section id="comparing-inequality-trends" class="level2">
-<h2 class="anchored" data-anchor-id="comparing-inequality-trends">Comparing inequality trends</h2>
-<p>The focus of this paper is on trends. But worth pointing out levels. Inequality is much higher in WID than in PIP.</p>
-<p>Again this relates to many things – pretax vs disposable income/consumption. Later we will try lining up income concepts more closely. But for global coverage we have to pull together these ‘worlds’ that combine many differences.</p>
+<section id="comparing-the-two-worlds" class="level1">
+<h1>2. Comparing the two worlds</h1>
 <p>What we’re trying to do with triangulation is see whether they show a qualitively similar picture of whether, and how rapidly, inequality was rising or falling.</p>
 <p>But what would ‘similar’ be for Gini and top 1. Not a 1 point move.</p>
 <p>The main way of operationalising ‘similar’ is to look at Relative change: a percentage, rather than percentage point. We can put some threshold and see if there were rises or falls.</p>
-<p>No reason to expect this given the properties of the two measures. If we take lognormality we see… (MAke a chart in appendix - where we plot Gini against top 10 and top 1% assuming lognormality, and then add actual data for a particular country.) How unlognormal the top is would be another way to judge similarity. Rather than doing this, we bridge by aligning the indices.</p>
+<p>Possibly a footnote: No reason to expect this given the properties of the two measures. If we take lognormality we see… (MAke a chart in appendix - where we plot Gini against top 10 and top 1% assuming lognormality, and then add actual data for a particular country.) How unlognormal the top is would be another way to judge similarity. Rather than doing this, we bridge by aligning the indices.</p>
 <ul>
-<li><p>We also do absolute change: a percentage point. This is more intuitive. But somewhat arbitrary – differences in levels affect assessment of differences in trends.</p></li>
+<li><p>We also do absolute change: a percentage point. This is more intuitive. But somewhat arbitrary – differences in levels affect assessment of differences in trends. (Or possibly empahasise this measure if there is little difference to the relative threshold.)</p></li>
 <li><p>A third way is residuals from a regression of the two measures</p>
 <ul>
 <li>This we will use to see countries that are particular outliers.</li>
 </ul></li>
 </ul>
+<p>To get an overview: I’ll use the unweigted and population weighted average. The first represents change in inequality in the average country.</p>
+<p>All broken down by region.</p>
+<section id="inequality-since-1993" class="level2">
+<h2 class="anchored" data-anchor-id="inequality-since-1993">Inequality since 1993</h2>
+<p>In <a href="#fig-pip-wid-1993-2015-all-obs">Figure&nbsp;1</a> we plot the level of inequality in 1993 and 2015 against each other, using the inequality measures ‘typical’ of each dataset.</p>
+<p>To help with the interpretation, a band is shown along the 45-degree line. Countries falling within this band saw little change in inequality. Countries falling above it saw a substantive rise in inequality between the two periods. Countries falling below it saw a substantive fall. ‘Substantive’ here is defined as a change of more than 2 percentage points in the case of the PIP Gini coefficient, and more than 1 percentage point in the case of the WID top 1% share.</p>
+<p>From the visual inspection, in conjunction with <a href="#tbl-pip-wid-1993-2015-all-obs-averages">Table&nbsp;3</a>. In both sets of data, we see a mix of countries with rising and falling inequality. In the case of WID top 1% share, far more rises than falls. In both we see some convergence – . This is largely driven by regional dynamics.</p>
+<p>This is confirmed in summary tables. and this … Tolerance: different thresholds due to different range of data. In the appendix we consider relative thresholds (+/-5%), which makes little difference.</p>
+<p><a href="#tbl-pip-wid-1993-2015-all-obs-absolute-count">Table&nbsp;1</a> and <a href="#tbl-pip-wid-1993-2015-matching-obs-absolute-count">Table&nbsp;2</a> do this…</p>
+</section>
+<section id="considering-all-available-observations-in-each-dataset-we-see" class="level2">
+<h2 class="anchored" data-anchor-id="considering-all-available-observations-in-each-dataset-we-see">Considering all available observations in each dataset, we see:</h2>
+<ul>
+<li></li>
+<li>Much bigger rise in the weigted average in WID.</li>
+</ul>
+<p>Whilst the number of countries available in the two datasets is very similar, they are not the same countries. In particular, LAC is largely absent from WID. (Footnote about LAC in WID?? Are the global results based on linear interpolation?… An interpolation that contradicts the survey data?) Also fewer Sub-Saharan African countries. In PIP, fewer rich countries in Western Europe and its offshoots.</p>
+<p>Importantly, … are not neutral with respect to.The regions where WID is lacking coverage – LAC and SSA – are regions in which inequality was generally falling, according to the PIP Gini coefficient. The reverse is also the case: Regions that PIP are lacking – high income countries in W. Europe and offshoots – were regions where inequality was generally rising, according to the WID top 1% shares data.</p>
+<p>As such, differences in coverage already go some way to explaining the differences between the two datasets. <a href="#fig-pip-wid-1993-2015-matching-obs">Figure&nbsp;2</a> and <a href="#tbl-pip-wid-1993-2015-matching-obs-averages">Table&nbsp;4</a> show the data, restricting the observations to those available in both datasets. This brings the two series closer. Explain. (Coverage falls)</p>
+</section>
+<section id="it-is-worth-emphasising-the-similarities" class="level2">
+<h2 class="anchored" data-anchor-id="it-is-worth-emphasising-the-similarities">It is worth emphasising the similarities:</h2>
+<ul>
+<li></li>
+<li></li>
+</ul>
+<p>Nevertheless, there are clearly differences in what – even after aligning coverage. Are these about the metric, or other methodological differences? WE will see later on.</p>
+<section id="figures-1-2" class="level4">
+<h4 class="anchored" data-anchor-id="figures-1-2">Figures 1-2</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">All available observations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Only observations available in both datasets</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="fig-pip-wid-1993-2015-all-obs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/figures/PIPGini-vs-WIDTop1-1993-vs-2015-01.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;1: PIP Gini and WID Top 1% shahre in 1993 vs 21015 – All available observations</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="fig-pip-wid-1993-2015-matching-obs" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/figures/PIPGini-vs-WIDTop1-1993-vs-2015-02.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2: PIP Gini and WID Top 1% shahre in 1993 vs 21015 – Matching observations only</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tables-1-2" class="level4">
+<h4 class="anchored" data-anchor-id="tables-1-2">Tables 1-2</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true">All available observations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false">Only observations available in both datasets</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div id="tbl-pip-wid-1993-2015-all-obs-absolute-count" class="anchored">
+
+<div>
+
+<table class="dataframe table table-sm table-striped"><caption>Table&nbsp;1:  Change in inequality 1993 vs 2015 - All availalbe observations </caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="4" halign="left">PIP: Gini</th>
+      <th colspan="4" halign="left">WID: Top 1pc share – pretax</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>fall</th>
+      <th>stable</th>
+      <th>rise</th>
+      <th>total</th>
+      <th>fall</th>
+      <th>stable</th>
+      <th>rise</th>
+      <th>total</th>
+    </tr>
+    <tr>
+      <th>region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>EE &amp; CA</th>
+      <td>6</td>
+      <td>2</td>
+      <td>9</td>
+      <td>17</td>
+      <td>3</td>
+      <td>2</td>
+      <td>13</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>East Asia</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>LAC</th>
+      <td>13</td>
+      <td>2</td>
+      <td>2</td>
+      <td>17</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>MENA</th>
+      <td>2</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6</td>
+      <td>5</td>
+      <td>1</td>
+      <td>2</td>
+      <td>8</td>
+    </tr>
+    <tr>
+      <th>Other N. America</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>Other Oceania</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>S &amp; SE Asia</th>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>10</td>
+      <td>3</td>
+      <td>2</td>
+      <td>6</td>
+      <td>11</td>
+    </tr>
+    <tr>
+      <th>SS Africa</th>
+      <td>14</td>
+      <td>1</td>
+      <td>8</td>
+      <td>23</td>
+      <td>12</td>
+      <td>2</td>
+      <td>8</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>W. Europe</th>
+      <td>4</td>
+      <td>5</td>
+      <td>7</td>
+      <td>16</td>
+      <td>1</td>
+      <td>2</td>
+      <td>15</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>W. Offshoots</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>World</th>
+      <td>43</td>
+      <td>14</td>
+      <td>38</td>
+      <td>95</td>
+      <td>25</td>
+      <td>10</td>
+      <td>56</td>
+      <td>91</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div id="tbl-pip-wid-1993-2015-matching-obs-absolute-count" class="anchored">
+
+<div>
+
+<table class="dataframe table table-sm table-striped"><caption>Table&nbsp;2:  Change in inequality 1993 vs 2015 - Matching observations only </caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="4" halign="left">PIP: Gini</th>
+      <th colspan="4" halign="left">WID: Top 1pc share – pretax</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>fall</th>
+      <th>stable</th>
+      <th>rise</th>
+      <th>total</th>
+      <th>fall</th>
+      <th>stable</th>
+      <th>rise</th>
+      <th>total</th>
+    </tr>
+    <tr>
+      <th>region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>EE &amp; CA</th>
+      <td>5</td>
+      <td>1</td>
+      <td>8</td>
+      <td>14</td>
+      <td>2</td>
+      <td>1</td>
+      <td>11</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>East Asia</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>LAC</th>
+      <td>3</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>MENA</th>
+      <td>2</td>
+      <td>0</td>
+      <td>3</td>
+      <td>5</td>
+      <td>4</td>
+      <td>0</td>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>Other N. America</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>Other Oceania</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>S &amp; SE Asia</th>
+      <td>4</td>
+      <td>1</td>
+      <td>5</td>
+      <td>10</td>
+      <td>3</td>
+      <td>2</td>
+      <td>5</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>SS Africa</th>
+      <td>10</td>
+      <td>1</td>
+      <td>7</td>
+      <td>18</td>
+      <td>10</td>
+      <td>1</td>
+      <td>7</td>
+      <td>18</td>
+    </tr>
+    <tr>
+      <th>W. Europe</th>
+      <td>4</td>
+      <td>4</td>
+      <td>7</td>
+      <td>15</td>
+      <td>1</td>
+      <td>1</td>
+      <td>13</td>
+      <td>15</td>
+    </tr>
+    <tr>
+      <th>W. Offshoots</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>World</th>
+      <td>28</td>
+      <td>10</td>
+      <td>34</td>
+      <td>72</td>
+      <td>21</td>
+      <td>6</td>
+      <td>45</td>
+      <td>72</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tables-3-4" class="level4">
+<h4 class="anchored" data-anchor-id="tables-3-4">Tables 3-4</h4>
+<div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true">All available observations</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false">Only observations available in both datasets</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div id="tbl-pip-wid-1993-2015-all-obs-averages" class="anchored">
+
+<div>
+
+<table class="dataframe table table-sm table-striped"><caption>Table&nbsp;3:  Unweighted and weighted average in 1993 vs 2015 - All availalbe observations </caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="6" halign="left">PIP: Gini</th>
+      <th colspan="6" halign="left">WID: Top 1pc share – pretax</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">Avg</th>
+      <th colspan="2" halign="left">Wt. avg</th>
+      <th colspan="2" halign="left">Pop. coverage</th>
+      <th colspan="2" halign="left">Avg</th>
+      <th colspan="2" halign="left">Wt. avg</th>
+      <th colspan="2" halign="left">Pop. coverage</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+    </tr>
+    <tr>
+      <th>region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>EE &amp; CA</th>
+      <td>31.3</td>
+      <td>31.5</td>
+      <td>37.4</td>
+      <td>33.3</td>
+      <td>0.83</td>
+      <td>0.79</td>
+      <td>9.7</td>
+      <td>11.8</td>
+      <td>10.6</td>
+      <td>15.0</td>
+      <td>0.83</td>
+      <td>0.79</td>
+    </tr>
+    <tr>
+      <th>East Asia</th>
+      <td>32.3</td>
+      <td>34.1</td>
+      <td>33.8</td>
+      <td>38.5</td>
+      <td>0.86</td>
+      <td>0.87</td>
+      <td>11.7</td>
+      <td>15.3</td>
+      <td>9.4</td>
+      <td>13.9</td>
+      <td>0.98</td>
+      <td>0.98</td>
+    </tr>
+    <tr>
+      <th>LAC</th>
+      <td>51.3</td>
+      <td>46.6</td>
+      <td>54.3</td>
+      <td>48.6</td>
+      <td>0.87</td>
+      <td>0.87</td>
+      <td>17.4</td>
+      <td>20.4</td>
+      <td>19.0</td>
+      <td>22.5</td>
+      <td>0.67</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <th>MENA</th>
+      <td>38.5</td>
+      <td>37.7</td>
+      <td>38.3</td>
+      <td>37.7</td>
+      <td>0.65</td>
+      <td>0.60</td>
+      <td>19.7</td>
+      <td>18.5</td>
+      <td>19.5</td>
+      <td>19.1</td>
+      <td>0.65</td>
+      <td>0.62</td>
+    </tr>
+    <tr>
+      <th>Other N. America</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>Other Oceania</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>S &amp; SE Asia</th>
+      <td>36.9</td>
+      <td>37.0</td>
+      <td>33.2</td>
+      <td>35.3</td>
+      <td>0.95</td>
+      <td>0.94</td>
+      <td>16.4</td>
+      <td>17.7</td>
+      <td>14.5</td>
+      <td>20.0</td>
+      <td>0.95</td>
+      <td>0.95</td>
+    </tr>
+    <tr>
+      <th>SS Africa</th>
+      <td>47.4</td>
+      <td>42.4</td>
+      <td>46.3</td>
+      <td>41.1</td>
+      <td>0.73</td>
+      <td>0.72</td>
+      <td>21.1</td>
+      <td>16.8</td>
+      <td>18.4</td>
+      <td>15.5</td>
+      <td>0.64</td>
+      <td>0.65</td>
+    </tr>
+    <tr>
+      <th>W. Europe</th>
+      <td>30.5</td>
+      <td>31.3</td>
+      <td>32.5</td>
+      <td>32.8</td>
+      <td>0.97</td>
+      <td>0.97</td>
+      <td>8.7</td>
+      <td>10.8</td>
+      <td>9.0</td>
+      <td>11.5</td>
+      <td>0.98</td>
+      <td>0.98</td>
+    </tr>
+    <tr>
+      <th>W. Offshoots</th>
+      <td>34.7</td>
+      <td>36.2</td>
+      <td>39.1</td>
+      <td>40.1</td>
+      <td>0.99</td>
+      <td>0.99</td>
+      <td>10.7</td>
+      <td>14.3</td>
+      <td>13.4</td>
+      <td>18.1</td>
+      <td>1.00</td>
+      <td>1.00</td>
+    </tr>
+    <tr>
+      <th>World</th>
+      <td>39.8</td>
+      <td>38.0</td>
+      <td>37.0</td>
+      <td>37.9</td>
+      <td>0.87</td>
+      <td>0.86</td>
+      <td>14.5</td>
+      <td>14.8</td>
+      <td>13.1</td>
+      <td>17.2</td>
+      <td>0.88</td>
+      <td>0.86</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="tbl-pip-wid-1993-2015-matching-obs-averages" class="anchored">
+
+<div>
+
+<table class="dataframe table table-sm table-striped"><caption>Table&nbsp;4:  Unweighted and weighted average in 1993 vs 2015 – Matching observations only </caption>
+  <thead>
+    <tr>
+      <th></th>
+      <th colspan="6" halign="left">PIP: Gini</th>
+      <th colspan="6" halign="left">WID: Top 1pc share – pretax</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th colspan="2" halign="left">Avg</th>
+      <th colspan="2" halign="left">Wt. avg</th>
+      <th colspan="2" halign="left">Pop. coverage</th>
+      <th colspan="2" halign="left">Avg</th>
+      <th colspan="2" halign="left">Wt. avg</th>
+      <th colspan="2" halign="left">Pop. coverage</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+      <th>1993</th>
+      <th>2015</th>
+    </tr>
+    <tr>
+      <th>region</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>EE &amp; CA</th>
+      <td>31.1</td>
+      <td>31.4</td>
+      <td>37.6</td>
+      <td>33.4</td>
+      <td>0.80</td>
+      <td>0.77</td>
+      <td>9.9</td>
+      <td>12.3</td>
+      <td>10.7</td>
+      <td>15.2</td>
+      <td>0.80</td>
+      <td>0.77</td>
+    </tr>
+    <tr>
+      <th>East Asia</th>
+      <td>32.3</td>
+      <td>34.1</td>
+      <td>33.8</td>
+      <td>38.5</td>
+      <td>0.86</td>
+      <td>0.87</td>
+      <td>11.6</td>
+      <td>16.4</td>
+      <td>9.3</td>
+      <td>14.1</td>
+      <td>0.86</td>
+      <td>0.87</td>
+    </tr>
+    <tr>
+      <th>LAC</th>
+      <td>52.3</td>
+      <td>48.2</td>
+      <td>55.4</td>
+      <td>49.6</td>
+      <td>0.67</td>
+      <td>0.67</td>
+      <td>17.4</td>
+      <td>20.4</td>
+      <td>19.0</td>
+      <td>22.5</td>
+      <td>0.67</td>
+      <td>0.67</td>
+    </tr>
+    <tr>
+      <th>MENA</th>
+      <td>38.3</td>
+      <td>37.3</td>
+      <td>38.1</td>
+      <td>37.5</td>
+      <td>0.58</td>
+      <td>0.54</td>
+      <td>18.7</td>
+      <td>17.1</td>
+      <td>19.3</td>
+      <td>18.9</td>
+      <td>0.58</td>
+      <td>0.54</td>
+    </tr>
+    <tr>
+      <th>Other N. America</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>Other Oceania</th>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+      <td>nan</td>
+    </tr>
+    <tr>
+      <th>S &amp; SE Asia</th>
+      <td>36.9</td>
+      <td>37.0</td>
+      <td>33.2</td>
+      <td>35.3</td>
+      <td>0.95</td>
+      <td>0.94</td>
+      <td>17.0</td>
+      <td>18.1</td>
+      <td>14.5</td>
+      <td>20.1</td>
+      <td>0.95</td>
+      <td>0.94</td>
+    </tr>
+    <tr>
+      <th>SS Africa</th>
+      <td>47.2</td>
+      <td>42.3</td>
+      <td>44.7</td>
+      <td>39.2</td>
+      <td>0.59</td>
+      <td>0.61</td>
+      <td>21.0</td>
+      <td>16.6</td>
+      <td>18.3</td>
+      <td>15.0</td>
+      <td>0.59</td>
+      <td>0.61</td>
+    </tr>
+    <tr>
+      <th>W. Europe</th>
+      <td>30.5</td>
+      <td>31.3</td>
+      <td>32.5</td>
+      <td>32.8</td>
+      <td>0.95</td>
+      <td>0.95</td>
+      <td>8.8</td>
+      <td>10.9</td>
+      <td>8.9</td>
+      <td>11.5</td>
+      <td>0.95</td>
+      <td>0.95</td>
+    </tr>
+    <tr>
+      <th>W. Offshoots</th>
+      <td>34.7</td>
+      <td>36.2</td>
+      <td>39.1</td>
+      <td>40.1</td>
+      <td>0.99</td>
+      <td>0.99</td>
+      <td>11.0</td>
+      <td>15.5</td>
+      <td>13.5</td>
+      <td>18.2</td>
+      <td>0.99</td>
+      <td>0.99</td>
+    </tr>
+    <tr>
+      <th>World</th>
+      <td>37.7</td>
+      <td>36.5</td>
+      <td>36.5</td>
+      <td>37.6</td>
+      <td>0.83</td>
+      <td>0.82</td>
+      <td>14.6</td>
+      <td>15.0</td>
+      <td>13.2</td>
+      <td>17.3</td>
+      <td>0.83</td>
+      <td>0.82</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<a href="data_appendix/figures_and_tables/PIP: Gini vs WID: Top 1pc share – pretax – 1993 to 2015 – allObsFalse.csv" download="Gini_vs_Top1_1993_2015.csv">
+<!-- Auto width -->
+<button class="btn"><i class="fa fa-download"></i> Download full data</button>
+</a>
+</section>
+<section id="figures-1-4" class="level4">
+<h4 class="anchored" data-anchor-id="figures-1-4">Figures 1-4</h4>
+
+
+
+
+<input type="radio" name="1993-vs-2015_radio" value="PIP" checked="checked" onclick="chartSwitchFunction1993_2015_img()">&nbsp;PIP: Gini coefficient
+&nbsp;
+&nbsp;
+<input type="radio" name="1993-vs-2015_radio" value="WID" onclick="chartSwitchFunction1993_2015_img()">&nbsp;WID: Top 1% share
+
+<br>
+<label for="1993-vs-2015_radio_obsCheck">Show only observations available in both datasets:</label> 
+<input type="checkbox" id="1993-vs-2015_radio_obsCheck" onclick="chartSwitchFunction1993_2015_img()">
+
+
+<img src="images/figures/pip-gini-1993-vs-2015-all-obs.png" id="1993-vs-2015_plot" width="500">
+<br>
+
+
+<script>
+function chartSwitchFunction1993_2015_img() {
+
+  var ele = document.getElementsByName('1993-vs-2015_radio');
+
+
+  var checkBox = document.getElementById("1993-vs-2015_radio_obsCheck");
+
+  if (checkBox.checked == true){
+    if(ele[0].checked)
+        document.getElementById("1993-vs-2015_plot").src = "images/figures/pip-gini-1993-vs-2015-matching-obs.png";
+
+    if(ele[1].checked)
+        document.getElementById("1993-vs-2015_plot").src = "images/figures/wid-top-1-1993-vs-2015-matching-obs.png";
+
+  } else {
+
+        if(ele[0].checked)
+        document.getElementById("1993-vs-2015_plot").src = "images/figures/pip-gini-1993-vs-2015-all-obs.png";
+
+    if(ele[1].checked)
+        document.getElementById("1993-vs-2015_plot").src = "images/figures/wid-top-1-1993-vs-2015-all-obs.png";
+  }
+}
+   
+</script>
+
+
+    
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>source_var</th>
+      <th>Entity</th>
+      <th>region</th>
+      <th>Year</th>
+      <th>PIP: Gini</th>
+      <th>WID: Top 1pc share – pretax</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Albania</td>
+      <td>EE &amp; CA</td>
+      <td>1996.0</td>
+      <td>27.010342</td>
+      <td>8.14</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Albania</td>
+      <td>EE &amp; CA</td>
+      <td>2015.0</td>
+      <td>32.753732</td>
+      <td>9.62</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Angola</td>
+      <td>SS Africa</td>
+      <td>1995.0</td>
+      <td>NaN</td>
+      <td>21.98</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Angola</td>
+      <td>SS Africa</td>
+      <td>2018.0</td>
+      <td>NaN</td>
+      <td>25.98</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Argentina</td>
+      <td>LAC</td>
+      <td>1993.0</td>
+      <td>44.856286</td>
+      <td>13.98</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>263</th>
+      <td>Vietnam</td>
+      <td>S &amp; SE Asia</td>
+      <td>2016.0</td>
+      <td>35.266739</td>
+      <td>16.51</td>
+    </tr>
+    <tr>
+      <th>264</th>
+      <td>Zambia</td>
+      <td>SS Africa</td>
+      <td>1993.0</td>
+      <td>52.608612</td>
+      <td>19.54</td>
+    </tr>
+    <tr>
+      <th>265</th>
+      <td>Zambia</td>
+      <td>SS Africa</td>
+      <td>2015.0</td>
+      <td>57.136058</td>
+      <td>23.17</td>
+    </tr>
+    <tr>
+      <th>266</th>
+      <td>Zimbabwe</td>
+      <td>SS Africa</td>
+      <td>1991.0</td>
+      <td>NaN</td>
+      <td>17.41</td>
+    </tr>
+    <tr>
+      <th>267</th>
+      <td>Zimbabwe</td>
+      <td>SS Africa</td>
+      <td>2017.0</td>
+      <td>NaN</td>
+      <td>17.48</td>
+    </tr>
+  </tbody>
+</table>
+<p>268 rows × 5 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>source_var</th>
+      <th>pip_welfare</th>
+      <th>Year1993</th>
+      <th>Entity</th>
+      <th>value1993</th>
+      <th>Year2015</th>
+      <th>value2015</th>
+      <th>region</th>
+      <th>pop1993</th>
+      <th>pop2015</th>
+      <th>change</th>
+      <th>absolute_tolerance</th>
+      <th>relative_tolerance</th>
+      <th>absolute_fall</th>
+      <th>absolute_stable</th>
+      <th>absolute_rise</th>
+      <th>relative_fall</th>
+      <th>relative_stable</th>
+      <th>relative_rise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>PIP: Gini</td>
+      <td>Income</td>
+      <td>1993</td>
+      <td>Argentina</td>
+      <td>44.856286</td>
+      <td>2016</td>
+      <td>42.032529</td>
+      <td>LAC</td>
+      <td>34027240.0</td>
+      <td>43257064.0</td>
+      <td>-2.823757</td>
+      <td>1.0</td>
+      <td>2.242814</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>PIP: Gini</td>
+      <td>Income</td>
+      <td>1995</td>
+      <td>Australia</td>
+      <td>32.581990</td>
+      <td>2016</td>
+      <td>33.685811</td>
+      <td>W. Offshoots</td>
+      <td>17631514.0</td>
+      <td>23820240.0</td>
+      <td>1.103820</td>
+      <td>1.0</td>
+      <td>1.629100</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PIP: Gini</td>
+      <td>Income</td>
+      <td>1994</td>
+      <td>Austria</td>
+      <td>31.322342</td>
+      <td>2015</td>
+      <td>30.532775</td>
+      <td>W. Europe</td>
+      <td>7905280.0</td>
+      <td>8642422.0</td>
+      <td>-0.789567</td>
+      <td>1.0</td>
+      <td>1.566117</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>PIP: Gini</td>
+      <td>Income</td>
+      <td>1992</td>
+      <td>Belgium</td>
+      <td>24.951877</td>
+      <td>2015</td>
+      <td>27.729463</td>
+      <td>W. Europe</td>
+      <td>10043738.0</td>
+      <td>11248306.0</td>
+      <td>2.777585</td>
+      <td>1.0</td>
+      <td>1.247594</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>PIP: Gini</td>
+      <td>Income</td>
+      <td>1992</td>
+      <td>Bolivia</td>
+      <td>49.110053</td>
+      <td>2015</td>
+      <td>46.739953</td>
+      <td>LAC</td>
+      <td>7544494.0</td>
+      <td>11090090.0</td>
+      <td>-2.370100</td>
+      <td>1.0</td>
+      <td>2.455503</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>181</th>
+      <td>WID: Top 1pc share – pretax</td>
+      <td>NaN</td>
+      <td>1993</td>
+      <td>United Kingdom</td>
+      <td>9.720000</td>
+      <td>2015</td>
+      <td>12.300000</td>
+      <td>W. Europe</td>
+      <td>57647464.0</td>
+      <td>65224368.0</td>
+      <td>2.580000</td>
+      <td>1.0</td>
+      <td>0.486000</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>182</th>
+      <td>WID: Top 1pc share – pretax</td>
+      <td>NaN</td>
+      <td>1993</td>
+      <td>United States</td>
+      <td>14.140000</td>
+      <td>2015</td>
+      <td>18.890000</td>
+      <td>W. Offshoots</td>
+      <td>258779760.0</td>
+      <td>324607776.0</td>
+      <td>4.750000</td>
+      <td>1.0</td>
+      <td>0.707000</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>183</th>
+      <td>WID: Top 1pc share – pretax</td>
+      <td>NaN</td>
+      <td>1992</td>
+      <td>Vietnam</td>
+      <td>16.420000</td>
+      <td>2016</td>
+      <td>16.510000</td>
+      <td>S &amp; SE Asia</td>
+      <td>71176408.0</td>
+      <td>92191400.0</td>
+      <td>0.090000</td>
+      <td>1.0</td>
+      <td>0.821000</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>184</th>
+      <td>WID: Top 1pc share – pretax</td>
+      <td>NaN</td>
+      <td>1993</td>
+      <td>Zambia</td>
+      <td>19.540000</td>
+      <td>2015</td>
+      <td>23.170000</td>
+      <td>SS Africa</td>
+      <td>8270921.0</td>
+      <td>16248231.0</td>
+      <td>3.630000</td>
+      <td>1.0</td>
+      <td>0.977000</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>185</th>
+      <td>WID: Top 1pc share – pretax</td>
+      <td>NaN</td>
+      <td>1991</td>
+      <td>Zimbabwe</td>
+      <td>17.410000</td>
+      <td>2017</td>
+      <td>17.480000</td>
+      <td>SS Africa</td>
+      <td>10794921.0</td>
+      <td>14154937.0</td>
+      <td>0.070000</td>
+      <td>1.0</td>
+      <td>0.870500</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>186 rows × 19 columns</p>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Averages + pop coverage</p></li>
+<li><p>Country changes (also see which countries strongly disagree in terms of direction)</p></li>
+</ul>
+</section>
+</section>
+<section id="inequality-since-1980" class="level2">
+<h2 class="anchored" data-anchor-id="inequality-since-1980">Inequality since 1980</h2>
+<section id="figures-x-y" class="level4">
+<h4 class="anchored" data-anchor-id="figures-x-y">Figures X-Y</h4>
+
+
+
+
+<input type="radio" name="1980_2018_radio" value="PIP" checked="checked" onclick="chartSwitchFunction1980_2018()">&nbsp;PIP: Gini coefficient
+&nbsp;
+&nbsp;
+<input type="radio" name="1980_2018_radio" value="WID" onclick="chartSwitchFunction1980_2018()">&nbsp;WID: Top 1% share
+
+<br>
+<label for="obsCheck">Show only observations available in both datasets:</label> 
+<input type="checkbox" id="obsCheck" onclick="chartSwitchFunction1980_2018()">
+
+<iframe id="1980_2018_plot" src="https://ourworldindata.org/grapher/pip-gini-1980-vs-2018-all-obs" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>;
+
+
+
+<script>
+function chartSwitchFunction1980_2018() {
+
+  var ele = document.getElementsByName('1980_2018_radio');
+
+
+  var checkBox = document.getElementById("obsCheck");
+
+  if (checkBox.checked == true){
+    if(ele[0].checked)
+        document.getElementById("1980_2018_plot").src = "https://ourworldindata.org/grapher/pip-gini-1980-vs-2018-matching-obs";
+
+    if(ele[1].checked)
+        document.getElementById("1980_2018_plot").src = "https://ourworldindata.org/grapher/wid-top-1-1980-vs-2018-matching-obs";
+
+  } else {
+
+        if(ele[0].checked)
+        document.getElementById("1980_2018_plot").src = "https://ourworldindata.org/grapher/pip-gini-1980-vs-2018-all-obs";
+
+    if(ele[1].checked)
+        document.getElementById("1980_2018_plot").src = "https://ourworldindata.org/grapher/wid-top-1-1980-vs-2018-all-obs";
+  }
+}
+   
+</script>
+
+
+    
+</section>
+</section>
+</section>
+<section id="aligning-indices" class="level1">
+<h1>3. Aligning indices</h1>
+<ul>
+<li><p>Show that measure doesn’t matter for WID until top 1 (check Palma ratio)</p></li>
+<li><p>Check out how much different metrics matter for PIP.</p></li>
+<li><p>Do a 1% vs 1% comparison</p></li>
+<li><p>Do a Gini vs Gini comparison</p></li>
+</ul>
+<p>All for 1993 and 1980.</p>
+<p>Does it make a difference whether we look at Gini or top 10%?</p>
+<p>People worry about whether Gini masks what’s happening at the top.</p>
+<p>Empirically: - Make a linear model of top 10% on Gini, for each source separately - Make predicted top 10% - Take a look at the R2 - Investigate individual countries with very poor predictions</p>
+<p>Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.</p>
+</section>
+<section id="bridging-the-gap-for-particular-countries" class="level1">
+<h1>Bridging the gap for particular countries</h1>
+<hr>
+<section id="aligning-coverage" class="level3">
+<h3 class="anchored" data-anchor-id="aligning-coverage">Aligning coverage</h3>
 </section>
 <section id="global-data-on-inequality" class="level2">
 <h2 class="anchored" data-anchor-id="global-data-on-inequality">Global data on inequality</h2>
@@ -423,10 +1800,6 @@ Load packages and data
 </section>
 <section id="comparing-metrics" class="level3">
 <h3 class="anchored" data-anchor-id="comparing-metrics">Comparing metrics</h3>
-<p>Does it make a difference whether we look at Gini or top 10%?</p>
-<p>People worry about whether Gini masks what’s happening at the top.</p>
-<p>Empirically: - Make a linear model of top 10% on Gini, for each source separately - Make predicted top 10% - Take a look at the R2 - Investigate individual countries with very poor predictions</p>
-<p>Sub-Saharan Africa: example where the Gini fell in more cases than the top 10%.</p>
 </section>
 <section id="since-1990-1" class="level3">
 <h3 class="anchored" data-anchor-id="since-1990-1">Since 1990</h3>
@@ -489,25 +1862,31 @@ Load packages and data
 </section>
 </section>
 <section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+</section>
+<section id="appendix" class="level1">
+<h1>Appendix</h1>
+<section id="data-coverage" class="level2">
+<h2 class="anchored" data-anchor-id="data-coverage">Data coverage</h2>
+</section>
+<section id="pip-gini-vs-wid-top-1-share" class="level2">
+<h2 class="anchored" data-anchor-id="pip-gini-vs-wid-top-1-share">PIP Gini vs WID Top 1% share</h2>
+<section id="section" class="level3">
 
 
 
 
 </section>
+</section>
+</section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">Conclusion</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-alvaredo_top_2013" class="csl-entry" role="doc-biblioentry">
-Alvaredo, Facundo, Anthony B Atkinson, Thomas Piketty, and Emmanuel Saez. 2013. <span>“The <span>Top</span> 1 <span>Percent</span> in <span>International</span> and <span>Historical</span> <span>Perspective</span>.”</span> <em>Journal of Economic Perspectives</em> 27 (3): 3–20. <a href="https://doi.org/10.1257/jep.27.3.3">https://doi.org/10.1257/jep.27.3.3</a>.
-</div>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">1993-2015</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
 <div id="ref-alvaredo_world_2018" class="csl-entry" role="doc-biblioentry">
 Alvaredo, F, L Chancel, T Piketty, E Saez, and G Zucman. 2018. <em>World <span>Inequality</span> <span>Report</span> 2018</em>. Harvard University Press.
 </div>
 <div id="ref-anand_global_2015" class="csl-entry" role="doc-biblioentry">
 Anand, Sudhir, and Paul Segal. 2015. <span>“The Global Distribution of Income.”</span> In <em>Handbook of Income Distribution</em>, 2:937–79. Elsevier.
-</div>
-<div id="ref-atkinson_top_2014" class="csl-entry" role="doc-biblioentry">
-Atkinson, A. B, and Thomas Piketty. 2014. <em>Top Incomes : A Global Perspective</em>. Oxford.
 </div>
 <div id="ref-atkinson_promise_2001" class="csl-entry" role="doc-biblioentry">
 Atkinson, Anthony B., and Andrea Brandolini. 2001. <span>“Promise and <span>Pitfalls</span> in the <span>Use</span> of "<span>Secondary</span>" <span>Data</span>-<span>Sets</span>: <span>Income</span> <span>Inequality</span> in <span>OECD</span> <span>Countries</span> <span>As</span> a <span>Case</span> <span>Study</span>.”</span> <em>Journal of Economic Literature</em> 39 (3): 771–99. <a href="https://doi.org/10.1257/jel.39.3.771">https://doi.org/10.1257/jel.39.3.771</a>.
@@ -518,24 +1897,20 @@ Chancel, Lucas, Thomas Piketty, Emmanuel Saez, and Gabriel Zucman. 2021. <span>�
 <div id="ref-lakner_global_2016" class="csl-entry" role="doc-biblioentry">
 Lakner, Christoph, and Branko Milanovic. 2016. <span>“Global <span>Income</span> <span>Distribution</span>: <span>From</span> the <span>Fall</span> of the <span>Berlin</span> <span>Wall</span> to the <span>Great</span> <span>Recession</span>.”</span> <em>World Bank Econ. Rev.</em> 30 (2): 203–32.
 </div>
-<div id="ref-piketty_capital_2014" class="csl-entry" role="doc-biblioentry">
-Piketty, Thomas. 2014. <em>Capital in the Twenty-First Century</em>. Cambridge Massachusetts: Harvard University Press.
-</div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>United Nations Secretary-General António Guterres made the comment in the 18th Nelson Mandela Annual Lecture in July 2020. See https://www.nelsonmandela.org/news/entry/annual-lecture-2020-secretary-general-guterress-full-speech.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>United Nations Secretary-General António Guterres made the comment in the 18th Nelson Mandela Annual Lecture in July 2020. See https://www.nelsonmandela.org/news/entry/annual-lecture-2020-secretary-general-guterress-full-speech.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>EDIT: PIP used to be Povcal. It draws upon the work of various regional teams. WID used to be WTID.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>EDIT: Both datasets suffer important limitations with respect to comparability acrosss time and location. These will be discussed in the data section below. Both datasets, however, take significant steps to harmonize, <em>ex-post</em>, the available underlying data. In this respect they can be distinguished from databases such as WIID and SWIID <span class="citation" data-cites="atkinson_promise_2001">(<a href="#ref-atkinson_promise_2001" role="doc-biblioref">Anthony B. Atkinson and Brandolini 2001</a>)</span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p><span class="citation" data-cites="Kanbur2022-lk lakner_global_2016 anand_global_2015 Nino-Zarazua2017-tv Ravallion2014-mk">(Including <a href="#ref-Kanbur2022-lk" role="doc-biblioref"><strong>Kanbur2022-lk?</strong></a>; <a href="#ref-lakner_global_2016" role="doc-biblioref">Lakner and Milanovic 2016</a>; <a href="#ref-anand_global_2015" role="doc-biblioref">Anand and Segal 2015</a>; <a href="#ref-Nino-Zarazua2017-tv" role="doc-biblioref"><strong>Nino-Zarazua2017-tv?</strong></a>; <a href="#ref-Ravallion2014-mk" role="doc-biblioref"><strong>Ravallion2014-mk?</strong></a>)</span> TODO: Check and more refs<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><blockquote class="blockquote">
+<li id="fn3"><p>TODO: PIP used to be Povcal. It draws upon the work of various regional teams. WID used to be WTID.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>EDIT: Both datasets suffer important limitations with respect to comparability acrosss time and location. These will be discussed in the data section below. Both datasets, however, take significant steps to harmonize, <em>ex-post</em>, the available underlying data. In this respect they can be distinguished from databases such as WIID and SWIID <span class="citation" data-cites="atkinson_promise_2001">(<a href="#ref-atkinson_promise_2001" role="doc-biblioref">Atkinson and Brandolini 2001</a>)</span><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><blockquote class="blockquote">
 <p>Income and wealth inequalities have been on the rise nearly everywhere since the 1980s, following a series of deregulation and liberalization programs which took different forms in different countries. <span class="citation" data-cites="chancel_world_2021">(<a href="#ref-chancel_world_2021" role="doc-biblioref">Chancel et al. 2021, xx</a>)</span></p>
 </blockquote>
 <blockquote class="blockquote">
-<p>In recent decades, income inequality has increased in nearly all countries, but at different speeds… <span class="citation" data-cites="alvaredo_world_2018">(<a href="#ref-alvaredo_world_2018" role="doc-biblioref">F. Alvaredo et al. 2018, xx</a>)</span></p>
+<p>In recent decades, income inequality has increased in nearly all countries, but at different speeds… <span class="citation" data-cites="alvaredo_world_2018">(<a href="#ref-alvaredo_world_2018" role="doc-biblioref">Alvaredo et al. 2018, xx</a>)</span></p>
 </blockquote>
-<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></li>
+<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
