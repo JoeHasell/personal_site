@@ -2503,7 +2503,7 @@
     "href": "PhD_pages/older_structure/paper_pages/paper3.html",
     "title": "Paper 3: Housing and the capital share of income",
     "section": "",
-    "text": "A substantial literature has documented a long-run shift in the distribution of national income between wages and returns to capital.\nMuch of the interest in this empirical trend owes to its lying at the junction of two prominent topics within the social sciences: 1) the decline of labour bargaining power, and 2) the rise in income inequality.\n(Explain (1) and connection to (2)).\nThe hypothesis underpins much of the motivation for the Top incomes approach."
+    "text": "NB: I should look at the global estimates of factor shares mentioned in some UN reports (maybe ILO data?). e.g.  - “The share of wages in total GDP declined in a majority of countries (91 out of 133 with data) from 1995 to 2014 (ILO, 2016).” (https://www.un.org/development/desa/dspd/wp-content/uploads/sites/22/2020/02/World-Social-Report2020-FullReport.pdf). - “A decline in the labour share of income from 2014 to 2019 ‐ from 54.1 per cent to 52.6 per cent ‐ represents upward pressure on inequality.” https://www.un.org/sustainabledevelopment/inequality/"
   },
   {
     "objectID": "PhD_pages/older_structure/paper_pages/paper3.html#data",
@@ -2833,5 +2833,12 @@
     "title": "Paper 1: Triangulating trends in inequality around the world from secondary databases",
     "section": "Sub-Saharan Africa",
     "text": "Sub-Saharan Africa\nNotes on the WID methodology. Basically no tax data. Based on guesses about how you shift consumption to pre-tax income, and then top income adjustment.\nPlot: make a direct comparison for this region with the same index. NEcessarily tethered to the survey data (unlike say Mexico) The changes are amplified in WID (falls are larger, rises are larger).\nAlso note the quality/comparability of the PIP survey data.\n\n\nAligning coverage"
+  },
+  {
+    "objectID": "PhD_pages/older_structure/paper_pages/paper3.html#introduction",
+    "href": "PhD_pages/older_structure/paper_pages/paper3.html#introduction",
+    "title": "Paper 3: Housing and the capital share of income",
+    "section": "Introduction",
+    "text": "Introduction\nA substantial literature has documented a long-run shift in the distribution of national income between wages and returns to capital.\nMuch of the interest in this empirical trend owes to its lying at the junction of two prominent topics within the social sciences: 1) the decline of labour bargaining power, and 2) the rise in income inequality.\n(Explain (1) and connection to (2)).\nThe hypothesis underpins much of the motivation for the Top incomes approach."
   }
 ]

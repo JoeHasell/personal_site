@@ -3,6 +3,12 @@ title: "Paper 3: Housing and the capital share of income"
 editor: visual
 ---
 
+NB: I should look at the global estimates of factor shares mentioned in some UN reports (maybe ILO data?). e.g. 
+- "The share of wages in total GDP declined in a majority of countries
+(91 out of 133 with data) from 1995 to 2014 (ILO, 2016)." (https://www.un.org/development/desa/dspd/wp-content/uploads/sites/22/2020/02/World-Social-Report2020-FullReport.pdf).
+- "A decline in the labour share of income from 2014 to 2019 ‐ from 54.1 per cent to 52.6 per cent ‐ represents upward pressure on inequality." https://www.un.org/sustainabledevelopment/inequality/
+
+
 ## Introduction
 
 A substantial literature has documented a long-run shift in the distribution of national income between wages and returns to capital.
