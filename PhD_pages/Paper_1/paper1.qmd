@@ -7,8 +7,7 @@ execute:
   warning: false
 ---
 
-::: {.callout-note collapse="true" appearance="minimal"}
-### Load packages and data
+
 
 ```{python}
 
@@ -100,13 +99,19 @@ def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement
 
 ```
 
-:::
 
 ```{python}
 # READING LIST:
 # Bourguignon (2015)
-# The share of wages in total GDP declined in a majority of countries
-# (91 out of 133 with data) from 1995 to 2014 (ILO, 2016).
+# WID methodology papers:
+
+# - Brazil: https://wid.world/document/extreme-persistent-inequality-new-evidence-brazil-combining-national-accounts-surveys-fiscal-data-2001-2015-wid-world-working-paper-201712/
+#  - Assouad (2017) on Lebanon and Czajka (2017) on Côte d’Ivoire]
+
+
+
+
+# TEXT GRAVEYARD
 
 #  Other authors
 # question the pre-eminence of globalization as the main driver of global inequality, noting
@@ -145,6 +150,192 @@ def make_selection_msg(reference_vals,max_dist_from_refs,all_metrics_requirement
 
 # A near ubiquitous rise in inequality apparent in the *WID* data points to fundamental 'forces for divergence' within capitalism [@piketty_capital_2014] and the need for global coordination, particularly on the taxation of capital, to counter them [@saez_triumph_2019]. If inequalities within countries now predominate within the global distribution of income, such avenues will also be central to tackling global inequality too [@piketty_brief_2022]. Conversely, the much more mixed picture seen in the *PIP* data highlights more prominently the past role and future scope of national policies to shape the extent of inequality within countries [@ravallion_inequality_2018]. From this viewpoint, such inequalities in any case remain a small share of overall global inequality such that the global distribution will continue to depend heavily on future aggregate growth rates [@kanbur_global_2022].
 
+
+
+# The two datasets differ along a range of dimensions, including the underlying sources relied on, the measures of welfare used, the summary indicators commonly favoured, and the temporal and geographic coverage available.
+
+# These differences come largely as a bundle. Choosing between the *WID* or *PIP* data implies not only a technical choice between data sources and methodolodies, but also a more fundamental choice as to which concept of inequality to consider, for which places and time periods. This has a led to a degree of specialisation in their use.
+
+# The *PIP* data has typically been the favoured choice for investigating the whole distribution of welfare across households, particularly at a global scale [@Kanbur2022-lk; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv; @Ravallion2014-mk]. This includes the World Bank's own research and monitoring activties concerning global poverty, inequality and growth across the distribution [see for example @world_bank_poverty_2016; @world_bank_poverty_2022]. The dataset is also relied on by the United Nations to set and monitor many of the targets in this area that form part of its *Sustainable Development Goals*.
+
+# The *WID* data has more commonly been used to understand top dynamics before taxes. Notwithstanding substantial efforts to global, high income countries due to the data required. in which today's rich countries are overrepresented . In policy, advocacy and public debate, the data used to highlight the very large and, in many cases, growing advantage enjoyed by the richest individuals in these societies. In academia, top incomes data long-run processes fundamental – capital accumulation.[@atkinson_top_2007; @piketty_capital_2014]  On political economy channels, social conflict between capital and labour, wage bargaining norms and the interaction with marginal tax rates. More generally the data have led to a fundamental revaluation of the causes of inequality that move beyond orthodox accounts given purely in terms of marginal productivities of workers with heterogeneous skills or education [@alvaredo_top_2013; @piketty_capital_2014-1]. 
+
+# Thus whilst both the *PIP* and *WID* datasets have played substantial agenda-setting roles in academic research, policy and public debate, this has tended to occur in largely separate arenas. Moreoever, no way to join up the insights they offer. Very confusing terrain for people to understand. We are left with two distinct and, to a large extent, incommensurable 'worlds' of inequality measurement.
+
+# Recent extensions have brought down some of these barriers. PIP now includes high-income countries. WID now global coverage, and post-tax income concepts. In  
+
+# At the same time, these developments in the two datasets have made this disconnect between them all the more apparent. Fundamental differences on the basics. Two in particular.
+
+# 1
+# 2
+
+# Whilst for individual countries, the connections may be well understood, globally the value of the different assumptions is not really known. We have to pick blindly.
+
+# ### Connecting up the worlds
+
+
+# This is the first of two papers that seeks to join up.
+
+
+
+
+
+# The dataset is used for the Bank's own research and monitoring activities which, whilst traditionally focussing on absolute poverty, have more recently encompassed trends in inequality, relative poverty and growth across the distribution. Notably, the data is alo used to set and monitor many of the targets, on both poverty and inequality, that form part of the UN's Sustainable Development Goals. More generally, the source has been indispensible for research taking a global view on inequality [@Kanbur2022-lk; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv; @Ravallion2014-mk].
+
+# The *WID* database emerged out of the burgeoning literature on top incomes [@atkinson_top_2014] and has come to play a central and, to some extent, coordinating role for this research agenda. The key innovation of the 'top incomes' approach has been the incorporation of tax data, as either an alternative or complement to the more orthodox reliance on household survey data. The primary advantage is that tax data can provide a better view of the top of the income distribution, which is often poorly captured by survey data [@lustig_missing_2019]. However, the choice of data source has typically brought with it a number of other differences that mark out the 'top incomes' approach. This includes a particular focus on the top of the distribution (for which tax data is more universally available), and on income measured before tax (in terms of which the underlying data is gathered). This contrasts with more orthodox approaches to inequality measurement in which disposable income has tended to be seen as the more relevant measure of welfare [@canberra_group_canberra_2011], and greater attention is given to measures of overall inequality, such as the Gini coefficient, or to relative poverty.
+
+# Another benefit of tax data is the much longer timeframes it is sometimes available for. The estimates gathered in *WID* provide a long-run perspective on the evolution of inequality over the twentieth century, albeit for a more limited geography in which today's rich countries are somewhat overrepresented [@atkinson_top_2007; @piketty_capital_2014].
+
+# Moreover, the top incomes methodology carried forward by *WID* developed with a distinctive set of questions concerning the *causes* of inequality in mind. Particular attention is given to the distribution of wealth and capital incomes as drivers of personal income inequality, in contrast to orthodox accounts focussed purely on the dispersion of wages [@alvaredo_top_2013; @piketty_capital_2014-1]. This ... hidden from view given the concentration of capital incomes at the top, captured poorly by survey data. 
+
+# ### Two 'worlds' of inequality measurement
+# Tw worlds – methods, conceptions of inequality, time periods and geographic coverage and research questions come bundled.
+
+# Always unsatisfying. Very difficult to unpick. Peple do it for individual countries.. 
+
+# A wholeslae comparison was generally avoided due to the very different coverage. Used in parallel.
+
+# As the databases have developed and expanded, however, this division of labour between the two datasets has become increasingly blurred. PIP includes high-income countries. WID coverage is global. DINA focus on comparability. Increasingly, the datasets are used to answer the same range of questions, speak to the same world.
+
+# Where they now meet, the result is very confusing, one that, despite the great strides forward, leaves uncertainty around the most basic questions.
+
+# This is most visible in two fundamental disagreements between the two 'worlds'.
+
+# Firstly, they give very different views of how ubiquitous a phenomenon rising inequality is within countries around the world. The view from *World Inequality Database* and its associated global report is that inequality has risen 'nearly everywhere' in recent decades [@alvaredo_world_2018; @chancel_world_2021]. In contrast, the World Bank data and its associated biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.
+
+# Secondly, the datasets paint as to how such inequalities *within* countries compare to the differences in average incomes seen *between* richer and poorer countries.
+
+# Most analyses of global income inequality to date have relied heavily on the *PIP* data [@Kanbur2022-lk; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv; @Ravallion2014-mk].^[TODO: Add footnote explaining transition from Povcal] *[TODO: Check and more refs.]*. A consistent result from this literature is that inequalities within countries remain small in comparison to the much larger differences seen between countries. This is despite the convergence seen in recent decades between countries, given higher economic growth rates across low- and middle-income countries. According to such research, a person's income remains largely determined by the country in which they happen to have been born [@milanovic_global_2015].
+
+# More recent analysis of the WID data flips this established result on its head. Chancel... estimate xx.
+
+
+# The datasets are enormous efforts, involving the work of hundreds of researchers. They are hugely valuable offering an unprecidented perspective on global inequality and how it is evolving. And yet the disconnect between the two devalues them both. Amidst the wealth of data, basic facts are not known. And the terrain is incredibly confusing to navigate for policimakers and the concerned public.
+
+# ### Connecting up the worlds
+
+# This paper, along with a companion paper, seeks to join up these two worlds. This first paper picks up the first question – within country. A companion paper considers global inequality.
+
+# Section 2 of this paper introduces the two worlds.
+# Section 3 compares within country trends between two periods. It begins with the inequlaity metrics for which these datasets are most associated, and in which the worlds fall furthest apart: Gini, Top 1% share. Already
+# Section 4 aligns coverage. It is not neutral. Already this goes some way to explaining the gap between the two datasets.
+# Section 5 aligns inequality indices. [Summary.]
+# Section 5 considers the role of welfare metrics and specific data quality issues for a subset of countries where there is most disagreement.
+
+# Summary of main conclusion!?
+
+
+
+
+
+
+
+
+
+
+
+
+
+# # 2. Two worlds of inequality measurement
+
+# As well as being the the two  not just two different databases. They in some sense represent *two different worlds* of inequality measurement.
+
+# Different methods. These yield different pictures of the extent of inequality and how it has changed over time. Motivated by different ideas about the salient factors shaping inequality.
+
+# ### PIP
+
+
+
+# ### WID
+
+
+# They differ as to how ubiquitous a phenomenon rising inequality is around the world. The view from *World Inequality Database* and its associated global report is that inequality is rising in 'nearly everywhere' [@alvaredo_world_2018; @chancel_world_2021].[^WID_quotes] In contrast, the World Bank data and its biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.
+
+
+# [^WID_quotes]:
+#     > Income and wealth inequalities have been on the rise nearly everywhere since the 1980s, following a series of deregulation and liberalization programs which took different forms in different countries. [@chancel_world_2021, pp. xx]
+
+#     > In recent decades, income inequality has increased in nearly all countries, but at different speeds... [@alvaredo_world_2018, pp. xx]
+
+
+# Decompositions of global inequality into between- and within-country components. 
+
+# Capital vs labour share. .– including fundamental laws of capitalism with regard to capital accumulation (Piketty) – 
+
+
+# ### The disconnect between these datasets devaules them both
+
+# These datasets are incredibly valuable – playing to motivate action. The example in the opening sentence above illustrates this well. It is only thanks to the WID data that we can say X. It is only thanks to the PIP data that we can say that three billion cannot afford a healthy diet.
+
+# Often it is presented that there is a division of labour between these dataset – WID is for inequality, especially at the top.PIP is for poverty.
+
+# But the point is that it is only one world that we live in. The disconnect is not something we can live with, but rather presents a challenge to both datasets.
+
+# There remains fundamental ambiguity surrounding which of two possible worlds we live in. 
+
+# The '*WID* world' rising inequality within countries has been an almost universal phenomenon. suggests the winners from globalization and economic growth overwhelmingly have been a global elite. It sees the bulk of global inequalities as lying within nations, but emphasises global factors in terms of causes and hence the need for international coordination to combat inequality.
+
+# The '*PIP* world' – within-country inequality trends in recent decades have been mixed, and the differences in average incomes between countries remain the lion's share of the globally.As such the importance of national policy (Ravallion, 2018; Corlett, 2016). access to both produced and human capital.
+
+# Knowing which of these worlds we live in matters a great deal – for our understanding of inequality today, how it has changed, and also where efforts to combat inequality in the future are likely to be most successful.
+
+# Trouble is that these are all bundled up. You must chose. On what basis can you make a choice?
+
+# Known problems on both sides.
+
+# For PIP – top incomes, and lack of comparability of the survey data – notably mix of incme and consumption data.
+
+# For WID – tha many assumptions. An emphasis placed on the incorporation of tax data, but when taking a global view confonte by the fact that such tax data is often nonexistent. Top income corrections based on strong assumptions.
+
+# Given the presentation, the extent to which different assumptions, indices, methodological choices affects the data and – is not something that can be read off' the data.
+
+# In using the datasets a global view on inequality, requires choosing wholesale between methodological 'bundles' whose relative strengths and weaknesses, applied globally, are not well understood.
+
+# Also makes for a very confusing terrain for policymakers, media and the public.
+
+# The two datasets are incredible efforts, involving the work of hundreds of researchers. Both datasets have continued to improve adn expand. In terms of data availability we are thus in a better position than ever to take a global viw on inequlity. And yet, amidst this wealth of data, limited understanding of very basics concerning inequality around the world.
+
+
+
+# ### Outline: Connecting the two worlds
+# *(In this section I will explain the plan for the paper)*
+
+# In this paper I aim to bring these two worlds of inequality measurement closer. To Triangulate what they do agree on and identify where they disagree.
+
+# The first, most obvious, step is simply to compare the in a systemtatic way. This very basic step is curiously lacking in the literature. We begin by comparing trends in each world based on the inequality indices most typical in each: the Gini coefficient for the PIP data, and the top 1% share of pre-tax income for WID.
+
+# Given incomplete coverage in both datasets, we 'line up' estimates to reference years to see change over time. We use two periods, presenting two different tradeoffs with respect to data coverage. The first is 1993-2018?? This maximises global coverage – 100 countries covering roughly 90% of the world poplation (Figure XX). The downside is that this period misses out – transition, liberalisation and structural adjustment. Question begging, by avoiding specifically the period where inequality thought to rise.
+
+# The second is 1980-2018. Here we lose coverage, especially in the PIP data (Figure XX).
+
+# The two measures selected – Gini coefficient of disposable income/consumption, and the top 1% share of pre-tax income – are where the PIP and WID worlds respectively are at their furthest apart. Yet in terms of broad global trends, there is much that even these very different measures can agree on: 
+# - x
+# - y
+# - z.
+
+# There are big differences though:
+# - Somewhat more pronounced rise among advanced economies.
+# - Big divergence in trend some of the most populous countries
+
+# Subsequent sections attempt to bridge the gaps in order to learn where those differences emerge.
+
+# - Section 2: Aligning coverage. This reduces the gap already. Coverage of countries is not... with respect to inequality trends.
+
+# - Inequality indices chosen. We align. Compare Top 1%. And Gini.
+#     - Explain results.
+
+# - Welfare concept. We look at different income concepts for the small number of coutnries for which such data exists. To this end we also include data from the Luxembourg Income Study. Similar to PIP in that it relies on survey data. But provides access to microdata, allowing for the construction of different welfare aggregates. We focus on the countries with the biggest difference in trend and biggest population. I.e. those that contribute most to the difference in the weighted an unweigted global averages.
+
+
+# What I won't do is a detailed lining up.
+# Although both institutions continue to take many steps to provide transparency and reproducibility to their estimates, they remain a black box. Makes it impossible to do this lining up. 
+
+# In many particular contexts – where detailed lining up is possible – there relative strengths and weaknesses may be clear. (This is what Morllei does. And Nolan). But at the global level the makes this impractical. 
+
+#     - Summarise: really depends on the country.
+
+# ----
+
 ```
 
 # Introduction
@@ -161,7 +352,7 @@ These two sources are the only regularly-updated databases providing global cove
 
 Their use and impact, however, has taken place within largely separate arenas. Many methodological differences distinguish the *PIP* and *WID* datasets. This includes the underlying data sources they rely on; the methods and assumptions applied to those sources; the concept of welfare measured; the summary indices of inequality typically favoured; and coverage they provide. This lack of alignment makes it difficult to combine the insights each provide into a coherent empirical view informed by both. The two datasets represent distinct and, to a large extent, incommensurable 'worlds' of inequality measurement – used in isolation rather than in conjunction.
 
-This disconnect is particularly problematic given the starkly contrasting perspectives on inequality the two worlds provide.
+This disconnect is particularly problematic given the starkly contrasting perspectives on inequality found in studies drawing on the two datasets.
 
 Analysis of the *PIP* data suggests that within-country inequality trends have been decidedly mixed in recent decades. Inequality is found to have fallen in roughly as many countries as it has risen, with no substantial trend in either direction on average [@world_bank_poverty_2016].[^PIP_quotes] In contrast, summaries of the *WID* data emphasise that rising inequality within countries has been an almost universal phenomenon [@alvaredo_world_2018; @chancel_world_2021].[^WID_quotes] 
 
@@ -178,245 +369,65 @@ Analysis of the *PIP* data suggests that within-country inequality trends have b
 
 The two datasets have also yielded opposing accounts of the contribution made by within-country inequalities to overall global inequality. Most analyses of global income inequality to date have relied heavily on the *PIP* data [@kanbur_global_2022; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv]. A consistent result from these studies is that differences between countries' average incomes continue to make up the lion's share of global inequality, despite some recent convergence [@patel_new_2021]. More recent analysis of the *WID* data, however, flips this established result on its head. @chancel_global_2021 find within-country inequalities instead now 'dominate' inequality between countries, contributing 78% in a decompositon of the global Theil index.
 
-Alongside these divergent assesments of *how* inequality has changed around the world, the two approaches to measurement are frequently used to evidence contrasting accounts of *why* it has changed in this way and hence where to target efforts to combat inequality in the future. [TODO: Expand thought: i.e. marginal labour productivies/wage distribution vs capital incomes/fundamental force for divergence/top marginal taxes/top wages bargaining.].
+Alongside these divergent assesments of *how* inequality has changed around the world, the two approaches to measurement are frequently used to evidence contrasting accounts of *why* it has changed in this way, and hence where to target efforts to combat inequality in the future. [TODO: Expand this thought: i.e. marginal labour productivies vs capital incomes/top wages bargaining & top marginal tax rates. National vs global factors, policy vs more fundamental forces.].
 
-The two 'worlds' of inequality measurement adopted by the *PIP* and *WID* datasets have yielded two very different views of inequality around the world and consequently two very different sets of recommendations as to how to address it.
+In sum, the two 'worlds' of inequality measurement adopted by the *PIP* and *WID* datasets have yielded two very different views of inequality around the world and consequently two very different sets of recommendations as to how to address it.
 
-Which of these realities should we give most credence to? A simplistic reading of the top incomes literature would see the *WID* data as unambiguously providing greater reliability, thanks to the incorporation of tax data and other sources in order to correct for the well-known issue of the 'missing rich' within survey data [@lustig_missing_2019]. The need for such a correction is amply demonstrated in many cases. @korinek_survey_2006, for example, find richer households in the United States to be less likely to participate in surveys and estimate this to bias the Gini coefficient downwards by around five percentage points. [TODO: More examples, including underreporting]. The *PIP* data, based purely on survey data, makes no such correction and is thus likely to understimate the extent of inequality in many cases.
+Which of these realities should we give most credence to? A simplistic reading of the top incomes literature would see the *WID* data as unambiguously providing greater reliability, thanks to the incorporation of tax data and other sources in order to correct for the well-known issue of the 'missing rich' within survey data [@lustig_missing_2019]. The case for such a correction is amply demonstrated in many instances. @korinek_survey_2006, for example, find richer households in the United States are less likely to participate in surveys, and they estimate that this biases the Gini coefficient downwards by around five percentage points. [TODO: More examples, including underreporting]. The *PIP* data, based purely on survey data, makes no such correction and is thus likely to understimate the extent of inequality in many cases.
 
-A more agnostic assessment of the two datasets is, however, warrented on a number of grounds. Firstly, the extent of the upward revision to inequality estimates resulting from top income adjustments varies from country to country. In some cases it may be quite modest, as demonstrated by @carranza_top_2021. They apply *WID*-style top income adjustments to survey data for 26 European countries and find an average increase in the Gini of around 2.4 points, with notable differences across countries and limited impact on trends. Secondly, for many countries/periods included in the *WID* estimates, the richer range of data sources that the dataset's methodology seeks to incorporate do not exist. In the place of data, various imputation and interpolation strategies must be employed.^[For example, see the methods outlined in @chancel_towards_2019 in the context of Africa, for which data quality and coverage is especially low] The terms of this tradeoff are not clear. While the incorporation of tax data is a proven asset in many individual cases, the value of top income adjustment methodologies when applied *globally* is harder to demonstrate. Lastly, deviations between survey and tax data appear to be restricted to the *very* top of the distribution. After aligning the income concept across survey and tax data for United States, Germany and France, @yonzan_drawing_2022 find that the sources correspond extremely well up until the top 1% of the distribution. The apparent 'accuracy' of survey data is thus likely to depend on the inequality index chosen, and in particular to its sensitity to changes at the top of the distribution. It is thus a question whose answer will depend also on normative judgements concerning the nature of inequality [@atkinson_measurement_1970].  
+A more agnostic assessment of the two datasets is, however, warrented on a number of grounds. Firstly, the extent of the upward revision to inequality estimates resulting from top income adjustments varies considerably from country to country, and in some cases may be quite modest. This is demonstrated by @carranza_top_2021 who apply a *WID*-style top income adjustment to survey data for 26 European countries and find an average increase in the Gini of around 2.4 points, with notable differences across countries and limited impact on trends. Secondly, for many countries/periods included in the *WID* estimates, the richer range of data sources that the dataset's methodology seeks to incorporate do not exist. In the place of data, various imputation and interpolation strategies must be employed.^[For example, see the methods outlined in @chancel_towards_2019 in the context of Africa, for which data quality and coverage is especially low] The terms of this tradeoff – between drawing on a greater set of information, and needing to fill in the gaps where this information does not exist – are not clear. While the incorporation of tax data is a proven asset in many individual cases, the value and reliability of top income adjustment methods when applied globally is harder to demonstrate. Lastly, deviations between survey and tax data appear to be restricted to the *very* top of the distribution. After aligning the income concept across survey and tax data for United States, Germany and France, @yonzan_drawing_2022 find that the sources correspond extremely well up until the top 1% of the distribution. The apparent 'accuracy' of survey data is thus likely to depend on the inequality index chosen, and in particular to its sensitity to changes at the top of the distribution. It is thus a question whose answer will depend also on normative judgements concerning the nature of inequality and how it should be measured [@atkinson_measurement_1970].  
 
-Overall, while for particular questions and cases, much can be said about the relative strengths and weaknesses of the two approaches to measurement employed in the *PIP* and *WID* datasets, there is no straightforward answer to the question of which offers us the most reliable or relevant global view on inequality.  
+Overall, while much can be said about the relative strengths and weaknesses of the two approaches to measurement employed in the datasets for particular questions and cases, there is no straightforward answer to the question of which offers us the most reliable or relevant *global* view on inequality.  
 
-A different route, however, may be taken to try to reconcile the divergent views of inequality drawn from the two datasets. A limitation of the existing .tend to be made insolation. This means areas of agreement are overlooked and the reasons for disagreement are obfuscated. By using the two datasets in conjunction, rather than in isolation, we can 'triangulate' a more robust and coherent empirical view informed by both. [TODO: Add footnote citing Tony Atkinson on the idea of triangulation]. This is the first of a pair of papers that seeks to do this. The present paper focuses on trends in within-country inequality – a companion paper takes a similar approach but considers overall global inequality. It triangulates between the *PIP* and *WID* data by separately aligning coverage, the inequality index, and where possible the welfare concept. 
+A different route, however, may be taken to try to reconcile the divergent views of inequality often drawn from the two datasets. A substantial limitation of existing work on inequality around the world is that consideration of the *PIP* and *WID* data tends to be given in insolation.[^isolated_examples] As a consequence, areas of *agreement* between the dataset are overlooked, and the reasons behind disagreements – of which, given the range of methodological differences, there may be many – are given little consideration. By using the two datasets in conjunction, rather than in isolation, we can 'triangulate' a more robust and coherent empirical view informed by both. [TODO: Add footnote citing Tony Atkinson on the idea of triangulation]. This is the first of a pair of papers aiming to do this. The present paper focuses on trends in within-country inequality and a companion paper takes a similar approach but considers overall global inequality.
 
-The result of this is X, Y, Z.
+[^isolated_examples]:
+    TODO: finish footnote.
+    Examples include the flagship reports associated with the two datasets – see for example @chancel_global_2021 and @world_bank_poverty_2022. Policy papers: @undp_beyond_2019 consider only WID data, with some minor cross-references to PIP data. Within academic research @kanbur_global_2022, @nino-zarazua_global_2017 and @ravallion_income_2014 rely on PIP data. Explain about @van_zanden_changing_2014.
+
+    Two notable counter-examples that have sought to incorporate both 'worlds' are @anand_global_2015 and @lakner_global_2016. Both studies recalculate global inequality measures after making a rough adjustment to the survey data so as to match the top income shares observed in *WTID*, a successor to *WID*. Their estimates extend only to 2005 and 2008 respectively and were made prior to the substantial increases in coverage now available in *WID*. Moreover, neither consider average within-country trends – the primary focus of the present paper.
+
+    @united_nations_world_2020 also draws on evidence from both datasets, but presents the results in parallel, without attempting to draw from them a coherent view.
+
+I triangulate between the *PIP* and *WID* data by separately aligning coverage and the inequality indices used. The result of this is X, Y, Z. For a subset of countries, the welfare concept, using Luxembourg Income Study, as well as *WID*'s own estiamtes of post-tax inequality where available.
 
 The rest of the paper is organized as follows. Section 2 provides a more detailed description of the *PIP* and *WID* datasets and their main differences. Section 3 compares within-country inequality trends in the two datasets, starting with the metrics they are most associated with and where they fall furthest apart: for *PIP* the Gini of disposabale income (or consumption); for *WID* the top 1% share of pretax national income. Section 4 takes a first simple step to bridge between the datasets, by restricting the analysis to only those countries available in both datasets. Section 5 considers a range of inequality indices, comparing the datasets on a like-for-like basis. Section 5 zooms in subset of countries where there is most disagreement and using Luxembourg Income Study considers the contribution of the different taget welfare concepts employed within the two datasets. Section 6 concludes.
 
 
 
 
-
-
 # Two 'worlds' of inequality measurement
 
-The two datasets differ along a range of dimensions, including the underlying sources relied on, the measures of welfare used, the summary indicators commonly favoured, and the temporal and geographic coverage available.
+[TODO: More details on PIP and WID and how they differ in terms of concepts and methods.
 
-These differences come largely as a bundle. Choosing between the *WID* or *PIP* data implies not only a technical choice between data sources and methodolodies, but also a more fundamental choice as to which concept of inequality to consider, for which places and time periods. This has a led to a degree of specialisation in their use.
+- Include discussion of inter/extrapolation in WID data. E.g. Rescaling factors from tax data for one year is often applied to many other years. In the case of Africa, the rescalling factors seen in the few countries with tax data (for at least some years) are applied to all other countries.]
 
-The *PIP* data has typically been the favoured choice for investigating the whole distribution of welfare across households, particularly at a global scale [@Kanbur2022-lk; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv; @Ravallion2014-mk]. This includes the World Bank's own research and monitoring activties concerning global poverty, inequality and growth across the distribution [see for example @world_bank_poverty_2016; @world_bank_poverty_2022]. The dataset is also relied on by the United Nations to set and monitor many of the targets in this area that form part of its *Sustainable Development Goals*.
+- Include discussion of comparability and quality of survey data in PIP.
 
-The *WID* data has more commonly been used to understand top dynamics before taxes. Notwithstanding substantial efforts to global, high income countries due to the data required. in which today's rich countries are overrepresented . In policy, advocacy and public debate, the data used to highlight the very large and, in many cases, growing advantage enjoyed by the richest individuals in these societies. In academia, top incomes data long-run processes fundamental – capital accumulation.[@atkinson_top_2007; @piketty_capital_2014]  On political economy channels, social conflict between capital and labour, wage bargaining norms and the interaction with marginal tax rates. More generally the data have led to a fundamental revaluation of the causes of inequality that move beyond orthodox accounts given purely in terms of marginal productivities of workers with heterogeneous skills or education [@alvaredo_top_2013; @piketty_capital_2014-1]. 
+## Coverage
 
-Thus whilst both the *PIP* and *WID* datasets have played substantial agenda-setting roles in academic research, policy and public debate, this has tended to occur in largely separate arenas. Moreoever, no way to join up the insights they offer. Very confusing terrain for people to understand. We are left with two distinct and, to a large extent, incommensurable 'worlds' of inequality measurement.
 
-Recent extensions have brought down some of these barriers. PIP now includes high-income countries. WID now global coverage, and post-tax income concepts. In  
 
-At the same time, these developments in the two datasets have made this disconnect between them all the more apparent. Fundamental differences on the basics. Two in particular.
 
-1
-2
+# 3. An out-of-the-box comparison of the *PIP* and *WID* datasets
 
-Whilst for individual countries, the connections may be well understood, globally the value of the different assumptions is not really known. We have to pick blindly.
+[TODO: Describe the basic method used to compare the data:
 
-### Connecting up the worlds
+- I take pairs of estimates in or close to reference years
+    - Footnote: For PIP data, which is a mix of income and consumption points, I only take a pair of observations where the income concept does not match where matchin observations are not available. This is only the case for 3 out of 90 countries in one specification.
+    - I use two periods, chosen to hit two different points in the trade-off maximising coverage and the length/relevance of the period studied: 1993-2015 (+/- 3 years) and 1980-2018 (+/- 5 years)
 
+- I consider unweighted and population-weighted average trends, and also the number of countries seeing substantive rises or falls.
 
-This is the first of two papers that seeks to join up.
+]
 
-
-
-
-
-The dataset is used for the Bank's own research and monitoring activities which, whilst traditionally focussing on absolute poverty, have more recently encompassed trends in inequality, relative poverty and growth across the distribution. Notably, the data is alo used to set and monitor many of the targets, on both poverty and inequality, that form part of the UN's Sustainable Development Goals. More generally, the source has been indispensible for research taking a global view on inequality [@Kanbur2022-lk; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv; @Ravallion2014-mk].
-
-The *WID* database emerged out of the burgeoning literature on top incomes [@atkinson_top_2014] and has come to play a central and, to some extent, coordinating role for this research agenda. The key innovation of the 'top incomes' approach has been the incorporation of tax data, as either an alternative or complement to the more orthodox reliance on household survey data. The primary advantage is that tax data can provide a better view of the top of the income distribution, which is often poorly captured by survey data [@lustig_missing_2019]. However, the choice of data source has typically brought with it a number of other differences that mark out the 'top incomes' approach. This includes a particular focus on the top of the distribution (for which tax data is more universally available), and on income measured before tax (in terms of which the underlying data is gathered). This contrasts with more orthodox approaches to inequality measurement in which disposable income has tended to be seen as the more relevant measure of welfare [@canberra_group_canberra_2011], and greater attention is given to measures of overall inequality, such as the Gini coefficient, or to relative poverty.
-
-Another benefit of tax data is the much longer timeframes it is sometimes available for. The estimates gathered in *WID* provide a long-run perspective on the evolution of inequality over the twentieth century, albeit for a more limited geography in which today's rich countries are somewhat overrepresented [@atkinson_top_2007; @piketty_capital_2014].
-
-Moreover, the top incomes methodology carried forward by *WID* developed with a distinctive set of questions concerning the *causes* of inequality in mind. Particular attention is given to the distribution of wealth and capital incomes as drivers of personal income inequality, in contrast to orthodox accounts focussed purely on the dispersion of wages [@alvaredo_top_2013; @piketty_capital_2014-1]. This ... hidden from view given the concentration of capital incomes at the top, captured poorly by survey data. 
-
-### Two 'worlds' of inequality measurement
-Tw worlds – methods, conceptions of inequality, time periods and geographic coverage and research questions come bundled.
-
-Always unsatisfying. Very difficult to unpick. Peple do it for individual countries.. 
-
-A wholeslae comparison was generally avoided due to the very different coverage. Used in parallel.
-
-As the databases have developed and expanded, however, this division of labour between the two datasets has become increasingly blurred. PIP includes high-income countries. WID coverage is global. DINA focus on comparability. Increasingly, the datasets are used to answer the same range of questions, speak to the same world.
-
-Where they now meet, the result is very confusing, one that, despite the great strides forward, leaves uncertainty around the most basic questions.
-
-This is most visible in two fundamental disagreements between the two 'worlds'.
-
-Firstly, they give very different views of how ubiquitous a phenomenon rising inequality is within countries around the world. The view from *World Inequality Database* and its associated global report is that inequality has risen 'nearly everywhere' in recent decades [@alvaredo_world_2018; @chancel_world_2021]. In contrast, the World Bank data and its associated biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.
-
-Secondly, the datasets paint as to how such inequalities *within* countries compare to the differences in average incomes seen *between* richer and poorer countries.
-
-Most analyses of global income inequality to date have relied heavily on the *PIP* data [@Kanbur2022-lk; @lakner_global_2016; @anand_global_2015; @milanovic_global_2015; @Nino-Zarazua2017-tv; @Ravallion2014-mk].^[TODO: Add footnote explaining transition from Povcal] *[TODO: Check and more refs.]*. A consistent result from this literature is that inequalities within countries remain small in comparison to the much larger differences seen between countries. This is despite the convergence seen in recent decades between countries, given higher economic growth rates across low- and middle-income countries. According to such research, a person's income remains largely determined by the country in which they happen to have been born [@milanovic_global_2015].
-
-More recent analysis of the WID data flips this established result on its head. Chancel... estimate xx.
-
-
-The datasets are enormous efforts, involving the work of hundreds of researchers. They are hugely valuable offering an unprecidented perspective on global inequality and how it is evolving. And yet the disconnect between the two devalues them both. Amidst the wealth of data, basic facts are not known. And the terrain is incredibly confusing to navigate for policimakers and the concerned public.
-
-### Connecting up the worlds
-
-This paper, along with a companion paper, seeks to join up these two worlds. This first paper picks up the first question – within country. A companion paper considers global inequality.
-
-Section 2 of this paper introduces the two worlds.
-Section 3 compares within country trends between two periods. It begins with the inequlaity metrics for which these datasets are most associated, and in which the worlds fall furthest apart: Gini, Top 1% share. Already
-Section 4 aligns coverage. It is not neutral. Already this goes some way to explaining the gap between the two datasets.
-Section 5 aligns inequality indices. [Summary.]
-Section 5 considers the role of welfare metrics and specific data quality issues for a subset of countries where there is most disagreement.
-
-Summary of main conclusion!?
-
-
-
-
-
-
-
-
-
-
-
-
-
-# 2. Two worlds of inequality measurement
-
-As well as being the the two  not just two different databases. They in some sense represent *two different worlds* of inequality measurement.
-
-Different methods. These yield different pictures of the extent of inequality and how it has changed over time. Motivated by different ideas about the salient factors shaping inequality.
-
-### PIP
-
-
-
-### WID
-
-
-They differ as to how ubiquitous a phenomenon rising inequality is around the world. The view from *World Inequality Database* and its associated global report is that inequality is rising in 'nearly everywhere' [@alvaredo_world_2018; @chancel_world_2021].[^WID_quotes] In contrast, the World Bank data and its biannual report offers a much more mixed picture – in which inequality is rising and falling in roughly equal numbers of countries.
-
-
-[^WID_quotes]:
-    > Income and wealth inequalities have been on the rise nearly everywhere since the 1980s, following a series of deregulation and liberalization programs which took different forms in different countries. [@chancel_world_2021, pp. xx]
-
-    > In recent decades, income inequality has increased in nearly all countries, but at different speeds... [@alvaredo_world_2018, pp. xx]
-
-
-Decompositions of global inequality into between- and within-country components. 
-
-Capital vs labour share. .– including fundamental laws of capitalism with regard to capital accumulation (Piketty) – 
-
-
-### The disconnect between these datasets devaules them both
-
-These datasets are incredibly valuable – playing to motivate action. The example in the opening sentence above illustrates this well. It is only thanks to the WID data that we can say X. It is only thanks to the PIP data that we can say that three billion cannot afford a healthy diet.
-
-Often it is presented that there is a division of labour between these dataset – WID is for inequality, especially at the top.PIP is for poverty.
-
-But the point is that it is only one world that we live in. The disconnect is not something we can live with, but rather presents a challenge to both datasets.
-
-There remains fundamental ambiguity surrounding which of two possible worlds we live in. 
-
-The '*WID* world' rising inequality within countries has been an almost universal phenomenon. suggests the winners from globalization and economic growth overwhelmingly have been a global elite. It sees the bulk of global inequalities as lying within nations, but emphasises global factors in terms of causes and hence the need for international coordination to combat inequality.
-
-The '*PIP* world' – within-country inequality trends in recent decades have been mixed, and the differences in average incomes between countries remain the lion's share of the globally.As such the importance of national policy (Ravallion, 2018; Corlett, 2016). access to both produced and human capital.
-
-Knowing which of these worlds we live in matters a great deal – for our understanding of inequality today, how it has changed, and also where efforts to combat inequality in the future are likely to be most successful.
-
-Trouble is that these are all bundled up. You must chose. On what basis can you make a choice?
-
-Known problems on both sides.
-
-For PIP – top incomes, and lack of comparability of the survey data – notably mix of incme and consumption data.
-
-For WID – tha many assumptions. An emphasis placed on the incorporation of tax data, but when taking a global view confonte by the fact that such tax data is often nonexistent. Top income corrections based on strong assumptions.
-
-Given the presentation, the extent to which different assumptions, indices, methodological choices affects the data and – is not something that can be read off' the data.
-
-In using the datasets a global view on inequality, requires choosing wholesale between methodological 'bundles' whose relative strengths and weaknesses, applied globally, are not well understood.
-
-Also makes for a very confusing terrain for policymakers, media and the public.
-
-The two datasets are incredible efforts, involving the work of hundreds of researchers. Both datasets have continued to improve adn expand. In terms of data availability we are thus in a better position than ever to take a global viw on inequlity. And yet, amidst this wealth of data, limited understanding of very basics concerning inequality around the world.
-
-
-
-### Outline: Connecting the two worlds
-*(In this section I will explain the plan for the paper)*
-
-In this paper I aim to bring these two worlds of inequality measurement closer. To Triangulate what they do agree on and identify where they disagree.
-
-The first, most obvious, step is simply to compare the in a systemtatic way. This very basic step is curiously lacking in the literature. We begin by comparing trends in each world based on the inequality indices most typical in each: the Gini coefficient for the PIP data, and the top 1% share of pre-tax income for WID.
-
-Given incomplete coverage in both datasets, we 'line up' estimates to reference years to see change over time. We use two periods, presenting two different tradeoffs with respect to data coverage. The first is 1993-2018?? This maximises global coverage – 100 countries covering roughly 90% of the world poplation (Figure XX). The downside is that this period misses out – transition, liberalisation and structural adjustment. Question begging, by avoiding specifically the period where inequality thought to rise.
-
-The second is 1980-2018. Here we lose coverage, especially in the PIP data (Figure XX).
-
-The two measures selected – Gini coefficient of disposable income/consumption, and the top 1% share of pre-tax income – are where the PIP and WID worlds respectively are at their furthest apart. Yet in terms of broad global trends, there is much that even these very different measures can agree on: 
-- x
-- y
-- z.
-
-There are big differences though:
-- Somewhat more pronounced rise among advanced economies.
-- Big divergence in trend some of the most populous countries
-
-Subsequent sections attempt to bridge the gaps in order to learn where those differences emerge.
-
-- Section 2: Aligning coverage. This reduces the gap already. Coverage of countries is not... with respect to inequality trends.
-
-- Inequality indices chosen. We align. Compare Top 1%. And Gini.
-    - Explain results.
-
-- Welfare concept. We look at different income concepts for the small number of coutnries for which such data exists. To this end we also include data from the Luxembourg Income Study. Similar to PIP in that it relies on survey data. But provides access to microdata, allowing for the construction of different welfare aggregates. We focus on the countries with the biggest difference in trend and biggest population. I.e. those that contribute most to the difference in the weighted an unweigted global averages.
-
-
-What I won't do is a detailed lining up.
-Although both institutions continue to take many steps to provide transparency and reproducibility to their estimates, they remain a black box. Makes it impossible to do this lining up. 
-
-In many particular contexts – where detailed lining up is possible – there relative strengths and weaknesses may be clear. (This is what Morllei does. And Nolan). But at the global level the makes this impractical. 
-
-    - Summarise: really depends on the country.
-
-----
-
-
-# 3. Comparing the two worlds
-
-We begin by comparing the metrics where the worlds are furthest apart. PIP Gini. Wid Top 1% share.
+We begin by comparing trends in the inequality metrics most characteristic of the two 'worlds' of measurement and where the datasets fall the furthest apart conceptually: for *PIP* the Gini of disposabale income (or consumption); for *WID* the top 1% share of pretax national income.
 
 ## Inequality since 1993
 
 
-@fig-pip-wid-1993-2015-all-obs comoares the level of inequality, as measured by the two metrics, in or around 1993 and 2015. A band is shown along the 45-degree line. Countries falling within this band saw little change in inequality. For countries above the band, inequality in 2015 was substantively higher than in 1993. Countries falling below the band instead saw a substantive fall. 
-
-@tbl-pip-wid-1993-2015-all-obs-absolute-count provides a summary of the . A 'substantive' change here is defined as a movement of more than 2 percentage points in the case of the PIP Gini coefficient, and more than 1 percentage point in the case of the WID top 1% share. [TODO: add table in appendix showing that using relative thresholds (+/-5% across both metrics) makes little difference.]
-
-According to PIP estimates for the Gini coefficient, inequality was rising and falling in roughly an equal number of countries over the period (broadly replicating the analysis presented in @world_bank_poverty_2016).
-
-@tbl-pip-wid-1993-2015-all-obs-averages presents averages for the two reference years. The unweighted average Gini coefficient within the PIP data fell somewhat over the period, from 39.8 to 30.0 points. As we see from @fig-pip-wid-1993-2015-all-obs (top panel), contributing to this average decline are a number of countries showing very substantial falls – in some cases declines of 10 points or more. These are seen mostly in Sub-Saharan Africa, in addition to a number of Latin American and Eastern European and Central Asian countries. [TODO: Mention particular questions around survey comparability in SSA – this is a subject that will be taken up in section X.]
-
-WID top 1% share estimates show decidedly more cases of rising inequality – in roughly two-thirds of countries.The average, again, is pulled down by some particularly substantial falls, which in the WID data are more exclusively concentrated in Sub-Saharan Africa. This leaves the average top 1% share remarkably stable over the period, showing a modest rise from 14.5% to 14.8%.
-
-In both datasets, we see that inequality trends were less benign in particularly populous countries. This is apparent from a comparison of the unweighted and population-weighted averages (@tbl-pip-wid-1993-2015-all-obs-averages). The moderate fall seen in the unweigted average PIP Gini coefficient is no longer visible in the weighted average. In the WID data, in contrast to the unweighted average, the weighted average rose by more than a third, from 13% to 17%.
-
-As @fig-pip-vs-wid-1993-2015 illustrates, it is also in particularly populous countries where we see some of the starkest differences between the two datasets. The figure plots the change in the two metrics, along with the line of best fit. 
-[TODO: 
-- Plot also for relative change (%, not %-pt).
-- But what should we expect? Plot the relationship between Gini change and top 1% share change assuming lognormality. Possibly this makes more sense as part of section 3 on inequality indices.]
-
-This includes India, United States, for which far more substantial rises are seen in the WID top 1% share. In Brazil and Nigeria, substantial falls present in the PIP Gini are not reflected in the WID data. Mexico and Russia stand out in particular in seeing large movements in opposite directions within the two datasets. 
-
-Regionally [TODO: summarise regional trends].
-
-
 ```{python}
-# Set-up to compare WID and PIP top 10% share, all observations
+# Set-up to compare PIP Gini and WID top 1% share, all observations, for shorter time period
 reference_vals = [1993, 2015]
 max_dist_from_refs = 3
 
@@ -426,7 +437,7 @@ selected_vars = [
         'WID: Top 1pc share – pretax'
         ]
 
-output_dict = prep_data_and_change_summary(
+output_dict_1993 = prep_data_and_change_summary(
       source_dfs = source_dfs,
       df_pop = df_pop,
       df_pop_regions = df_pop_regions,
@@ -443,7 +454,7 @@ output_dict = prep_data_and_change_summary(
       )
 
 # Store data for OWID upload – prepared further in appendix below
-df_owid_1993_2015 = output_dict['owid_format']
+df_owid_1993_2015 = output_dict_1993['owid_format']
 
 fp = 'data_appendix/figures_and_tables/Compare WID and PIP inequality data 1993 vs 2015 (Joe temp).csv'
 
@@ -452,77 +463,130 @@ df_owid_1993_2015.to_csv(fp, index=False)
 ```
 
 
+@fig-pip-wid-1993-2015-all-obs compares the level of inequality, as measured by the two metrics, in or around 1993 and 2015. A band is shown along the 45-degree line. Countries falling within this band saw little change in inequality. For countries above the band, inequality in 2015 was substantively higher than in 1993. Countries falling below the band instead saw a substantive fall. The data is summarised in @tbl-pip-wid-1993-2015-all-obs-absolute-count, which provides a counts of the number of countries with rising, stable or falling inequality, and @tbl-pip-wid-1993-2015-all-obs-averages which presents unweighted and population-weighted averages for the two reference years. In both @fig-pip-wid-1993-2015-all-obs and @tbl-pip-wid-1993-2015-all-obs-absolute-count, a 'substantive change over the period is defined as a movement of more than 2 percentage points in the case of the PIP Gini coefficient, and more than 1 percentage point in the case of the WID top 1% share. [TODO: add table in appendix showing that using *relative* thresholds – i.e. +/-5% (and not %-point) across both metrics – makes little difference.]
 
-#### Figures 1-2
-
-::: {.panel-tabset}
-## All available observations
+#### Figure 1
 
 ![PIP Gini and WID Top 1% shahre in 1993 vs 21015 – All available observations](images/figures/PIPGini-vs-WIDTop1-1993-vs-2015-01.png){#fig-pip-wid-1993-2015-all-obs}
 
-## Only observations available in both datasets
-![PIP Gini and WID Top 1% shahre in 1993 vs 21015 – Matching observations only](images/figures/PIPGini-vs-WIDTop1-1993-vs-2015-02.png){#fig-pip-wid-1993-2015-matching-obs}
-
-:::
-
-
-
-
-#### Tables 1-2
-::: {.panel-tabset}
-## All available observations
 
 
 ```{python}
 #| label: tbl-pip-wid-1993-2015-all-obs-absolute-count
 #| tbl-cap: Change in inequality 1993 vs 2015 - All availalbe observations
-output_dict['all_sources_False']['absolute_counts']
+output_dict_1993['all_sources_False']['absolute_counts']
 
 ```
 
-## Only observations available in both datasets
 
-```{python}
-#| label: tbl-pip-wid-1993-2015-matching-obs-absolute-count
-#| tbl-cap: Change in inequality 1993 vs 2015 - Matching observations only
-output_dict['all_sources_True']['absolute_counts']
-
-```
-
-:::
-
-
-
-#### Tables 3-4
-
-::: {.panel-tabset}
-## All available observations
 
 
 ```{python}
 #| label: tbl-pip-wid-1993-2015-all-obs-averages
 #| tbl-cap: Unweighted and weighted average in 1993 vs 2015 - All availalbe observations
-output_dict['all_sources_False']['averages']
+output_dict_1993['all_sources_False']['averages']
 
 ```
 
-## Only observations available in both datasets
+
+According to *PIP* estimates for the Gini coefficient, inequality was rising and falling in roughly an equal number of countries over the period. This broadly replicates the analysis presented in @world_bank_poverty_2016. The unweighted average fell somewhat over the period, from 39.8 to 30.0 points. As we see from @fig-pip-wid-1993-2015-all-obs (top panel), contributing to this average decline are a number of countries showing very substantial falls – in some cases declines of 10 points or more. These are seen mostly in Sub-Saharan Africa, in addition to a number of Latin American and Eastern European and Central Asian countries. [TODO: Mention particular questions around survey comparability in SSA.]
+
+*WID* top 1% share estimates show decidedly more cases of rising inequality – in roughly two-thirds of countries. The average, again, is pulled down by some particularly substantial falls, which in the *WID* data are more exclusively concentrated in Sub-Saharan Africa. This leaves the average top 1% share remarkably stable over the period, showing a modest rise from 14.5% to 14.8%.
+
+In both datasets, we see that inequality trends were less benign in particularly populous countries. This is apparent from a comparison of the unweighted and population-weighted averages (@tbl-pip-wid-1993-2015-all-obs-averages). The moderate fall seen in the unweigted average *PIP* Gini coefficient is no longer visible in the weighted average. In the *WID* data, in contrast to the unweighted average, the weighted average rose by more than a third, from 13% to 17%.
+
+As @fig-pip-vs-wid-1993-2015 (section 4) illustrates, it is also in particularly populous countries where we see some of the starkest differences between the two datasets. The figure plots the change in the two metrics, along with the line of best fit. 
+[TODO: 
+- Plot also for relative change (%, not %-pt).
+- But what should we expect? Plot the relationship between Gini change and top 1% share change assuming lognormality. Possibly this makes more sense as part of section 3 on inequality indices.]
+
+This includes India, United States, for which far more substantial rises are seen in the WID top 1% share. In Brazil and Nigeria, substantial falls present in the PIP Gini are not reflected in the WID data. Mexico and Russia stand out in particular in seeing large movements in opposite directions within the two datasets. 
+
+
+
+
+Regionally [TODO: summarise regional trends].
+
+
+## Inequality since 1980
 
 ```{python}
-#| label: tbl-pip-wid-1993-2015-matching-obs-averages
-#| tbl-cap: Unweighted and weighted average in 1993 vs 2015 – Matching observations only
-output_dict['all_sources_True']['averages']
+# Set-up to compare PIP Gini and WID Top 1% share, all observations, for longer period
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+
+
+selected_vars = [
+        'PIP: Gini',
+        'WID: Top 1pc share – pretax'
+        ]
+
+output_dict_1980 = prep_data_and_change_summary(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      region_col = 'region',
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup
+      )
+
+# Store data for OWID upload – prepared further in appendix below
+df_owid_1980_2018 = output_dict_1980['owid_format']
+
+fp = 'data_appendix/figures_and_tables/Compare WID and PIP inequality data 1980 vs 2018 (Joe temp).csv'
+
+df_owid_1980_2018.to_csv(fp, index=False)
 
 ```
 
-:::
 
+[TODO: Make similar figure as figure 1]
+
+
+```{python}
+#| label: tbl-pip-wid-1980-2018-all-obs-absolute-count
+#| tbl-cap: Change in inequality 1980 vs 2018 - All availalbe observations
+output_dict_1980['all_sources_False']['absolute_counts']
+
+```
+
+
+
+```{python}
+#| label: tbl-pip-wid-1980-2018-all-obs-averages
+#| tbl-cap: Unweighted and weighted average in 1980 vs 2018 - All availalbe observations
+output_dict_1980['all_sources_False']['averages']
+
+```
+
+
+
+## Similarities and differences 
+
+Summary, across both periods. (Reflect this back in the intro.)
+
+
+
+# 3. Aligning coverage
+
+Whilst the number of countries available in the two datasets is very similar, they are not the same countries. In particular, LAC is largely absent from WID. (Footnote about LAC in WID?? Are the global results based on linear interpolation?... An interpolation that contradicts the survey data?) Also fewer Sub-Saharan African countries. In PIP, fewer rich countries in Western Europe and its offshoots.
+
+Importantly, ... are not neutral with respect to.The regions where WID is lacking coverage – LAC and SSA – are regions in which inequality was generally falling, according to the PIP Gini coefficient. The reverse is also the case: Regions that PIP are lacking – high income countries in W. Europe and offshoots – were regions where inequality was generally rising, according to the WID top 1% shares data.
+
+[TODO: Plot in appendix – Just like figure 1, but show only the data points missing from WID in the PIP pannel. And visa versa.]
 
 ```{python}
 import statsmodels.formula.api as smf
 from matplotlib import pyplot as plt
 
-change_compare = output_dict['all_sources_True']['prepped_data'][['source_var', 'Entity', 'change', 'region']]
+change_compare = output_dict_1993['all_sources_True']['prepped_data'][['source_var', 'Entity', 'change', 'region']]
 
 
  
@@ -553,95 +617,19 @@ model = model.fit()
 
 ![Change in PIP Gini vs WID Top 1% share in 1993 vs 2015](images/figures/Change-1993-2015.svg){#fig-pip-vs-wid-1993-2015}
 
-
-## Inequality since 1980
-
-```{python}
-# Set-up to compare WID and PIP top 10% share, all observations
-reference_vals = [1980, 2018]
-max_dist_from_refs = 5
-
-
-selected_vars = [
-        'PIP: Gini',
-        'WID: Top 1pc share – pretax'
-        ]
-
-output_dict = prep_data_and_change_summary(
-      source_dfs = source_dfs,
-      df_pop = df_pop,
-      df_pop_regions = df_pop_regions,
-      df_regions = df_regions,
-      region_col = 'region',
-      selected_vars = selected_vars,
-      reference_vals = reference_vals,
-      max_dist_from_refs = max_dist_from_refs,
-      min_dist_between = 1,
-      reference_col = "Year",
-      group_by_col = "Entity",
-      outlier_cut_off_upper = None,
-      tolerance_lookup =  tolerance_lookup
-      )
-
-# Store data for OWID upload – prepared further in appendix below
-df_owid_1980_2018 = output_dict['owid_format']
-
-fp = 'data_appendix/figures_and_tables/Compare WID and PIP inequality data 1980 vs 2018 (Joe temp).csv'
-
-df_owid_1980_2018.to_csv(fp, index=False)
-
-```
-
-
-
-#### Figures X-Y
-
-
-#### Tables 3-4
-
-::: {.panel-tabset}
-## All available observations
-
-
-```{python}
-#| label: tbl-pip-wid-1980-2018-all-obs-averages
-#| tbl-cap: Unweighted and weighted average in 1980 vs 2018 - All availalbe observations
-output_dict['all_sources_False']['averages']
-
-```
-
-## Only observations available in both datasets
-
-```{python}
-#| label: tbl-pip-wid-1980-2018-matching-obs-averages
-#| tbl-cap: Unweighted and weighted average in 1980 vs 2018– Matching observations only
-output_dict['all_sources_True']['averages']
-
-```
-
-:::
-
-
-## Similarities and differences 
-
-Summary, across both periods. (Reflect this back in the intro.)
-
-
-
-# 3. Aligning coverage
-
-Whilst the number of countries available in the two datasets is very similar, they are not the same countries. In particular, LAC is largely absent from WID. (Footnote about LAC in WID?? Are the global results based on linear interpolation?... An interpolation that contradicts the survey data?) Also fewer Sub-Saharan African countries. In PIP, fewer rich countries in Western Europe and its offshoots.
-
-Importantly, ... are not neutral with respect to.The regions where WID is lacking coverage – LAC and SSA – are regions in which inequality was generally falling, according to the PIP Gini coefficient. The reverse is also the case: Regions that PIP are lacking – high income countries in W. Europe and offshoots – were regions where inequality was generally rising, according to the WID top 1% shares data.
+[TODO: same plot but for 1980 period]
 
 As such, differences in coverage already go some way to explaining the differences between the two datasets. 
 @fig-pip-wid-1993-2015-matching-obs and @tbl-pip-wid-1993-2015-matching-obs-averages show the data, restricting the observations to those available in both datasets. This brings the two series closer. Explain. (Coverage falls)
 
 Summarise remaining differences.
 
-Plot – Just like figure 1, but show only the data points missing from WID in the PIP pannel. And visa versa.
 
-# 3. Aligning indices
+
+
+# 4. Aligning indices
+
+
 
 - Show that measure doesn't matter for WID until top 1 (check Palma ratio)
 
@@ -819,6 +807,48 @@ In order to get a better understanding of where differences between the datasets
 
 
 # Appendix
+
+## Comparison of the WID and PIP datasets after aligning coverage
+
+### Inequality since 1993
+
+
+#### Figure X
+![PIP Gini and WID Top 1% share in 1993 vs 2015 – Matching observations only](images/figures/PIPGini-vs-WIDTop1-1993-vs-2015-02.png){#fig-pip-wid-1993-2015-matching-obs}
+
+
+```{python}
+#| label: tbl-pip-wid-1993-2015-matching-obs-absolute-count
+#| tbl-cap: Change in inequality 1993 vs 2015 - Matching observations only
+output_dict_1993['all_sources_True']['absolute_counts']
+
+```
+
+
+
+```{python}
+#| label: tbl-pip-wid-1993-2015-matching-obs-averages
+#| tbl-cap: Unweighted and weighted average in 1993 vs 2015 – Matching observations only
+output_dict_1993['all_sources_True']['averages']
+
+```
+
+### Inequality since 1980
+
+[TODO: same as above for post-1993 period.]
+
+
+
+
+```{python}
+#| label: tbl-pip-wid-1980-2018-matching-obs-averages
+#| tbl-cap: Unweighted and weighted average in 1980 vs 2018– Matching observations only
+output_dict_1980['all_sources_True']['averages']
+
+```
+
+
+
 ```{python}
 
 
