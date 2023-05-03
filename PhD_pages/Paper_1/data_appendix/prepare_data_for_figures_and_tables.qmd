@@ -1,0 +1,197 @@
+---
+title: "Appendix 1.H: Preparing figures and tables used in the paper"
+format: html
+execute:
+  echo: false
+  warning: false
+---
+
+
+
+```{python}
+
+from plotnine import *
+import plotly.express as px
+import pandas as pd
+import numpy as np
+# from IPython.display import display, HTML, IFrame, Markdown
+# import dataframe_image as dfi
+# import imgkit
+
+from G_functions_for_figures_and_tables import * 
+
+# pd.set_option('display.max_rows', None)
+
+```
+
+
+```{python}
+
+fp = 'data/clean/pip.csv'
+        
+df_pip = pd.read_csv(fp)
+
+
+fp = 'data/clean/wid.csv'
+
+df_wid = pd.read_csv(fp)
+
+fp = 'data/clean/lis.csv'
+
+df_lis = pd.read_csv(fp)
+
+
+fp = 'data/clean/region_mapping.csv'
+
+df_regions = pd.read_csv(fp)
+
+
+fp = 'data/clean/population.csv'
+
+df_pop = pd.read_csv(fp)
+
+fp = 'data/clean/region_population.csv'
+
+df_pop_regions = pd.read_csv(fp)
+
+
+# Gather data into dictionary
+source_dfs = {
+    "PIP": df_pip,
+    "WID": df_wid,
+    "LIS": df_lis
+    }
+
+
+# This specifies the +/- for the 'stable' category in the tables below
+tolerance_lookup =  {
+                'var_search_term': [
+                    'Gini',
+                    'Top 1pc share', 
+                    'Top 10pc share',
+                    'Bottom 50pc share',
+                    "Ratio Top 10 Bottom 50 share"],
+                'var_tolerance': [
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                ], 
+                'relative_tolerance': [
+                    0.05
+                ]
+            }
+
+```
+
+```{python}
+
+selected_vars = [
+        'PIP: Gini',
+        "PIP: Top 10pc share",
+        'PIP: Bottom 50pc share',
+        'PIP: Ratio Top 10 Bottom 50 share',
+        'WID: Gini – pretax',
+        "WID: Top 1pc share – pretax",
+        "WID: Top 10pc share – pretax",
+        'WID: Bottom 50pc share – pretax',
+        'WID: Ratio Top 10 Bottom 50 share – pretax'
+        ]
+
+   
+```
+
+Prep data for 1993-2015 period
+
+```{python}
+# Set-up to compare PIP Gini and WID top 1% share, all observations, for shorter time period
+reference_vals = [1993, 2015]
+max_dist_from_refs = 3
+
+
+
+prepped_data_dict = prep_data(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      region_col = 'region',
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      tolerance_lookup =  tolerance_lookup,
+      outlier_cut_off_upper = None
+      )
+
+
+owid_format = prepped_data_to_owid_format(
+      prepped_data_all_obs = prepped_data_dict['all_obs'],
+      prepped_data_matching_obs = prepped_data_dict['matching_obs'],
+      reference_vals = reference_vals
+      )
+owid_format
+
+# # 
+# Save data to be uploaded to OWID to make charts
+fp = 'figures_and_tables/Compare WID and PIP inequality data 1993 vs 2015 (Joe temp).csv'
+
+owid_format.to_csv(fp, index=False)
+
+```
+
+
+```{python}
+summary_tables_dict = prep_summary_tables(
+    prepped_data_dict = prepped_data_dict,
+    df_pop_regions = df_pop_regions,
+    selected_vars = [ 'PIP: Gini',
+                    'WID: Top 10pc share – pretax'],
+    reference_vals = reference_vals)
+
+summary_tables_dict['all_obs']['absolute_counts']
+
+```
+
+
+Prep data for 1980-2018 period
+
+```{python}
+# Set-up to compare PIP Gini and WID top 1% share, all observations, for shorter time period
+reference_vals = [1980, 2018]
+max_dist_from_refs = 5
+
+
+
+prepped_data_dict = prep_data(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_regions = df_regions,
+      region_col = 'region',
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      tolerance_lookup =  tolerance_lookup,
+      outlier_cut_off_upper = None
+      )
+
+
+owid_format = prepped_data_to_owid_format(
+      prepped_data_all_obs = prepped_data_dict['all_obs'],
+      prepped_data_matching_obs = prepped_data_dict['matching_obs'],
+      reference_vals = reference_vals
+      )
+
+# # 
+# Save data to be uploaded to OWID to make charts
+fp = 'figures_and_tables/Compare WID and PIP inequality data 1980 vs 2018 (Joe temp).csv'
+
+owid_format.to_csv(fp, index=False)
+
+# prepped_data_dict['all_obs']
+```

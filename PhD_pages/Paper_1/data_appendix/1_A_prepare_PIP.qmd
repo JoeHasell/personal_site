@@ -15,18 +15,85 @@ The titles in each of the boxes below summarise the steps taken to prepare the P
 ```{python}
 
 import pandas as pd
+import json
+import requests
 
-pd.set_option('display.max_rows', None)
 ```
 :::
 
 
 ::: {.callout-note collapse="true" appearance="minimal"}
-### Load PIP data
+### Load PIP percentile data
+```{python}
+fp = "data/original/pip_percentiles.csv"
+
+df_pip_percentiles = pd.read_csv(fp)
+
+
+```
+
+:::
+
+
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Keep top 1% shares
+```{python}
+
+drop_cols = ['percentile', 'avg_welfare', 'pop_share', 'quantile']
+
+df_pip_percentiles = df_pip_percentiles[df_pip_percentiles['percentile'] == 100]\
+  .drop(drop_cols, axis=1)\
+  .rename(columns={
+    'welfare_share': 'Top 1pc share'
+  })
+
+# Convert shares to percent
+df_pip_percentiles['Top 1pc share'] = df_pip_percentiles['Top 1pc share'] * 100
+```
+
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Standardize country names in percentile data
+
+
+```{python}
+# # Initially I save a csv of country-codes included in the percentil data, to pass through the OWID country name standardization tool
+# unique_countries = df_pip_percentiles['country_code'].unique()
+# df_pip_percentiles_countries = pd.DataFrame({'country': unique_countries})
+
+# df_pip_percentiles_countries.to_csv('data/original/pip_percentiles_countries.csv', index=False)
+
+
+# Read in name mapping file
+fp = 'data/original/pip_percentiles_countries_country_standardized.csv'
+name_mapping = pd.read_csv(fp)
+
+
+# Merge into  
+
+# Merge mapping into data
+
+df_pip_percentiles = pd.merge(df_pip_percentiles, name_mapping, left_on='country_code', right_on='country', how = 'left')
+
+# Drop columns used in the construction of the standardized country column
+df_pip_percentiles = df_pip_percentiles.drop(columns=['country','country_code'])
+
+df_pip_percentiles = df_pip_percentiles.rename(columns = {'Our World In Data Name': 'country'})
+```
+
+```{python}
+df_pip_percentiles.head()
+```
+:::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Load PIP main data (already prepared by OWID)
 We load the data from a file prepared from the PIP API by Our World in Data.
 
 ```{python}
-# df_pip<- read.csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
+# df_pip = pd.read_csv("https://raw.githubusercontent.com/owid/poverty-data/main/datasets/pip_dataset.csv")
 
 #  A local version, in case internet isn't available 
 df_pip = pd.read_csv("data/original/pip_dataset.csv")
@@ -46,6 +113,17 @@ We will use the 2017 PPPs.
 df_pip = df_pip.loc[df_pip["ppp_version"] == 2017]
 ```
 :::
+
+::: {.callout-note collapse="true" appearance="minimal"}
+### Merge top 1% shares from percentile data into main PIP data
+
+```{python}
+df_pip = pd.merge(df_pip, df_pip_percentiles, on=['country', 'year', 'reporting_level', 'welfare_type'], how='left')
+
+df_pip.head()
+```
+:::
+
 
 ::: {.callout-note collapse="true" appearance="minimal"}
 ### Drop sub-national data
@@ -135,6 +213,9 @@ df_pip["P90:P50 ratio"] = df_pip["decile9_thr"]/df_pip["median"]
 
 df_pip["Gini"] = df_pip['gini'] * 100
 
+# Top 10 / bottom 50% share
+df_pip["Ratio Top 10 Bottom 50 share"] = df_pip["decile10_share"]/df_pip["Bottom 50pc share"] * 100
+
 ```
 
 :::
@@ -155,8 +236,10 @@ keep_cols = [
   "Year",
   "Entity",
   "Gini",
+  "Top 1pc share",
   "Top 10pc share",
   "Bottom 50pc share",
+  "Ratio Top 10 Bottom 50 share",
   "MLD",
   "welfare_type"
 ]

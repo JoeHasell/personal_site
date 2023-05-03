@@ -70,8 +70,10 @@ tolerance_lookup =  {
                     'Gini',
                     'Top 1pc share', 
                     'Top 10pc share',
-                    'Bottom 50pc share'],
+                    'Bottom 50pc share',
+                    "Ratio Top 10 Bottom 50 share"],
                 'var_tolerance': [
+                    1,
                     1,
                     1,
                     1,
@@ -404,6 +406,8 @@ The rest of the paper is organized as follows. Section 2 provides a more detaile
 
 - Include discussion of comparability and quality of survey data in PIP.
 
+- Plot forthe appendix: make a direct comparison for Africa region with the same inequality index. Necessarily tethered to the survey data (unlike say Mexico) The changes are amplified in WID (falls are larger, rises are larger).
+
 ## Coverage
 
 
@@ -570,7 +574,35 @@ output_dict_1980['all_sources_False']['averages']
 
 ## Similarities and differences 
 
-Summary, across both periods. (Reflect this back in the intro.)
+Similarities:
+
+Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)
+
+Indeed for some regions very similar picture:
+
+    - MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)
+
+    - South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise
+
+    -  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)
+
+    - Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).
+
+
+Differences:
+
+Verry different bottom line at the global level:
+
+- PIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That's without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)
+
+- WID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e. % increase rather than % point increase? A point rise means 'less' in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia 
+
+That difference is driven by particular regions:
+- 
+
+
+More countries with rises. LArger rises. Especially larger populations. Average view very different:
+
 
 
 
@@ -624,10 +656,73 @@ As such, differences in coverage already go some way to explaining the differenc
 
 Summarise remaining differences.
 
+Countries where the sources paint a radically different picture that affect the aggregate results:
+
+- India: Insane rise in WID 34->56
+- Russia: Massive drop in PIP. Insane rise in WID.
+- USA: Much larger rise in WID.
+
+It sometimes goes the other way: 
+- Indonesia: Rise in PIP, fall in WID.
+- Some SSA countries: Larger falls in WID.
+
 
 
 
 # 4. Aligning indices
+
+- For a range of metrics, check which countries disagree on change category using a relative definitnio (+/-5%). And report global averages.
+
+
+```{python}
+# Set-up to compare PIP
+reference_vals = [1993, 2015]
+max_dist_from_refs = 3
+
+
+selected_vars = [
+        'PIP: Gini',
+        'PIP: Ratio Top 10 Bottom 50 share'
+        ]
+
+output_dict_PIP_indices_1993 = prep_data_and_change_summary(
+      source_dfs = source_dfs,
+      df_pop = df_pop,
+      df_pop_regions = df_pop_regions,
+      df_regions = df_regions,
+      region_col = 'region',
+      selected_vars = selected_vars,
+      reference_vals = reference_vals,
+      max_dist_from_refs = max_dist_from_refs,
+      min_dist_between = 1,
+      reference_col = "Year",
+      group_by_col = "Entity",
+      outlier_cut_off_upper = None,
+      tolerance_lookup =  tolerance_lookup
+      )
+
+
+```
+
+
+
+```{python}
+#| label: tbl-pip-indices-counts
+#| tbl-cap: Change in inequality 1980 vs 2018 - All availalbe observations
+output_dict_PIP_indices_1993['all_sources_False']['absolute_counts']
+
+```
+
+
+
+```{python}
+#| label: tbl-pip-indices-avgs
+#| tbl-cap: Unweighted and weighted average in 1980 vs 2018 - All availalbe observations
+output_dict_PIP_indices_1993['all_sources_False']['averages']
+
+```
+
+
 
 
 
@@ -655,152 +750,9 @@ Summarise remaining differences.
 Summarise where we're at after aligning the inequality metric.
 
 
-# Bridging the gap for particular countries / welfare concept
+# 5. Bridging the gap for particular countries / welfare concept
 
-"Korinek, Mistiaen, and
-Ravallion (2006) estimate that correcting
-for such selective compliance adds about
-five percentage points to the Gini index for
-the United States."
 
-
-## Sub-Saharan Africa
-Notes on the WID methodology. Basically no tax data. Based on guesses about how you shift consumption to pre-tax income, and then top income adjustment. 
-
-Plot: make a direct comparison for this region with the same index. NEcessarily tethered to the survey data (unlike say Mexico) The changes are amplified in WID (falls are larger, rises are larger).
-
-Also note the quality/comparability of the PIP survey data.
-
-
-
------
-
-### Aligning coverage 
-
-
-
-
-
-
-
-
-## Global data on inequality
-
-### Global databases
-
-A global view faces the hard limitation of the underlying data. This has two sides: firstly is there any data? Secondly the comparability of the data, across countries and over time.
-
-Much improved – *harmonized* secondary databases. Three of note.
-
-- PIP
-
-- WID
-
-- LIS
-
-
-
-### Two worlds of inequality measurement
-
-
-
-#### Connecting up the worlds is valuable
-
-- for Policy
-- for academic research
-
-
-## Triangulating a global view
-
-
-### Since 1990
-
-
-
-### Since 1980
-
-
-
-
-### Comparing metrics
-
-
-
-### Since 1990
-
-
-Similarities:
-
-Convergence – Smaller rises in coutries that started out with high inequality. Driven regionally. (We could do a test for this.)
-
-Indeed for some regions very similar picture:
-
-    - MENA - Roughly 2 point fall, both Gini and top 10%. Only one country with a rise: Not total agreeement on coverage (one country either side)
-
-    - South and South East Asia – Very similar not weighting by population. But wildly different when weighting by population, due to the much much stronger rise
-
-    -  Sub-Saharan Afric – Very similar across sources. Top 10: Roughly even mix of rises and falling countries, but with a 3 point fall on average. Gini: More falls, 5 point on average. (Mention data quality issues: e.g. Kenya big fall. Lesoto big fall. But how comparable are the surveys?? Same surveys underlie WID...)
-
-    - Western Europe – Rises in a majority of countries, but relatively moderate of 1-2 points (Whether Gini of top 10).
-
-
-Differences:
-
-Verry different bottom line at the global level:
-
-- PIP: roughly equal numbers falling and rising. 0 average change – though a modest rise when pop weighted (2 points). Same whether Gini or Top 10. That's without LAtin America (Which WID is missing). Includung LatAm tips nudges it (with about a 1 point fall unweighter and 1 point rise weighted)
-
-- WID: Far more countries with rising inequality. On average a 3 point rise (whether top 10 or Gini) – [Better to express these relative to the level of ineq. i.e. % increase rather than % point increase? A point rise means 'less' in WID terms because inequality levels are much higher.] But the most stark difference comes when we weight by population. Some key populous countries: India, China, US?, Indonesia? Russia 
-
-That difference is driven by particular regions:
-- 
-
-
-More countries with rises. LArger rises. Especially larger populations. Average view very different:
-
-
-
-
-
-Countries where the sources paint a radically different picture that affect the aggregate results:
-
-- India: Insane rise in WID 34->56
-- China:
-- Russia: Massive drop in PIP. Insane rise in WID.
-- USA: Much larger rise in WID.
-
-What explains the different trends in these countries? (We can maybe look in more detail, at different welfare concepts etc.)
-
-It sometimes goes the other way: Indonesia – Rise in PIP, fall in WID.
-
-:::
-
-#### Method 2: Use a regression to obtain the time trend
-
-
-
-### Results for a range of inequality metrics
-
-
-::: {.callout-note collapse="true" appearance="minimal"} 
-## Calculations for comparisons
-
-
-
-## Explaining differences between PIP and WID data
-
-### For a subset of countries we can bridge between the PIP and WID data
-
-Besides the underlying data sources, there are many differences between what is being measured in the PIP and WID data - notably the welfare concept and unit of analysis/equivalization.
-
-In order to get a better understanding of where differences between the datasets arise, for a subset of countries we can bridge between the two somewhat. For example:
-
--   WID has post-tax income series for some countries
--   We can use LIS to look at how changing the welfare concept, unit of analysis, equivalisation affects things. (For equivalisation, we could also possibly use the newly available PIP harmonized microdata).
-
-### More in-depth discussion of particular outliers
-
--   Russia is a very notable case where the two datasets tell very different stories.
 
 # Conclusion
 

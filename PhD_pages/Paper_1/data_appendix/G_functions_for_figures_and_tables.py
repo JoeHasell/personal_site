@@ -224,7 +224,6 @@ def prep_data(
       reference_vals,
       max_dist_from_refs,
       min_dist_between,
-      all_metrics_requirement,
       reference_col = "Year",
       group_by_col = "Entity",
       tolerance_lookup =  {
@@ -245,234 +244,286 @@ def prep_data(
 
     selected_source_var_dict = prep_selected_vars(selected_vars)
 
+    prepped_data_dict = {}
+
+    for obs_requirement in ['all_obs', 'matching_obs']:
+
+      if obs_requirement == 'all_obs':
+        all_metrics_requirement = False
+      if obs_requirement == 'matching_obs':
+        all_metrics_requirement = True
+
+      matches = []
+
+      for i in range(len(selected_source_var_dict['sources'])):
+          
+          source = selected_source_var_dict["sources"][i]
+          var = selected_source_var_dict["var_names"][i]
+
+          
+
+          df = source_dfs[source]
+
+          if source == "PIP":
+
+              matched = pip_welfare_routine(
+                  df = df,
+                  reference_vals = reference_vals,
+                  max_dist_from_refs = max_dist_from_refs,
+                  min_dist_between = min_dist_between,
+                  reference_col = reference_col,
+                  group_by_col = group_by_col,
+                  value_col = var
+                  )
+
+          else:
+
+              matched = merge_two_ref_matches(
+                  df = df,
+                  reference_vals = reference_vals,
+                  max_dist_from_refs = max_dist_from_refs,
+                  min_dist_between = min_dist_between,
+                  reference_col = reference_col,
+                  group_by_col = group_by_col,
+                  value_col = var
+                  )
+
+          matches.append(matched)
+
+
+      prepped_data = pd.concat(matches, keys=selected_vars)
+
+      # Tidy up indexes
+      prepped_data = prepped_data.reset_index()
+      
+      prepped_data = prepped_data.drop('level_1', axis=1)
+
+      prepped_data = prepped_data\
+          .rename(columns={"level_0": "source_var"})
+
+
+
+
+      # Store the names of the columns to be used onthe X and Y axis
+      x_axis = f'value{reference_vals[0]}'
+      y_axis = f'value{reference_vals[1]}'
+
+
+
+      # Apply outlier cut off, if specified
+      if not pd.isna(outlier_cut_off_upper):
+          prepped_data = prepped_data.loc[prepped_data[x_axis] <= outlier_cut_off_upper]
+          prepped_data = prepped_data.loc[prepped_data[y_axis] <= outlier_cut_off_upper]
+
+
+      # Add a count by country – counting whether data is available from each source or not
+      prepped_data['source_count'] = prepped_data.groupby(group_by_col)['source_var'].transform('count')
+
+
+      # Apply metrics requirement (whether to include only observations with data from all metrics)
+      if all_metrics_requirement:
+          prepped_data = prepped_data.loc[prepped_data['source_count'] == prepped_data['source_count'].max()]
+
+      # Drop source_count column
+      prepped_data = prepped_data.drop('source_count', axis=1)
+
+      # Add in region classification
+      df_regions = df_regions[[group_by_col, region_col]]
+      prepped_data = pd.merge(prepped_data, df_regions, how = 'left')
+
+      # Add in population data
+          # For first ref
+      df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[0], ['Entity', 'population'] ]
+
+      prepped_data = pd.merge(prepped_data, df_pop_ref, how = 'left')
+
+      prepped_data = prepped_data.rename(columns={'population':f'pop{reference_vals[0]}'})
+
+          # For second ref
+      df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[1], ['Entity', 'population'] ]
+
+      prepped_data = pd.merge(prepped_data, df_pop_ref, how = 'left')
+
+      prepped_data = prepped_data.rename(columns={'population':f'pop{reference_vals[1]}'})
+
+
+
+
+      # Calculate the change between the two ref periods
+      prepped_data['change'] = (prepped_data[f'value{reference_vals[1]}'] - prepped_data[f'value{reference_vals[0]}'])
+
+
+      # ABSOLUTE TOLERANCE: 
+      # Add a tolerance column – the change the demarks a substnatial rise or fall.
+      # Here this is measured in terms of absolute change.
+      # It uses a dictionary passed as an argument to this function to
+      # search for vars with particualr strings ('Gini') and the sub in
+      # the tolerance specified in the dictionary
+      for i in range(len(tolerance_lookup['var_search_term'])):
+
+          prepped_data.loc[prepped_data['source_var']\
+              .str.contains(
+                  tolerance_lookup['var_search_term'][i]
+                  ), 'absolute_tolerance'] = tolerance_lookup['var_tolerance'][i]
+
+
+      # RELATIVE TOLERANCE: 
+      # Add a tolerance column – the change the demarks a substnatial rise or fall.
+      # Here this is measured in terms of relative change.
+      # It uses a single value [0-1] irrespective of the variable.
+      prepped_data['relative_tolerance'] = prepped_data[f'value{reference_vals[0]}'] * tolerance_lookup['relative_tolerance'][0]
+      
+
+
+      # Prepare fall/stable/rise categories 
+      change_types = ['absolute', 'relative']
     
-    matches = []
+      for change_type in change_types:
+        prepped_data[f'{change_type}_fall'] = prepped_data['change'] < -prepped_data[f'{change_type}_tolerance']
 
-    for i in range(len(selected_source_var_dict['sources'])):
-        
-        source = selected_source_var_dict["sources"][i]
-        var = selected_source_var_dict["var_names"][i]
+        prepped_data[f'{change_type}_stable'] = (prepped_data['change'] <= prepped_data[f'{change_type}_tolerance']) & (prepped_data['change'] >= -prepped_data[f'{change_type}_tolerance'])
 
-        
+        prepped_data[f'{change_type}_rise'] = prepped_data['change'] > prepped_data[f'{change_type}_tolerance']
 
-        df = source_dfs[source]
-
-        if source == "PIP":
-
-            matched = pip_welfare_routine(
-                df = df,
-                reference_vals = reference_vals,
-                max_dist_from_refs = max_dist_from_refs,
-                min_dist_between = min_dist_between,
-                reference_col = reference_col,
-                group_by_col = group_by_col,
-                value_col = var
-                )
-
-        else:
-
-            matched = merge_two_ref_matches(
-                df = df,
-                reference_vals = reference_vals,
-                max_dist_from_refs = max_dist_from_refs,
-                min_dist_between = min_dist_between,
-                reference_col = reference_col,
-                group_by_col = group_by_col,
-                value_col = var
-                )
-
-        matches.append(matched)
+        # Make sure the dichotomous vars are integers
+        prepped_data[[f'{change_type}_fall', f'{change_type}_stable', f'{change_type}_rise']] = prepped_data[[f'{change_type}_fall', f'{change_type}_stable', f'{change_type}_rise']].astype(int)
 
 
-    prepped_data = pd.concat(matches, keys=selected_vars)
+      # Use a fixed name for the region column
+      prepped_data = prepped_data.rename(columns={
+        region_col:'region',
+        group_by_col:'country',
+        f'{reference_col}{reference_vals[0]}': f'year{reference_vals[0]}',
+        f'{reference_col}{reference_vals[1]}': f'year{reference_vals[1]}'
+        })
 
-    # Tidy up indexes
-    prepped_data = prepped_data.reset_index()
+      prepped_data_dict[obs_requirement] = prepped_data
     
-    prepped_data = prepped_data.drop('level_1', axis=1)
-
-    prepped_data = prepped_data\
-        .rename(columns={"level_0": "source_var"})
+    return prepped_data_dict
 
 
 
+# %%
+def prepped_data_to_owid_format(
+      prepped_data_all_obs,
+      prepped_data_matching_obs,
+      reference_vals
+      ):
 
-    # Store the names of the columns to be used onthe X and Y axis
-    x_axis = f'value{reference_vals[0]}'
-    y_axis = f'value{reference_vals[1]}'
+  step_1 = {}
+  all_metrics_requirement_types = ['all_obs', 'matching_obs']
 
+  for obs_requirement in all_metrics_requirement_types:
 
+    if obs_requirement == 'all_obs':
+      prepped_data = prepped_data_all_obs
+    if obs_requirement == 'matching_obs':
+      prepped_data = prepped_data_matching_obs
 
-    # Apply outlier cut off, if specified
-    if not pd.isna(outlier_cut_off_upper):
-        prepped_data = prepped_data.loc[prepped_data[x_axis] <= outlier_cut_off_upper]
-        prepped_data = prepped_data.loc[prepped_data[y_axis] <= outlier_cut_off_upper]
+    # Reshape the data
+    owid_format = pd.melt(prepped_data, id_vars=['source_var', 'country', 'region' ], value_vars=[f'year{reference_vals[0]}', f'year{reference_vals[1]}', f'value{reference_vals[0]}', f'value{reference_vals[1]}'])
 
+    # Extract year and group information from variable column
+    owid_format[['var', 'reference']] = owid_format['variable'].str.extract(r'(\D+)(\d+)$')
+    owid_format['reference'] = owid_format['reference'].astype(int)
 
-    # Add a count by country – counting whether data is available from each source or not
-    prepped_data['source_count'] = prepped_data.groupby(group_by_col)['source_var'].transform('count')
+    #Reshape from long to wide
+    owid_format=pd.pivot(owid_format, index=['source_var', 'country', 'region', 'reference' ], columns = 'var' ,values = 'value').reset_index() 
 
+    # Drop the original reference column
+    owid_format = owid_format.drop('reference', axis=1)
 
-    # Apply metrics requirement (whether to include only observations with data from all metrics)
-    if all_metrics_requirement:
-        prepped_data = prepped_data.loc[prepped_data['source_count'] == prepped_data['source_count'].max()]
+    # Pivot the melted dataframe wider – one value column per source_var
+    owid_format = owid_format.pivot_table(index=['country', 'region', 'year'], columns='source_var', values='value').reset_index()
 
-    # Drop source_count column
-    prepped_data = prepped_data.drop('source_count', axis=1)
+    step_1[obs_requirement] = owid_format
 
-    # Add in region classification
-    df_regions = df_regions[[group_by_col, region_col]]
-    prepped_data = pd.merge(prepped_data, df_regions, how = 'left')
-
-    # Add in population data
-        # For first ref
-    df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[0], ['Entity', 'population'] ]
-
-    prepped_data = pd.merge(prepped_data, df_pop_ref, how = 'left')
-
-    prepped_data = prepped_data.rename(columns={'population':f'pop{reference_vals[0]}'})
-
-        # For second ref
-    df_pop_ref = df_pop.loc[df_pop['Year'] == reference_vals[1], ['Entity', 'population'] ]
-
-    prepped_data = pd.merge(prepped_data, df_pop_ref, how = 'left')
-
-    prepped_data = prepped_data.rename(columns={'population':f'pop{reference_vals[1]}'})
+  # Merge the all_obs and matching_obs data for OWID format
+  owid_format = pd.merge(step_1['all_obs'], step_1['matching_obs'], on=['country', 'year', 'region'], how='outer', suffixes=(' – all observations', ' – only matching observations'))
 
 
+  # Reorder columns
+  cols = list(owid_format.columns) # Get the list of column names
+  cols.remove('country') # Remove col1 from the list
+  cols.remove('year') # Remove col2 from the list
+  cols = ['country', 'year'] + cols # Add col1 and col2 to the front of the list
+  owid_format = owid_format[cols] # Reorder columns in the DataFrame
+
+  owid_format['year'] = owid_format['year'].astype(int) # Year needs to be integer for OWID
 
 
-    # Calculate the change between the two ref periods
-    prepped_data['change'] = (prepped_data[f'value{reference_vals[1]}'] - prepped_data[f'value{reference_vals[0]}'])
-
-
-    # ABSOLUTE TOLERANCE: 
-    # Add a tolerance column – the change the demarks a substnatial rise or fall.
-    # Here this is measured in terms of absolute change.
-    # It uses a dictionary passed as an argument to this function to
-    # search for vars with particualr strings ('Gini') and the sub in
-    # the tolerance specified in the dictionary
-    for i in range(len(tolerance_lookup['var_search_term'])):
-
-        prepped_data.loc[prepped_data['source_var']\
-            .str.contains(
-                tolerance_lookup['var_search_term'][i]
-                ), 'absolute_tolerance'] = tolerance_lookup['var_tolerance'][i]
-
-
-    # RELATIVE TOLERANCE: 
-    # Add a tolerance column – the change the demarks a substnatial rise or fall.
-    # Here this is measured in terms of relative change.
-    # It uses a single value [0-1] irrespective of the variable.
-    prepped_data['relative_tolerance'] = prepped_data[f'value{reference_vals[0]}'] * tolerance_lookup['relative_tolerance'][0]
-    
-
-
-    # Prepare fall/stable/rise categories 
-    change_types = ['absolute', 'relative']
-  
-    for change_type in change_types:
-      prepped_data[f'{change_type}_fall'] = prepped_data['change'] < -prepped_data[f'{change_type}_tolerance']
-
-      prepped_data[f'{change_type}_stable'] = (prepped_data['change'] <= prepped_data[f'{change_type}_tolerance']) & (prepped_data['change'] >= -prepped_data[f'{change_type}_tolerance'])
-
-      prepped_data[f'{change_type}_rise'] = prepped_data['change'] > prepped_data[f'{change_type}_tolerance']
-
-      # Make sure the dichotomous vars are integers
-      prepped_data[[f'{change_type}_fall', f'{change_type}_stable', f'{change_type}_rise']] = prepped_data[[f'{change_type}_fall', f'{change_type}_stable', f'{change_type}_rise']].astype(int)
-
-
-    
-    return prepped_data
-
+  return(owid_format)
 
 
 
 # %% [markdown]
-#  # Preparing tables and charts
+#  # Preparing summary tables 
 #  This function prepares the table that is used a number of times in the data.
 
-# %%
-def prep_data_and_change_summary(
-      source_dfs,
-      df_pop,
+#%%
+def prep_summary_tables(
+      prepped_data_dict,
       df_pop_regions,
-      df_regions,
-      region_col,
       selected_vars,
-      reference_vals,
-      max_dist_from_refs,
-      min_dist_between,
-      reference_col,
-      group_by_col,
-      outlier_cut_off_upper,
-      tolerance_lookup
+      reference_vals
       ):
+  
+  summary_tables_dict ={}
 
-    output_dict = {}
+  all_metrics_requirement_types = ['all_obs', 'matching_obs']
 
-    for all_metrics_requirement in [False, True]:
 
-      prepped_data = prep_data(
-          source_dfs = source_dfs,
-          df_pop = df_pop,
-          df_regions = df_regions,
-          region_col = region_col,
-          selected_vars = selected_vars,
-          reference_vals = reference_vals,
-          max_dist_from_refs = max_dist_from_refs,
-          min_dist_between = min_dist_between,
-          all_metrics_requirement = all_metrics_requirement,
-          reference_col = reference_col,
-          group_by_col = group_by_col,
-          tolerance_lookup = tolerance_lookup,
-          outlier_cut_off_upper = outlier_cut_off_upper
-          )
+  for obs_requirement in all_metrics_requirement_types:
 
-      # Prepare pop-weighted averages for each ref year
-      df_aggs = prepped_data.copy()
+    prepped_data = prepped_data_dict[obs_requirement]
 
-      for ref in reference_vals:
+    # Prepare pop-weighted averages for each ref year
+    df_aggs = prepped_data.copy()
 
-          # Calulate regional pop weights, grouped by source-var 
-          df_aggs[f'regional_pop_weights{ref}'] = df_aggs.groupby(['source_var', region_col])[f'pop{ref}'].transform(lambda x: x/x.sum()) 
+    df_aggs = df_aggs[df_aggs['source_var'].isin(selected_vars)]
 
-          # Calulate global pop weights, grouped by source-var
-          df_aggs[f'global_pop_weights{ref}'] = df_aggs.groupby('source_var')[f'pop{ref}'].transform(lambda x: x/x.sum()) 
+    for ref in reference_vals:
 
-          # Multiply the values by the pop weights 
-          df_aggs[f'region_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'regional_pop_weights{ref}']
-          df_aggs[f'global_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'global_pop_weights{ref}']
+      # Calulate regional pop weights, grouped by source-var 
+      df_aggs[f'regional_pop_weights{ref}'] = df_aggs.groupby(['source_var', 'region'])[f'pop{ref}'].transform(lambda x: x/x.sum()) 
 
-      # Select whether aboslute or relative rise/fall categories are to be used
-      change_types = ['absolute', 'relative']
-      cats = ['rise', 'stable', 'fall']
+      # Calulate global pop weights, grouped by source-var
+      df_aggs[f'global_pop_weights{ref}'] = df_aggs.groupby('source_var')[f'pop{ref}'].transform(lambda x: x/x.sum()) 
 
-      for change_type in change_types:
-        
-        for cat in cats:
+      # Multiply the values by the pop weights 
+      df_aggs[f'region_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'regional_pop_weights{ref}']
+      df_aggs[f'global_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'global_pop_weights{ref}']
 
-          df_aggs[f'{change_type}_{cat}'] = df_aggs[f'{change_type}_{cat}']
+    
 
+    change_types = ['absolute', 'relative']
+    cats = ['rise', 'stable', 'fall']
+
+    for change_type in change_types:
       
+      # for cat in cats:
+
+      #   df_aggs[f'{change_type}_{cat}'] = df_aggs[f'{change_type}_{cat}']
+
+    
       # Summarise by region
       df_region_summary = df_aggs\
-          .groupby(['source_var', region_col])[[
-              f'value{reference_vals[0]}',
-              f'value{reference_vals[1]}',
-              f'region_weighted_value{reference_vals[0]}',
-              f'region_weighted_value{reference_vals[1]}',
-              f'global_pop_weights{reference_vals[0]}', 
-              f'global_pop_weights{reference_vals[1]}',
-              f'pop{reference_vals[0]}',
-              f'pop{reference_vals[1]}', 
-              'absolute_fall', 
-              'absolute_stable', 
-              'absolute_rise',
-              'relative_fall', 
-              'relative_stable', 
-              'relative_rise']]\
-          .agg(['sum', 'mean', 'count'])
+        .groupby(['source_var', 'region'])[[
+            f'value{reference_vals[0]}',
+            f'value{reference_vals[1]}',
+            f'region_weighted_value{reference_vals[0]}',
+            f'region_weighted_value{reference_vals[1]}',
+            f'global_pop_weights{reference_vals[0]}', 
+            f'global_pop_weights{reference_vals[1]}',
+            f'pop{reference_vals[0]}',
+            f'pop{reference_vals[1]}', 
+            'absolute_fall', 
+            'absolute_stable', 
+            'absolute_rise',
+            'relative_fall', 
+            'relative_stable', 
+            'relative_rise']]\
+        .agg(['sum', 'mean', 'count'])
 
 
       df_region_summary = df_region_summary.loc[:, [
@@ -555,8 +606,8 @@ def prep_data_and_change_summary(
           (f'pop{reference_vals[1]}', 'sum')]]
 
       # Add 'World' region as key
-      df_global_summary[region_col] = "World"
-      df_global_summary.set_index(region_col, append =True, inplace=True )
+      df_global_summary['region'] = "World"
+      df_global_summary.set_index('region', append =True, inplace=True )
 
       #  Sub in more helpful col names
       df_global_summary.columns = final_column_names
@@ -569,21 +620,21 @@ def prep_data_and_change_summary(
 
     # Merge in region data
       for ref in reference_vals:
-        this_ref_pop_regions = df_pop_regions[df_pop_regions[reference_col] == ref].copy()
+        this_ref_pop_regions = df_pop_regions[df_pop_regions['year'] == ref].copy()
         
-        this_ref_pop_regions = this_ref_pop_regions[[region_col, 'population']]\
+        this_ref_pop_regions = this_ref_pop_regions[['region', 'population']]\
           .rename(columns = {"population": f'regional_population {ref}'})\
-          .set_index(region_col)
+          .set_index('region')
 
       # Repeat for each source_var in selected_vars (I couldn't find a more sensible way to do the merge at the next step)      
         df_list = [this_ref_pop_regions] * len(selected_vars)
         this_ref_pop_regions = pd.concat(df_list, keys = selected_vars)
         # rename the row indexes
-        this_ref_pop_regions.index.names = ['source_var', region_col]
+        this_ref_pop_regions.index.names = ['source_var', 'region']
       
 
         df_summary = df_summary\
-          .merge(this_ref_pop_regions, on=['source_var', region_col], how = 'outer')
+          .merge(this_ref_pop_regions, on=['source_var', 'region'], how = 'left')
 
         df_summary[f'Pop. coverage {ref}'] = df_summary[f'Pop. sum {ref}']/df_summary[f'regional_population {ref}']
 
@@ -647,9 +698,6 @@ def prep_data_and_change_summary(
       # Make a dictionary storing the prepped data and different parts of the summary table
       summaries_dict = {}
 
-      # The prepped data (not summarised)
-      summaries_dict["prepped_data"] = prepped_data
-
       # The whole summary table
       summaries_dict['all'] = df_summary
 
@@ -659,47 +707,336 @@ def prep_data_and_change_summary(
 
       # The averages and population coverage
       summaries_dict['averages'] = df_summary.loc[:, (selected_vars, ['Avg', 'Wt. avg', 'Pop. coverage'], slice(None))]
-
-
-      # Reshape the data for OWID upload
-
-      owid_format = pd.melt(prepped_data, id_vars=['source_var', group_by_col, region_col ], value_vars=[f'{reference_col}{reference_vals[0]}', f'{reference_col}{reference_vals[1]}', f'value{reference_vals[0]}', f'value{reference_vals[1]}'])
-
-      # Extract year and group information from variable column
-      owid_format[['var', 'reference']] = owid_format['variable'].str.extract(r'(\D+)(\d+)$')
-      owid_format['reference'] = owid_format['reference'].astype(int)
-
-      #Reshape from long to wide
-      owid_format=pd.pivot(owid_format, index=['source_var', group_by_col, region_col, 'reference' ], columns = 'var' ,values = 'value').reset_index() 
-
-      # Drop the original reference column
-      owid_format = owid_format.drop('reference', axis=1)
-
-      # Pivot the melted dataframe wider – one value column per source_var
-      owid_format = owid_format.pivot_table(index=[group_by_col, region_col, reference_col], columns='source_var', values='value').reset_index()
-
-      summaries_dict['owid_format'] = owid_format
-    
-      output_dict[f'all_sources_{all_metrics_requirement}'] = summaries_dict
     
 
-    # Merge the all_sources- True and False data for OWID format
-    owid_format = pd.merge(output_dict['all_sources_False']['owid_format'], output_dict['all_sources_True']['owid_format'], on=[group_by_col, reference_col, region_col], how='outer', suffixes=(' – all observations', ' – only matching observations'))
 
-    owid_format = owid_format.rename(columns={group_by_col: "country", reference_col: "year"})
-    
-    # Reorder columns
-    cols = list(owid_format.columns) # Get the list of column names
-    cols.remove('country') # Remove col1 from the list
-    cols.remove('year') # Remove col2 from the list
-    cols = ['country', 'year'] + cols # Add col1 and col2 to the front of the list
-    owid_format = owid_format[cols] # Reorder columns in the DataFrame
-    
-    owid_format['year'] = owid_format['year'].astype(int) # Year needs to be integer for OWID
+    summary_tables_dict[obs_requirement] = summaries_dict
 
-    output_dict['owid_format'] = owid_format
+  return summary_tables_dict
+
+
+
+
+
+
+
+
+
+
+# ---------------
+
+# %% [markdown]
+#  # Preparing tables and charts
+#  This function prepares the table that is used a number of times in the data.
+
+# %%
+# def prep_data_and_change_summary(
+#       source_dfs,
+#       df_pop,
+#       df_pop_regions,
+#       df_regions,
+#       region_col,
+#       selected_vars,
+#       reference_vals,
+#       max_dist_from_refs,
+#       min_dist_between,
+#       reference_col,
+#       group_by_col,
+#       outlier_cut_off_upper,
+#       tolerance_lookup
+#       ):
+
+#     output_dict = {}
+
+#     for all_metrics_requirement in [False, True]:
+
+#       prepped_data = prep_data(
+#           source_dfs = source_dfs,
+#           df_pop = df_pop,
+#           df_regions = df_regions,
+#           region_col = region_col,
+#           selected_vars = selected_vars,
+#           reference_vals = reference_vals,
+#           max_dist_from_refs = max_dist_from_refs,
+#           min_dist_between = min_dist_between,
+#           all_metrics_requirement = all_metrics_requirement,
+#           reference_col = reference_col,
+#           group_by_col = group_by_col,
+#           tolerance_lookup = tolerance_lookup,
+#           outlier_cut_off_upper = outlier_cut_off_upper
+#           )
+
+#       # Prepare pop-weighted averages for each ref year
+#       df_aggs = prepped_data.copy()
+
+#       for ref in reference_vals:
+
+#           # Calulate regional pop weights, grouped by source-var 
+#           df_aggs[f'regional_pop_weights{ref}'] = df_aggs.groupby(['source_var', region_col])[f'pop{ref}'].transform(lambda x: x/x.sum()) 
+
+#           # Calulate global pop weights, grouped by source-var
+#           df_aggs[f'global_pop_weights{ref}'] = df_aggs.groupby('source_var')[f'pop{ref}'].transform(lambda x: x/x.sum()) 
+
+#           # Multiply the values by the pop weights 
+#           df_aggs[f'region_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'regional_pop_weights{ref}']
+#           df_aggs[f'global_weighted_value{ref}'] = df_aggs[f'value{ref}'] * df_aggs[f'global_pop_weights{ref}']
+
+#       # Select whether aboslute or relative rise/fall categories are to be used
+#       change_types = ['absolute', 'relative']
+#       cats = ['rise', 'stable', 'fall']
+
+#       for change_type in change_types:
+        
+#         for cat in cats:
+
+#           df_aggs[f'{change_type}_{cat}'] = df_aggs[f'{change_type}_{cat}']
+
+      
+#       # Summarise by region
+#       df_region_summary = df_aggs\
+#           .groupby(['source_var', region_col])[[
+#               f'value{reference_vals[0]}',
+#               f'value{reference_vals[1]}',
+#               f'region_weighted_value{reference_vals[0]}',
+#               f'region_weighted_value{reference_vals[1]}',
+#               f'global_pop_weights{reference_vals[0]}', 
+#               f'global_pop_weights{reference_vals[1]}',
+#               f'pop{reference_vals[0]}',
+#               f'pop{reference_vals[1]}', 
+#               'absolute_fall', 
+#               'absolute_stable', 
+#               'absolute_rise',
+#               'relative_fall', 
+#               'relative_stable', 
+#               'relative_rise']]\
+#           .agg(['sum', 'mean', 'count'])
+
+
+#       df_region_summary = df_region_summary.loc[:, [
+#           (f'value{reference_vals[0]}', 'mean'),
+#           (f'value{reference_vals[1]}', 'mean'),
+#           (f'region_weighted_value{reference_vals[0]}', 'sum'),
+#           (f'region_weighted_value{reference_vals[1]}', 'sum'),
+#           ('absolute_fall', 'sum'),
+#           ('absolute_stable', 'sum'), 
+#           ('absolute_rise', 'sum'),
+#           ('relative_fall', 'sum'),
+#           ('relative_stable', 'sum'), 
+#           ('relative_rise', 'sum'),
+#           ('relative_rise', 'count'),
+#           (f'global_pop_weights{reference_vals[0]}', 'sum'), 
+#           (f'global_pop_weights{reference_vals[1]}', 'sum'),
+#           (f'pop{reference_vals[0]}', 'sum'),
+#           (f'pop{reference_vals[1]}', 'sum')]]
     
-    return output_dict
+
+#     #  Define more helpful col names
+#       final_column_names =  [
+#           f'Avg {reference_vals[0]}',
+#           f'Avg {reference_vals[1]}',
+#           f'Wt. avg {reference_vals[0]}',
+#           f'Wt. avg {reference_vals[1]}',
+#           'absolute_fall',
+#           'absolute_stable',
+#           'absolute_rise',
+#           'relative_fall',
+#           'relative_stable',
+#           'relative_rise',
+#           'total',
+#           f'Pop. weights {reference_vals[0]}',
+#           f'Pop. weights {reference_vals[1]}',
+#           f'Pop. sum {reference_vals[0]}',
+#           f'Pop. sum {reference_vals[1]}',        
+#       ]
+
+#       #  Sub in more helpful col names
+#       df_region_summary.columns = final_column_names
+
+
+#       # Summarise globally
+
+#       df_global_summary = df_aggs\
+#           .groupby(['source_var'])[[
+#               f'value{reference_vals[0]}',
+#               f'value{reference_vals[1]}',
+#               f'global_weighted_value{reference_vals[0]}',
+#               f'global_weighted_value{reference_vals[1]}',
+#               f'global_pop_weights{reference_vals[0]}', 
+#               f'global_pop_weights{reference_vals[1]}',
+#               f'pop{reference_vals[0]}',
+#               f'pop{reference_vals[1]}',  
+#               'absolute_fall', 
+#               'absolute_stable', 
+#               'absolute_rise',
+#               'relative_fall', 
+#               'relative_stable', 
+#               'relative_rise']]\
+#           .agg(['sum', 'mean', 'count'])
+
+
+#       df_global_summary = df_global_summary.loc[:, [
+#           (f'value{reference_vals[0]}', 'mean'),
+#           (f'value{reference_vals[1]}', 'mean'),
+#           (f'global_weighted_value{reference_vals[0]}', 'sum'),
+#           (f'global_weighted_value{reference_vals[1]}', 'sum'),
+#           ('absolute_fall', 'sum'),
+#           ('absolute_stable', 'sum'), 
+#           ('absolute_rise', 'sum'),
+#           ('relative_fall', 'sum'),
+#           ('relative_stable', 'sum'), 
+#           ('relative_rise', 'sum'),
+#           ('relative_rise', 'count'),
+#           (f'global_pop_weights{reference_vals[0]}', 'sum'), 
+#           (f'global_pop_weights{reference_vals[1]}', 'sum'),
+#           (f'pop{reference_vals[0]}', 'sum'),
+#           (f'pop{reference_vals[1]}', 'sum')]]
+
+#       # Add 'World' region as key
+#       df_global_summary[region_col] = "World"
+#       df_global_summary.set_index(region_col, append =True, inplace=True )
+
+#       #  Sub in more helpful col names
+#       df_global_summary.columns = final_column_names
+
+
+#       # Append regional and global summaries
+#       df_summary = pd.concat([df_region_summary, df_global_summary])
+
+
+
+#     # Merge in region data
+#       for ref in reference_vals:
+#         this_ref_pop_regions = df_pop_regions[df_pop_regions[reference_col] == ref].copy()
+        
+#         this_ref_pop_regions = this_ref_pop_regions[[region_col, 'population']]\
+#           .rename(columns = {"population": f'regional_population {ref}'})\
+#           .set_index(region_col)
+
+#       # Repeat for each source_var in selected_vars (I couldn't find a more sensible way to do the merge at the next step)      
+#         df_list = [this_ref_pop_regions] * len(selected_vars)
+#         this_ref_pop_regions = pd.concat(df_list, keys = selected_vars)
+#         # rename the row indexes
+#         this_ref_pop_regions.index.names = ['source_var', region_col]
+      
+
+#         df_summary = df_summary\
+#           .merge(this_ref_pop_regions, on=['source_var', region_col], how = 'outer')
+
+#         df_summary[f'Pop. coverage {ref}'] = df_summary[f'Pop. sum {ref}']/df_summary[f'regional_population {ref}']
+
+
+
+#       # To help with formatting the multi-level index, I make a dictionary
+#       dict = {
+#           ('Avg',reference_vals[0]): df_summary[f'Avg {reference_vals[0]}'], 
+#           ('Avg',reference_vals[1]): df_summary[f'Avg {reference_vals[1]}'],
+#           ('Wt. avg',reference_vals[0]): df_summary[f'Wt. avg {reference_vals[0]}'], 
+#           ('Wt. avg',reference_vals[1]): df_summary[f'Wt. avg {reference_vals[1]}'],
+#           ('Absolute','fall'): df_summary['absolute_fall'],
+#           ('Absolute','stable'): df_summary['absolute_stable'],
+#           ('Absolute','rise'): df_summary['absolute_rise'],
+#           ('Relative','fall'): df_summary['relative_fall'],
+#           ('Relative','stable'): df_summary['relative_stable'],
+#           ('Relative','rise'): df_summary['relative_rise'],
+#           ('Total','total'): df_summary['total'],
+#           ('Pop. weights',reference_vals[0]): df_summary[f'Pop. weights {reference_vals[0]}'],
+#           ('Pop. weights',reference_vals[1]): df_summary[f'Pop. weights {reference_vals[1]}'],
+#           ('Pop. coverage',reference_vals[0]): df_summary[f'Pop. coverage {reference_vals[0]}'],
+#           ('Pop. coverage',reference_vals[1]): df_summary[f'Pop. coverage {reference_vals[1]}']
+#           }
+      
+#       # ... And then put it back to a dataframe
+#       df_summary = pd.DataFrame(dict)
+
+
+#       df_summary = df_summary.sort_index()
+
+#       # Split the original dataframe into a dictionary of dataframes by first row index value
+#       grouped = df_summary.groupby(level=0)
+#       dfs_dict = {name: group for name, group in grouped}
+
+#       # Drop the first row index level from each dataframe
+#       dfs_dict_dropped = {name: df.droplevel(0, axis=0) for name, df in dfs_dict.items()}
+
+#       df_summary = pd.concat(dfs_dict_dropped, axis=1, keys=dfs_dict_dropped.keys())
+
+#       # df_summary = df_summary.unstack(level=0).swaplevel(i=0, j=2, axis=1)
+
+#       # df_summary = df_summary.swaplevel(i=1, j=2, axis=1)
+
+#       # df_summary = df_summary.sort_index(level= 'source_var')
+    
+#       for source_var in selected_vars:
+
+#         for ref in reference_vals:
+#           df_summary[(source_var,'Avg',ref)] = df_summary[(source_var,'Avg',ref)] .map('{:.1f}'.format)
+#           df_summary[(source_var,'Wt. avg',ref)] = df_summary[(source_var,'Wt. avg',ref)] .map('{:.1f}'.format)
+#           df_summary[(source_var,'Pop. weights',ref)] = df_summary[(source_var,'Pop. weights',ref)] .map('{:.2f}'.format)
+#           df_summary[(source_var,'Pop. coverage',ref)] = df_summary[(source_var,'Pop. coverage',ref)] .map('{:.2f}'.format)
+
+#         for change_type in ['Absolute', 'Relative']:
+#           for change_cat in ['rise', 'stable', 'fall']:
+#             df_summary[(source_var, change_type, change_cat)] = df_summary[(source_var, change_type, change_cat)] .map('{:.0f}'.format)
+
+#         df_summary[(source_var,'Total', 'total')] = df_summary[(source_var,'Total', 'total')] .map('{:.0f}'.format)
+
+
+#       # Make a dictionary storing the prepped data and different parts of the summary table
+#       summaries_dict = {}
+
+#       # The prepped data (not summarised)
+#       summaries_dict["prepped_data"] = prepped_data
+
+#       # The whole summary table
+#       summaries_dict['all'] = df_summary
+
+#       # The fall/stable/rise counts – for Absolute and Relative thresholds
+#       for change_type in ['Absolute', 'Relative']:
+#         summaries_dict[f'{change_type.lower()}_counts'] = df_summary.loc[:, (selected_vars, [change_type, 'Total'], ['fall','stable','rise','total'])].droplevel(level=1, axis=1)
+
+#       # The averages and population coverage
+#       summaries_dict['averages'] = df_summary.loc[:, (selected_vars, ['Avg', 'Wt. avg', 'Pop. coverage'], slice(None))]
+
+
+#       # Reshape the data for OWID upload
+
+#       owid_format = pd.melt(prepped_data, id_vars=['source_var', group_by_col, region_col ], value_vars=[f'{reference_col}{reference_vals[0]}', f'{reference_col}{reference_vals[1]}', f'value{reference_vals[0]}', f'value{reference_vals[1]}'])
+
+#       # Extract year and group information from variable column
+#       owid_format[['var', 'reference']] = owid_format['variable'].str.extract(r'(\D+)(\d+)$')
+#       owid_format['reference'] = owid_format['reference'].astype(int)
+
+#       #Reshape from long to wide
+#       owid_format=pd.pivot(owid_format, index=['source_var', group_by_col, region_col, 'reference' ], columns = 'var' ,values = 'value').reset_index() 
+
+#       # Drop the original reference column
+#       owid_format = owid_format.drop('reference', axis=1)
+
+#       # Pivot the melted dataframe wider – one value column per source_var
+#       owid_format = owid_format.pivot_table(index=[group_by_col, region_col, reference_col], columns='source_var', values='value').reset_index()
+
+#       summaries_dict['owid_format'] = owid_format
+    
+#       output_dict[f'all_sources_{all_metrics_requirement}'] = summaries_dict
+    
+
+#     # Merge the all_sources- True and False data for OWID format
+#     owid_format = pd.merge(output_dict['all_sources_False']['owid_format'], output_dict['all_sources_True']['owid_format'], on=[group_by_col, reference_col, region_col], how='outer', suffixes=(' – all observations', ' – only matching observations'))
+
+#     owid_format = owid_format.rename(columns={group_by_col: "country", reference_col: "year"})
+    
+#     # Reorder columns
+#     cols = list(owid_format.columns) # Get the list of column names
+#     cols.remove('country') # Remove col1 from the list
+#     cols.remove('year') # Remove col2 from the list
+#     cols = ['country', 'year'] + cols # Add col1 and col2 to the front of the list
+#     owid_format = owid_format[cols] # Reorder columns in the DataFrame
+    
+#     owid_format['year'] = owid_format['year'].astype(int) # Year needs to be integer for OWID
+
+#     output_dict['owid_format'] = owid_format
+    
+#     return output_dict
 
 
 
@@ -709,167 +1046,167 @@ def prep_data_and_change_summary(
 #  This function builds the scatter charts used in the paper. It also returns the data being plotted.
 
 # %%
-def plot_change_scatter(
-      plot_var,
-      source_dfs,
-      df_pop,
-      df_regions,
-      selected_vars,
-      reference_vals,
-      max_dist_from_refs,
-      min_dist_between,
-      all_metrics_requirement,
-      reference_col,
-      group_by_col,
-      outlier_cut_off_upper,
-      tolerance_lookup,
-      region_col,
-      ):
+# def plot_change_scatter(
+#       plot_var,
+#       source_dfs,
+#       df_pop,
+#       df_regions,
+#       selected_vars,
+#       reference_vals,
+#       max_dist_from_refs,
+#       min_dist_between,
+#       all_metrics_requirement,
+#       reference_col,
+#       group_by_col,
+#       outlier_cut_off_upper,
+#       tolerance_lookup,
+#       region_col,
+#       ):
 
 
-    prepped_data = prep_data(
-        source_dfs = source_dfs,
-        df_pop = df_pop,
-        df_regions = df_regions,
-        selected_vars = selected_vars,
-        reference_vals = reference_vals,
-        max_dist_from_refs = max_dist_from_refs,
-        min_dist_between = min_dist_between,
-        all_metrics_requirement = all_metrics_requirement,
-        reference_col = reference_col,
-        group_by_col = group_by_col,
-        tolerance_lookup = tolerance_lookup,
-        outlier_cut_off_upper = outlier_cut_off_upper
-        )
+#     prepped_data = prep_data(
+#         source_dfs = source_dfs,
+#         df_pop = df_pop,
+#         df_regions = df_regions,
+#         selected_vars = selected_vars,
+#         reference_vals = reference_vals,
+#         max_dist_from_refs = max_dist_from_refs,
+#         min_dist_between = min_dist_between,
+#         all_metrics_requirement = all_metrics_requirement,
+#         reference_col = reference_col,
+#         group_by_col = group_by_col,
+#         tolerance_lookup = tolerance_lookup,
+#         outlier_cut_off_upper = outlier_cut_off_upper
+#         )
 
-    if plot_var == 'diff' or plot_var == 'relative_diff':
+#     if plot_var == 'diff' or plot_var == 'relative_diff':
 
-      prepped_data['change'] = prepped_data[f'value{reference_vals[1]}'] - prepped_data[f'value{reference_vals[0]}']
+#       prepped_data['change'] = prepped_data[f'value{reference_vals[1]}'] - prepped_data[f'value{reference_vals[0]}']
 
-      if plot_var == 'relative_diff':
-        prepped_data['change'] = prepped_data['change']/prepped_data[f'value{reference_vals[0]}']*100
+#       if plot_var == 'relative_diff':
+#         prepped_data['change'] = prepped_data['change']/prepped_data[f'value{reference_vals[0]}']*100
 
-      prepped_data = prepped_data.pivot(index=['Entity', region_col], columns='source_var', values=['change', f'value{reference_vals[0]}',f'value{reference_vals[1]}', f'Year{reference_vals[0]}',f'Year{reference_vals[1]}',f'pop{reference_vals[0]}',f'pop{reference_vals[1]}', region_col, 'pip_welfare'])
+#       prepped_data = prepped_data.pivot(index=['Entity', region_col], columns='source_var', values=['change', f'value{reference_vals[0]}',f'value{reference_vals[1]}', f'Year{reference_vals[0]}',f'Year{reference_vals[1]}',f'pop{reference_vals[0]}',f'pop{reference_vals[1]}', region_col, 'pip_welfare'])
       
-      prepped_data.columns = [' '.join(col).strip() for col in prepped_data.columns.values]
+#       prepped_data.columns = [' '.join(col).strip() for col in prepped_data.columns.values]
 
-      prepped_data =  prepped_data.reset_index()
+#       prepped_data =  prepped_data.reset_index()
 
       
-      # The scatter bubble size will be equal to transformed population for the later year
-        #  The transformation was adapted from here: https://stackoverflow.com/questions/63265123/size-of-bubbles-in-plotly-express-scatter-mapbox
-      number_of_steps = 40
-      selected_pop_var = f'pop{reference_vals[1]} {selected_vars[0]}'
-      pop_step = (prepped_data[selected_pop_var].max() - prepped_data[selected_pop_var].min()) / number_of_steps
-      prepped_data['plot_pop_scale'] = (prepped_data[selected_pop_var] - prepped_data[selected_pop_var].min()) / pop_step + 1
+#       # The scatter bubble size will be equal to transformed population for the later year
+#         #  The transformation was adapted from here: https://stackoverflow.com/questions/63265123/size-of-bubbles-in-plotly-express-scatter-mapbox
+#       number_of_steps = 40
+#       selected_pop_var = f'pop{reference_vals[1]} {selected_vars[0]}'
+#       pop_step = (prepped_data[selected_pop_var].max() - prepped_data[selected_pop_var].min()) / number_of_steps
+#       prepped_data['plot_pop_scale'] = (prepped_data[selected_pop_var] - prepped_data[selected_pop_var].min()) / pop_step + 1
 
-      # The pivot converted many columns to 'object' data type.
-      # The chart below doesn't accept this type for the bubble size parameter
-      cols_to_convert = ['plot_pop_scale']
-      prepped_data[cols_to_convert] = prepped_data[cols_to_convert].apply(pd.to_numeric, errors='coerce')
+#       # The pivot converted many columns to 'object' data type.
+#       # The chart below doesn't accept this type for the bubble size parameter
+#       cols_to_convert = ['plot_pop_scale']
+#       prepped_data[cols_to_convert] = prepped_data[cols_to_convert].apply(pd.to_numeric, errors='coerce')
 
-      # Sort to keep regions the same colours.
-      prepped_data = prepped_data.sort_values(by=[region_col])
+#       # Sort to keep regions the same colours.
+#       prepped_data = prepped_data.sort_values(by=[region_col])
 
-      # # To plot a 45 degree line we need to specify the points manually      
-      ymin = prepped_data[f'change {selected_vars[1]}'].min() 
-      ymax = prepped_data[f'change {selected_vars[1]}'].max()
+#       # # To plot a 45 degree line we need to specify the points manually      
+#       ymin = prepped_data[f'change {selected_vars[1]}'].min() 
+#       ymax = prepped_data[f'change {selected_vars[1]}'].max()
 
-      xmin = prepped_data[f'change {selected_vars[0]}'].min()
-      xmax = prepped_data[f'change {selected_vars[0]}'].max()
+#       xmin = prepped_data[f'change {selected_vars[0]}'].min()
+#       xmax = prepped_data[f'change {selected_vars[0]}'].max()
 
-      fig = px.scatter(
-            prepped_data, 
-            x=f'change {selected_vars[0]}', 
-            y=f'change {selected_vars[1]}',
-            color=region_col, 
-            # facet_col='source_var', 
-            # facet_col_wrap=1, 
-            size='plot_pop_scale',
-            size_max= 30,
-            hover_name=group_by_col,
-            hover_data={
-              f'change {selected_vars[0]}':':.1f',
-              f'change {selected_vars[1]}':':.1f',
-              f'{reference_col}{reference_vals[0]} {selected_vars[0]}':':.0f',
-              f'{reference_col}{reference_vals[1]} {selected_vars[0]}':':.0f',
-              f'{reference_col}{reference_vals[0]} {selected_vars[1]}':':.0f',
-              f'{reference_col}{reference_vals[1]} {selected_vars[1]}':':.0f',
-              region_col: False,
-              'plot_pop_scale': False
-            },
-            title=f'Change in {selected_vars[0]} vs {selected_vars[1]} ({reference_vals[0]}-{reference_vals[1]} +/- {max_dist_from_refs})',
-            height=600
-            )
+#       fig = px.scatter(
+#             prepped_data, 
+#             x=f'change {selected_vars[0]}', 
+#             y=f'change {selected_vars[1]}',
+#             color=region_col, 
+#             # facet_col='source_var', 
+#             # facet_col_wrap=1, 
+#             size='plot_pop_scale',
+#             size_max= 30,
+#             hover_name=group_by_col,
+#             hover_data={
+#               f'change {selected_vars[0]}':':.1f',
+#               f'change {selected_vars[1]}':':.1f',
+#               f'{reference_col}{reference_vals[0]} {selected_vars[0]}':':.0f',
+#               f'{reference_col}{reference_vals[1]} {selected_vars[0]}':':.0f',
+#               f'{reference_col}{reference_vals[0]} {selected_vars[1]}':':.0f',
+#               f'{reference_col}{reference_vals[1]} {selected_vars[1]}':':.0f',
+#               region_col: False,
+#               'plot_pop_scale': False
+#             },
+#             title=f'Change in {selected_vars[0]} vs {selected_vars[1]} ({reference_vals[0]}-{reference_vals[1]} +/- {max_dist_from_refs})',
+#             height=600
+#             )
 
 
-      fig.update_layout(
-          shapes=[
-              dict(
-                  type= 'line',
-                  line=dict(color="#808080"),
-                  opacity=0.5,
-                  yref= 'y', y0=min(ymin, xmin), y1= max(ymax, xmax),
-                  xref= 'x', x0=min(ymin, xmin), x1= max(ymax, xmax)
+#       fig.update_layout(
+#           shapes=[
+#               dict(
+#                   type= 'line',
+#                   line=dict(color="#808080"),
+#                   opacity=0.5,
+#                   yref= 'y', y0=min(ymin, xmin), y1= max(ymax, xmax),
+#                   xref= 'x', x0=min(ymin, xmin), x1= max(ymax, xmax)
                   
-              )
-          ])
+#               )
+#           ])
 
 
-    else:
-    # Select only the data for the specified plot_var
-      prepped_data = prepped_data[prepped_data['source_var'] == plot_var]
+#     else:
+#     # Select only the data for the specified plot_var
+#       prepped_data = prepped_data[prepped_data['source_var'] == plot_var]
 
-      # The scatter bubble size will be equal to transformed population for the later year
-        #  The transformation was adapted from here: https://stackoverflow.com/questions/63265123/size-of-bubbles-in-plotly-express-scatter-mapbox
-      number_of_steps = 40
-      prepped_data['plot_pop'] = prepped_data[f'pop{reference_vals[1]}']
-      pop_step = (prepped_data['plot_pop'].max() - prepped_data['plot_pop'].min()) / number_of_steps
-      prepped_data['plot_pop_scale'] = (prepped_data['plot_pop'] - prepped_data['plot_pop'].min()) / pop_step + 1
+#       # The scatter bubble size will be equal to transformed population for the later year
+#         #  The transformation was adapted from here: https://stackoverflow.com/questions/63265123/size-of-bubbles-in-plotly-express-scatter-mapbox
+#       number_of_steps = 40
+#       prepped_data['plot_pop'] = prepped_data[f'pop{reference_vals[1]}']
+#       pop_step = (prepped_data['plot_pop'].max() - prepped_data['plot_pop'].min()) / number_of_steps
+#       prepped_data['plot_pop_scale'] = (prepped_data['plot_pop'] - prepped_data['plot_pop'].min()) / pop_step + 1
       
-      prepped_data = prepped_data.sort_values(by=[region_col])
+#       prepped_data = prepped_data.sort_values(by=[region_col])
 
-      # To plot a 45 degree line we need to specify the points manually
-      ymin = prepped_data[f'value{reference_vals[1]}'].min()
-      ymax = prepped_data[f'value{reference_vals[1]}'].max()
+#       # To plot a 45 degree line we need to specify the points manually
+#       ymin = prepped_data[f'value{reference_vals[1]}'].min()
+#       ymax = prepped_data[f'value{reference_vals[1]}'].max()
 
-      xmin = prepped_data[f'value{reference_vals[0]}'].min()
-      xmax = prepped_data[f'value{reference_vals[0]}'].max()
+#       xmin = prepped_data[f'value{reference_vals[0]}'].min()
+#       xmax = prepped_data[f'value{reference_vals[0]}'].max()
 
-      fig = px.scatter(
-        prepped_data, 
-        x=f'value{reference_vals[0]}', 
-        y=f'value{reference_vals[1]}',
-        color=region_col, 
-        # facet_col='source_var', 
-        # facet_col_wrap=1, 
-        size='plot_pop_scale',
-        # size_max= 60,
-        hover_name=group_by_col,
-        hover_data={
-          f'value{reference_vals[0]}':':.2f',
-          f'{reference_col}{reference_vals[0]}':True,
-          f'value{reference_vals[1]}':':.2f',
-          f'{reference_col}{reference_vals[1]}':True,
-          region_col: False,
-          'plot_pop_scale': False,
-          'source_var': False},
-        title=f'{plot_var}, {reference_vals[0]} vs {reference_vals[1]} (+/- {max_dist_from_refs})',
-        height=600
-        )
+#       fig = px.scatter(
+#         prepped_data, 
+#         x=f'value{reference_vals[0]}', 
+#         y=f'value{reference_vals[1]}',
+#         color=region_col, 
+#         # facet_col='source_var', 
+#         # facet_col_wrap=1, 
+#         size='plot_pop_scale',
+#         # size_max= 60,
+#         hover_name=group_by_col,
+#         hover_data={
+#           f'value{reference_vals[0]}':':.2f',
+#           f'{reference_col}{reference_vals[0]}':True,
+#           f'value{reference_vals[1]}':':.2f',
+#           f'{reference_col}{reference_vals[1]}':True,
+#           region_col: False,
+#           'plot_pop_scale': False,
+#           'source_var': False},
+#         title=f'{plot_var}, {reference_vals[0]} vs {reference_vals[1]} (+/- {max_dist_from_refs})',
+#         height=600
+#         )
 
 
-      fig.update_layout(
-          shapes=[
-              dict(
-                  type= 'line',
-                  line=dict(color="#808080"),
-                  opacity=0.5,
-                  yref= 'y', y0=min(ymin, xmin), y1= max(ymax, xmax),
-                  xref= 'x', x0=min(ymin, xmin), x1= max(ymax, xmax)
+#       fig.update_layout(
+#           shapes=[
+#               dict(
+#                   type= 'line',
+#                   line=dict(color="#808080"),
+#                   opacity=0.5,
+#                   yref= 'y', y0=min(ymin, xmin), y1= max(ymax, xmax),
+#                   xref= 'x', x0=min(ymin, xmin), x1= max(ymax, xmax)
                   
-              )
-          ])
+#               )
+#           ])
 
     
 
@@ -878,20 +1215,20 @@ def plot_change_scatter(
 
 
 
-    return fig, prepped_data
+#     return fig, prepped_data
 
 
 # %% [markdown]
 # This builds a filepath in which to save prepared data
 # %%
-def filename_for_full_data(selected_vars,reference_vals):
+# def filename_for_full_data(selected_vars,reference_vals):
     
-    vars_string = ' vs '.join(selected_vars)
-    refs_string = f'{reference_vals[0]} to {reference_vals[1]}'
+#     vars_string = ' vs '.join(selected_vars)
+#     refs_string = f'{reference_vals[0]} to {reference_vals[1]}'
 
-    filepath = f'{vars_string} – {refs_string}'
+#     filepath = f'{vars_string} – {refs_string}'
 
-    return filepath
+#     return filepath
 
 
 

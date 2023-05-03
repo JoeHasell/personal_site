@@ -131,7 +131,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <body class="nav-sidebar docked">
 
-
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
@@ -219,15 +218,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
 </li>
           <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../PhD_pages/Paper_1/data_appendix/1_F_within_country_trends.html" class="sidebar-item-text sidebar-link">Appendix 1.F: Analysing global trends in within-country inequality</a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../../../PhD_pages/Paper_1/data_appendix/G_functions_for_figures_and_tables.html" class="sidebar-item-text sidebar-link">G_functions_for_figures_and_tables.html</a>
-  </div>
-</li>
+  PhD_pages/Paper_1/data_appendix/1_F_within_country_trends.qmd
+  </li>
       </ul>
   </li>
       </ul>
@@ -348,7 +340,7 @@ Load WID data
 <p>The resulting dataframe looks like this:</p>
 <div class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_wid.head(<span class="dv">50</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="30">
 
 <div>
 
@@ -1662,7 +1654,9 @@ Calculate some additional inequality metrics
 <div class="callout-body-container callout-body">
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gini as index</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_wid[<span class="st">"Gini"</span>] <span class="op">=</span> df_wid[<span class="st">'Gini coefficient'</span>] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_wid[<span class="st">"Gini"</span>] <span class="op">=</span> df_wid[<span class="st">'Gini coefficient'</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>df_wid[<span class="st">"Ratio Top 10 Bottom 50 share"</span>] <span class="op">=</span> df_wid[<span class="st">'P90-P100 - share of the top 10%'</span>]<span class="op">/</span>df_wid[<span class="st">'P0-P50 - share of the bottom 50%'</span>] <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1693,10 +1687,11 @@ Rename and select needed variables
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">'Top 1pc share'</span>,</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Top 10pc share"</span>,</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Bottom 50pc share"</span>,</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"inc_concept"</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>df_wid <span class="op">=</span> df_wid[keep_cols]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ratio Top 10 Bottom 50 share"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"inc_concept"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>df_wid <span class="op">=</span> df_wid[keep_cols]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1740,7 +1735,7 @@ See the prepared WID data
 <p>The first 100 rows of the dataframe looks like this:</p>
 <div class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_wid.head(<span class="dv">100</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="35">
 
 <div>
 
@@ -1762,6 +1757,9 @@ See the prepared WID data
       <th>Bottom 50pc share – posttax_dis</th>
       <th>Bottom 50pc share – posttax_nat</th>
       <th>Bottom 50pc share – pretax</th>
+      <th>Ratio Top 10 Bottom 50 share – posttax_dis</th>
+      <th>Ratio Top 10 Bottom 50 share – posttax_nat</th>
+      <th>Ratio Top 10 Bottom 50 share – pretax</th>
     </tr>
   </thead>
   <tbody>
@@ -1781,6 +1779,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>17.16</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>244.405594</td>
     </tr>
     <tr>
       <th>2650</th>
@@ -1798,6 +1799,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>19.00</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>204.000000</td>
     </tr>
     <tr>
       <th>3076</th>
@@ -1815,6 +1819,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>17.79</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>230.522766</td>
     </tr>
     <tr>
       <th>3149</th>
@@ -1831,6 +1838,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>19.93</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>191.018565</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -1849,6 +1859,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>19.98</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>190.440440</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3405</th>
@@ -1865,6 +1878,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>19.98</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>190.440440</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -1883,6 +1899,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>19.98</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>190.440440</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1447</th>
@@ -1900,6 +1919,9 @@ See the prepared WID data
       <td>20.11</td>
       <td>22.10</td>
       <td>18.80</td>
+      <td>149.030333</td>
+      <td>129.638009</td>
+      <td>173.244681</td>
     </tr>
     <tr>
       <th>1826</th>
@@ -1917,6 +1939,9 @@ See the prepared WID data
       <td>19.19</td>
       <td>21.54</td>
       <td>17.96</td>
+      <td>162.219906</td>
+      <td>137.000929</td>
+      <td>187.305122</td>
     </tr>
     <tr>
       <th>2056</th>
@@ -1934,6 +1959,9 @@ See the prepared WID data
       <td>19.71</td>
       <td>22.10</td>
       <td>18.43</td>
+      <td>155.403349</td>
+      <td>131.221719</td>
+      <td>179.706999</td>
     </tr>
     <tr>
       <th>2311</th>
@@ -1951,6 +1979,9 @@ See the prepared WID data
       <td>19.77</td>
       <td>22.23</td>
       <td>18.59</td>
+      <td>154.425898</td>
+      <td>129.824561</td>
+      <td>177.891339</td>
     </tr>
     <tr>
       <th>2651</th>
@@ -1968,6 +1999,9 @@ See the prepared WID data
       <td>20.00</td>
       <td>22.56</td>
       <td>19.05</td>
+      <td>154.550000</td>
+      <td>129.078014</td>
+      <td>173.228346</td>
     </tr>
     <tr>
       <th>2904</th>
@@ -1985,6 +2019,9 @@ See the prepared WID data
       <td>19.69</td>
       <td>22.17</td>
       <td>17.61</td>
+      <td>161.452514</td>
+      <td>135.363103</td>
+      <td>200.056786</td>
     </tr>
     <tr>
       <th>2992</th>
@@ -2002,6 +2039,9 @@ See the prepared WID data
       <td>18.92</td>
       <td>21.53</td>
       <td>16.48</td>
+      <td>169.027484</td>
+      <td>139.990711</td>
+      <td>217.111650</td>
     </tr>
     <tr>
       <th>3077</th>
@@ -2019,6 +2059,9 @@ See the prepared WID data
       <td>19.43</td>
       <td>21.98</td>
       <td>17.06</td>
+      <td>162.480700</td>
+      <td>135.441310</td>
+      <td>207.796014</td>
     </tr>
     <tr>
       <th>3150</th>
@@ -2036,6 +2079,9 @@ See the prepared WID data
       <td>19.88</td>
       <td>22.36</td>
       <td>17.49</td>
+      <td>156.237425</td>
+      <td>131.171735</td>
+      <td>200.285878</td>
     </tr>
     <tr>
       <th>1</th>
@@ -2053,6 +2099,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>14.42</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>349.514563</td>
     </tr>
     <tr>
       <th>25</th>
@@ -2070,6 +2119,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>14.01</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>369.735903</td>
     </tr>
     <tr>
       <th>49</th>
@@ -2087,6 +2139,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.60</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>391.176471</td>
     </tr>
     <tr>
       <th>73</th>
@@ -2104,6 +2159,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.19</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>413.949962</td>
     </tr>
     <tr>
       <th>98</th>
@@ -2121,6 +2179,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>11.16</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>551.971326</td>
     </tr>
     <tr>
       <th>142</th>
@@ -2138,6 +2199,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>11.16</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>551.971326</td>
     </tr>
     <tr>
       <th>220</th>
@@ -2155,6 +2219,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>11.16</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>551.971326</td>
     </tr>
     <tr>
       <th>299</th>
@@ -2172,6 +2239,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>11.57</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>520.311150</td>
     </tr>
     <tr>
       <th>371</th>
@@ -2189,6 +2259,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>16.94</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>246.162928</td>
     </tr>
     <tr>
       <th>454</th>
@@ -2206,6 +2279,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>15.23</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>312.541037</td>
     </tr>
     <tr>
       <th>541</th>
@@ -2223,6 +2299,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>15.23</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>312.541037</td>
     </tr>
     <tr>
       <th>1018</th>
@@ -2240,6 +2319,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.27</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>385.003768</td>
     </tr>
     <tr>
       <th>1386</th>
@@ -2257,6 +2339,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>15.34</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>279.074316</td>
     </tr>
     <tr>
       <th>2563</th>
@@ -2274,6 +2359,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>19.02</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>200.210305</td>
     </tr>
     <tr>
       <th>3151</th>
@@ -2290,6 +2378,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>25.74</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>121.561772</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -2308,6 +2399,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>25.79</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>121.248546</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3406</th>
@@ -2324,6 +2418,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>25.79</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>121.248546</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -2342,6 +2439,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>25.79</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>121.248546</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>1387</th>
@@ -2359,6 +2459,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.15</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>634.207650</td>
     </tr>
     <tr>
       <th>1692</th>
@@ -2376,6 +2479,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.15</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>634.207650</td>
     </tr>
     <tr>
       <th>2312</th>
@@ -2393,6 +2499,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>12.23</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>403.270646</td>
     </tr>
     <tr>
       <th>3152</th>
@@ -2410,6 +2519,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>10.81</td>
       <td>9.04</td>
+      <td>NaN</td>
+      <td>520.536540</td>
+      <td>641.703540</td>
     </tr>
     <tr>
       <th>3288</th>
@@ -2426,6 +2538,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>10.83</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>519.482918</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -2444,6 +2559,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>10.83</td>
       <td>NaN</td>
+      <td>NaN</td>
+      <td>519.482918</td>
+      <td>NaN</td>
     </tr>
     <tr>
       <th>3517</th>
@@ -2460,6 +2578,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>10.83</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>519.482918</td>
       <td>NaN</td>
     </tr>
     <tr>
@@ -2478,6 +2599,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.85</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>344.187726</td>
     </tr>
     <tr>
       <th>26</th>
@@ -2495,6 +2619,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.71</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>351.422319</td>
     </tr>
     <tr>
       <th>50</th>
@@ -2512,6 +2639,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.58</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>358.468336</td>
     </tr>
     <tr>
       <th>74</th>
@@ -2529,6 +2659,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.45</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>365.650558</td>
     </tr>
     <tr>
       <th>99</th>
@@ -2546,6 +2679,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.18</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>380.728376</td>
     </tr>
     <tr>
       <th>143</th>
@@ -2563,6 +2699,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.18</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>380.728376</td>
     </tr>
     <tr>
       <th>221</th>
@@ -2580,6 +2719,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.18</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>380.728376</td>
     </tr>
     <tr>
       <th>300</th>
@@ -2597,6 +2739,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.23</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>377.928949</td>
     </tr>
     <tr>
       <th>372</th>
@@ -2614,6 +2759,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.54</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>360.709010</td>
     </tr>
     <tr>
       <th>455</th>
@@ -2631,6 +2779,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>14.47</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>313.061507</td>
     </tr>
     <tr>
       <th>542</th>
@@ -2648,6 +2799,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>14.54</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>309.766162</td>
     </tr>
     <tr>
       <th>633</th>
@@ -2665,6 +2819,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>679</th>
@@ -2682,6 +2839,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>725</th>
@@ -2699,6 +2859,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>768</th>
@@ -2716,6 +2879,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>812</th>
@@ -2733,6 +2899,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>861</th>
@@ -2750,6 +2919,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>917</th>
@@ -2767,6 +2939,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>968</th>
@@ -2784,6 +2959,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1019</th>
@@ -2801,6 +2979,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1073</th>
@@ -2818,6 +2999,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1121</th>
@@ -2835,6 +3019,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1168</th>
@@ -2852,6 +3039,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1221</th>
@@ -2869,6 +3059,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1278</th>
@@ -2886,6 +3079,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1331</th>
@@ -2903,6 +3099,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1388</th>
@@ -2920,6 +3119,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1448</th>
@@ -2937,6 +3139,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1508</th>
@@ -2954,6 +3159,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1566</th>
@@ -2971,6 +3179,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1631</th>
@@ -2988,6 +3199,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1693</th>
@@ -3005,6 +3219,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>9.50</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>517.473684</td>
     </tr>
     <tr>
       <th>1758</th>
@@ -3022,6 +3239,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>10.86</td>
       <td>7.85</td>
+      <td>NaN</td>
+      <td>437.016575</td>
+      <td>643.821656</td>
     </tr>
     <tr>
       <th>1827</th>
@@ -3039,6 +3259,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>10.41</td>
       <td>7.79</td>
+      <td>NaN</td>
+      <td>472.430355</td>
+      <td>662.130937</td>
     </tr>
     <tr>
       <th>1903</th>
@@ -3056,6 +3279,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>12.71</td>
       <td>10.96</td>
+      <td>NaN</td>
+      <td>360.739575</td>
+      <td>437.864964</td>
     </tr>
     <tr>
       <th>1979</th>
@@ -3073,6 +3299,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>13.55</td>
       <td>11.78</td>
+      <td>NaN</td>
+      <td>326.715867</td>
+      <td>392.529711</td>
     </tr>
     <tr>
       <th>2057</th>
@@ -3090,6 +3319,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>14.02</td>
       <td>12.09</td>
+      <td>NaN</td>
+      <td>304.279601</td>
+      <td>369.230769</td>
     </tr>
     <tr>
       <th>2140</th>
@@ -3107,6 +3339,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>14.76</td>
       <td>12.73</td>
+      <td>NaN</td>
+      <td>280.013550</td>
+      <td>341.633936</td>
     </tr>
     <tr>
       <th>2224</th>
@@ -3124,6 +3359,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>14.85</td>
       <td>12.86</td>
+      <td>NaN</td>
+      <td>290.303030</td>
+      <td>352.332815</td>
     </tr>
     <tr>
       <th>2313</th>
@@ -3141,6 +3379,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>15.01</td>
       <td>13.06</td>
+      <td>NaN</td>
+      <td>292.738175</td>
+      <td>347.932619</td>
     </tr>
     <tr>
       <th>2389</th>
@@ -3158,6 +3399,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>15.78</td>
       <td>13.22</td>
+      <td>NaN</td>
+      <td>252.344740</td>
+      <td>320.650530</td>
     </tr>
     <tr>
       <th>2475</th>
@@ -3175,6 +3419,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>16.21</td>
       <td>13.64</td>
+      <td>NaN</td>
+      <td>254.225787</td>
+      <td>319.868035</td>
     </tr>
     <tr>
       <th>2564</th>
@@ -3192,6 +3439,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>17.36</td>
       <td>14.43</td>
+      <td>NaN</td>
+      <td>226.152074</td>
+      <td>291.406791</td>
     </tr>
     <tr>
       <th>2652</th>
@@ -3209,6 +3459,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>18.00</td>
       <td>14.95</td>
+      <td>NaN</td>
+      <td>200.611111</td>
+      <td>261.204013</td>
     </tr>
     <tr>
       <th>2739</th>
@@ -3226,6 +3479,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>17.97</td>
       <td>14.87</td>
+      <td>NaN</td>
+      <td>204.618809</td>
+      <td>269.872226</td>
     </tr>
     <tr>
       <th>2820</th>
@@ -3243,6 +3499,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>16.80</td>
       <td>13.83</td>
+      <td>NaN</td>
+      <td>227.976190</td>
+      <td>298.987708</td>
     </tr>
     <tr>
       <th>2905</th>
@@ -3260,6 +3519,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>16.90</td>
       <td>14.45</td>
+      <td>NaN</td>
+      <td>235.621302</td>
+      <td>299.238754</td>
     </tr>
     <tr>
       <th>2993</th>
@@ -3277,6 +3539,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>17.01</td>
       <td>15.13</td>
+      <td>NaN</td>
+      <td>243.033510</td>
+      <td>299.339061</td>
     </tr>
     <tr>
       <th>3078</th>
@@ -3294,6 +3559,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>17.12</td>
       <td>13.76</td>
+      <td>NaN</td>
+      <td>250.350467</td>
+      <td>337.281977</td>
     </tr>
     <tr>
       <th>3153</th>
@@ -3311,6 +3579,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>16.53</td>
       <td>13.46</td>
+      <td>NaN</td>
+      <td>265.335753</td>
+      <td>348.068351</td>
     </tr>
     <tr>
       <th>1449</th>
@@ -3328,6 +3599,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>13.48</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>346.958457</td>
     </tr>
     <tr>
       <th>1632</th>
@@ -3345,6 +3619,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>15.68</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>281.696429</td>
     </tr>
     <tr>
       <th>1828</th>
@@ -3362,6 +3639,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>16.84</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>254.809976</td>
     </tr>
     <tr>
       <th>1904</th>
@@ -3379,6 +3659,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>17.53</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>242.726754</td>
     </tr>
     <tr>
       <th>1980</th>
@@ -3396,6 +3679,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>16.14</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>282.961586</td>
     </tr>
     <tr>
       <th>2058</th>
@@ -3413,6 +3699,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>16.48</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>273.058252</td>
     </tr>
     <tr>
       <th>2141</th>
@@ -3430,6 +3719,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>19.32</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>195.496894</td>
     </tr>
     <tr>
       <th>2225</th>
@@ -3447,6 +3739,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>18.56</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>206.950431</td>
     </tr>
     <tr>
       <th>2314</th>
@@ -3464,6 +3759,9 @@ See the prepared WID data
       <td>NaN</td>
       <td>NaN</td>
       <td>19.33</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>191.205380</td>
     </tr>
   </tbody>
 </table>
